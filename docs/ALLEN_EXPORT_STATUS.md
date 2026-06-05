@@ -13,6 +13,9 @@ The latest controlled expansion reached 40 normalized Allen sessions. The
 previous partial NWB download (`1048196054`) was resumed successfully and added
 one usable `go_response` session. The empirical usable-session rate still makes
 clear that "50 downloads" and "50 usable target sessions" are not equivalent.
+After documenting the non-usable sessions, the raw NWB cache was pruned for
+sessions that are not usable for the strict `go_response` cohort. Normalized
+`session.json` artifacts and reports were kept.
 
 | metric | value |
 | --- | ---: |
@@ -21,9 +24,11 @@ clear that "50 downloads" and "50 usable target sessions" are not equivalent.
 | non-usable `go_response` sessions | 15 |
 | total labeled trials | 11096 |
 | labeled `go_response` trials | 9705 |
-| raw Allen cache size | 121 GB |
+| raw Allen cache size after pruning | 75 GB |
 | normalized Allen artifacts size | 24 MB |
-| free disk after checkpoint | 632 GiB |
+| free disk after pruning | 679 GiB |
+| pruned raw NWB files | 15 |
+| storage freed by pruning | 46.34 GiB |
 | partially downloaded next session | none |
 | partial bytes for next session | 0 |
 
@@ -208,6 +213,7 @@ make allen-evidence
 make allen-targets
 make allen-go-evidence-until-10
 make allen-target-aware-select
+make allen-prune-cache-plan
 ```
 
 ## Scientific status
@@ -225,3 +231,9 @@ The first target-aware selector is implemented in
 ranks 20 pending candidates from the top 80 metadata candidates; the top-ranked
 candidate is `1122903357`. This ranking should be used to prioritize the next
 downloads, then regenerated after each batch.
+
+Raw cache pruning is implemented in `scripts/prune_allen_nwb_cache.py`. The
+2026-06-06 cleanup deleted only raw NWB files for the 15 sessions documented as
+non-usable for `go_response`; all normalized artifacts remain available for
+audit and reanalysis. The cleanup reduced `data/allen` from 121 GB to 75 GB and
+increased free disk from 632 GiB to 679 GiB.

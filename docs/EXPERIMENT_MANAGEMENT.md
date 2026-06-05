@@ -54,6 +54,9 @@ artifacts/reports/allen/multisession_summary.json
 artifacts/reports/allen/evidence_report.json
 artifacts/reports/allen/target_diagnostics.json
 artifacts/reports/allen/export_batch_status.json
+artifacts/reports/allen/nwb_cache_prune_nonusable_go_response.json
+artifacts/reports/allen/nwb_cache_prune_nonusable_go_response.csv
+artifacts/reports/allen/nwb_cache_prune_nonusable_go_response.md
 artifacts/reports/allen_targets/go_response_usable/multisession_summary.json
 artifacts/reports/allen_targets/go_response_usable/evidence_report.json
 artifacts/reports/allen_targets/target_evidence_status.json
@@ -219,6 +222,18 @@ For large Allen expansion runs, always record:
 - normalized artifact disk usage;
 - free disk after checkpoint;
 - partial NWB session id and byte count if the run is paused.
+
+For raw Allen cache cleanup, prune only raw NWB files, never normalized
+`session.json` artifacts. Always run the dry plan first:
+
+```bash
+make allen-prune-cache-plan
+```
+
+Execute pruning only when the plan shows that every target-non-usable session
+has a preserved normalized artifact. The current cleanup policy is limited to
+sessions documented as non-usable for the strict `go_response` target in
+`artifacts/reports/allen_targets/go_response_session_relations.json`.
 
 Do not interpret raw accuracy on imbalanced real-data behavioral labels without
 balanced accuracy or an equivalent imbalance-aware metric.

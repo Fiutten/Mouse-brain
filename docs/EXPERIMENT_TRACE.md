@@ -13,8 +13,8 @@ separate.
 - Strict usable `go_response` sessions: 25/40.
 - Non-usable `go_response` sessions: 15/40, all due to class imbalance.
 - Latest broad evidence decision: `inconclusive_mixed_evidence`.
-- Raw Allen cache size at latest checkpoint: 121 GB.
-- Free disk at latest checkpoint: 632 GiB.
+- Raw Allen cache size after pruning: 75 GB.
+- Free disk after pruning: 679 GiB.
 
 ## Target viability
 
@@ -147,6 +147,43 @@ confirmatory. The top candidates are dominated by `image_set=H` and `Novel`
 experience because those categories currently look more favorable after
 small-sample smoothing. This should guide the next download order, but it must
 be re-audited after each batch to avoid locking onto a cohort artifact.
+
+## Raw NWB cache pruning
+
+Command:
+
+```bash
+.venv/bin/python scripts/prune_allen_nwb_cache.py
+.venv/bin/python scripts/prune_allen_nwb_cache.py --execute
+```
+
+Artifacts:
+
+```text
+artifacts/reports/allen/nwb_cache_prune_nonusable_go_response.json
+artifacts/reports/allen/nwb_cache_prune_nonusable_go_response.csv
+artifacts/reports/allen/nwb_cache_prune_nonusable_go_response.md
+```
+
+Result:
+
+| metric | value |
+| --- | ---: |
+| non-usable `go_response` sessions planned | 15 |
+| eligible raw NWB files deleted | 15 |
+| storage freed | 46.34 GiB |
+| raw Allen cache after pruning | 75 GB |
+| normalized Allen artifacts after pruning | 24 MB |
+| free disk after pruning | 679 GiB |
+| missing normalized artifacts after pruning | 0 |
+| remaining pruned-session NWB files | 0 |
+| unit tests after pruning | 88/88 OK |
+
+Interpretation: only raw NWB files were deleted, and only for sessions already
+documented as non-usable for the strict `go_response` cohort because their
+minority class was below 0.20. The normalized `session.json` artifacts remain
+available, so the exclusion rationale is still auditable and the raw NWB files
+can be re-downloaded from Allen if a future target redesign needs them.
 
 ## Strict target evidence
 

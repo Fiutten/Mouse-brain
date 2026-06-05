@@ -1,7 +1,7 @@
 PYTHON := .venv/bin/python
 PIP := .venv/bin/pip
 
-.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-export-candidate allen-export-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
+.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
 
 help:
 	@echo "Targets:"
@@ -15,6 +15,7 @@ help:
 	@echo "  make allen-smoke-s3 Run Allen direct-S3 metadata smoke test"
 	@echo "  make allen-select Select candidate Allen sessions from metadata"
 	@echo "  make allen-target-aware-select Rank pending Allen sessions using target evidence"
+	@echo "  make allen-prune-cache-plan Plan raw NWB pruning for non-usable sessions"
 	@echo "  make allen-export-candidate Export selected Allen session (requires .venv-allen)"
 	@echo "  make allen-export-batch-plan Plan resumable Allen batch export"
 	@echo "  make allen-export-batch Export next pending Allen session"
@@ -75,6 +76,9 @@ allen-select:
 
 allen-target-aware-select:
 	$(PYTHON) scripts/select_allen_target_aware_sessions.py
+
+allen-prune-cache-plan:
+	$(PYTHON) scripts/prune_allen_nwb_cache.py
 
 allen-export-candidate:
 	$(PYTHON) scripts/allen_export_session.py --ecephys-session-id 1087992708 --behavior-session-id 1088053452 --animal-id 556014 --out artifacts/datasets/allen/1087992708
