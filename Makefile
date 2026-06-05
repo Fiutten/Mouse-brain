@@ -1,7 +1,7 @@
 PYTHON := .venv/bin/python
 PIP := .venv/bin/pip
 
-.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-export-candidate allen-export-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-advanced-evidence allen-stabilize verify clean
+.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-export-candidate allen-export-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
 
 help:
 	@echo "Targets:"
@@ -39,6 +39,7 @@ help:
 	@echo "  make allen-session-generator-v2 Generate calibrated synthetic session artifact"
 	@echo "  make allen-advanced-scientific-agent Run advanced deterministic audit"
 	@echo "  make allen-selected-microcircuit Run selected controlled-edge microcircuit"
+	@echo "  make allen-microcircuit-validation Validate microcircuit against session stability"
 	@echo "  make allen-advanced-evidence Run full advanced evidence pipeline"
 	@echo "  make allen-stabilize Run current Allen evidence stabilization pipeline"
 	@echo "  make verify   Run install, tests and prototype"
@@ -146,7 +147,10 @@ allen-advanced-scientific-agent:
 allen-selected-microcircuit:
 	$(PYTHON) scripts/run_allen_selected_microcircuit.py
 
-allen-advanced-evidence: allen-stabilize allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit test
+allen-microcircuit-validation:
+	$(PYTHON) scripts/run_allen_microcircuit_validation.py
+
+allen-advanced-evidence: allen-stabilize allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation test
 
 allen-stabilize: allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest test
 

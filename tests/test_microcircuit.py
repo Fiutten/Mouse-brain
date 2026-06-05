@@ -1,13 +1,17 @@
 import unittest
 
 from neurotwin_mvp.data import Session, Trial
-from neurotwin_mvp.microcircuit import calibrate_microcircuit_from_sessions, run_selected_microcircuit
+from neurotwin_mvp.microcircuit import (
+    calibrate_microcircuit_from_sessions,
+    run_selected_microcircuit,
+    validate_microcircuit_against_stability,
+)
 
 
 class MicrocircuitTests(unittest.TestCase):
-    def test_calibrates_from_robust_sessions_and_runs_perturbations(self):
-        session = Session(
-            session_id="robust_a",
+    def make_session(self, session_id: str, visual_base: float, basal_base: float) -> Session:
+        return Session(
+            session_id=session_id,
             animal_id="mouse",
             dataset="test",
             region_names=["visual_cortex", "basal_ganglia"],
@@ -19,12 +23,12 @@ class MicrocircuitTests(unittest.TestCase):
                     reward=1,
                     latency_ms=250.0,
                     engagement=0.7,
-                    region_rates={"visual_cortex": 1.0, "basal_ganglia": 0.5},
+                    region_rates={"visual_cortex": visual_base, "basal_ganglia": basal_base},
                     metadata={
                         "region_rates_by_window": {
                             "pre_response": {
-                                "visual_cortex": 1.0 + i * 0.01,
-                                "basal_ganglia": 0.5 + i * 0.01,
+                                "visual_cortex": visual_base + i * 0.001,
+                                "basal_ganglia": basal_base + i * 0.001,
                             }
                         }
                     },
@@ -32,6 +36,9 @@ class MicrocircuitTests(unittest.TestCase):
                 for i in range(20)
             ],
         )
+
+    def test_calibrates_from_robust_sessions_and_runs_perturbations(self):
+        session = self.make_session("robust_a", visual_base=1.0, basal_base=0.5)
         calibration = calibrate_microcircuit_from_sessions(
             [session],
             robust_session_ids=["robust_a"],
@@ -53,6 +60,37 @@ class MicrocircuitTests(unittest.TestCase):
                 basal_ganglia_drop=0.03,
                 temporal_gain=0.14,
             )
+
+    def test_validates_microcircuit_against_stability_labels(self):
+        robust = self.make_session("robust_a", visual_base=1.0, basal_base=0.5)
+        mixed = self.make_session("mixed_a", visual_base=0.95, basal_base=0.45)
+        fragile = self.make_session("fragile_a", visual_base=0.85, basal_base=0.35)
+        calibration = calibrate_microcircuit_from_sessions(
+            [robust],
+            robust_session_ids=["robust_a"],
+            visual_cortex_drop=0.08,
+            basal_ganglia_drop=0.04,
+            temporal_gain=0.14,
+        )
+        report = validate_microcircuit_against_stability(
+            calibration,
+            [fragile, mixed, robust],
+            stability_rows=[
+                {"session_id": "robust_a", "status": "robust", "stability_score": 1.0},
+                {"session_id": "mixed_a", "status": "mixed", "stability_score": 0.5},
+                {"session_id": "fragile_a", "status": "fragile", "stability_score": 0.0},
+            ],
+        )
+        self.assertEqual(len(report.sessions), 3)
+        self.assertGreater(report.robust_minus_fragile_probability, 0.0)
+        self.assertIn(
+            report.decision,
+            {
+                "supports_stability_gradient",
+                "weak_partial_robust_fragile_alignment",
+                "partial_robust_fragile_alignment",
+            },
+        )
 
 
 if __name__ == "__main__":

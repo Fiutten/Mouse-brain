@@ -89,6 +89,12 @@
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_selected_microcircuit.json",
       "sha256": "64ed2ad5390fcabbce8a12b80c096e0bfd00c080124babdd90bc7e068228484d"
+    },
+    {
+      "bytes": 4831,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_microcircuit_validation.json",
+      "sha256": "e3ec1253f626f84eb780e735e82a4c146b2f99cd7b19ac7c9598ddaaea7909d2"
     }
   ],
   "commands": [
@@ -103,7 +109,7 @@
     "make allen-advanced-evidence",
     "make test"
   ],
-  "created_at_utc": "2026-06-05T13:54:07.560033+00:00",
+  "created_at_utc": "2026-06-05T14:12:02.835246+00:00",
   "dataset_inventory": {
     "normalized_allen_sessions": 15,
     "session_ids": [

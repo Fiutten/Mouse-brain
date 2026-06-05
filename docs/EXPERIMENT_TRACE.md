@@ -557,6 +557,46 @@ inhibition slightly increases the action probability when suppressed, which is
 directionally coherent. This is a mechanistic scaffold for hypothesis
 prioritization, not causal biological evidence.
 
+## Microcircuit external validation
+
+Command:
+
+```bash
+make allen-microcircuit-validation
+```
+
+Artifacts:
+
+```text
+artifacts/reports/allen_targets/go_response_microcircuit_validation.json
+artifacts/reports/allen_targets/go_response_microcircuit_validation.csv
+artifacts/reports/allen_targets/go_response_microcircuit_validation.md
+```
+
+Result over the 10 strict usable `go_response` sessions:
+
+| metric | value |
+| --- | ---: |
+| decision | `weak_partial_robust_fragile_alignment` |
+| probability/stability correlation | 0.641 |
+| robust minus fragile probability | 0.009 |
+| robust minus mixed probability | 0.006 |
+
+Group means:
+
+| status | mean action probability | mean stability score |
+| --- | ---: | ---: |
+| fragile | 0.573 | 0.133 |
+| mixed | 0.577 | 0.467 |
+| robust | 0.583 | 0.950 |
+
+Interpretation: the fixed robust-calibrated microcircuit tracks the stability
+ordering in the expected direction and shows a moderate positive correlation
+with the stability score. However, the absolute separation in predicted action
+probability is small. This supports using the microcircuit as a hypothesis
+prioritizer, but it is not strong enough to claim a validated mechanistic model
+or a publishable biological mechanism.
+
 ## Verification
 
 Command:
@@ -568,7 +608,7 @@ Command:
 Current result:
 
 ```text
-80 tests OK
+83 tests OK
 ```
 
 ## Current scientific decision
@@ -581,9 +621,10 @@ baselines, passes current negative window controls, and motivates graph-guided
 regional hypotheses centered on visual cortex. The advanced stability matrix
 identifies four robust sessions, but latency/session heterogeneity and the weak
 PCA latent baseline prevent a strong representation-learning claim. The first
-selected microcircuit provides a focused mechanistic scaffold, but its
-perturbation effects are still modest and must be validated against stronger
-controls or perturbation evidence.
+selected microcircuit provides a focused mechanistic scaffold. Its external
+validation is directionally aligned with session stability, but the probability
+separation is weak; it must therefore be treated as a hypothesis generator that
+requires stronger controls, larger cohorts or perturbation evidence.
 
 Next required controls:
 
