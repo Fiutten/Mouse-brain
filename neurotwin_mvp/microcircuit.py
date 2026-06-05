@@ -112,6 +112,7 @@ class MicrocircuitValidationReport:
     probability_stability_correlation: float | None
     decision: str
     warnings: list[str]
+    robustness: dict[str, object]
 
     def to_dict(self) -> dict:
         """Return a JSON-serializable representation."""
@@ -125,6 +126,7 @@ class MicrocircuitValidationReport:
             "probability_stability_correlation": self.probability_stability_correlation,
             "decision": self.decision,
             "warnings": list(self.warnings),
+            "robustness": dict(self.robustness),
         }
 
 
@@ -185,6 +187,9 @@ def validate_microcircuit_against_stability(
     sessions: list[Session],
     *,
     stability_rows: list[dict[str, object]],
+    n_bootstrap: int = 0,
+    n_null: int = 0,
+    seed: int = 202,
 ) -> MicrocircuitValidationReport:
     """Project real sessions through the calibrated circuit and compare labels.
 
@@ -238,6 +243,20 @@ def validate_microcircuit_against_stability(
     if correlation is not None and correlation < 0.25:
         warnings.append("Microcircuit probability weakly tracks stability score")
 
+    robustness = _robustness_analysis(
+        validations,
+        observed_robust_minus_fragile=robust_minus_fragile,
+        observed_correlation=correlation,
+        n_bootstrap=n_bootstrap,
+        n_null=n_null,
+        seed=seed,
+    )
+    if robustness.get("bootstrap", {}).get("robust_minus_fragile_ci95_crosses_zero"):
+        warnings.append("Bootstrap robust-vs-fragile interval crosses zero")
+    if robustness.get("null", {}).get("correlation_p_value") is not None:
+        if float(robustness["null"]["correlation_p_value"]) >= 0.05:
+            warnings.append("Correlation does not beat label-permutation null at alpha=0.05")
+
     decision = _validation_decision(group_probability, robust_minus_fragile, correlation)
     return MicrocircuitValidationReport(
         calibration=calibration,
@@ -249,6 +268,7 @@ def validate_microcircuit_against_stability(
         probability_stability_correlation=correlation,
         decision=decision,
         warnings=warnings,
+        robustness=robustness,
     )
 
 
@@ -496,3 +516,139 @@ def _validation_decision(
     if robust_minus_fragile is not None and robust_minus_fragile > 0.0:
         return "partial_robust_fragile_alignment"
     return "no_external_stability_alignment"
+
+
+def _robustness_analysis(
+    validations: list[MicrocircuitSessionValidation],
+    *,
+    observed_robust_minus_fragile: float | None,
+    observed_correlation: float | None,
+    n_bootstrap: int,
+    n_null: int,
+    seed: int,
+) -> dict[str, object]:
+    """Estimate uncertainty and label-permutation null behavior.
+
+    Resampling is done at the session level. Trial-level resampling would make
+    the intervals look artificially tight because trials within one Allen
+    session are not independent biological replications.
+    """
+    if n_bootstrap < 0 or n_null < 0:
+        raise ValueError("n_bootstrap and n_null must be non-negative")
+    rng = random.Random(seed)
+    payload: dict[str, object] = {
+        "n_bootstrap": n_bootstrap,
+        "n_null": n_null,
+        "seed": seed,
+    }
+    if n_bootstrap:
+        bootstrap_rmf = []
+        bootstrap_corr = []
+        for _ in range(n_bootstrap):
+            sampled = [rng.choice(validations) for _ in validations]
+            robust_minus_fragile = _robust_minus_fragile_from_items(sampled)
+            correlation = _correlation_from_items(sampled)
+            if robust_minus_fragile is not None:
+                bootstrap_rmf.append(robust_minus_fragile)
+            if correlation is not None:
+                bootstrap_corr.append(correlation)
+        rmf_ci = _summary_interval(bootstrap_rmf)
+        corr_ci = _summary_interval(bootstrap_corr)
+        payload["bootstrap"] = {
+            "robust_minus_fragile": rmf_ci,
+            "correlation": corr_ci,
+            "robust_minus_fragile_ci95_crosses_zero": _interval_crosses_zero(rmf_ci),
+            "correlation_ci95_crosses_zero": _interval_crosses_zero(corr_ci),
+        }
+    if n_null:
+        null_rmf = []
+        null_corr = []
+        labels = [(item.status, item.stability_score) for item in validations]
+        for _ in range(n_null):
+            shuffled = labels[:]
+            rng.shuffle(shuffled)
+            permuted = [
+                MicrocircuitSessionValidation(
+                    session_id=item.session_id,
+                    status=status,
+                    stability_score=stability_score,
+                    n_trials=item.n_trials,
+                    mean_visual_excitation=item.mean_visual_excitation,
+                    mean_visual_inhibition=item.mean_visual_inhibition,
+                    mean_basal_gate=item.mean_basal_gate,
+                    mean_action_logit=item.mean_action_logit,
+                    mean_action_probability=item.mean_action_probability,
+                )
+                for item, (status, stability_score) in zip(validations, shuffled)
+            ]
+            robust_minus_fragile = _robust_minus_fragile_from_items(permuted)
+            correlation = _correlation_from_items(permuted)
+            if robust_minus_fragile is not None:
+                null_rmf.append(robust_minus_fragile)
+            if correlation is not None:
+                null_corr.append(correlation)
+        payload["null"] = {
+            "robust_minus_fragile": _summary_interval(null_rmf),
+            "correlation": _summary_interval(null_corr),
+            "robust_minus_fragile_p_value": _one_sided_p_value(null_rmf, observed_robust_minus_fragile),
+            "correlation_p_value": _one_sided_p_value(null_corr, observed_correlation),
+        }
+    return payload
+
+
+def _robust_minus_fragile_from_items(items: list[MicrocircuitSessionValidation]) -> float | None:
+    group_probability = _group_mean(
+        items,
+        key=lambda item: item.status,
+        value=lambda item: item.mean_action_probability,
+    )
+    return _difference(group_probability, "robust", "fragile")
+
+
+def _correlation_from_items(items: list[MicrocircuitSessionValidation]) -> float | None:
+    return _pearson(
+        [item.mean_action_probability for item in items],
+        [item.stability_score for item in items],
+    )
+
+
+def _summary_interval(values: list[float]) -> dict[str, float | int | None]:
+    if not values:
+        return {"n": 0, "mean": None, "ci95_low": None, "median": None, "ci95_high": None}
+    ordered = sorted(values)
+    return {
+        "n": len(ordered),
+        "mean": sum(ordered) / len(ordered),
+        "ci95_low": _quantile(ordered, 0.025),
+        "median": _quantile(ordered, 0.500),
+        "ci95_high": _quantile(ordered, 0.975),
+    }
+
+
+def _quantile(sorted_values: list[float], q: float) -> float:
+    if not sorted_values:
+        raise ValueError("Cannot compute quantile of empty values")
+    if len(sorted_values) == 1:
+        return sorted_values[0]
+    position = q * (len(sorted_values) - 1)
+    lower = math.floor(position)
+    upper = math.ceil(position)
+    if lower == upper:
+        return sorted_values[lower]
+    weight = position - lower
+    return sorted_values[lower] * (1.0 - weight) + sorted_values[upper] * weight
+
+
+def _interval_crosses_zero(summary: dict[str, float | int | None]) -> bool:
+    low = summary.get("ci95_low")
+    high = summary.get("ci95_high")
+    if low is None or high is None:
+        return False
+    return float(low) <= 0.0 <= float(high)
+
+
+def _one_sided_p_value(null_values: list[float], observed: float | None) -> float | None:
+    if observed is None or not null_values:
+        return None
+    more_extreme = sum(1 for value in null_values if value >= observed)
+    return (more_extreme + 1) / (len(null_values) + 1)

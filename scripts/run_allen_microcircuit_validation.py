@@ -92,11 +92,43 @@ def write_markdown(path: Path, payload: dict[str, Any]) -> None:
         if payload["robust_minus_mixed_probability"] is not None
         else "- Robust minus mixed probability: not available",
         "",
+        "## Robustness",
+        "",
+    ]
+    bootstrap = payload["robustness"].get("bootstrap", {})
+    null = payload["robustness"].get("null", {})
+    if bootstrap:
+        lines.extend(
+            [
+                "| metric | mean | ci95 low | median | ci95 high |",
+                "| --- | ---: | ---: | ---: | ---: |",
+                _summary_row("bootstrap robust-fragile", bootstrap["robust_minus_fragile"]),
+                _summary_row("bootstrap correlation", bootstrap["correlation"]),
+                "",
+            ]
+        )
+    if null:
+        lines.extend(
+            [
+                "| null metric | mean | ci95 low | median | ci95 high | p-value |",
+                "| --- | ---: | ---: | ---: | ---: | ---: |",
+                _null_row(
+                    "null robust-fragile",
+                    null["robust_minus_fragile"],
+                    null["robust_minus_fragile_p_value"],
+                ),
+                _null_row("null correlation", null["correlation"], null["correlation_p_value"]),
+                "",
+            ]
+        )
+    lines.extend(
+        [
         "## Group means",
         "",
         "| status | mean action probability | mean stability score |",
         "| --- | ---: | ---: |",
-    ]
+        ]
+    )
     groups = sorted(payload["group_mean_action_probability"])
     for status in groups:
         lines.append(
@@ -122,6 +154,33 @@ def write_markdown(path: Path, payload: dict[str, Any]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def _summary_row(label: str, summary: dict[str, Any]) -> str:
+    """Format one bootstrap summary row."""
+    return "| {label} | {mean:.3f} | {ci95_low:.3f} | {median:.3f} | {ci95_high:.3f} |".format(
+        label=label,
+        mean=summary["mean"],
+        ci95_low=summary["ci95_low"],
+        median=summary["median"],
+        ci95_high=summary["ci95_high"],
+    )
+
+
+def _null_row(label: str, summary: dict[str, Any], p_value: float | None) -> str:
+    """Format one permutation-null summary row."""
+    p_value_text = "NA" if p_value is None else f"{p_value:.3f}"
+    return (
+        "| {label} | {mean:.3f} | {ci95_low:.3f} | {median:.3f} | "
+        "{ci95_high:.3f} | {p_value} |"
+    ).format(
+        label=label,
+        mean=summary["mean"],
+        ci95_low=summary["ci95_low"],
+        median=summary["median"],
+        ci95_high=summary["ci95_high"],
+        p_value=p_value_text,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--datasets-root", type=Path, default=ROOT / "artifacts" / "datasets" / "allen")
@@ -129,6 +188,8 @@ def main() -> None:
     parser.add_argument("--regional-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_regional_ablation_all_sessions.csv")
     parser.add_argument("--uncertainty-json", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_uncertainty.json")
     parser.add_argument("--seed", type=int, default=101)
+    parser.add_argument("--n-bootstrap", type=int, default=1000)
+    parser.add_argument("--n-null", type=int, default=1000)
     parser.add_argument("--out-json", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_microcircuit_validation.json")
     parser.add_argument("--out-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_microcircuit_validation.csv")
     parser.add_argument("--out-md", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_microcircuit_validation.md")
@@ -151,6 +212,9 @@ def main() -> None:
         calibration,
         sessions,
         stability_rows=stability_rows,
+        n_bootstrap=args.n_bootstrap,
+        n_null=args.n_null,
+        seed=args.seed,
     )
     payload = report.to_dict()
     args.out_json.parent.mkdir(parents=True, exist_ok=True)

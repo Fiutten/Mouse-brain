@@ -80,9 +80,15 @@ class MicrocircuitTests(unittest.TestCase):
                 {"session_id": "mixed_a", "status": "mixed", "stability_score": 0.5},
                 {"session_id": "fragile_a", "status": "fragile", "stability_score": 0.0},
             ],
+            n_bootstrap=20,
+            n_null=20,
+            seed=7,
         )
         self.assertEqual(len(report.sessions), 3)
         self.assertGreater(report.robust_minus_fragile_probability, 0.0)
+        self.assertIn("bootstrap", report.robustness)
+        self.assertIn("null", report.robustness)
+        self.assertIsNotNone(report.robustness["null"]["correlation_p_value"])
         self.assertIn(
             report.decision,
             {

@@ -582,6 +582,14 @@ Result over the 10 strict usable `go_response` sessions:
 | robust minus fragile probability | 0.009 |
 | robust minus mixed probability | 0.006 |
 
+Robustness controls with 1000 bootstrap resamples and 1000 label-permutation
+nulls:
+
+| metric | estimate | ci95 low | ci95 high | null p-value |
+| --- | ---: | ---: | ---: | ---: |
+| robust minus fragile probability | 0.010 | 0.002 | 0.016 | 0.014 |
+| probability/stability correlation | 0.644 | 0.193 | 0.937 | 0.021 |
+
 Group means:
 
 | status | mean action probability | mean stability score |
@@ -592,10 +600,12 @@ Group means:
 
 Interpretation: the fixed robust-calibrated microcircuit tracks the stability
 ordering in the expected direction and shows a moderate positive correlation
-with the stability score. However, the absolute separation in predicted action
-probability is small. This supports using the microcircuit as a hypothesis
-prioritizer, but it is not strong enough to claim a validated mechanistic model
-or a publishable biological mechanism.
+with the stability score. Bootstrap intervals do not cross zero and
+label-permutation controls are positive at alpha 0.05. However, the absolute
+separation in predicted action probability remains small. This supports using
+the microcircuit as a statistically non-trivial hypothesis prioritizer, but it
+is still not strong enough to claim a validated mechanistic model or a
+publishable biological mechanism.
 
 ## Verification
 
@@ -622,9 +632,11 @@ regional hypotheses centered on visual cortex. The advanced stability matrix
 identifies four robust sessions, but latency/session heterogeneity and the weak
 PCA latent baseline prevent a strong representation-learning claim. The first
 selected microcircuit provides a focused mechanistic scaffold. Its external
-validation is directionally aligned with session stability, but the probability
-separation is weak; it must therefore be treated as a hypothesis generator that
-requires stronger controls, larger cohorts or perturbation evidence.
+validation is directionally aligned with session stability and passes current
+bootstrap/permutation robustness checks, but the probability separation is weak;
+it must therefore be treated as a statistically supported hypothesis generator
+that requires larger cohorts, second-dataset replication or perturbation
+evidence before any mechanistic claim.
 
 Next required controls:
 
