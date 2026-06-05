@@ -1,0 +1,96 @@
+{
+  "artifacts": [
+    {
+      "bytes": 14111,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_temporal_windows.json",
+      "sha256": "dce109470b7ecdcd2b4ed7457076fa0915ea607fc8b77d8da24988addde2cd24"
+    },
+    {
+      "bytes": 7843,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_permutation_500.json",
+      "sha256": "1ed6287f75cd28269130ea9c5c27f93b8d3d7e47ccb24d5cde4ee05ed385c3d7"
+    },
+    {
+      "bytes": 3244,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_regional_ablation.csv",
+      "sha256": "d8d1dfe4e9f57033f4f931035910561021e645c306b674fa0cdddfd1eeb607b5"
+    },
+    {
+      "bytes": 6095,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_regional_ablation_all_sessions.csv",
+      "sha256": "a80995d561cdfaefcc6141462c5a83c36c443d1fa37735bb184d5ea5643e82d3"
+    },
+    {
+      "bytes": 5850,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_uncertainty.json",
+      "sha256": "0657b48c4c7c9c4c973ebe5f1c0577a58ec07e9f2519ea2a25b69db4b7b5280d"
+    },
+    {
+      "bytes": 8305,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_controls.json",
+      "sha256": "6f1303ea741e0491c85cf128413204238088b86b9f29866a5db2d3e774378d03"
+    },
+    {
+      "bytes": 2339,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_functional_graph.json",
+      "sha256": "c97c933ebaf0ef22b2646007980d55bf4571332583127cd015774f5acc777ece"
+    },
+    {
+      "bytes": 4414,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_generative_surrogate.json",
+      "sha256": "48fe57e7c21515947b64aef567ab9d6e663f59912056e14d709218464fc6e80d"
+    },
+    {
+      "bytes": 393,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_scientific_agent.json",
+      "sha256": "0abe3db70dceab2f82b77be2d18cd9ae3e68665eca183fe80ef21783f8f96b6f"
+    }
+  ],
+  "commands": [
+    "make allen-temporal-windows",
+    "make allen-temporal-permutation-confirm",
+    "make allen-temporal-regional-ablation",
+    "make allen-uncertainty",
+    "make allen-response-controls",
+    "make allen-functional-graph",
+    "make allen-generative-surrogate",
+    "make allen-scientific-agent",
+    "make test"
+  ],
+  "created_at_utc": "2026-06-05T12:05:51.933042+00:00",
+  "dataset_inventory": {
+    "normalized_allen_sessions": 15,
+    "session_ids": [
+      "1053709239",
+      "1064415305",
+      "1065449881",
+      "1087720624",
+      "1087992708",
+      "1090800639",
+      "1090803859",
+      "1091039902",
+      "1092283837",
+      "1093638203",
+      "1093864136",
+      "1096620314",
+      "1098119201",
+      "1111013640",
+      "1119946360"
+    ]
+  },
+  "environment_notes": [
+    "Core analyses run in .venv and consume normalized JSON artifacts.",
+    "AllenSDK/NWB extraction remains isolated in .venv-allen; outputs cross environments through artifacts/datasets/allen."
+  ],
+  "purpose": "Canonical reproducibility manifest for Allen go_response/pre_response evidence layers.",
+  "study_id": "allen_go_response_pre_response"
+}

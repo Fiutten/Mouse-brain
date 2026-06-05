@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neurotwin-mvp"
+version = "0.1.0"
+description = "Modular MVP for a knowledge-guided regional functional digital twin of mouse brain dynamics."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "DSLab" }
+]
+license = { text = "Proprietary - research prototype" }
+dependencies = []
+
+[project.optional-dependencies]
+allen = [
+  "allensdk==2.16.2; python_version < '3.12'"
+]
+ibl = [
+  "ONE-api; python_version < '3.13'"
+]
+
+[project.scripts]
+neurotwin-run = "neurotwin_mvp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["neurotwin_mvp*"]
+
+[tool.setuptools.package-data]
+neurotwin_mvp = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = []

@@ -1,0 +1,22 @@
+{
+  "allen_visual_behavior_neuropixels": {
+    "status": "adapter_contract",
+    "cache_dir": "data/allen_visual_behavior_neuropixels",
+    "official_access": "AllenSDK VisualBehaviorNeuropixelsProjectCache",
+    "notes": [
+      "Requires optional allensdk dependency.",
+      "Data are NWB files accessed through AllenSDK or S3.",
+      "Normalization into neurotwin_mvp.data.Session is pending."
+    ]
+  },
+  "ibl_brainwide_map": {
+    "status": "adapter_contract",
+    "cache_dir": "data/ibl_brainwide_map",
+    "official_access": "ONE API with OpenAlyx",
+    "notes": [
+      "Requires optional ONE-api dependency.",
+      "Public endpoint: https://openalyx.internationalbrainlab.org.",
+      "Normalization into neurotwin_mvp.data.Session is pending."
+    ]
+  }
+}
