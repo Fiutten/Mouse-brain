@@ -78,6 +78,7 @@ def export_one_session(
     core_python: Path,
     candidate_limit: int,
     screening_permutations: int,
+    min_free_gb: float,
     dry_run: bool,
 ) -> None:
     """Export one pending Allen session and refresh broad Allen reports."""
@@ -91,6 +92,8 @@ def export_one_session(
             str(candidate_limit),
             "--n-permutations",
             str(screening_permutations),
+            "--min-free-gb",
+            str(min_free_gb),
         ],
         dry_run=dry_run,
     )
@@ -162,6 +165,7 @@ def main() -> None:
     parser.add_argument("--candidate-limit", type=int, default=25)
     parser.add_argument("--screening-permutations", type=int, default=50)
     parser.add_argument("--final-permutations", type=int, default=500)
+    parser.add_argument("--min-free-gb", type=float, default=120.0)
     parser.add_argument("--core-python", type=Path, default=ROOT / ".venv" / "bin" / "python")
     parser.add_argument("--diagnostics-path", type=Path, default=ROOT / "artifacts" / "reports" / "allen" / "target_diagnostics.json")
     parser.add_argument(
@@ -203,6 +207,7 @@ def main() -> None:
             core_python=args.core_python,
             candidate_limit=args.candidate_limit,
             screening_permutations=args.screening_permutations,
+            min_free_gb=args.min_free_gb,
             dry_run=args.dry_run,
         )
         exported_attempts += 1
@@ -242,6 +247,7 @@ def main() -> None:
         "candidate_limit": args.candidate_limit,
         "screening_permutations": args.screening_permutations,
         "final_permutations": args.final_permutations,
+        "min_free_gb": args.min_free_gb,
         "reached_target": reached_target,
         "history": history,
     }

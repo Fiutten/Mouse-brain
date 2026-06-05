@@ -8,10 +8,13 @@ separate.
 ## Current dataset state
 
 - Dataset: Allen Visual Behavior Neuropixels.
-- Normalized sessions: 15.
+- Normalized sessions: 39.
 - Strict primary target: `go_response`.
-- Strict usable `go_response` sessions: 10/15.
-- Non-usable `go_response` sessions: 5/15, all due to class imbalance.
+- Strict usable `go_response` sessions: 24/39.
+- Non-usable `go_response` sessions: 15/39, all due to class imbalance.
+- Latest broad evidence decision: `inconclusive_mixed_evidence`.
+- Raw Allen cache size at latest checkpoint: 119 GB.
+- Free disk at latest checkpoint: 635 GiB.
 
 ## Target viability
 
@@ -31,15 +34,84 @@ Current target status:
 
 | target | usable sessions | labeled trials | status |
 | --- | ---: | ---: | --- |
-| `go_response` | 10/15 | 3507 | primary signal target |
-| `response_made` | 12/15 | 4005 | broader control, weaker evidence |
-| `task_success` | 10/15 | 4005 | correctness control, outcome-confounded |
-| `choice` | 12/15 | 4005 | continuity baseline |
-| `rewarded` | 12/15 | 4005 | outcome-derived control |
-| `catch_response` | 0/15 | 498 | underpowered |
+| `go_response` | 24/39 | 9422 | primary signal target |
+| `response_made` | 33/39 | 10773 | broader control |
+| `task_success` | 25/39 | 10773 | correctness control, outcome-confounded |
+| `choice` | 33/39 | 10773 | continuity baseline |
+| `rewarded` | 34/39 | 10773 | outcome-derived control |
+| `catch_response` | 0/39 | 1351 | underpowered/imbalanced |
 
 Interpretation: target viability, not download failure, explains why some
 sessions are excluded from the strict `go_response` cohort.
+
+## 50-usable-session expansion checkpoint
+
+Command:
+
+```bash
+.venv/bin/python scripts/export_until_target_evidence.py \
+  --target-name go_response \
+  --target-usable-sessions 50 \
+  --max-new-sessions 63 \
+  --candidate-limit 80 \
+  --screening-permutations 20 \
+  --final-permutations 200 \
+  --min-free-gb 120
+```
+
+Supporting verification:
+
+```bash
+.venv/bin/python scripts/analyze_allen_session_relations.py --target-name go_response
+.venv/bin/python -m unittest discover -s tests
+df -h .
+du -sh data/allen artifacts/datasets/allen artifacts/reports
+```
+
+Artifacts:
+
+```text
+artifacts/reports/allen/target_diagnostics.json
+artifacts/reports/allen/evidence_report.json
+artifacts/reports/allen/export_batch_status.json
+artifacts/reports/allen_targets/go_response_session_relations.json
+artifacts/reports/allen_targets/go_response_session_relations.csv
+artifacts/reports/allen_targets/go_response_session_relations.md
+```
+
+Result:
+
+| metric | value |
+| --- | ---: |
+| normalized sessions | 39 |
+| usable `go_response` sessions | 24 |
+| non-usable `go_response` sessions | 15 |
+| `go_response` labeled trials | 9422 |
+| permutation-significant sessions in strict relation report | 3 |
+| broad mean multi-split gain | 0.022 |
+| broad mean permutation gain | 0.030 |
+| broad evidence decision | `inconclusive_mixed_evidence` |
+| raw Allen cache | 119 GB |
+| normalized Allen artifacts | 23 MB |
+| free disk | 635 GiB |
+| unit tests | 83/83 OK |
+
+The run was stopped at a safe checkpoint after a new pending session,
+`1048196054`, had started downloading. That partial NWB is resumable because
+the downloader uses `curl -C -`; the partial size recorded by the batch status
+was 399892480 bytes.
+
+Interpretation: the expansion did not fail technically. The limiting factor is
+target viability: all 15 non-usable `go_response` sessions are rejected because
+the minority class falls below 0.20. Several sessions are valid Allen sessions
+and usable for broader controls such as `choice`, `response_made` or `rewarded`,
+but not defensible for a balanced hit-versus-miss `go_response` analysis.
+
+Scientific consequence: reaching 50 usable `go_response` sessions likely
+requires downloading substantially more than 50 NWB files. The next expansion
+should be metadata- and behavior-aware, prioritizing candidates likely to have
+balanced go hit/miss labels instead of blindly following the broad metadata
+ranking.
 
 ## Strict target evidence
 
@@ -98,6 +170,19 @@ Result:
 - 3/10 usable sessions are permutation-significant.
 
 Interpretation: failed sessions are target failures, not benchmark failures.
+
+Latest relation checkpoint:
+
+- 39 sessions analyzed.
+- 24 usable `go_response` sessions.
+- 15 non-usable `go_response` sessions.
+- 15/15 non-usable sessions fail due to `go_response` class imbalance below
+  minority fraction 0.20.
+- 3 sessions in the strict evidence cohort are permutation-significant.
+
+Interpretation: the same failure mode persists at larger scale. This strengthens
+the argument that we need target-aware candidate selection and stratification,
+not just more downloads.
 
 ## Target redesign screen
 

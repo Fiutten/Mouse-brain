@@ -111,6 +111,13 @@ artifacts/study_manifests/allen_go_response_pre_response.json
 Current normalized Allen sessions:
 
 ```text
+Current checkpoint: 39 normalized sessions as of 2026-06-05.
+The complete machine-readable list is in
+artifacts/reports/allen/target_diagnostics.json and the human-readable
+usable/non-usable explanation is in
+artifacts/reports/allen_targets/go_response_session_relations.md.
+
+Initial 15-session checkpoint:
 1053709239
 1064415305
 1065449881
@@ -200,6 +207,15 @@ integrated.
 Keep `docs/EXPERIMENT_TRACE.md` updated after every meaningful real-data test.
 It is the project-level audit trail for commands, artifacts, results and
 scientific interpretation.
+
+For large Allen expansion runs, always record:
+
+- target threshold and candidate limit;
+- `--min-free-gb` value;
+- raw `data/allen` disk usage;
+- normalized artifact disk usage;
+- free disk after checkpoint;
+- partial NWB session id and byte count if the run is paused.
 
 Do not interpret raw accuracy on imbalanced real-data behavioral labels without
 balanced accuracy or an equivalent imbalance-aware metric.

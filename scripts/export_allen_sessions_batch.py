@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import subprocess
 import sys
 import time
@@ -89,6 +90,7 @@ def download_nwb(
     speed_time: int,
     speed_limit: int,
     max_time: int,
+    min_free_gb: float,
 ) -> Path:
     """Download or resume one NWB file with conservative network controls.
 
@@ -99,6 +101,7 @@ def download_nwb(
     """
     nwb_path = local_nwb_path(cache_dir, ecephys_session_id)
     nwb_path.parent.mkdir(parents=True, exist_ok=True)
+    ensure_free_space(cache_dir, min_free_gb=min_free_gb)
     command = _curl_download_command(
         curl_bin=curl_bin,
         nwb_path=nwb_path,
@@ -133,6 +136,19 @@ def download_nwb(
     if last_error is not None:
         raise last_error
     return nwb_path
+
+
+def ensure_free_space(path: Path, *, min_free_gb: float) -> None:
+    """Abort before large downloads if the target volume is too full."""
+    if min_free_gb <= 0:
+        return
+    path.mkdir(parents=True, exist_ok=True)
+    free_gb = shutil.disk_usage(path).free / (1024**3)
+    if free_gb < min_free_gb:
+        raise RuntimeError(
+            f"Only {free_gb:.1f} GiB free at {path}; refusing to download below "
+            f"the safety threshold of {min_free_gb:.1f} GiB."
+        )
 
 
 def _curl_download_command(
@@ -289,6 +305,12 @@ def main() -> None:
     parser.add_argument("--speed-time", type=int, default=90)
     parser.add_argument("--speed-limit", type=int, default=2048)
     parser.add_argument("--max-time", type=int, default=1800)
+    parser.add_argument(
+        "--min-free-gb",
+        type=float,
+        default=120.0,
+        help="Abort before each NWB download if cache volume has less free space.",
+    )
     parser.add_argument("--continue-on-error", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
@@ -323,6 +345,7 @@ def main() -> None:
                 speed_time=args.speed_time,
                 speed_limit=args.speed_limit,
                 max_time=args.max_time,
+                min_free_gb=args.min_free_gb,
             )
             export_session(
                 allen_python=args.allen_python,
@@ -360,6 +383,7 @@ def main() -> None:
         "dry_run": args.dry_run,
         "candidate_limit": args.candidate_limit,
         "max_new": args.max_new,
+        "min_free_gb": args.min_free_gb,
         "already_exported": [asdict(candidate) for candidate in exported],
         "attempted": attempted,
         "remaining_pending": [asdict(candidate) for candidate in pending[args.max_new :]],

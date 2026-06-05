@@ -5,7 +5,58 @@
 Increase the number of normalized Allen Visual Behavior Neuropixels sessions so
 multi-session validation becomes scientifically meaningful.
 
-## Current normalized sessions
+## Current checkpoint
+
+Checkpoint date: 2026-06-05.
+
+The latest controlled expansion attempted to move toward 50 usable
+`go_response` sessions, but it was stopped at a safe reproducible checkpoint
+after the empirical usable-session rate made clear that "50 downloads" and
+"50 usable target sessions" are not equivalent.
+
+| metric | value |
+| --- | ---: |
+| normalized/exported sessions | 39 |
+| usable `go_response` sessions | 24 |
+| non-usable `go_response` sessions | 15 |
+| total labeled trials | 10773 |
+| labeled `go_response` trials | 9422 |
+| raw Allen cache size | 119 GB |
+| normalized Allen artifacts size | 23 MB |
+| free disk after checkpoint | 635 GiB |
+| partially downloaded next session | `1048196054` |
+| partial bytes for next session | 399892480 |
+
+The next-session partial download is intentional and recoverable: the batch
+exporter uses `curl -C -`, so a later run resumes instead of restarting the NWB
+transfer.
+
+Latest broad evidence status over all 39 normalized sessions:
+
+| statistic | value |
+| --- | ---: |
+| total valid trials | 10773 |
+| mean multi-split neural gain | 0.022 |
+| mean permutation observed gain | 0.030 |
+| positive multi-split fraction | 0.564 |
+| significant permutation fraction | 0.462 |
+| formal decision | `inconclusive_mixed_evidence` |
+
+This remains exploratory. It is useful evidence for system behavior and target
+selection, but it is not a publication-grade positive claim.
+
+Latest behavioral-target diagnostics:
+
+| target | usable sessions | labeled trials | interpretation |
+| --- | ---: | ---: | --- |
+| `choice` | 33/39 | 10773 | high-coverage continuity baseline |
+| `go_response` | 24/39 | 9422 | strict primary task-native target candidate |
+| `catch_response` | 0/39 | 1351 | systematically underpowered/imbalanced |
+| `rewarded` | 34/39 | 10773 | useful but outcome-derived control |
+| `response_made` | 33/39 | 10773 | broad action/no-action control |
+| `task_success` | 25/39 | 10773 | correctness target; outcome-confounded |
+
+## Initial 15-session checkpoint
 
 | ecephys session | status |
 | --- | --- |
@@ -25,9 +76,9 @@ multi-session validation becomes scientifically meaningful.
 | 1111013640 | exported, benchmarked and diagnosed |
 | 1119946360 | exported, benchmarked and diagnosed |
 
-## Current evidence status
+## Initial evidence status
 
-The broad all-valid-trials evidence synthesis uses 15 normalized sessions and
+The initial broad all-valid-trials evidence synthesis used 15 normalized sessions and
 4005 valid behavior trials.
 
 | statistic | value |
@@ -41,7 +92,7 @@ The broad all-valid-trials evidence synthesis uses 15 normalized sessions and
 This is not positive evidence. The broad cohort remains a diagnostic control,
 not the publication target.
 
-## Behavioral-target status
+## Initial behavioral-target status
 
 The behavioral-target diagnostics run over all normalized Allen sessions. This
 is required because the Allen task is not a simple balanced binary-choice
@@ -107,6 +158,25 @@ The latest run used:
 It exported 9 additional sessions after the initial state and reached the target
 at 10 usable `go_response` sessions.
 
+The latest 50-session expansion checkpoint used:
+
+```bash
+.venv/bin/python scripts/export_until_target_evidence.py \
+  --target-name go_response \
+  --target-usable-sessions 50 \
+  --max-new-sessions 63 \
+  --candidate-limit 80 \
+  --screening-permutations 20 \
+  --final-permutations 200 \
+  --min-free-gb 120
+```
+
+It was stopped manually after reaching 39 normalized sessions and 24 usable
+`go_response` sessions. The next pending NWB (`1048196054`) was left partially
+downloaded and resumable. This was a methodological checkpoint, not a data
+failure: the observed `go_response` usable rate implies that reaching 50 usable
+sessions likely requires substantially more than 50 downloads.
+
 ## Batch export automation
 
 `scripts/export_allen_sessions_batch.py` provides a controlled multi-session
@@ -138,8 +208,10 @@ make allen-go-evidence-until-10
 
 ## Scientific status
 
-Multi-session analysis infrastructure now runs on 15 fully normalized sessions,
-with 10 usable sessions for the strict `go_response` target. This is a real
-evidence base for iteration, but the formal result remains
-`inconclusive_mixed_evidence`, so the next step is target/feature redesign and
-stability analysis rather than a positive publication claim.
+Multi-session analysis infrastructure now runs on 39 fully normalized sessions,
+with 24 usable sessions for the strict `go_response` target. This is a stronger
+engineering and scientific base than the initial 15-session checkpoint, but the
+formal result remains `inconclusive_mixed_evidence`. The immediate next step is
+not to claim success; it is to stratify usable/non-usable sessions, refine the
+target strategy, and run heavier evidence only on cohorts with defensible
+behavioral balance.
