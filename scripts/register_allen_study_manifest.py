@@ -49,6 +49,7 @@ CANONICAL_ARTIFACTS = [
     "artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.json",
     "artifacts/reports/allen_targets/go_response_session_generator_v2.json",
     "artifacts/reports/allen_targets/go_response_advanced_scientific_agent.json",
+    "artifacts/reports/allen_targets/go_response_selected_microcircuit.json",
 ]
 
 

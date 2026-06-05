@@ -83,6 +83,12 @@
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_advanced_scientific_agent.json",
       "sha256": "fb30beb0f7c98e6e113e68c81efb2295bae88f56d249817d01b3177092003b87"
+    },
+    {
+      "bytes": 97783,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_selected_microcircuit.json",
+      "sha256": "64ed2ad5390fcabbce8a12b80c096e0bfd00c080124babdd90bc7e068228484d"
     }
   ],
   "commands": [
@@ -97,7 +103,7 @@
     "make allen-advanced-evidence",
     "make test"
   ],
-  "created_at_utc": "2026-06-05T13:46:08.565565+00:00",
+  "created_at_utc": "2026-06-05T13:54:07.560033+00:00",
   "dataset_inventory": {
     "normalized_allen_sessions": 15,
     "session_ids": [

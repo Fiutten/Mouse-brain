@@ -174,7 +174,7 @@ Scientific caveat:
 
 ### Layer 6: selected microcircuits
 
-Status: next focused implementation layer.
+Status: implemented as a first selected microcircuit scaffold.
 
 What it should represent:
 
@@ -189,6 +189,21 @@ Initial scope:
   `1119946360`;
 - keep latent representation claims separate until PCA/stronger latent
   baselines become positive under controls.
+
+Current result:
+
+- selected visual-cortex / basal-ganglia pre-response scaffold calibrated from
+  the four robust sessions;
+- intact mean action probability 0.590;
+- visual-excitation perturbation drop 0.020;
+- basal-gate perturbation drop 0.009;
+- visual-inhibition suppression changes probability by -0.003.
+
+Scientific caveat:
+
+- perturbation effects are directionally useful but modest;
+- this remains a hypothesis-prioritization scaffold, not causal biological
+  perturbation evidence.
 
 ## Note on neuron counts
 

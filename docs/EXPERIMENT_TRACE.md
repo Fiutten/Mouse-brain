@@ -518,6 +518,45 @@ Finding: the latent temporal baseline is not consistently useful
 microcircuit design because the graph/control evidence remains positive. It is
 blocking for any strong claim about latent representations.
 
+## Selected microcircuit layer
+
+Command:
+
+```bash
+make allen-selected-microcircuit
+```
+
+Artifacts:
+
+```text
+artifacts/reports/allen_targets/go_response_selected_microcircuit.json
+artifacts/reports/allen_targets/go_response_selected_microcircuit.md
+```
+
+Calibration:
+
+| quantity | value |
+| --- | ---: |
+| robust sessions | 4 |
+| temporal gain | 0.143 |
+| visual-cortex drop | 0.059 |
+| basal-ganglia drop | 0.037 |
+| intact mean action probability | 0.590 |
+
+Perturbations:
+
+| perturbation | mean action probability | drop from intact |
+| --- | ---: | ---: |
+| visual excitation | 0.569 | 0.020 |
+| visual inhibition | 0.593 | -0.003 |
+| basal gate | 0.581 | 0.009 |
+
+Interpretation: the selected microcircuit reproduces the expected direction for
+visual excitation and basal-ganglia gating, but effects are modest. Visual
+inhibition slightly increases the action probability when suppressed, which is
+directionally coherent. This is a mechanistic scaffold for hypothesis
+prioritization, not causal biological evidence.
+
 ## Verification
 
 Command:
@@ -541,8 +580,10 @@ Current defensible claim: in the strict Allen `go_response` cohort, the
 baselines, passes current negative window controls, and motivates graph-guided
 regional hypotheses centered on visual cortex. The advanced stability matrix
 identifies four robust sessions, but latency/session heterogeneity and the weak
-PCA latent baseline prevent a stronger mechanistic or representation-learning
-claim.
+PCA latent baseline prevent a strong representation-learning claim. The first
+selected microcircuit provides a focused mechanistic scaffold, but its
+perturbation effects are still modest and must be validated against stronger
+controls or perturbation evidence.
 
 Next required controls:
 

@@ -449,6 +449,23 @@ baseline positive-gain fraction is only 0.200. This permits focused
 microcircuit design around controlled graph edges, but blocks strong latent
 representation claims.
 
+## Selected microcircuit scaffold
+
+The first selected microcircuit is calibrated from the four robust sessions and
+uses only the controlled graph edges around `pre_response`, visual cortex and
+basal ganglia.
+
+| perturbation | mean action probability | drop from intact |
+| --- | ---: | ---: |
+| intact | 0.590 |  |
+| visual excitation | 0.569 | 0.020 |
+| visual inhibition | 0.593 | -0.003 |
+| basal gate | 0.581 | 0.009 |
+
+Interpretation: the scaffold has the expected qualitative direction for visual
+excitation and basal gating, but effects are modest. It is useful as a focused
+mechanistic hypothesis generator, not as evidence for causal circuit necessity.
+
 ## Decision
 
 Do not claim causal neural mechanism yet.
@@ -463,5 +480,8 @@ Proceed with:
   system architecture;
 - analyze fragile sessions and latent-negative sessions before adding heavier
   representation-learning models;
+- strengthen the selected microcircuit by fitting parameters to robust-session
+  distributions and testing whether it predicts held-out robust vs fragile
+  session behavior;
 - continue requiring permutation tests, CIs and explicit control gates before
   biological-layer expansion.
