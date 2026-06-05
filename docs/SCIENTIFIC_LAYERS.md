@@ -92,7 +92,8 @@ Current result:
 - strict Allen `go_response` cohort has 10 usable sessions;
 - `pre_response` temporal gain mean is 0.143 with CI95 [0.047, 0.243];
 - negative window controls pass against baseline and stimulus windows;
-- latency strata remain heterogeneous, especially in the fast stratum.
+- latency strata remain heterogeneous, especially in the fast stratum;
+- advanced stability matrix: 4 robust, 3 mixed and 3 fragile sessions.
 
 Scientific caveat:
 
@@ -114,7 +115,8 @@ Current result:
 - `window:pre_response -> target:go_response` weight 0.143;
 - `region:visual_cortex -> window:pre_response` weight 0.059;
 - `region:basal_ganglia -> window:pre_response` weight 0.037;
-- scientific-agent decision: `advance_with_controls`.
+- graph evidence registry marks all three edges as `controlled`;
+- advanced scientific-agent decision: `advance_to_microcircuit_design`.
 
 Scientific caveat:
 
@@ -137,7 +139,9 @@ Current result:
 
 - empirical temporal gain mean 0.143;
 - generated temporal gain mean 0.152 over 10 generated sessions;
-- regional generated means preserve the empirical ordering.
+- regional generated means preserve the empirical ordering;
+- generator v2 produces normalized trial-level sessions with 500 trials,
+  temporal region-window metadata and calibrated latency/target summaries.
 
 Scientific caveat:
 
@@ -145,15 +149,46 @@ Scientific caveat:
   digital twin;
 - empirical reports remain the only source of biological evidence.
 
+### Layer 5b: latent temporal representation baseline
+
+Status: implemented as a negative/diagnostic baseline.
+
+What it represents:
+
+- PCA temporal latents over region-window features;
+- held-out behavior prediction against a compact behavioral baseline;
+- held-out reconstruction error and explained variance.
+
+Current result:
+
+- mean latent gain -0.107;
+- positive latent-gain fraction 0.200;
+- mean explained variance fraction 0.857.
+
+Scientific caveat:
+
+- the current PCA baseline reconstructs variance but does not usually improve
+  behavior prediction;
+- this blocks strong claims about latent representation learning until failure
+  modes are understood.
+
 ### Layer 6: selected microcircuits
 
-Status: pending.
+Status: next focused implementation layer.
 
 What it should represent:
 
 - thalamocortical visual pathway;
 - basal-ganglia action selection;
 - hippocampal/context module if required by task.
+
+Initial scope:
+
+- design only around controlled graph edges;
+- prioritize robust sessions `1091039902`, `1093864136`, `1096620314` and
+  `1119946360`;
+- keep latent representation claims separate until PCA/stronger latent
+  baselines become positive under controls.
 
 ## Note on neuron counts
 

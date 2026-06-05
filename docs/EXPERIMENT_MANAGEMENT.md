@@ -95,6 +95,16 @@ artifacts/reports/allen_targets/go_response_pre_response_generative_surrogate.js
 artifacts/reports/allen_targets/go_response_pre_response_generative_surrogate.md
 artifacts/reports/allen_targets/go_response_scientific_agent.json
 artifacts/reports/allen_targets/go_response_scientific_agent.md
+artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.json
+artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.md
+artifacts/reports/allen_targets/go_response_latent_temporal_baseline.json
+artifacts/reports/allen_targets/go_response_latent_temporal_baseline.md
+artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.json
+artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.md
+artifacts/reports/allen_targets/go_response_session_generator_v2.json
+artifacts/reports/allen_targets/go_response_session_generator_v2.md
+artifacts/reports/allen_targets/go_response_advanced_scientific_agent.json
+artifacts/reports/allen_targets/go_response_advanced_scientific_agent.md
 artifacts/study_manifests/allen_go_response_pre_response.json
 ```
 
@@ -163,6 +173,24 @@ This target rebuilds the current reproducible evidence layer:
 
 The command intentionally consumes normalized artifacts in
 `artifacts/datasets/allen` and does not require AllenSDK/NWB access.
+
+Run the advanced evidence layer:
+
+```bash
+make allen-advanced-evidence
+```
+
+This target adds:
+
+- session x control stability matrix;
+- PCA temporal latent baseline;
+- graph-edge evidence registry;
+- calibrated normalized session generator v2;
+- advanced deterministic audit.
+
+The current advanced audit allows focused microcircuit design but blocks strong
+latent-representation claims because the PCA latent baseline has negative mean
+gain and only 0.200 positive-gain fraction.
 
 ## Required rules
 

@@ -419,6 +419,105 @@ n_findings=0
 The deterministic audit rules find no current blocking issue, provided the
 project keeps the claim at the level of controlled predictive evidence.
 
+## Advanced evidence layer
+
+Command:
+
+```bash
+make allen-advanced-evidence
+```
+
+Artifacts:
+
+```text
+artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.json
+artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.md
+artifacts/reports/allen_targets/go_response_latent_temporal_baseline.json
+artifacts/reports/allen_targets/go_response_latent_temporal_baseline.md
+artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.json
+artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.md
+artifacts/reports/allen_targets/go_response_session_generator_v2.json
+artifacts/reports/allen_targets/go_response_session_generator_v2.md
+artifacts/reports/allen_targets/go_response_advanced_scientific_agent.json
+artifacts/reports/allen_targets/go_response_advanced_scientific_agent.md
+```
+
+Stability matrix:
+
+| metric | value |
+| --- | ---: |
+| sessions | 10 |
+| mean stability score | 0.560 |
+| robust sessions | 4 |
+| mixed sessions | 3 |
+| fragile sessions | 3 |
+
+Robust sessions: `1091039902`, `1093864136`, `1096620314`,
+`1119946360`.
+
+Interpretation: the aggregate effect is not uniform. Four sessions support a
+stronger follow-up, three are mixed, and three are fragile. Future mechanistic
+work should focus first on robust and mixed sessions, while fragile sessions
+should be treated as failure cases to explain.
+
+Latent temporal baseline:
+
+| metric | value |
+| --- | ---: |
+| sessions | 10 |
+| mean latent gain | -0.107 |
+| positive gain fraction | 0.200 |
+| mean explained variance fraction | 0.857 |
+
+Interpretation: a simple PCA latent representation reconstructs much of the
+temporal feature variance but usually does not improve behavior prediction over
+the compact behavioral baseline. This argues against jumping directly to
+heavier representation-learning claims. The next latent step should diagnose
+why only sessions `1093864136` and `1096620314` show positive latent gain.
+
+Graph evidence registry:
+
+| edge class | count |
+| --- | ---: |
+| controlled | 3 |
+| exploratory | 0 |
+| fragile | 0 |
+
+Controlled edges:
+
+- `window:pre_response -> target:go_response`;
+- `region:visual_cortex -> window:pre_response`;
+- `region:basal_ganglia -> window:pre_response`.
+
+These edges are eligible for follow-up, not causal conclusions.
+
+Session generator v2:
+
+| metric | value |
+| --- | ---: |
+| generated trials | 500 |
+| positive rate | 0.654 |
+| latency mean ms | 508.404 |
+| latency std ms | 499.858 |
+| regions | 5 |
+| windows | 3 |
+
+The generator now produces normalized trial-level sessions with temporal
+region-window metadata. It is for stress-testing pipelines and ablation logic,
+not for empirical claims.
+
+Advanced scientific-agent audit:
+
+```text
+decision=advance_to_microcircuit_design
+n_findings=1
+```
+
+Finding: the latent temporal baseline is not consistently useful
+(`positive_gain_fraction=0.200`). This is a moderate, not blocking, issue for
+microcircuit design because the graph/control evidence remains positive. It is
+blocking for any strong claim about latent representations.
+
 ## Verification
 
 Command:
@@ -430,7 +529,7 @@ Command:
 Current result:
 
 ```text
-75 tests OK
+80 tests OK
 ```
 
 ## Current scientific decision
@@ -440,8 +539,10 @@ Do not claim causal regional necessity yet.
 Current defensible claim: in the strict Allen `go_response` cohort, the
 `pre_response` temporal window adds predictive signal beyond task/image/history
 baselines, passes current negative window controls, and motivates graph-guided
-regional hypotheses centered on visual cortex. Latency-stratified heterogeneity
-prevents a stronger mechanistic claim.
+regional hypotheses centered on visual cortex. The advanced stability matrix
+identifies four robust sessions, but latency/session heterogeneity and the weak
+PCA latent baseline prevent a stronger mechanistic or representation-learning
+claim.
 
 Next required controls:
 
@@ -449,4 +550,5 @@ Next required controls:
 - deeper reaction-time and animal/session-quality stratification;
 - broader-session validation or second-dataset replication;
 - region-by-window uncertainty with larger session cohorts;
+- failure analysis of fragile sessions and latent-negative sessions;
 - dependency lockfile and dataset-version capture in the study manifest.

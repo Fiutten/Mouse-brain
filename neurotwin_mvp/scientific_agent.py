@@ -102,3 +102,78 @@ def audit_current_evidence(
         "Use the functional graph and generative surrogate to design experiments, not to replace empirical validation.",
     ]
     return ScientificAgentReport(decision=decision, findings=findings, next_actions=next_actions)
+
+
+def audit_advanced_evidence(
+    *,
+    stability_summary: dict,
+    graph_registry_summary: dict,
+    latent_summary: dict,
+    generator_warnings: list[str],
+    minimum_mean_stability: float = 0.55,
+    minimum_latent_positive_fraction: float = 0.5,
+) -> ScientificAgentReport:
+    """Audit the advanced evidence stack with explicit blocking rules.
+
+    This is the deterministic contract we later wrap with an LLM/LangGraph
+    planner. The deterministic layer remains the authority: an LLM may propose
+    experiments, but these rules decide whether claims can advance.
+    """
+    findings: list[AgentFinding] = []
+    mean_stability = float(stability_summary.get("mean_stability_score", 0.0))
+    robust_sessions = int(stability_summary.get("robust_sessions", 0))
+    controlled_edges = int(graph_registry_summary.get("controlled", 0))
+    latent_positive_fraction = float(latent_summary.get("positive_gain_fraction", 0.0))
+    if mean_stability < minimum_mean_stability:
+        findings.append(
+            AgentFinding(
+                severity="major",
+                claim="Session-level stability is below the promotion threshold.",
+                evidence=f"mean_stability_score={mean_stability:.3f}",
+                recommendation="Do not strengthen biological claims; inspect fragile sessions and latency strata.",
+            )
+        )
+    if robust_sessions == 0:
+        findings.append(
+            AgentFinding(
+                severity="major",
+                claim="No session reaches robust stability status.",
+                evidence=f"robust_sessions={robust_sessions}",
+                recommendation="Treat the current result as exploratory until robust sessions appear.",
+            )
+        )
+    if controlled_edges == 0:
+        findings.append(
+            AgentFinding(
+                severity="major",
+                claim="No functional graph edge is controlled under the evidence registry.",
+                evidence=f"controlled_edges={controlled_edges}",
+                recommendation="Keep graph edges as hypotheses, not conclusions.",
+            )
+        )
+    if latent_positive_fraction < minimum_latent_positive_fraction:
+        findings.append(
+            AgentFinding(
+                severity="moderate",
+                claim="Latent temporal baseline is not consistently useful.",
+                evidence=f"positive_gain_fraction={latent_positive_fraction:.3f}",
+                recommendation="Do not invest in heavier latent models until baseline failures are understood.",
+            )
+        )
+    for warning in generator_warnings:
+        findings.append(
+            AgentFinding(
+                severity="minor",
+                claim="Session generator emitted a caution.",
+                evidence=warning,
+                recommendation="Use generated sessions for stress tests only.",
+            )
+        )
+    decision = "advance_to_microcircuit_design" if not any(item.severity == "major" for item in findings) else "hold_for_fragility_resolution"
+    next_actions = [
+        "Prioritize sessions marked robust or mixed for region-window mechanistic follow-up.",
+        "Investigate fragile sessions before increasing model biological detail.",
+        "Use latent baselines as the entry gate for heavier representation learning models.",
+        "Keep generator-v2 outputs separate from empirical evidence in all reports.",
+    ]
+    return ScientificAgentReport(decision=decision, findings=findings, next_actions=next_actions)

@@ -12,6 +12,8 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 import random
 
+from .data import Session, Trial
+
 
 @dataclass(frozen=True)
 class GenerativeCalibration:
@@ -56,6 +58,42 @@ class GenerativeValidationReport:
             "generated_sessions": [asdict(item) for item in self.generated_sessions],
             "mean_temporal_gain": self.mean_temporal_gain,
             "mean_regional_drops": dict(self.mean_regional_drops),
+            "warnings": list(self.warnings),
+        }
+
+
+@dataclass(frozen=True)
+class SessionGeneratorCalibration:
+    """Parameters for generating normalized synthetic session artifacts."""
+
+    target_name: str
+    window_names: list[str]
+    region_names: list[str]
+    n_trials: int
+    positive_rate: float
+    latency_mean_ms: float
+    latency_std_ms: float
+    region_window_means: dict[str, dict[str, float]]
+    seed: int
+
+    def to_dict(self) -> dict:
+        """Return a JSON-serializable representation."""
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class GeneratedSessionReport:
+    """Generated normalized session plus calibration metadata."""
+
+    calibration: SessionGeneratorCalibration
+    session: Session
+    warnings: list[str]
+
+    def to_dict(self) -> dict:
+        """Return a JSON-serializable representation without losing structure."""
+        return {
+            "calibration": self.calibration.to_dict(),
+            "session": asdict(self.session),
             "warnings": list(self.warnings),
         }
 
@@ -108,5 +146,68 @@ def simulate_evidence_sessions(
         generated_sessions=sessions,
         mean_temporal_gain=mean_temporal,
         mean_regional_drops=mean_regions,
+        warnings=warnings,
+    )
+
+
+def generate_calibrated_session(calibration: SessionGeneratorCalibration) -> GeneratedSessionReport:
+    """Generate a normalized session with temporal region-window metadata.
+
+    The generator samples trials from empirical distribution summaries. It is
+    designed for pipeline stress tests and ablation sanity checks. It should
+    never be mixed with empirical Allen evidence when making biological claims.
+    """
+    if calibration.n_trials <= 1:
+        raise ValueError("n_trials must be greater than 1")
+    rng = random.Random(calibration.seed)
+    trials = []
+    warnings = []
+    for trial_id in range(calibration.n_trials):
+        label = 1 if rng.random() < calibration.positive_rate else 0
+        stimulus = 1.0 if rng.random() < 0.5 else -1.0
+        latency = max(40.0, rng.gauss(calibration.latency_mean_ms, calibration.latency_std_ms))
+        engagement = max(0.0, min(1.0, rng.gauss(0.62, 0.12)))
+        region_rates_by_window = {}
+        for window in calibration.window_names:
+            means = calibration.region_window_means.get(window, {})
+            window_rates = {}
+            for region in calibration.region_names:
+                mean_rate = float(means.get(region, 0.0))
+                signal = 0.15 * label if window == "pre_response" and region == "visual_cortex" else 0.0
+                window_rates[region] = rng.gauss(mean_rate + signal, max(0.05, abs(mean_rate) * 0.10))
+            region_rates_by_window[window] = window_rates
+        primary_window = "pre_response" if "pre_response" in region_rates_by_window else calibration.window_names[-1]
+        trials.append(
+            Trial(
+                trial_id=trial_id,
+                stimulus=stimulus,
+                choice=label,
+                reward=int(label == 1),
+                latency_ms=latency,
+                engagement=engagement,
+                region_rates=dict(region_rates_by_window[primary_window]),
+                metadata={
+                    "target_name": calibration.target_name,
+                    "synthetic_calibrated": True,
+                    "go": True,
+                    "hit": bool(label == 1),
+                    "miss": bool(label == 0),
+                    "region_rates_by_window": region_rates_by_window,
+                    "time_window_valid": {window: True for window in calibration.window_names},
+                },
+            )
+        )
+    if not calibration.region_window_means:
+        warnings.append("No empirical region-window means supplied; generated rates are weakly anchored")
+    session = Session(
+        session_id="generated_calibrated_session_v2",
+        animal_id="synthetic_calibrated_mouse",
+        dataset="calibrated-surrogate",
+        trials=trials,
+        region_names=list(calibration.region_names),
+    )
+    return GeneratedSessionReport(
+        calibration=calibration,
+        session=session,
         warnings=warnings,
     )

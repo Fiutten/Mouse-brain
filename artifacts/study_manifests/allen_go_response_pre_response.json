@@ -53,6 +53,36 @@
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_scientific_agent.json",
       "sha256": "0abe3db70dceab2f82b77be2d18cd9ae3e68665eca183fe80ef21783f8f96b6f"
+    },
+    {
+      "bytes": 4613,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.json",
+      "sha256": "a1ec641bfff397cbc8103dc7485524e2e39ada2f401fa16b1bc49a257fae3a89"
+    },
+    {
+      "bytes": 7041,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_latent_temporal_baseline.json",
+      "sha256": "fb8854f456de4b508d0544b11d887a5142524d0fdcd39124e8a776dfbf70fd23"
+    },
+    {
+      "bytes": 1429,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.json",
+      "sha256": "4c068b0780c0d4f34091922689f6aa43ccb21831d40536fa47ccc40fad09f608"
+    },
+    {
+      "bytes": 859313,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_session_generator_v2.json",
+      "sha256": "7ec989def2e9db87e8cfb3dc60e1e9ad46e275459553e5333be71391ab143e30"
+    },
+    {
+      "bytes": 705,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_advanced_scientific_agent.json",
+      "sha256": "fb30beb0f7c98e6e113e68c81efb2295bae88f56d249817d01b3177092003b87"
     }
   ],
   "commands": [
@@ -64,9 +94,10 @@
     "make allen-functional-graph",
     "make allen-generative-surrogate",
     "make allen-scientific-agent",
+    "make allen-advanced-evidence",
     "make test"
   ],
-  "created_at_utc": "2026-06-05T12:05:51.933042+00:00",
+  "created_at_utc": "2026-06-05T13:46:08.565565+00:00",
   "dataset_inventory": {
     "normalized_allen_sessions": 15,
     "session_ids": [

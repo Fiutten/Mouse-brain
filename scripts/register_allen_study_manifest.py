@@ -29,6 +29,7 @@ CANONICAL_COMMANDS = [
     "make allen-functional-graph",
     "make allen-generative-surrogate",
     "make allen-scientific-agent",
+    "make allen-advanced-evidence",
     "make test",
 ]
 
@@ -43,6 +44,11 @@ CANONICAL_ARTIFACTS = [
     "artifacts/reports/allen_targets/go_response_pre_response_functional_graph.json",
     "artifacts/reports/allen_targets/go_response_pre_response_generative_surrogate.json",
     "artifacts/reports/allen_targets/go_response_scientific_agent.json",
+    "artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.json",
+    "artifacts/reports/allen_targets/go_response_latent_temporal_baseline.json",
+    "artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.json",
+    "artifacts/reports/allen_targets/go_response_session_generator_v2.json",
+    "artifacts/reports/allen_targets/go_response_advanced_scientific_agent.json",
 ]
 
 

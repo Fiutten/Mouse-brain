@@ -388,6 +388,67 @@ The deterministic scientific-agent audit currently returns
 add abstraction layers while keeping the claim at controlled predictive
 evidence.
 
+## Advanced evidence layer
+
+The advanced reconstruction command is:
+
+```bash
+make allen-advanced-evidence
+```
+
+It adds five gates on top of the stabilized evidence stack:
+
+- session x control stability matrix;
+- PCA temporal latent baseline;
+- graph-edge evidence registry;
+- calibrated session generator v2;
+- advanced deterministic scientific-agent audit.
+
+Stability matrix:
+
+| class | sessions |
+| --- | ---: |
+| robust | 4 |
+| mixed | 3 |
+| fragile | 3 |
+
+Mean stability score is 0.560. The robust sessions are `1091039902`,
+`1093864136`, `1096620314` and `1119946360`.
+
+Latent temporal baseline:
+
+| metric | value |
+| --- | ---: |
+| mean latent gain | -0.107 |
+| positive gain fraction | 0.200 |
+| mean explained variance fraction | 0.857 |
+
+Interpretation: PCA captures temporal feature variance but does not usually
+improve behavior prediction beyond compact behavioral rows. This is a negative
+result for immediate heavy representation-learning expansion. It is useful
+because it tells us where not to over-invest yet.
+
+Graph evidence registry:
+
+| edge | state |
+| --- | --- |
+| `window:pre_response -> target:go_response` | controlled |
+| `region:visual_cortex -> window:pre_response` | controlled |
+| `region:basal_ganglia -> window:pre_response` | controlled |
+
+The registry makes graph claims auditable: controlled means eligible for
+follow-up under current gates, not causal or replicated.
+
+The calibrated session generator v2 produces 500 normalized synthetic trials
+with `baseline`, `stimulus` and `pre_response` temporal windows. It is a
+software stress-test layer, not empirical evidence.
+
+The advanced scientific-agent audit returns
+`advance_to_microcircuit_design` with one moderate finding: latent temporal
+baseline positive-gain fraction is only 0.200. This permits focused
+microcircuit design around controlled graph edges, but blocks strong latent
+representation claims.
+
 ## Decision
 
 Do not claim causal neural mechanism yet.
@@ -400,5 +461,7 @@ Proceed with:
 - use the functional graph to prioritize region-window hypotheses;
 - use the generative surrogate and deterministic agent to stress-test the
   system architecture;
+- analyze fragile sessions and latent-negative sessions before adding heavier
+  representation-learning models;
 - continue requiring permutation tests, CIs and explicit control gates before
   biological-layer expansion.

@@ -54,6 +54,46 @@ class FunctionalGraphReport:
         }
 
 
+@dataclass(frozen=True)
+class EvidenceEdgeRecord:
+    """Evidence registry record for one functional graph edge."""
+
+    source: str
+    relation: str
+    target: str
+    weight: float
+    evidence: str
+    strength: float
+    fragility: float
+    state: str
+    rationale: str
+
+    def to_dict(self) -> dict:
+        """Return a JSON-serializable representation."""
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class GraphEvidenceRegistry:
+    """Accumulated edge evidence with explicit interpretability states."""
+
+    target_name: str
+    window_name: str
+    records: list[EvidenceEdgeRecord]
+    summary: dict[str, int]
+    warnings: list[str]
+
+    def to_dict(self) -> dict:
+        """Return a JSON-serializable representation."""
+        return {
+            "target_name": self.target_name,
+            "window_name": self.window_name,
+            "records": [record.to_dict() for record in self.records],
+            "summary": dict(self.summary),
+            "warnings": list(self.warnings),
+        }
+
+
 def build_functional_graph(
     *,
     target_name: str,
@@ -131,3 +171,78 @@ def build_functional_graph(
         edges=edges,
         interpretation=interpretation,
     )
+
+
+def build_graph_evidence_registry(
+    graph: FunctionalGraphReport,
+    *,
+    stability_by_session: list[dict],
+    temporal_ci95_low: float,
+    control_decision: str,
+) -> GraphEvidenceRegistry:
+    """Annotate graph edges with strength, fragility and evidence state.
+
+    The registry turns a graph into an auditable scientific object. Each edge
+    is tagged as exploratory, controlled or replicated-like based on current
+    controls and session stability. We avoid the word `replicated` because this
+    is still one dataset; `controlled` is the strongest current admissible state.
+    """
+    if not stability_by_session:
+        raise ValueError("stability_by_session must not be empty")
+    mean_stability = sum(float(row["stability_score"]) for row in stability_by_session) / len(stability_by_session)
+    robust_fraction = sum(1 for row in stability_by_session if row["status"] == "robust") / len(stability_by_session)
+    records = []
+    warnings = []
+    for edge in graph.edges:
+        strength = max(0.0, float(edge.weight))
+        fragility = 1.0 - mean_stability
+        state, rationale = _edge_state(
+            strength=strength,
+            robust_fraction=robust_fraction,
+            temporal_ci95_low=temporal_ci95_low,
+            control_decision=control_decision,
+        )
+        records.append(
+            EvidenceEdgeRecord(
+                source=edge.source,
+                relation=edge.relation,
+                target=edge.target,
+                weight=float(edge.weight),
+                evidence=edge.evidence,
+                strength=strength,
+                fragility=fragility,
+                state=state,
+                rationale=rationale,
+            )
+        )
+    if control_decision != "passes_window_controls":
+        warnings.append("Graph edges cannot be promoted because the control gate failed")
+    summary = {
+        "exploratory": sum(1 for record in records if record.state == "exploratory"),
+        "controlled": sum(1 for record in records if record.state == "controlled"),
+        "fragile": sum(1 for record in records if record.state == "fragile"),
+    }
+    return GraphEvidenceRegistry(
+        target_name=graph.target_name,
+        window_name=graph.window_name,
+        records=records,
+        summary=summary,
+        warnings=warnings,
+    )
+
+
+def _edge_state(
+    *,
+    strength: float,
+    robust_fraction: float,
+    temporal_ci95_low: float,
+    control_decision: str,
+) -> tuple[str, str]:
+    """Classify one edge using conservative current-project rules."""
+    if strength <= 0.0:
+        return "fragile", "Non-positive edge weight."
+    if control_decision != "passes_window_controls" or temporal_ci95_low <= 0.0:
+        return "exploratory", "Controls or temporal CI do not support promotion."
+    if robust_fraction >= 0.4:
+        return "controlled", "Positive edge with passed controls and enough robust-session support."
+    return "exploratory", "Positive edge but limited robust-session support."
