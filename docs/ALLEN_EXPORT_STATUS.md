@@ -7,37 +7,37 @@ multi-session validation becomes scientifically meaningful.
 
 ## Current checkpoint
 
-Checkpoint date: 2026-06-05.
+Checkpoint date: 2026-06-06.
 
-The latest controlled expansion attempted to move toward 50 usable
-`go_response` sessions, but it was stopped at a safe reproducible checkpoint
-after the empirical usable-session rate made clear that "50 downloads" and
-"50 usable target sessions" are not equivalent.
+The latest controlled expansion reached 40 normalized Allen sessions. The
+previous partial NWB download (`1048196054`) was resumed successfully and added
+one usable `go_response` session. The empirical usable-session rate still makes
+clear that "50 downloads" and "50 usable target sessions" are not equivalent.
 
 | metric | value |
 | --- | ---: |
-| normalized/exported sessions | 39 |
-| usable `go_response` sessions | 24 |
+| normalized/exported sessions | 40 |
+| usable `go_response` sessions | 25 |
 | non-usable `go_response` sessions | 15 |
-| total labeled trials | 10773 |
-| labeled `go_response` trials | 9422 |
-| raw Allen cache size | 119 GB |
-| normalized Allen artifacts size | 23 MB |
-| free disk after checkpoint | 635 GiB |
-| partially downloaded next session | `1048196054` |
-| partial bytes for next session | 399892480 |
+| total labeled trials | 11096 |
+| labeled `go_response` trials | 9705 |
+| raw Allen cache size | 121 GB |
+| normalized Allen artifacts size | 24 MB |
+| free disk after checkpoint | 632 GiB |
+| partially downloaded next session | none |
+| partial bytes for next session | 0 |
 
-The next-session partial download is intentional and recoverable: the batch
-exporter uses `curl -C -`, so a later run resumes instead of restarting the NWB
-transfer.
+The previous next-session partial download is now complete. Future interrupted
+downloads remain recoverable because the batch exporter uses `curl -C -`, so a
+later run resumes instead of restarting the NWB transfer.
 
-Latest broad evidence status over all 39 normalized sessions:
+Latest broad evidence status over all 40 normalized sessions:
 
 | statistic | value |
 | --- | ---: |
-| total valid trials | 10773 |
-| mean multi-split neural gain | 0.022 |
-| mean permutation observed gain | 0.030 |
+| total valid trials | 11096 |
+| mean multi-split neural gain | 0.023 |
+| mean permutation observed gain | 0.031 |
 | positive multi-split fraction | 0.564 |
 | significant permutation fraction | 0.462 |
 | formal decision | `inconclusive_mixed_evidence` |
@@ -49,12 +49,12 @@ Latest behavioral-target diagnostics:
 
 | target | usable sessions | labeled trials | interpretation |
 | --- | ---: | ---: | --- |
-| `choice` | 33/39 | 10773 | high-coverage continuity baseline |
-| `go_response` | 24/39 | 9422 | strict primary task-native target candidate |
-| `catch_response` | 0/39 | 1351 | systematically underpowered/imbalanced |
-| `rewarded` | 34/39 | 10773 | useful but outcome-derived control |
-| `response_made` | 33/39 | 10773 | broad action/no-action control |
-| `task_success` | 25/39 | 10773 | correctness target; outcome-confounded |
+| `choice` | 34/40 | 11096 | high-coverage continuity baseline |
+| `go_response` | 25/40 | 9705 | strict primary task-native target candidate |
+| `catch_response` | 0/40 | 1391 | systematically underpowered/imbalanced |
+| `rewarded` | 35/40 | 11096 | useful but outcome-derived control |
+| `response_made` | 34/40 | 11096 | broad action/no-action control |
+| `task_success` | 26/40 | 11096 | correctness target; outcome-confounded |
 
 ## Initial 15-session checkpoint
 
@@ -171,11 +171,14 @@ The latest 50-session expansion checkpoint used:
   --min-free-gb 120
 ```
 
-It was stopped manually after reaching 39 normalized sessions and 24 usable
-`go_response` sessions. The next pending NWB (`1048196054`) was left partially
-downloaded and resumable. This was a methodological checkpoint, not a data
-failure: the observed `go_response` usable rate implies that reaching 50 usable
-sessions likely requires substantially more than 50 downloads.
+It was first stopped manually after reaching 39 normalized sessions and 24
+usable `go_response` sessions. The next pending NWB (`1048196054`) was then
+resumed in a controlled single-session batch and completed, giving the current
+40-session checkpoint with 25 usable `go_response` sessions. This remains a
+methodological checkpoint, not a data failure: the observed `go_response`
+usable rate implies that reaching 50 usable sessions likely requires
+substantially more than 50 downloads unless candidate selection becomes
+target-aware.
 
 ## Batch export automation
 
@@ -204,14 +207,21 @@ make allen-export-batch
 make allen-evidence
 make allen-targets
 make allen-go-evidence-until-10
+make allen-target-aware-select
 ```
 
 ## Scientific status
 
-Multi-session analysis infrastructure now runs on 39 fully normalized sessions,
-with 24 usable sessions for the strict `go_response` target. This is a stronger
+Multi-session analysis infrastructure now runs on 40 fully normalized sessions,
+with 25 usable sessions for the strict `go_response` target. This is a stronger
 engineering and scientific base than the initial 15-session checkpoint, but the
 formal result remains `inconclusive_mixed_evidence`. The immediate next step is
-not to claim success; it is to stratify usable/non-usable sessions, refine the
-target strategy, and run heavier evidence only on cohorts with defensible
-behavioral balance.
+not to claim success; it is to build a target-aware session selector, stratify
+usable/non-usable sessions, and run heavier evidence only on cohorts with
+defensible behavioral balance.
+
+The first target-aware selector is implemented in
+`scripts/select_allen_target_aware_sessions.py`. At the 40-session checkpoint it
+ranks 20 pending candidates from the top 80 metadata candidates; the top-ranked
+candidate is `1122903357`. This ranking should be used to prioritize the next
+downloads, then regenerated after each batch.

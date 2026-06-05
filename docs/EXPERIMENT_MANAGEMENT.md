@@ -60,6 +60,9 @@ artifacts/reports/allen_targets/target_evidence_status.json
 artifacts/reports/allen_targets/go_response_session_relations.json
 artifacts/reports/allen_targets/go_response_session_relations.csv
 artifacts/reports/allen_targets/go_response_session_relations.md
+artifacts/reports/allen_targets/go_response_target_aware_selector.json
+artifacts/reports/allen_targets/go_response_target_aware_selector.csv
+artifacts/reports/allen_targets/go_response_target_aware_selector.md
 artifacts/reports/allen_targets/go_response_regional_ablation.json
 artifacts/reports/allen_targets/go_response_regional_ablation.csv
 artifacts/reports/allen_targets/go_response_regional_ablation.md
@@ -111,7 +114,7 @@ artifacts/study_manifests/allen_go_response_pre_response.json
 Current normalized Allen sessions:
 
 ```text
-Current checkpoint: 39 normalized sessions as of 2026-06-05.
+Current checkpoint: 40 normalized sessions as of 2026-06-06.
 The complete machine-readable list is in
 artifacts/reports/allen/target_diagnostics.json and the human-readable
 usable/non-usable explanation is in
@@ -241,10 +244,10 @@ target/feature redesign, not biological-layer expansion.
 Do not promote a behavioral target into the main benchmark unless
 `artifacts/reports/allen/target_diagnostics.json` shows enough labeled trials
 and acceptable class balance across multiple sessions. At the current
-15-session stage, `go_response` is the first serious task-native candidate,
-`response_made` is a broader action/no-action control, `choice` is a continuity
-baseline, `rewarded` and `task_success` are outcome-related controls, and
-`catch_response` is underpowered.
+40-session stage, `go_response` remains the first serious task-native
+candidate, `response_made` is a broader action/no-action control, `choice` is a
+continuity baseline, `rewarded` and `task_success` are outcome-related
+controls, and `catch_response` is underpowered.
 
 For target-specific reports, keep all-labeled and usable-only cohorts separate.
 The strict usable-session `go_response` cohort currently has the strongest
@@ -262,6 +265,19 @@ make allen-session-relations
 
 Use the generated markdown for reviewer-facing interpretation and the CSV/JSON
 outputs for stratification or candidate-selection scripts.
+
+Run the target-aware selector before the next large download batch:
+
+```bash
+make allen-target-aware-select
+```
+
+The selector ranks pending metadata candidates using three separated terms:
+target-balance viability learned from downloaded sessions, weak neural-evidence
+resemblance, and the original metadata quality score. It is a download
+prioritizer, not a biological or statistical claim. Re-run it after every new
+batch because the empirical layer is intentionally updated from the current
+normalized cohort.
 
 Regional ablations are feature ablations, not biological lesions. They are
 allowed for hypothesis prioritization only:

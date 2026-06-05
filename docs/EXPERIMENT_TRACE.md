@@ -8,13 +8,13 @@ separate.
 ## Current dataset state
 
 - Dataset: Allen Visual Behavior Neuropixels.
-- Normalized sessions: 39.
+- Normalized sessions: 40.
 - Strict primary target: `go_response`.
-- Strict usable `go_response` sessions: 24/39.
-- Non-usable `go_response` sessions: 15/39, all due to class imbalance.
+- Strict usable `go_response` sessions: 25/40.
+- Non-usable `go_response` sessions: 15/40, all due to class imbalance.
 - Latest broad evidence decision: `inconclusive_mixed_evidence`.
-- Raw Allen cache size at latest checkpoint: 119 GB.
-- Free disk at latest checkpoint: 635 GiB.
+- Raw Allen cache size at latest checkpoint: 121 GB.
+- Free disk at latest checkpoint: 632 GiB.
 
 ## Target viability
 
@@ -34,17 +34,17 @@ Current target status:
 
 | target | usable sessions | labeled trials | status |
 | --- | ---: | ---: | --- |
-| `go_response` | 24/39 | 9422 | primary signal target |
-| `response_made` | 33/39 | 10773 | broader control |
-| `task_success` | 25/39 | 10773 | correctness control, outcome-confounded |
-| `choice` | 33/39 | 10773 | continuity baseline |
-| `rewarded` | 34/39 | 10773 | outcome-derived control |
-| `catch_response` | 0/39 | 1351 | underpowered/imbalanced |
+| `go_response` | 25/40 | 9705 | primary signal target |
+| `response_made` | 34/40 | 11096 | broader control |
+| `task_success` | 26/40 | 11096 | correctness control, outcome-confounded |
+| `choice` | 34/40 | 11096 | continuity baseline |
+| `rewarded` | 35/40 | 11096 | outcome-derived control |
+| `catch_response` | 0/40 | 1391 | underpowered/imbalanced |
 
 Interpretation: target viability, not download failure, explains why some
 sessions are excluded from the strict `go_response` cohort.
 
-## 50-usable-session expansion checkpoint
+## 40-session checkpoint before selector
 
 Command:
 
@@ -83,23 +83,23 @@ Result:
 
 | metric | value |
 | --- | ---: |
-| normalized sessions | 39 |
-| usable `go_response` sessions | 24 |
+| normalized sessions | 40 |
+| usable `go_response` sessions | 25 |
 | non-usable `go_response` sessions | 15 |
-| `go_response` labeled trials | 9422 |
+| `go_response` labeled trials | 9705 |
 | permutation-significant sessions in strict relation report | 3 |
-| broad mean multi-split gain | 0.022 |
-| broad mean permutation gain | 0.030 |
+| broad mean multi-split gain | 0.023 |
+| broad mean permutation gain | 0.031 |
 | broad evidence decision | `inconclusive_mixed_evidence` |
-| raw Allen cache | 119 GB |
-| normalized Allen artifacts | 23 MB |
-| free disk | 635 GiB |
+| raw Allen cache | 121 GB |
+| normalized Allen artifacts | 24 MB |
+| free disk | 632 GiB |
 | unit tests | 83/83 OK |
 
-The run was stopped at a safe checkpoint after a new pending session,
-`1048196054`, had started downloading. That partial NWB is resumable because
-the downloader uses `curl -C -`; the partial size recorded by the batch status
-was 399892480 bytes.
+The previous partial NWB for `1048196054` was resumed with `curl -C -`,
+completed successfully and exported as the 40th normalized session. It added
+one usable strict `go_response` session. No partial NWB remains pending at this
+checkpoint.
 
 Interpretation: the expansion did not fail technically. The limiting factor is
 target viability: all 15 non-usable `go_response` sessions are rejected because
@@ -109,9 +109,44 @@ but not defensible for a balanced hit-versus-miss `go_response` analysis.
 
 Scientific consequence: reaching 50 usable `go_response` sessions likely
 requires downloading substantially more than 50 NWB files. The next expansion
-should be metadata- and behavior-aware, prioritizing candidates likely to have
-balanced go hit/miss labels instead of blindly following the broad metadata
-ranking.
+should be selector-driven, prioritizing candidates likely to have balanced go
+hit/miss labels instead of blindly following the broad metadata ranking.
+
+## Target-aware session selector
+
+Command:
+
+```bash
+.venv/bin/python scripts/select_allen_target_aware_sessions.py \
+  --candidate-limit 80 \
+  --top-n 20
+```
+
+Artifacts:
+
+```text
+artifacts/reports/allen_targets/go_response_target_aware_selector.json
+artifacts/reports/allen_targets/go_response_target_aware_selector.csv
+artifacts/reports/allen_targets/go_response_target_aware_selector.md
+```
+
+Result:
+
+| metric | value |
+| --- | ---: |
+| metadata candidates considered | 80 |
+| pending candidates ranked | 20 |
+| top ecephys session | 1122903357 |
+| top selector score | 0.720 |
+| top target-viability score | 0.661 |
+| top neural-evidence score | 0.379 |
+| top metadata-quality score | 1.000 |
+
+Interpretation: the first selector pass is operationally useful but not
+confirmatory. The top candidates are dominated by `image_set=H` and `Novel`
+experience because those categories currently look more favorable after
+small-sample smoothing. This should guide the next download order, but it must
+be re-audited after each batch to avoid locking onto a cohort artifact.
 
 ## Strict target evidence
 
@@ -173,8 +208,8 @@ Interpretation: failed sessions are target failures, not benchmark failures.
 
 Latest relation checkpoint:
 
-- 39 sessions analyzed.
-- 24 usable `go_response` sessions.
+- 40 sessions analyzed.
+- 25 usable `go_response` sessions.
 - 15 non-usable `go_response` sessions.
 - 15/15 non-usable sessions fail due to `go_response` class imbalance below
   minority fraction 0.20.
