@@ -971,6 +971,30 @@ insufficient even if some subordinate checks partially pass. This suggests
 that the next scientific step is not adding a more elaborate microcircuit; it
 is explaining why a sizeable subset lacks the candidate temporal signature.
 
+Independent explanation analysis:
+
+```bash
+make allen-fragility-explanations
+```
+
+Artifacts:
+
+```text
+artifacts/reports/allen_targets/go_response_fragility_explanations.json
+artifacts/reports/allen_targets/go_response_fragility_explanations.csv
+artifacts/reports/allen_targets/go_response_fragility_discussion.md
+docs/FRAGILITY_DISCUSSION.md
+```
+
+Result: no independent coarse covariate currently provides a supported
+explanation under 20,000 label permutations per numeric feature. Weak
+candidates are lower target minority fraction, lower probe count and incomplete
+metadata. Probe count has the strongest standardized difference
+(`-1.384`, permutation `p=0.054`), but probe metadata are missing in 3/9 fragile
+sessions. The discussion therefore treats recording coverage as a candidate
+confound and unresolved session-state/circuit heterogeneity as the most
+defensible explanation.
+
 ## Verification
 
 Command:
@@ -982,7 +1006,7 @@ Command:
 Current result:
 
 ```text
-94 tests OK
+97 tests OK
 ```
 
 ## Current scientific decision
