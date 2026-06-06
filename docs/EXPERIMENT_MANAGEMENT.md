@@ -84,6 +84,7 @@ artifacts/reports/allen_targets/go_response_pre_response_permutation.md
 artifacts/reports/allen_targets/go_response_pre_response_permutation_500.json
 artifacts/reports/allen_targets/go_response_pre_response_permutation_500.csv
 artifacts/reports/allen_targets/go_response_pre_response_permutation_500.md
+artifacts/reports/allen_targets/temporal_permutation_cache/<target>/<window>/<permutation_count>/<seed>/<session_id>.json
 artifacts/reports/allen_targets/go_response_pre_response_regional_ablation.json
 artifacts/reports/allen_targets/go_response_pre_response_regional_ablation.csv
 artifacts/reports/allen_targets/go_response_pre_response_regional_ablation.md
@@ -324,6 +325,13 @@ response-aligned controls are added.
 The current `pre_response` candidate passes negative window controls against
 baseline and stimulus windows, but latency-stratified checks show heterogeneity.
 Treat this as controlled predictive evidence, not mechanism.
+
+The active 45-session advanced evidence layer is based on the cacheable
+50-permutation temporal screen over 29 strict usable `go_response` sessions.
+The older 500-permutation artifact documents the initial 10-session cohort and
+must not be treated as confirmation of the 29-session expanded cohort until
+`make allen-temporal-permutation-confirm` completes with current per-session
+cache files.
 
 The functional graph and generative surrogate are allowed only as design and
 stress-test layers. They must not be cited as anatomical connectivity, causal

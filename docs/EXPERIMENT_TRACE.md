@@ -827,6 +827,112 @@ the microcircuit as a statistically non-trivial hypothesis prioritizer, but it
 is still not strong enough to claim a validated mechanistic model or a
 publishable biological mechanism.
 
+## 45-session expanded evidence rerun
+
+Purpose: reuse the 45 normalized Allen sessions, without downloading more NWB
+files, to test whether the proposed temporal/graph/microcircuit stack survives
+the larger 29-session strict `go_response` cohort.
+
+Commands:
+
+```bash
+make allen-temporal-windows
+make allen-temporal-permutation
+.venv/bin/python scripts/run_allen_temporal_regional_ablation.py \
+  --target-name go_response \
+  --window-name pre_response \
+  --require-usable-target \
+  --out-json artifacts/reports/allen_targets/go_response_pre_response_regional_ablation_all_sessions.json \
+  --out-csv artifacts/reports/allen_targets/go_response_pre_response_regional_ablation_all_sessions.csv \
+  --out-md artifacts/reports/allen_targets/go_response_pre_response_regional_ablation_all_sessions.md
+make allen-temporal-regional-ablation
+make allen-response-controls
+make allen-uncertainty
+make allen-functional-graph
+make allen-generative-surrogate
+make allen-scientific-agent
+make allen-stability-matrix
+make allen-latent-temporal
+make allen-graph-evidence-registry
+make allen-session-generator-v2
+make allen-advanced-scientific-agent
+make allen-selected-microcircuit
+make allen-microcircuit-validation
+```
+
+Engineering note: the 500-permutation confirmatory command was started but
+interrupted because the non-cached implementation was too slow for interactive
+iteration over 29 sessions. `scripts/run_allen_temporal_permutation.py` now
+writes validated per-session cache files keyed by target, window, seed and
+permutation count. The 50-permutation screening run was repeated twice:
+first to populate cache (`cache_hits=0`, `cache_misses=29`) and then to verify
+reuse (`cache_hits=29`, `cache_misses=0`). The 500-permutation rerun remains a
+required confirmatory step, but it is now recoverable by session.
+
+Result over the expanded strict `go_response` cohort:
+
+| layer | result |
+| --- | ---: |
+| normalized sessions considered | 45 |
+| strict usable `go_response` sessions | 29 |
+| temporal-window analyzed sessions | 29 |
+| temporal-window skipped sessions | 16 |
+| `pre_response` mean gain | 0.149 |
+| `pre_response` median gain | 0.149 |
+| `pre_response` positive-gain fraction | 0.655 |
+| 50-permutation significant fraction | 0.552 |
+| `pre_response` valid-trial fraction | 0.966 |
+| all-window mean gain | 0.270 |
+| `pre_response` bootstrap CI95 | 0.089 to 0.211 |
+| window-control decision | `passes_window_controls` |
+| margin over baseline window | 0.118 |
+| margin over stimulus window | 0.080 |
+
+Regional ablation over all 29 usable sessions:
+
+| region | sessions | mean drop | positive drop fraction |
+| --- | ---: | ---: | ---: |
+| visual_cortex | 29 | 0.038 | 0.517 |
+| arousal_midbrain | 29 | 0.036 | 0.414 |
+
+Regional ablation over the 16 screening-significant sessions:
+
+| region | sessions | mean drop | positive drop fraction |
+| --- | ---: | ---: | ---: |
+| arousal_midbrain | 16 | 0.077 | 0.750 |
+| visual_cortex | 16 | 0.061 | 0.750 |
+
+Advanced layer:
+
+| component | result |
+| --- | ---: |
+| functional graph edges | 6 |
+| graph registry controlled edges | 6 |
+| generated surrogate mean temporal gain | 0.155 |
+| stability matrix sessions | 29 |
+| mean stability score | 0.531 |
+| robust sessions | 12 |
+| mixed sessions | 8 |
+| fragile sessions | 9 |
+| latent mean gain | -0.045 |
+| latent positive-gain fraction | 0.379 |
+| scientific-agent decision | `hold_strong_claims` |
+| advanced-agent decision | `hold_for_fragility_resolution` |
+| microcircuit decision | `partial_robust_fragile_alignment` |
+| microcircuit probability/stability correlation | 0.344 |
+| robust minus fragile probability | 0.003 |
+
+Interpretation: the core temporal claim is stronger after expansion: the
+`pre_response` effect remains positive, its bootstrap CI stays above zero, and
+it passes baseline/stimulus window controls over 29 usable sessions. The
+mechanistic story is more mixed. Regional drops are positive but less stable
+over all sessions than within the significant subset; therefore regions are
+still hypotheses, not causal claims. The graph layer is coherent as an
+evidence registry, but the deterministic agents correctly block strong claims
+because session stability is only moderate and the latent baseline remains
+negative on average. The microcircuit remains useful as a hypothesis scaffold,
+not as a validated brain mechanism.
+
 ## Verification
 
 Command:
@@ -838,25 +944,23 @@ Command:
 Current result:
 
 ```text
-83 tests OK
+92 tests OK
 ```
 
 ## Current scientific decision
 
 Do not claim causal regional necessity yet.
 
-Current defensible claim: in the strict Allen `go_response` cohort, the
-`pre_response` temporal window adds predictive signal beyond task/image/history
-baselines, passes current negative window controls, and motivates graph-guided
-regional hypotheses centered on visual cortex. The advanced stability matrix
-identifies four robust sessions, but latency/session heterogeneity and the weak
-PCA latent baseline prevent a strong representation-learning claim. The first
-selected microcircuit provides a focused mechanistic scaffold. Its external
-validation is directionally aligned with session stability and passes current
-bootstrap/permutation robustness checks, but the probability separation is weak;
-it must therefore be treated as a statistically supported hypothesis generator
-that requires larger cohorts, second-dataset replication or perturbation
-evidence before any mechanistic claim.
+Current defensible claim: in the expanded strict Allen `go_response` cohort,
+the `pre_response` temporal window adds predictive signal beyond
+task/image/history baselines, passes current negative window controls, and has
+a positive session-bootstrap CI over 29 usable sessions. This supports a
+controlled predictive-evidence claim. It does not yet support causal regional
+necessity, strong latent-representation claims, or a validated mechanistic
+microcircuit. The graph and microcircuit layers are now best framed as
+evidence-organized hypothesis generators that need fragility analysis,
+500-permutation confirmation and external replication before publication-level
+mechanistic language.
 
 Next required controls:
 

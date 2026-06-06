@@ -235,6 +235,15 @@ selected sessions and yielded 4/5 usable `go_response` sessions. After
 regeneration at the 45-session checkpoint, the top-ranked pending candidate is
 `1065905010`. This ranking should be regenerated after each batch.
 
+The current best scientific signal is not the broad all-trials evidence report;
+it is the expanded strict `go_response` temporal analysis. Over 29 usable
+sessions, the `pre_response` window has mean gain 0.149, positive-gain fraction
+0.655, 50-permutation significant fraction 0.552 and a bootstrap CI95 of 0.089
+to 0.211. It passes baseline/stimulus window controls, but deterministic audit
+agents still block strong mechanistic claims because regional effects are
+heterogeneous, the latent baseline remains negative on average and the
+microcircuit validation is only partially aligned.
+
 Raw cache pruning is implemented in `scripts/prune_allen_nwb_cache.py`. The
 2026-06-06 cleanup deleted only raw NWB files for the 15 sessions documented as
 non-usable for `go_response`; all normalized artifacts remain available for
