@@ -1,7 +1,9 @@
 import argparse
 import importlib.util
+import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 
@@ -44,6 +46,27 @@ class AllenSessionRelationsTests(unittest.TestCase):
         self.assertEqual(report["n_permutation_significant"], 1)
         self.assertEqual(report["non_usable_warning_counts"]["minority class below 0.20"], 1)
         self.assertIn("go_response class imbalance", " ".join(report["interpretation"]))
+
+    def test_project_metadata_remains_authoritative_across_batch_snapshots(self):
+        module = load_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            metadata = root / "ecephys_sessions.csv"
+            metadata.write_text(
+                "ecephys_session_id,session_type,mouse_id,unit_count,probe_count,image_set,experience_level\n"
+                "1,type-a,mouse-a,2000,6,H,Novel\n",
+                encoding="utf-8",
+            )
+            status = root / "status.json"
+            status.write_text(
+                json.dumps({"already_exported": [], "attempted": []}),
+                encoding="utf-8",
+            )
+
+            result = module.load_metadata_by_session(status, metadata)
+
+            self.assertEqual(result["1"]["probe_count"], "6")
+            self.assertEqual(result["1"]["experience_level"], "Novel")
 
     def _row(self, session_id, usable, minority, gain, p_value):
         # The relation report deliberately carries both target viability and

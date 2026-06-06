@@ -193,6 +193,7 @@ def main() -> None:
     parser.add_argument("--no-cache", action="store_true", help="Recompute every session and overwrite session-level cache files.")
     parser.add_argument("--cache-warm-only", action="store_true", help="Populate missing session-level cache entries without writing cohort evidence outputs.")
     parser.add_argument("--max-cache-misses", type=int, help="Maximum uncached sessions to compute in this run; useful for staged confirmatory cache warming.")
+    parser.add_argument("--session-ids", nargs="+", help="Optional explicit session-id subset, useful for disjoint parallel cache warming.")
     parser.add_argument("--cache-status-json", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "temporal_permutation_cache_status.json")
     parser.add_argument("--out-json", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_permutation.json")
     parser.add_argument("--out-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_permutation.csv")
@@ -206,6 +207,9 @@ def main() -> None:
     cache_misses = 0
     pending_cache = []
     session_dirs = sorted(path.parent for path in args.datasets_root.glob("*/session.json"))
+    if args.session_ids:
+        requested = set(args.session_ids)
+        session_dirs = [path for path in session_dirs if path.name in requested]
     for session_dir in session_dirs:
         session = read_session_artifact(session_dir)
         diagnostic = diagnose_target(session, target_name)

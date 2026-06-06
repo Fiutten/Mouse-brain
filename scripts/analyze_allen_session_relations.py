@@ -40,17 +40,35 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def load_metadata_by_session(export_status_path: Path) -> dict[str, dict[str, Any]]:
-    """Return Allen export metadata indexed by ecephys session id."""
-    if not export_status_path.exists():
-        return {}
-    payload = load_json(export_status_path)
-    rows = payload.get("already_exported", [])
+def load_metadata_by_session(
+    export_status_path: Path,
+    metadata_csv_path: Path | None = None,
+) -> dict[str, dict[str, Any]]:
+    """Return Allen metadata indexed by ecephys session id.
+
+    The project metadata CSV is authoritative for static Allen fields. The
+    latest batch-status file is only an operational snapshot and may omit
+    sessions exported in previous batches, so it is merged as an optional
+    enrichment instead of being treated as the sole metadata source.
+    """
     result: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        session_id = str(row.get("ecephys_session_id", ""))
-        if session_id:
-            result[session_id] = row
+    if metadata_csv_path is not None and metadata_csv_path.exists():
+        with metadata_csv_path.open("r", encoding="utf-8", newline="") as handle:
+            for row in csv.DictReader(handle):
+                session_id = str(row.get("ecephys_session_id", ""))
+                if session_id:
+                    result[session_id] = dict(row)
+    if export_status_path.exists():
+        payload = load_json(export_status_path)
+        rows = payload.get("already_exported", []) + [
+            item.get("candidate", {})
+            for item in payload.get("attempted", [])
+            if item.get("candidate")
+        ]
+        for row in rows:
+            session_id = str(row.get("ecephys_session_id", ""))
+            if session_id:
+                result.setdefault(session_id, {}).update(row)
     return result
 
 
@@ -159,7 +177,7 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
     """Join diagnostics, evidence, metadata and session-level summaries."""
     diagnostics = load_go_diagnostics(args.target_diagnostics, args.target_name)
     evidence = load_evidence_by_session(args.evidence_report)
-    metadata = load_metadata_by_session(args.export_status)
+    metadata = load_metadata_by_session(args.export_status, args.metadata_csv)
     rows: list[dict[str, Any]] = []
 
     for session_json in sorted(args.datasets_root.glob("*/session.json")):
@@ -381,6 +399,7 @@ def main() -> None:
     parser.add_argument("--target-diagnostics", type=Path, default=ROOT / "artifacts" / "reports" / "allen" / "target_diagnostics.json")
     parser.add_argument("--evidence-report", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_usable" / "evidence_report.json")
     parser.add_argument("--export-status", type=Path, default=ROOT / "artifacts" / "reports" / "allen" / "export_batch_status.json")
+    parser.add_argument("--metadata-csv", type=Path, default=ROOT / "data" / "allen" / "project_metadata" / "ecephys_sessions.csv")
     parser.add_argument("--out-json", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_session_relations.json")
     parser.add_argument("--out-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_session_relations.csv")
     parser.add_argument("--out-md", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_session_relations.md")

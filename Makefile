@@ -1,7 +1,7 @@
 PYTHON := .venv/bin/python
 PIP := .venv/bin/pip
 
-.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-selector-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-permutation-confirm-warm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-fragility-analysis allen-fragility-explanations allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
+.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-selector-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-permutation-confirm-warm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-fragility-analysis allen-fragility-explanations allen-fragile-alternative-windows allen-within-session-states allen-animal-aware-validation allen-recording-coverage allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
 
 help:
 	@echo "Targets:"
@@ -40,6 +40,10 @@ help:
 	@echo "  make allen-stability-matrix Build session x control stability matrix"
 	@echo "  make allen-fragility-analysis Explain fragile and mixed Allen sessions"
 	@echo "  make allen-fragility-explanations Test independent explanations for fragile sessions"
+	@echo "  make allen-fragile-alternative-windows Test alternate temporal windows in fragile sessions"
+	@echo "  make allen-within-session-states Analyze chronological and engagement state dependence"
+	@echo "  make allen-animal-aware-validation Validate temporal evidence with animal clustering"
+	@echo "  make allen-recording-coverage Analyze coarse anatomical recording coverage"
 	@echo "  make allen-latent-temporal Run PCA latent temporal baseline"
 	@echo "  make allen-graph-evidence-registry Register graph-edge evidence states"
 	@echo "  make allen-session-generator-v2 Generate calibrated synthetic session artifact"
@@ -155,6 +159,18 @@ allen-fragility-analysis:
 
 allen-fragility-explanations:
 	$(PYTHON) scripts/analyze_allen_fragility_explanations.py
+
+allen-fragile-alternative-windows:
+	$(PYTHON) scripts/analyze_allen_fragile_alternative_windows.py
+
+allen-within-session-states:
+	$(PYTHON) scripts/analyze_allen_within_session_states.py
+
+allen-animal-aware-validation:
+	$(PYTHON) scripts/analyze_allen_animal_aware_validation.py
+
+allen-recording-coverage:
+	$(PYTHON) scripts/analyze_allen_recording_coverage.py
 
 allen-latent-temporal:
 	$(PYTHON) scripts/run_allen_latent_temporal_baseline.py --require-usable-target

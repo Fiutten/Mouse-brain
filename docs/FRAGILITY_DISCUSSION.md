@@ -55,15 +55,15 @@ label-permutation tests per numeric covariate.
 | median latency ms | 449.847 | 433.008 | 0.140 | 0.748 | unsupported |
 | zero-latency fraction | 0.225 | 0.273 | -0.395 | 0.331 | unsupported |
 | coarse region count | 4.444 | 4.300 | 0.296 | 0.673 | unsupported |
-| unit count | 2411.833 | 2557.053 | -0.473 | 0.333 | unsupported; missing metadata |
-| probe count | 5.667 | 6.000 | -1.384 | 0.054 | weak recording-coverage candidate |
-| complete session metadata | 0.667 | 0.950 | -0.857 | 0.073 | technical confound candidate |
+| unit count | 2345.111 | 2520.350 | -0.547 | 0.186 | weak recording-coverage candidate |
+| probe count | 5.778 | 6.000 | -0.926 | 0.088 | weak recording-coverage candidate |
+| complete session metadata | 1.000 | 1.000 | 0.000 | 1.000 | unsupported |
 
 No independent coarse covariate currently qualifies as a supported
-explanation. Probe count and metadata completeness are the strongest weak
-candidates, but both are affected by missing metadata in 3/9 fragile sessions.
-Among the six fragile sessions with known probe count, two have five probes and
-four have six probes.
+explanation. Probe count, unit count and target minority fraction are weak
+candidates, but none passes the permutation threshold. The earlier apparent
+metadata-completeness difference was caused by an incomplete local metadata
+join and disappeared after the project metadata CSV was made authoritative.
 
 ## Animal And Task Effects
 
@@ -79,13 +79,14 @@ shows that session state matters within animals.
 
 Experience level and image set do not cleanly separate fragile from
 non-fragile sessions. Fragile sessions include both Familiar/G and Novel/H
-conditions. Three fragile sessions lack these metadata fields, limiting formal
-categorical interpretation.
+conditions. The corrected metadata join provides these fields for all current
+usable sessions.
 
 ## Scientific Explanation
 
-The most defensible current explanation is **unresolved session-state or
-circuit heterogeneity, potentially compounded by recording coverage**.
+The most defensible current explanation is **partly state-dependent and partly
+persistent session/circuit heterogeneity, potentially compounded by recording
+coverage**.
 
 The evidence argues against three simpler explanations:
 
@@ -103,6 +104,54 @@ Possible explanations include latent engagement/arousal state, probe placement
 within coarse regions, cell-type composition, within-session nonstationarity,
 or a genuinely alternative neural strategy.
 
+## Alternative Windows
+
+The 9 fragile sessions were tested with 50 permutation iterations in the
+`baseline`, `stimulus` and `decision` windows.
+
+| result | sessions |
+| --- | ---: |
+| no alternative-window rescue | 4 |
+| decision-window rescue, motor contamination possible | 3 |
+| stimulus-window rescue | 1 |
+| baseline-state signal | 1 |
+
+The decision window is positive in 4/9 fragile sessions and significant in
+3/9. This is not a pre-response rescue: it may indicate later decision-related
+or motor-linked activity. Only session `1125713722` shows a stimulus-window
+rescue, and only `1092283837` shows a baseline-state signal.
+
+These results split the fragile group. Five sessions contain predictive
+information outside the candidate window, while four remain broad
+alternative-window nulls under the current coarse features.
+
+## Within-Session State Dependence
+
+The full 29-session usable cohort was split into early/middle/late
+chronological thirds and low/high engagement states. Each state used a
+20-permutation screen.
+
+| classification | sessions |
+| --- | ---: |
+| state-dependent supported | 21 |
+| no supported state | 7 |
+| state-invariant supported | 1 |
+
+The middle chronological block is the strongest aggregate state, with mean gain
+`0.163` and significant fraction `0.552`. This indicates substantial
+within-session nonstationarity across the cohort.
+
+Within the fragile subgroup:
+
+- `1067588044` is supported in middle and late blocks;
+- `1122903357` is supported only in the early block;
+- `1125713722` is supported in middle and late blocks;
+- the other six fragile sessions have no positively supported state.
+
+Thus, three fragile sessions are better described as state-dependent failures
+of the whole-session analysis. Six remain persistent null/weak cases across the
+tested state partitions.
+
 ## Discussion-Ready Language
 
 A substantial minority of behaviorally usable sessions lacked the candidate
@@ -110,8 +159,8 @@ pre-response signature. These failures were not adequately explained by class
 balance, trial count, response latency, coarse region count, experience level,
 or image set. The pattern therefore argues against a universal temporal
 mechanism and favors a state-dependent or circuit-heterogeneous account. A
-possible contribution from recording coverage remains, because lower probe
-count appeared as a weak candidate under incomplete metadata. Fragile sessions
+possible contribution from recording coverage remains, because lower probe and
+unit counts appeared as weak candidates. Fragile sessions
 should be retained as explicit negative cases for future state, anatomy and
 recording-quality stratification rather than removed from the cohort.
 
@@ -129,17 +178,28 @@ Not defensible:
 
 - claiming a universal pre-response mechanism;
 - excluding fragile sessions to strengthen the aggregate claim;
-- attributing fragility to probe count without complete placement/coverage
-  metadata;
+- attributing fragility to probe/unit count without fine placement, depth and
+  unit-quality metadata;
 - interpreting the current regional or microcircuit layers as causal.
 
 ## Required Follow-Up
 
-1. Complete the 500-permutation confirmation for all 29 usable sessions.
-2. Recover missing session metadata and quantify probe placement/unit coverage
-   within each coarse region.
-3. Add within-session state features such as engagement, running/pupil proxies,
+1. Quantify probe placement, depth, cell-type and unit-quality coverage within
+   each coarse region.
+2. Add richer within-session state features such as running/pupil proxies,
    block position and temporal nonstationarity.
-4. Perform animal-aware hierarchical or leave-one-animal-out validation.
-5. Test whether fragile sessions use alternative windows or regional patterns
-   instead of treating them only as absent-signal cases.
+3. Extend the completed leave-one-animal-out summary into a hierarchical
+   predictive model.
+4. Validate the state-dependent/persistent-null split in a second dataset.
+
+## Completed Validation Addendum
+
+- The expanded 29-session `pre_response` result is confirmed with 500
+  permutations per session: mean gain `0.149`, significant fraction `0.552`.
+- Leave-one-animal-out aggregate gain remains positive for all 23 animals:
+  minimum `0.128`, maximum `0.160`.
+- Coarse presence of visual cortex, visual thalamus, hippocampus and
+  arousal-midbrain is identical across fragile and other sessions.
+- The metadata join was corrected so Allen project metadata, rather than the
+  latest batch snapshot, is authoritative. All 29 usable sessions now have
+  probe/unit/task metadata in the relationship analysis.

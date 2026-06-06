@@ -238,7 +238,7 @@ regeneration at the 45-session checkpoint, the top-ranked pending candidate is
 The current best scientific signal is not the broad all-trials evidence report;
 it is the expanded strict `go_response` temporal analysis. Over 29 usable
 sessions, the `pre_response` window has mean gain 0.149, positive-gain fraction
-0.655, 50-permutation significant fraction 0.552 and a bootstrap CI95 of 0.089
+0.655, confirmed 500-permutation significant fraction 0.552 and a bootstrap CI95 of 0.089
 to 0.211. It passes baseline/stimulus window controls, but deterministic audit
 agents still block strong mechanistic claims because regional effects are
 heterogeneous, the latent baseline remains negative on average and the
@@ -248,6 +248,15 @@ The current fragility audit identifies 9 fragile sessions among the 29 usable
 `go_response` sessions: 6 global temporal-null cases and 3 weak or
 non-significant temporal-effect cases. This is now the main scientific obstacle
 to stronger claims.
+
+Expanded heterogeneity analysis shows that 21/29 usable sessions have
+state-dependent support. Three of the 9 fragile sessions recover support in
+specific chronological blocks, while six remain persistent null/weak cases.
+Alternative windows rescue five fragile sessions, but three are decision-window
+rescues with possible motor contamination. The completed 500-permutation
+confirmation preserves the original mean gain 0.149 and significant fraction
+0.552. Leave-one-animal-out mean gain remains positive in every case
+(minimum 0.128).
 
 Raw cache pruning is implemented in `scripts/prune_allen_nwb_cache.py`. The
 2026-06-06 cleanup deleted only raw NWB files for the 15 sessions documented as

@@ -201,7 +201,7 @@ def main() -> None:
     parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--bootstrap-iterations", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=43)
-    parser.add_argument("--permutation-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_permutation.csv")
+    parser.add_argument("--permutation-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_permutation_500.csv")
     parser.add_argument("--regional-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_regional_ablation_all_sessions.csv")
     parser.add_argument("--regional-significant-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_regional_ablation.csv")
     parser.add_argument("--out-json", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_uncertainty.json")

@@ -868,11 +868,10 @@ writes validated per-session cache files keyed by target, window, seed and
 permutation count. The 50-permutation screening run was repeated twice:
 first to populate cache (`cache_hits=0`, `cache_misses=29`) and then to verify
 reuse (`cache_hits=29`, `cache_misses=0`). The 500-permutation rerun remains a
-required confirmatory step, but it is now recoverable by session. The
-confirmatory 500-permutation cache was then warmed in two controlled
-3-session batches. Current status: `cache_hits=3`, `cache_misses=3`,
-`pending_cache=23`. Cache warming does not write an incomplete confirmatory
-cohort report.
+recoverable session-level computation. After initial staged batches, the final
+16 uncached sessions were completed in four disjoint parallel workers using
+explicit `--session-ids`. The assembled confirmatory report has
+`cache_hits=29`, `cache_misses=0`.
 
 Result over the expanded strict `go_response` cohort:
 
@@ -885,7 +884,7 @@ Result over the expanded strict `go_response` cohort:
 | `pre_response` mean gain | 0.149 |
 | `pre_response` median gain | 0.149 |
 | `pre_response` positive-gain fraction | 0.655 |
-| 50-permutation significant fraction | 0.552 |
+| confirmed 500-permutation significant fraction | 0.552 |
 | `pre_response` valid-trial fraction | 0.966 |
 | all-window mean gain | 0.270 |
 | `pre_response` bootstrap CI95 | 0.089 to 0.211 |
@@ -900,7 +899,7 @@ Regional ablation over all 29 usable sessions:
 | visual_cortex | 29 | 0.038 | 0.517 |
 | arousal_midbrain | 29 | 0.036 | 0.414 |
 
-Regional ablation over the 16 screening-significant sessions:
+Regional ablation over the 16 confirmed-significant sessions:
 
 | region | sessions | mean drop | positive drop fraction |
 | --- | ---: | ---: | ---: |
@@ -988,12 +987,42 @@ docs/FRAGILITY_DISCUSSION.md
 
 Result: no independent coarse covariate currently provides a supported
 explanation under 20,000 label permutations per numeric feature. Weak
-candidates are lower target minority fraction, lower probe count and incomplete
-metadata. Probe count has the strongest standardized difference
-(`-1.384`, permutation `p=0.054`), but probe metadata are missing in 3/9 fragile
-sessions. The discussion therefore treats recording coverage as a candidate
-confound and unresolved session-state/circuit heterogeneity as the most
-defensible explanation.
+candidates are lower target minority fraction, lower unit count and lower probe
+count. Probe count has the strongest standardized difference (`-0.926`,
+permutation `p=0.088`). A metadata-join bug that previously created four
+incomplete rows was corrected by making Allen's project metadata CSV
+authoritative. The discussion therefore treats recording coverage as a weak
+candidate and state/session circuit heterogeneity as the most defensible
+explanation.
+
+Alternative-window and within-session-state commands:
+
+```bash
+make allen-fragile-alternative-windows
+make allen-within-session-states
+make allen-animal-aware-validation
+make allen-recording-coverage
+```
+
+Key results:
+
+| analysis | result |
+| --- | --- |
+| fragile alternative windows | 4 no rescue; 3 decision rescue; 1 stimulus rescue; 1 baseline signal |
+| within-session states, all usable sessions | 21/29 state-dependent; 7/29 no supported state; 1/29 state-invariant |
+| within-session states, fragile sessions | 3/9 state-dependent; 6/9 no supported state |
+| strongest chronological block | middle; mean gain 0.163; significant fraction 0.552 |
+| animal-aware validation | 23 animals; positive animal fraction 0.696 |
+| leave-one-animal-out gain | minimum 0.128; maximum 0.160 |
+| coarse recording coverage | no significant fragile/non-fragile region-presence difference |
+
+Interpretation: state dependence is real and common, but it does not explain
+the entire fragile subgroup. Three fragile sessions recover positive support in
+specific chronological states, while six remain persistent null/weak cases.
+The aggregate temporal effect survives exclusion of every animal in turn.
+Coarse anatomical presence is uninformative because visual cortex, visual
+thalamus, hippocampus and arousal-midbrain are present in all 29 usable
+sessions. Fine probe placement and unit quality remain unresolved.
 
 ## Verification
 
@@ -1006,7 +1035,7 @@ Command:
 Current result:
 
 ```text
-97 tests OK
+102 tests OK
 ```
 
 ## Current scientific decision
@@ -1020,9 +1049,8 @@ a positive session-bootstrap CI over 29 usable sessions. This supports a
 controlled predictive-evidence claim. It does not yet support causal regional
 necessity, strong latent-representation claims, or a validated mechanistic
 microcircuit. The graph and microcircuit layers are now best framed as
-evidence-organized hypothesis generators that need fragility analysis,
-500-permutation confirmation and external replication before publication-level
-mechanistic language.
+evidence-organized hypothesis generators that need deeper fragility analysis
+and external replication before publication-level mechanistic language.
 
 Next required controls:
 

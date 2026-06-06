@@ -1,100 +1,136 @@
 {
   "artifacts": [
     {
-      "bytes": 14111,
+      "bytes": 38687,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_temporal_windows.json",
-      "sha256": "dce109470b7ecdcd2b4ed7457076fa0915ea607fc8b77d8da24988addde2cd24"
+      "sha256": "3e02ab5faaac532541447971d56703626d5ba77cec250478314af312f4a28f04"
     },
     {
-      "bytes": 7843,
+      "bytes": 22858,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_permutation_500.json",
-      "sha256": "1ed6287f75cd28269130ea9c5c27f93b8d3d7e47ccb24d5cde4ee05ed385c3d7"
+      "sha256": "8bb14d17a0195ce6076eb0e615d008831d3d80185a3941026c2cbd2fd65fa13e"
     },
     {
-      "bytes": 3244,
+      "bytes": 9247,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_regional_ablation.csv",
-      "sha256": "d8d1dfe4e9f57033f4f931035910561021e645c306b674fa0cdddfd1eeb607b5"
+      "sha256": "e173d3d425192c768a5987d89abe4d80ba05dc1f1ab1c5e4a552b34daa134045"
     },
     {
-      "bytes": 6095,
+      "bytes": 16199,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_regional_ablation_all_sessions.csv",
-      "sha256": "a80995d561cdfaefcc6141462c5a83c36c443d1fa37735bb184d5ea5643e82d3"
+      "sha256": "f3eb538b93d1a600982e66ba227f26f3c5119bdf4fdfdfb1a202b93c85e5ed4b"
     },
     {
-      "bytes": 5850,
+      "bytes": 14219,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_uncertainty.json",
-      "sha256": "0657b48c4c7c9c4c973ebe5f1c0577a58ec07e9f2519ea2a25b69db4b7b5280d"
+      "sha256": "693367f0beeba62982bce49fdbd3e7b947fa2103d14371f9188e9a0597692c21"
     },
     {
-      "bytes": 8305,
+      "bytes": 21967,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_controls.json",
-      "sha256": "6f1303ea741e0491c85cf128413204238088b86b9f29866a5db2d3e774378d03"
+      "sha256": "61c2266026a9c8adb7c690349e1b23cc57660c6cc99d19b00abd59f9e5ee160d"
     },
     {
-      "bytes": 2339,
+      "bytes": 2992,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_functional_graph.json",
-      "sha256": "c97c933ebaf0ef22b2646007980d55bf4571332583127cd015774f5acc777ece"
+      "sha256": "1f3fa60f1f1d02fd5a27c134e38f3121dac0483dca8c95a87a71ff12e961e69b"
     },
     {
-      "bytes": 4414,
+      "bytes": 4364,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_generative_surrogate.json",
-      "sha256": "48fe57e7c21515947b64aef567ab9d6e663f59912056e14d709218464fc6e80d"
+      "sha256": "659a96d2d577f479d7cdcddabc087a7ed2b3ed304c66e56f04cc8ba84cf74e9d"
     },
     {
-      "bytes": 393,
+      "bytes": 924,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_scientific_agent.json",
-      "sha256": "0abe3db70dceab2f82b77be2d18cd9ae3e68665eca183fe80ef21783f8f96b6f"
+      "sha256": "32a9918b55fe848cb20739ac12760f783871ccdf5a2834fe86a46779de922644"
     },
     {
-      "bytes": 4613,
+      "bytes": 12902,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.json",
-      "sha256": "a1ec641bfff397cbc8103dc7485524e2e39ada2f401fa16b1bc49a257fae3a89"
+      "sha256": "eeea01cb0e3ec64c90a83be1b5dbad1d0f3e41ca07efa9fd20fb92778400d7f2"
     },
     {
-      "bytes": 7041,
+      "bytes": 19634,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_latent_temporal_baseline.json",
-      "sha256": "fb8854f456de4b508d0544b11d887a5142524d0fdcd39124e8a776dfbf70fd23"
+      "sha256": "9fee2596f8e91ad7180a79f8ba3594c53e878dfb1a95552ce9034c1266e3eb9d"
     },
     {
-      "bytes": 1429,
+      "bytes": 2690,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.json",
-      "sha256": "4c068b0780c0d4f34091922689f6aa43ccb21831d40536fa47ccc40fad09f608"
+      "sha256": "354afb8037691e8b70593049f7aa81bf5552c4d2032b38abd79dfeaa4ea8392a"
     },
     {
-      "bytes": 859313,
+      "bytes": 858953,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_session_generator_v2.json",
-      "sha256": "7ec989def2e9db87e8cfb3dc60e1e9ad46e275459553e5333be71391ab143e30"
+      "sha256": "3fa71d3bd70e8385adde58bc115b8ce712a1b7a4c47271aa5e3c9917a3abcbd9"
     },
     {
-      "bytes": 705,
+      "bytes": 976,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_advanced_scientific_agent.json",
-      "sha256": "fb30beb0f7c98e6e113e68c81efb2295bae88f56d249817d01b3177092003b87"
+      "sha256": "4f0e136a4fc36a443d43eb138ed8ff09c5576049aad49ea68efb1e9f7ce0222b"
     },
     {
-      "bytes": 97783,
+      "bytes": 97989,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_selected_microcircuit.json",
-      "sha256": "64ed2ad5390fcabbce8a12b80c096e0bfd00c080124babdd90bc7e068228484d"
+      "sha256": "59985681d94a0181dff224288b0f5a045c8ad8fc6610b15da6c82f61506fc6dc"
     },
     {
-      "bytes": 6038,
+      "bytes": 13358,
       "exists": true,
       "path": "artifacts/reports/allen_targets/go_response_microcircuit_validation.json",
-      "sha256": "e7354b8d420ae79dc3ad4f80a583ad9f4ea93c111deb973ccdfe698029a2684e"
+      "sha256": "52e1104082cd5d01a30f83d9e1d255952bbce980f4681c9035caa5d8cbaf8aa8"
+    },
+    {
+      "bytes": 32552,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_fragile_sessions.json",
+      "sha256": "f2bc7462c4c93970c2840abc1acfce0688b8d791ef1c486c174e39f46189c700"
+    },
+    {
+      "bytes": 6004,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_fragility_explanations.json",
+      "sha256": "8c121b047552a5cef25c4399fb840ddd44cd17bd1907e7f789159a6bbdd8b841"
+    },
+    {
+      "bytes": 18629,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_fragile_alternative_windows.json",
+      "sha256": "8db85a29ea9ec1b00ed46e1f8e3c6ad5bee3c704d70e17b806a3c93fe077d0ac"
+    },
+    {
+      "bytes": 100327,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_within_session_states.json",
+      "sha256": "754f4e554389b3f11bfb7a6393013b9ec5ee69723cf845641a1a9b9d42ecb5dc"
+    },
+    {
+      "bytes": 7945,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_animal_aware_validation.json",
+      "sha256": "4e8230eb611e5e5d825469a46b45de0fdad09a7dfe1e9495143544a1b3d070e2"
+    },
+    {
+      "bytes": 1634,
+      "exists": true,
+      "path": "artifacts/reports/allen_targets/go_response_recording_coverage.json",
+      "sha256": "8af16ceb422016a6c2dd946acb04be5035ce98ed499e2c029b05915c9b3611e8"
     }
   ],
   "commands": [
@@ -107,27 +143,63 @@
     "make allen-generative-surrogate",
     "make allen-scientific-agent",
     "make allen-advanced-evidence",
+    "make allen-fragility-analysis",
+    "make allen-fragility-explanations",
+    "make allen-fragile-alternative-windows",
+    "make allen-within-session-states",
+    "make allen-animal-aware-validation",
+    "make allen-recording-coverage",
     "make test"
   ],
-  "created_at_utc": "2026-06-05T17:06:27.182843+00:00",
+  "created_at_utc": "2026-06-06T07:43:14.170977+00:00",
   "dataset_inventory": {
-    "normalized_allen_sessions": 15,
+    "normalized_allen_sessions": 45,
     "session_ids": [
+      "1044594870",
+      "1047969464",
+      "1048196054",
       "1053709239",
+      "1053718935",
+      "1053925378",
+      "1055221968",
+      "1055240613",
+      "1062755779",
       "1064415305",
+      "1064639378",
+      "1064644573",
+      "1065437523",
       "1065449881",
+      "1065908084",
+      "1067588044",
+      "1081079981",
+      "1081090969",
+      "1081431006",
       "1087720624",
       "1087992708",
       "1090800639",
       "1090803859",
       "1091039902",
       "1092283837",
+      "1092466205",
       "1093638203",
+      "1093642839",
       "1093864136",
+      "1093867806",
+      "1095138995",
       "1096620314",
       "1098119201",
+      "1104052767",
       "1111013640",
-      "1119946360"
+      "1112302803",
+      "1115086689",
+      "1115368723",
+      "1118324999",
+      "1118508667",
+      "1119946360",
+      "1120251466",
+      "1122903357",
+      "1125713722",
+      "1130113579"
     ]
   },
   "environment_notes": [

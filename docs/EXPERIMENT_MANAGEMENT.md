@@ -110,6 +110,18 @@ artifacts/reports/allen_targets/go_response_fragile_sessions.md
 artifacts/reports/allen_targets/go_response_fragility_explanations.json
 artifacts/reports/allen_targets/go_response_fragility_explanations.csv
 artifacts/reports/allen_targets/go_response_fragility_discussion.md
+artifacts/reports/allen_targets/go_response_fragile_alternative_windows.json
+artifacts/reports/allen_targets/go_response_fragile_alternative_windows.csv
+artifacts/reports/allen_targets/go_response_fragile_alternative_windows.md
+artifacts/reports/allen_targets/go_response_within_session_states.json
+artifacts/reports/allen_targets/go_response_within_session_states.csv
+artifacts/reports/allen_targets/go_response_within_session_states.md
+artifacts/reports/allen_targets/go_response_animal_aware_validation.json
+artifacts/reports/allen_targets/go_response_animal_aware_validation.csv
+artifacts/reports/allen_targets/go_response_animal_aware_validation.md
+artifacts/reports/allen_targets/go_response_recording_coverage.json
+artifacts/reports/allen_targets/go_response_recording_coverage.csv
+artifacts/reports/allen_targets/go_response_recording_coverage.md
 artifacts/reports/allen_targets/go_response_latent_temporal_baseline.json
 artifacts/reports/allen_targets/go_response_latent_temporal_baseline.md
 artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.json
@@ -332,18 +344,16 @@ The current `pre_response` candidate passes negative window controls against
 baseline and stimulus windows, but latency-stratified checks show heterogeneity.
 Treat this as controlled predictive evidence, not mechanism.
 
-The active 45-session advanced evidence layer is based on the cacheable
-50-permutation temporal screen over 29 strict usable `go_response` sessions.
-The older 500-permutation artifact documents the initial 10-session cohort and
-must not be treated as confirmation of the 29-session expanded cohort until
-`make allen-temporal-permutation-confirm` completes with current per-session
-cache files.
+The active 45-session advanced evidence layer is based on the completed
+500-permutation temporal confirmation over 29 strict usable `go_response`
+sessions. The session-level cache is complete and the current
+`go_response_pre_response_permutation_500.*` artifacts are the confirmatory
+source for uncertainty, stability and animal-aware validation.
 
-Use `make allen-temporal-permutation-confirm-warm` to populate the current
-500-permutation cache in small resumable batches. This target must not be
-interpreted as a complete confirmatory report; it only warms missing
-session-level cache files and records status in
-`artifacts/reports/allen_targets/temporal_permutation_cache_status.json`.
+Use `make allen-temporal-permutation-confirm-warm` for future incremental
+sessions. Explicit `--session-ids` subsets can be used for disjoint parallel
+cache warming; the complete cohort report must still be assembled with
+`make allen-temporal-permutation-confirm`.
 
 The functional graph and generative surrogate are allowed only as design and
 stress-test layers. They must not be cited as anatomical connectivity, causal

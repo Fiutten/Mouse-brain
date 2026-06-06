@@ -30,6 +30,12 @@ CANONICAL_COMMANDS = [
     "make allen-generative-surrogate",
     "make allen-scientific-agent",
     "make allen-advanced-evidence",
+    "make allen-fragility-analysis",
+    "make allen-fragility-explanations",
+    "make allen-fragile-alternative-windows",
+    "make allen-within-session-states",
+    "make allen-animal-aware-validation",
+    "make allen-recording-coverage",
     "make test",
 ]
 
@@ -51,6 +57,12 @@ CANONICAL_ARTIFACTS = [
     "artifacts/reports/allen_targets/go_response_advanced_scientific_agent.json",
     "artifacts/reports/allen_targets/go_response_selected_microcircuit.json",
     "artifacts/reports/allen_targets/go_response_microcircuit_validation.json",
+    "artifacts/reports/allen_targets/go_response_fragile_sessions.json",
+    "artifacts/reports/allen_targets/go_response_fragility_explanations.json",
+    "artifacts/reports/allen_targets/go_response_fragile_alternative_windows.json",
+    "artifacts/reports/allen_targets/go_response_within_session_states.json",
+    "artifacts/reports/allen_targets/go_response_animal_aware_validation.json",
+    "artifacts/reports/allen_targets/go_response_recording_coverage.json",
 ]
 
 
