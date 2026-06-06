@@ -104,6 +104,9 @@ artifacts/reports/allen_targets/go_response_scientific_agent.json
 artifacts/reports/allen_targets/go_response_scientific_agent.md
 artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.json
 artifacts/reports/allen_targets/go_response_pre_response_stability_matrix.md
+artifacts/reports/allen_targets/go_response_fragile_sessions.json
+artifacts/reports/allen_targets/go_response_fragile_sessions.csv
+artifacts/reports/allen_targets/go_response_fragile_sessions.md
 artifacts/reports/allen_targets/go_response_latent_temporal_baseline.json
 artifacts/reports/allen_targets/go_response_latent_temporal_baseline.md
 artifacts/reports/allen_targets/go_response_pre_response_graph_evidence_registry.json
@@ -332,6 +335,12 @@ The older 500-permutation artifact documents the initial 10-session cohort and
 must not be treated as confirmation of the 29-session expanded cohort until
 `make allen-temporal-permutation-confirm` completes with current per-session
 cache files.
+
+Use `make allen-temporal-permutation-confirm-warm` to populate the current
+500-permutation cache in small resumable batches. This target must not be
+interpreted as a complete confirmatory report; it only warms missing
+session-level cache files and records status in
+`artifacts/reports/allen_targets/temporal_permutation_cache_status.json`.
 
 The functional graph and generative surrogate are allowed only as design and
 stress-test layers. They must not be cited as anatomical connectivity, causal

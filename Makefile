@@ -1,7 +1,7 @@
 PYTHON := .venv/bin/python
 PIP := .venv/bin/pip
 
-.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-selector-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
+.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-selector-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-permutation-confirm-warm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-fragility-analysis allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
 
 help:
 	@echo "Targets:"
@@ -29,6 +29,7 @@ help:
 	@echo "  make allen-temporal-windows Run go_response temporal-window benchmark"
 	@echo "  make allen-temporal-permutation Run pre_response temporal permutation screen"
 	@echo "  make allen-temporal-permutation-confirm Run 500-permutation pre_response confirmation"
+	@echo "  make allen-temporal-permutation-confirm-warm Warm 500-permutation cache for 3 sessions"
 	@echo "  make allen-temporal-regional-ablation Run significant pre_response region ablation"
 	@echo "  make allen-uncertainty Estimate cross-session uncertainty"
 	@echo "  make allen-response-controls Run response-window and latency controls"
@@ -37,6 +38,7 @@ help:
 	@echo "  make allen-scientific-agent Run deterministic scientific audit agent"
 	@echo "  make allen-study-manifest Register reproducibility manifest"
 	@echo "  make allen-stability-matrix Build session x control stability matrix"
+	@echo "  make allen-fragility-analysis Explain fragile and mixed Allen sessions"
 	@echo "  make allen-latent-temporal Run PCA latent temporal baseline"
 	@echo "  make allen-graph-evidence-registry Register graph-edge evidence states"
 	@echo "  make allen-session-generator-v2 Generate calibrated synthetic session artifact"
@@ -120,6 +122,9 @@ allen-temporal-permutation:
 allen-temporal-permutation-confirm:
 	$(PYTHON) scripts/run_allen_temporal_permutation.py --target-name go_response --window-name pre_response --require-usable-target --n-permutations 500 --out-json artifacts/reports/allen_targets/go_response_pre_response_permutation_500.json --out-csv artifacts/reports/allen_targets/go_response_pre_response_permutation_500.csv --out-md artifacts/reports/allen_targets/go_response_pre_response_permutation_500.md
 
+allen-temporal-permutation-confirm-warm:
+	$(PYTHON) scripts/run_allen_temporal_permutation.py --target-name go_response --window-name pre_response --require-usable-target --n-permutations 500 --cache-warm-only --max-cache-misses 3
+
 allen-temporal-regional-ablation:
 	$(PYTHON) scripts/run_allen_temporal_regional_ablation.py --target-name go_response --window-name pre_response --require-usable-target --significant-only
 
@@ -143,6 +148,9 @@ allen-study-manifest:
 
 allen-stability-matrix:
 	$(PYTHON) scripts/build_allen_stability_matrix.py
+
+allen-fragility-analysis:
+	$(PYTHON) scripts/analyze_allen_fragile_sessions.py
 
 allen-latent-temporal:
 	$(PYTHON) scripts/run_allen_latent_temporal_baseline.py --require-usable-target

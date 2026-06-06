@@ -244,6 +244,11 @@ agents still block strong mechanistic claims because regional effects are
 heterogeneous, the latent baseline remains negative on average and the
 microcircuit validation is only partially aligned.
 
+The current fragility audit identifies 9 fragile sessions among the 29 usable
+`go_response` sessions: 6 global temporal-null cases and 3 weak or
+non-significant temporal-effect cases. This is now the main scientific obstacle
+to stronger claims.
+
 Raw cache pruning is implemented in `scripts/prune_allen_nwb_cache.py`. The
 2026-06-06 cleanup deleted only raw NWB files for the 15 sessions documented as
 non-usable for `go_response`; all normalized artifacts remain available for

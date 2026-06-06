@@ -191,6 +191,9 @@ def main() -> None:
     parser.add_argument("--datasets-root", type=Path, default=ROOT / "artifacts" / "datasets" / "allen")
     parser.add_argument("--cache-root", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "temporal_permutation_cache")
     parser.add_argument("--no-cache", action="store_true", help="Recompute every session and overwrite session-level cache files.")
+    parser.add_argument("--cache-warm-only", action="store_true", help="Populate missing session-level cache entries without writing cohort evidence outputs.")
+    parser.add_argument("--max-cache-misses", type=int, help="Maximum uncached sessions to compute in this run; useful for staged confirmatory cache warming.")
+    parser.add_argument("--cache-status-json", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "temporal_permutation_cache_status.json")
     parser.add_argument("--out-json", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_permutation.json")
     parser.add_argument("--out-csv", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_permutation.csv")
     parser.add_argument("--out-md", type=Path, default=ROOT / "artifacts" / "reports" / "allen_targets" / "go_response_pre_response_permutation.md")
@@ -201,6 +204,7 @@ def main() -> None:
     skipped = []
     cache_hits = 0
     cache_misses = 0
+    pending_cache = []
     session_dirs = sorted(path.parent for path in args.datasets_root.glob("*/session.json"))
     for session_dir in session_dirs:
         session = read_session_artifact(session_dir)
@@ -228,6 +232,9 @@ def main() -> None:
             cache_hits += 1
             rows.append(cached)
             continue
+        if args.cache_warm_only and args.max_cache_misses is not None and cache_misses >= args.max_cache_misses:
+            pending_cache.append(session.session_id)
+            continue
         cache_misses += 1
         try:
             report = run_temporal_window_permutation_test(
@@ -247,6 +254,28 @@ def main() -> None:
         if not args.no_cache:
             write_cached_row(cache_path, row)
         rows.append(row)
+
+    if args.cache_warm_only:
+        payload = {
+            "target_name": target_name,
+            "window_name": args.window_name,
+            "n_permutations": args.n_permutations,
+            "seed": args.seed,
+            "n_sessions_considered": len(session_dirs),
+            "n_sessions_skipped": len(skipped),
+            "cache_hits": cache_hits,
+            "cache_misses": cache_misses,
+            "n_pending_cache": len(pending_cache),
+            "pending_cache_session_ids": pending_cache,
+            "complete": len(pending_cache) == 0,
+        }
+        args.cache_status_json.parent.mkdir(parents=True, exist_ok=True)
+        args.cache_status_json.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+        print(f"cache_status_json={args.cache_status_json}")
+        print(f"cache_hits={cache_hits}")
+        print(f"cache_misses={cache_misses}")
+        print(f"pending_cache={len(pending_cache)}")
+        return
 
     payload = {
         "target_name": target_name,

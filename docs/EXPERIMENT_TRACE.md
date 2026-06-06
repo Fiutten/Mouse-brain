@@ -852,6 +852,7 @@ make allen-functional-graph
 make allen-generative-surrogate
 make allen-scientific-agent
 make allen-stability-matrix
+make allen-fragility-analysis
 make allen-latent-temporal
 make allen-graph-evidence-registry
 make allen-session-generator-v2
@@ -867,7 +868,11 @@ writes validated per-session cache files keyed by target, window, seed and
 permutation count. The 50-permutation screening run was repeated twice:
 first to populate cache (`cache_hits=0`, `cache_misses=29`) and then to verify
 reuse (`cache_hits=29`, `cache_misses=0`). The 500-permutation rerun remains a
-required confirmatory step, but it is now recoverable by session.
+required confirmatory step, but it is now recoverable by session. The
+confirmatory 500-permutation cache was then warmed in two controlled
+3-session batches. Current status: `cache_hits=3`, `cache_misses=3`,
+`pending_cache=23`. Cache warming does not write an incomplete confirmatory
+cohort report.
 
 Result over the expanded strict `go_response` cohort:
 
@@ -914,6 +919,8 @@ Advanced layer:
 | robust sessions | 12 |
 | mixed sessions | 8 |
 | fragile sessions | 9 |
+| fragile global temporal null sessions | 6 |
+| fragile weak/non-significant temporal sessions | 3 |
 | latent mean gain | -0.045 |
 | latent positive-gain fraction | 0.379 |
 | scientific-agent decision | `hold_strong_claims` |
@@ -933,6 +940,37 @@ because session stability is only moderate and the latent baseline remains
 negative on average. The microcircuit remains useful as a hypothesis scaffold,
 not as a validated brain mechanism.
 
+Fragility analysis artifacts:
+
+```text
+artifacts/reports/allen_targets/go_response_fragile_sessions.json
+artifacts/reports/allen_targets/go_response_fragile_sessions.csv
+artifacts/reports/allen_targets/go_response_fragile_sessions.md
+artifacts/reports/allen_targets/temporal_permutation_cache_status.json
+```
+
+Fragile sessions:
+
+```text
+1044594870
+1064644573
+1067588044
+1087720624
+1090803859
+1092283837
+1092466205
+1122903357
+1125713722
+```
+
+Interpretation of fragility: the 9 fragile sessions are not random noise to
+hide. Six are `global_temporal_null` cases where the main temporal effect and
+both latency strata fail together. Three are
+`weak_or_non_significant_temporal_effect` cases where the temporal effect is
+insufficient even if some subordinate checks partially pass. This suggests
+that the next scientific step is not adding a more elaborate microcircuit; it
+is explaining why a sizeable subset lacks the candidate temporal signature.
+
 ## Verification
 
 Command:
@@ -944,7 +982,7 @@ Command:
 Current result:
 
 ```text
-92 tests OK
+94 tests OK
 ```
 
 ## Current scientific decision
