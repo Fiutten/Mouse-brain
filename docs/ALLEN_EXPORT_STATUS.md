@@ -9,24 +9,24 @@ multi-session validation becomes scientifically meaningful.
 
 Checkpoint date: 2026-06-06.
 
-The latest controlled expansion reached 40 normalized Allen sessions. The
-previous partial NWB download (`1048196054`) was resumed successfully and added
-one usable `go_response` session. The empirical usable-session rate still makes
-clear that "50 downloads" and "50 usable target sessions" are not equivalent.
-After documenting the non-usable sessions, the raw NWB cache was pruned for
-sessions that are not usable for the strict `go_response` cohort. Normalized
-`session.json` artifacts and reports were kept.
+The latest controlled expansion reached 45 normalized Allen sessions after a
+5-session target-aware selector trial. The previous 40-session checkpoint had
+25 usable `go_response` sessions; the selector-prioritized batch added 5
+normalized sessions, 4 of which are usable for the strict `go_response` cohort.
+This is operationally encouraging, but it is not yet statistical proof that the
+selector generalizes. The empirical usable-session rate still makes clear that
+"50 downloads" and "50 usable target sessions" are not equivalent.
 
 | metric | value |
 | --- | ---: |
-| normalized/exported sessions | 40 |
-| usable `go_response` sessions | 25 |
-| non-usable `go_response` sessions | 15 |
-| total labeled trials | 11096 |
-| labeled `go_response` trials | 9705 |
-| raw Allen cache size after pruning | 75 GB |
-| normalized Allen artifacts size | 24 MB |
-| free disk after pruning | 679 GiB |
+| normalized/exported sessions | 45 |
+| usable `go_response` sessions | 29 |
+| non-usable `go_response` sessions | 16 |
+| total labeled trials | 12311 |
+| labeled `go_response` trials | 10767 |
+| raw Allen cache size after selector trial | 88 GB |
+| normalized Allen artifacts size | 27 MB |
+| free disk after selector trial | 665 GiB |
 | pruned raw NWB files | 15 |
 | storage freed by pruning | 46.34 GiB |
 | partially downloaded next session | none |
@@ -36,15 +36,15 @@ The previous next-session partial download is now complete. Future interrupted
 downloads remain recoverable because the batch exporter uses `curl -C -`, so a
 later run resumes instead of restarting the NWB transfer.
 
-Latest broad evidence status over all 40 normalized sessions:
+Latest broad evidence status over all 45 normalized sessions:
 
 | statistic | value |
 | --- | ---: |
-| total valid trials | 11096 |
-| mean multi-split neural gain | 0.023 |
-| mean permutation observed gain | 0.031 |
-| positive multi-split fraction | 0.564 |
-| significant permutation fraction | 0.462 |
+| total valid trials | 12311 |
+| mean multi-split neural gain | 0.021 |
+| mean permutation observed gain | 0.030 |
+| positive multi-split fraction | 0.578 |
+| significant permutation fraction | 0.467 |
 | formal decision | `inconclusive_mixed_evidence` |
 
 This remains exploratory. It is useful evidence for system behavior and target
@@ -54,12 +54,12 @@ Latest behavioral-target diagnostics:
 
 | target | usable sessions | labeled trials | interpretation |
 | --- | ---: | ---: | --- |
-| `choice` | 34/40 | 11096 | high-coverage continuity baseline |
-| `go_response` | 25/40 | 9705 | strict primary task-native target candidate |
-| `catch_response` | 0/40 | 1391 | systematically underpowered/imbalanced |
-| `rewarded` | 35/40 | 11096 | useful but outcome-derived control |
-| `response_made` | 34/40 | 11096 | broad action/no-action control |
-| `task_success` | 26/40 | 11096 | correctness target; outcome-confounded |
+| `choice` | 39/45 | 12311 | high-coverage continuity baseline |
+| `go_response` | 29/45 | 10767 | strict primary task-native target candidate |
+| `catch_response` | 0/45 | 1544 | systematically underpowered/imbalanced |
+| `rewarded` | 40/45 | 12311 | useful but outcome-derived control |
+| `response_made` | 39/45 | 12311 | broad action/no-action control |
+| `task_success` | 30/45 | 12311 | correctness target; outcome-confounded |
 
 ## Initial 15-session checkpoint
 
@@ -208,6 +208,7 @@ Useful commands:
 
 ```bash
 make allen-export-batch-plan
+make allen-export-selector-batch-plan
 make allen-export-batch
 make allen-evidence
 make allen-targets
@@ -218,8 +219,8 @@ make allen-prune-cache-plan
 
 ## Scientific status
 
-Multi-session analysis infrastructure now runs on 40 fully normalized sessions,
-with 25 usable sessions for the strict `go_response` target. This is a stronger
+Multi-session analysis infrastructure now runs on 45 fully normalized sessions,
+with 29 usable sessions for the strict `go_response` target. This is a stronger
 engineering and scientific base than the initial 15-session checkpoint, but the
 formal result remains `inconclusive_mixed_evidence`. The immediate next step is
 not to claim success; it is to build a target-aware session selector, stratify
@@ -228,12 +229,15 @@ defensible behavioral balance.
 
 The first target-aware selector is implemented in
 `scripts/select_allen_target_aware_sessions.py`. At the 40-session checkpoint it
-ranks 20 pending candidates from the top 80 metadata candidates; the top-ranked
-candidate is `1122903357`. This ranking should be used to prioritize the next
-downloads, then regenerated after each batch.
+ranked 20 pending candidates from the top 80 metadata candidates; the top-ranked
+candidate was `1122903357`. The first 5-session selector trial exported all 5
+selected sessions and yielded 4/5 usable `go_response` sessions. After
+regeneration at the 45-session checkpoint, the top-ranked pending candidate is
+`1065905010`. This ranking should be regenerated after each batch.
 
 Raw cache pruning is implemented in `scripts/prune_allen_nwb_cache.py`. The
 2026-06-06 cleanup deleted only raw NWB files for the 15 sessions documented as
 non-usable for `go_response`; all normalized artifacts remain available for
 audit and reanalysis. The cleanup reduced `data/allen` from 121 GB to 75 GB and
-increased free disk from 632 GiB to 679 GiB.
+increased free disk from 632 GiB to 679 GiB. The later selector trial increased
+the raw cache to 88 GB and left 665 GiB free.

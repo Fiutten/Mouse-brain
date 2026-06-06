@@ -266,14 +266,63 @@ def write_status_report(reports_root: Path, payload: dict[str, Any], dry_run: bo
     return report_path
 
 
+def load_selector_session_order(selector_json: Path | None) -> list[int]:
+    """Return ecephys ids from a target-aware selector report.
+
+    The target-aware selector is produced from already normalized evidence. When
+    provided, this order becomes the download priority for the batch exporter;
+    metadata still supplies the complete Allen session fields needed for export.
+    """
+    if selector_json is None:
+        return []
+    payload = json.loads(selector_json.read_text(encoding="utf-8"))
+    order: list[int] = []
+    for row in payload.get("candidates", []):
+        session_id = row.get("ecephys_session_id")
+        if session_id is not None:
+            order.append(int(session_id))
+    return order
+
+
+def apply_selector_order(
+    candidates: list[AllenSessionCandidate],
+    selector_order: list[int],
+) -> list[AllenSessionCandidate]:
+    """Reorder metadata candidates by target-aware selector ids.
+
+    Any selector id missing from the metadata candidate pool is ignored. The
+    remaining metadata-ranked candidates are appended after the selector order so
+    dry runs still expose the broader fallback queue.
+    """
+    if not selector_order:
+        return candidates
+    by_id = {candidate.ecephys_session_id: candidate for candidate in candidates}
+    selected: list[AllenSessionCandidate] = []
+    seen: set[int] = set()
+    for session_id in selector_order:
+        candidate = by_id.get(session_id)
+        if candidate is None or session_id in seen:
+            continue
+        selected.append(candidate)
+        seen.add(session_id)
+    selected.extend(
+        candidate
+        for candidate in candidates
+        if candidate.ecephys_session_id not in seen
+    )
+    return selected
+
+
 def select_pending_candidates(
     *,
     metadata_csv: Path,
     datasets_root: Path,
     candidate_limit: int,
+    selector_json: Path | None = None,
 ) -> tuple[list[AllenSessionCandidate], list[AllenSessionCandidate]]:
     """Return ranked candidates split into already-exported and pending groups."""
     candidates = load_allen_session_candidates(metadata_csv)[:candidate_limit]
+    candidates = apply_selector_order(candidates, load_selector_session_order(selector_json))
     exported: list[AllenSessionCandidate] = []
     pending: list[AllenSessionCandidate] = []
     for candidate in candidates:
@@ -296,6 +345,11 @@ def main() -> None:
     parser.add_argument("--core-python", type=Path, default=ROOT / ".venv" / "bin" / "python")
     parser.add_argument("--curl-bin", type=Path, default=Path("/usr/bin/curl"))
     parser.add_argument("--candidate-limit", type=int, default=10)
+    parser.add_argument(
+        "--selector-json",
+        type=Path,
+        help="Optional target-aware selector report whose candidate order should drive this batch.",
+    )
     parser.add_argument("--max-new", type=int, default=1)
     parser.add_argument("--max-trials", type=int)
     parser.add_argument("--n-permutations", type=int, default=50)
@@ -319,6 +373,7 @@ def main() -> None:
         metadata_csv=args.metadata_csv,
         datasets_root=args.datasets_root,
         candidate_limit=args.candidate_limit,
+        selector_json=args.selector_json,
     )
     selected = pending[: args.max_new]
     attempted: list[dict[str, Any]] = []
@@ -382,6 +437,7 @@ def main() -> None:
         "created_at": datetime.now(UTC).isoformat(),
         "dry_run": args.dry_run,
         "candidate_limit": args.candidate_limit,
+        "selector_json": str(args.selector_json) if args.selector_json else None,
         "max_new": args.max_new,
         "min_free_gb": args.min_free_gb,
         "already_exported": [asdict(candidate) for candidate in exported],

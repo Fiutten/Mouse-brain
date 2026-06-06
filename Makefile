@@ -1,7 +1,7 @@
 PYTHON := .venv/bin/python
 PIP := .venv/bin/pip
 
-.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
+.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-selector-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
 
 help:
 	@echo "Targets:"
@@ -18,6 +18,7 @@ help:
 	@echo "  make allen-prune-cache-plan Plan raw NWB pruning for non-usable sessions"
 	@echo "  make allen-export-candidate Export selected Allen session (requires .venv-allen)"
 	@echo "  make allen-export-batch-plan Plan resumable Allen batch export"
+	@echo "  make allen-export-selector-batch-plan Plan a 5-session selector-driven export"
 	@echo "  make allen-export-batch Export next pending Allen session"
 	@echo "  make allen-evidence Synthesize current Allen evidence"
 	@echo "  make allen-targets Diagnose Allen behavioral targets"
@@ -85,6 +86,9 @@ allen-export-candidate:
 
 allen-export-batch-plan:
 	$(PYTHON) scripts/export_allen_sessions_batch.py --dry-run
+
+allen-export-selector-batch-plan:
+	$(PYTHON) scripts/export_allen_sessions_batch.py --dry-run --max-new 5 --candidate-limit 80 --selector-json artifacts/reports/allen_targets/go_response_target_aware_selector.json --n-permutations 20 --min-free-gb 120
 
 allen-export-batch:
 	$(PYTHON) scripts/export_allen_sessions_batch.py --max-new 1

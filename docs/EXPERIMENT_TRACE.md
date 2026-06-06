@@ -8,13 +8,13 @@ separate.
 ## Current dataset state
 
 - Dataset: Allen Visual Behavior Neuropixels.
-- Normalized sessions: 40.
+- Normalized sessions: 45.
 - Strict primary target: `go_response`.
-- Strict usable `go_response` sessions: 25/40.
-- Non-usable `go_response` sessions: 15/40, all due to class imbalance.
+- Strict usable `go_response` sessions: 29/45.
+- Non-usable `go_response` sessions: 16/45, all due to class imbalance.
 - Latest broad evidence decision: `inconclusive_mixed_evidence`.
-- Raw Allen cache size after pruning: 75 GB.
-- Free disk after pruning: 679 GiB.
+- Raw Allen cache size after selector trial: 88 GB.
+- Free disk after selector trial: 665 GiB.
 
 ## Target viability
 
@@ -34,12 +34,12 @@ Current target status:
 
 | target | usable sessions | labeled trials | status |
 | --- | ---: | ---: | --- |
-| `go_response` | 25/40 | 9705 | primary signal target |
-| `response_made` | 34/40 | 11096 | broader control |
-| `task_success` | 26/40 | 11096 | correctness control, outcome-confounded |
-| `choice` | 34/40 | 11096 | continuity baseline |
-| `rewarded` | 35/40 | 11096 | outcome-derived control |
-| `catch_response` | 0/40 | 1391 | underpowered/imbalanced |
+| `go_response` | 29/45 | 10767 | primary signal target |
+| `response_made` | 39/45 | 12311 | broader control |
+| `task_success` | 30/45 | 12311 | correctness control, outcome-confounded |
+| `choice` | 39/45 | 12311 | continuity baseline |
+| `rewarded` | 40/45 | 12311 | outcome-derived control |
+| `catch_response` | 0/45 | 1544 | underpowered/imbalanced |
 
 Interpretation: target viability, not download failure, explains why some
 sessions are excluded from the strict `go_response` cohort.
@@ -148,6 +148,69 @@ experience because those categories currently look more favorable after
 small-sample smoothing. This should guide the next download order, but it must
 be re-audited after each batch to avoid locking onto a cohort artifact.
 
+## 5-session selector trial
+
+Command:
+
+```bash
+.venv/bin/python scripts/export_allen_sessions_batch.py \
+  --max-new 5 \
+  --candidate-limit 80 \
+  --selector-json artifacts/reports/allen_targets/go_response_target_aware_selector.json \
+  --n-permutations 20 \
+  --min-free-gb 120 \
+  --continue-on-error
+
+.venv/bin/python scripts/analyze_allen_session_relations.py --target-name go_response
+.venv/bin/python scripts/select_allen_target_aware_sessions.py --candidate-limit 80 --top-n 20
+.venv/bin/python -m unittest discover -s tests
+```
+
+Artifacts:
+
+```text
+artifacts/reports/allen/export_batch_status.json
+artifacts/reports/allen/target_diagnostics.json
+artifacts/reports/allen_targets/go_response_session_relations.json
+artifacts/reports/allen_targets/go_response_session_relations.csv
+artifacts/reports/allen_targets/go_response_session_relations.md
+artifacts/reports/allen_targets/go_response_target_aware_selector.json
+artifacts/reports/allen_targets/go_response_target_aware_selector.csv
+artifacts/reports/allen_targets/go_response_target_aware_selector.md
+```
+
+Result:
+
+| metric | value |
+| --- | ---: |
+| selector sessions attempted | 5 |
+| exported/normalized sessions | 5 |
+| usable `go_response` among new selected sessions | 4/5 |
+| previous usable rate | 25/40 = 0.625 |
+| selector-trial usable rate | 4/5 = 0.800 |
+| cumulative usable rate | 29/45 = 0.644 |
+| failed selected session | 1065908084 |
+| failed-session reason | minority class below 0.20 |
+| failed-session positive rate | 0.816 |
+| failed-session labeled trials | 196 |
+| total valid trials after trial | 12311 |
+| broad mean multi-split gain | 0.021 |
+| broad mean permutation gain | 0.030 |
+| broad evidence decision | `inconclusive_mixed_evidence` |
+| raw Allen cache after trial | 88 GB |
+| normalized Allen artifacts after trial | 27 MB |
+| free disk after trial | 665 GiB |
+| unit tests after code update | 89/89 OK |
+| updated top selector candidate | 1065905010 |
+
+Interpretation: the selector is useful enough to keep using as an operational
+download prioritizer, because this first trial outperformed the previous
+observed usable-session rate. It is not yet validated as a statistically stable
+session-quality model. One selected `image_set=H`/`Novel` session still failed
+because its hit/miss labels were too imbalanced, so the next selector version
+should add stronger diversity or uncertainty constraints rather than simply
+chasing the current top category.
+
 ## Raw NWB cache pruning
 
 Command:
@@ -245,10 +308,10 @@ Interpretation: failed sessions are target failures, not benchmark failures.
 
 Latest relation checkpoint:
 
-- 40 sessions analyzed.
-- 25 usable `go_response` sessions.
-- 15 non-usable `go_response` sessions.
-- 15/15 non-usable sessions fail due to `go_response` class imbalance below
+- 45 sessions analyzed.
+- 29 usable `go_response` sessions.
+- 16 non-usable `go_response` sessions.
+- 16/16 non-usable sessions fail due to `go_response` class imbalance below
   minority fraction 0.20.
 - 3 sessions in the strict evidence cohort are permutation-significant.
 

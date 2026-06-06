@@ -117,7 +117,7 @@ artifacts/study_manifests/allen_go_response_pre_response.json
 Current normalized Allen sessions:
 
 ```text
-Current checkpoint: 40 normalized sessions as of 2026-06-06.
+Current checkpoint: 45 normalized sessions as of 2026-06-06.
 The complete machine-readable list is in
 artifacts/reports/allen/target_diagnostics.json and the human-readable
 usable/non-usable explanation is in
@@ -259,7 +259,7 @@ target/feature redesign, not biological-layer expansion.
 Do not promote a behavioral target into the main benchmark unless
 `artifacts/reports/allen/target_diagnostics.json` shows enough labeled trials
 and acceptable class balance across multiple sessions. At the current
-40-session stage, `go_response` remains the first serious task-native
+45-session stage, `go_response` remains the first serious task-native
 candidate, `response_made` is a broader action/no-action control, `choice` is a
 continuity baseline, `rewarded` and `task_success` are outcome-related
 controls, and `catch_response` is underpowered.
@@ -292,7 +292,10 @@ target-balance viability learned from downloaded sessions, weak neural-evidence
 resemblance, and the original metadata quality score. It is a download
 prioritizer, not a biological or statistical claim. Re-run it after every new
 batch because the empirical layer is intentionally updated from the current
-normalized cohort.
+normalized cohort. The first 5-session selector validation exported all
+selected sessions and yielded 4/5 usable `go_response` sessions; treat this as
+an encouraging operational screen, not as proof that the selector is
+statistically calibrated.
 
 Regional ablations are feature ablations, not biological lesions. They are
 allowed for hypothesis prioritization only:

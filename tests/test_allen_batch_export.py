@@ -1,5 +1,6 @@
 import csv
 import importlib.util
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -124,6 +125,82 @@ class AllenBatchExportTests(unittest.TestCase):
             )
             self.assertEqual([item.ecephys_session_id for item in exported], [1])
             self.assertEqual([item.ecephys_session_id for item in pending], [2])
+
+    def test_select_pending_candidates_can_follow_selector_order(self):
+        batch = load_batch_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            metadata = tmp_path / "ecephys_sessions.csv"
+            selector = tmp_path / "selector.json"
+            with metadata.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(
+                    handle,
+                    fieldnames=[
+                        "ecephys_session_id",
+                        "behavior_session_id",
+                        "date_of_acquisition",
+                        "equipment_name",
+                        "session_type",
+                        "mouse_id",
+                        "genotype",
+                        "sex",
+                        "project_code",
+                        "age_in_days",
+                        "unit_count",
+                        "probe_count",
+                        "channel_count",
+                        "structure_acronyms",
+                        "image_set",
+                        "prior_exposures_to_image_set",
+                        "session_number",
+                        "experience_level",
+                        "prior_exposures_to_omissions",
+                        "file_id",
+                        "abnormal_histology",
+                        "abnormal_activity",
+                    ],
+                )
+                writer.writeheader()
+                for session_id, units in [(1, 3500), (2, 2500), (3, 2000)]:
+                    writer.writerow(
+                        {
+                            "ecephys_session_id": session_id,
+                            "behavior_session_id": session_id + 100,
+                            "date_of_acquisition": "",
+                            "equipment_name": "",
+                            "session_type": "EPHYS_1_images_H_5uL_reward",
+                            "mouse_id": f"mouse-{session_id}",
+                            "genotype": "",
+                            "sex": "",
+                            "project_code": "",
+                            "age_in_days": "120",
+                            "unit_count": str(units),
+                            "probe_count": "6",
+                            "channel_count": "2000",
+                            "structure_acronyms": "['VISp', 'LGd', 'CA1', 'SNr', 'MRN']",
+                            "image_set": "H",
+                            "prior_exposures_to_image_set": "0",
+                            "session_number": "1",
+                            "experience_level": "Novel",
+                            "prior_exposures_to_omissions": "0",
+                            "file_id": "",
+                            "abnormal_histology": "",
+                            "abnormal_activity": "",
+                        }
+                    )
+            selector.write_text(
+                json.dumps({"candidates": [{"ecephys_session_id": 3}, {"ecephys_session_id": 2}]}),
+                encoding="utf-8",
+            )
+
+            _, pending = batch.select_pending_candidates(
+                metadata_csv=metadata,
+                datasets_root=tmp_path / "datasets",
+                candidate_limit=10,
+                selector_json=selector,
+            )
+
+            self.assertEqual([item.ecephys_session_id for item in pending], [3, 2, 1])
 
     def test_refresh_target_diagnostics_runs_expected_script(self):
         batch = load_batch_module()
