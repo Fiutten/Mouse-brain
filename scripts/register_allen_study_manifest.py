@@ -36,6 +36,12 @@ CANONICAL_COMMANDS = [
     "make allen-within-session-states",
     "make allen-animal-aware-validation",
     "make allen-recording-coverage",
+    "make allen-temporal-falsification",
+    "make allen-blocked-fixed-validation",
+    "make allen-direct-state-anatomy",
+    "make allen-state-adjusted-signal",
+    "make allen-hierarchical-heterogeneity",
+    "make external-replication-readiness",
     "make test",
 ]
 
@@ -63,6 +69,12 @@ CANONICAL_ARTIFACTS = [
     "artifacts/reports/allen_targets/go_response_within_session_states.json",
     "artifacts/reports/allen_targets/go_response_animal_aware_validation.json",
     "artifacts/reports/allen_targets/go_response_recording_coverage.json",
+    "artifacts/reports/allen_targets/go_response_temporal_falsification.json",
+    "artifacts/reports/allen_targets/go_response_blocked_fixed_validation.json",
+    "artifacts/reports/allen_targets/go_response_direct_state_anatomy.json",
+    "artifacts/reports/allen_targets/go_response_state_adjusted_signal.json",
+    "artifacts/reports/allen_targets/go_response_hierarchical_heterogeneity.json",
+    "artifacts/reports/replication/external_replication_readiness.json",
 ]
 
 
@@ -84,6 +96,7 @@ def main() -> None:
     args = parser.parse_args()
 
     session_paths = sorted((ROOT / "artifacts" / "datasets" / "allen").glob("*/session.json"))
+    state_anatomy_paths = sorted((ROOT / "artifacts" / "datasets" / "allen").glob("*/state_anatomy.json"))
     payload = {
         "study_id": "allen_go_response_pre_response",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -92,11 +105,21 @@ def main() -> None:
         "dataset_inventory": {
             "normalized_allen_sessions": len(session_paths),
             "session_ids": [path.parent.name for path in session_paths],
+            "state_anatomy_sidecars": len(state_anatomy_paths),
+            "state_anatomy_sidecar_hashes": [
+                {
+                    "session_id": path.parent.name,
+                    "sha256": sha256_file(path),
+                    "bytes": path.stat().st_size,
+                }
+                for path in state_anatomy_paths
+            ],
         },
         "artifacts": [hash_optional(ROOT / relative) for relative in CANONICAL_ARTIFACTS],
         "environment_notes": [
             "Core analyses run in .venv and consume normalized JSON artifacts.",
             "AllenSDK/NWB extraction remains isolated in .venv-allen; outputs cross environments through artifacts/datasets/allen.",
+            "Direct state/anatomy sidecars are generated from local NWB files and do not modify primary session.json artifacts.",
         ],
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)

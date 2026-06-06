@@ -24,7 +24,7 @@ Current Python:
 Status:
 
 - working;
-- 22+ tests passing;
+- 113 tests passing;
 - no heavy scientific dependencies required.
 
 ### Allen environment: `.venv-allen`
@@ -40,6 +40,12 @@ Purpose:
 Recommended Python:
 
 - Python 3.10 or 3.11.
+
+Current status:
+
+- isolated environment creation attempted on 2026-06-06;
+- blocked by corrupt cached Conda Python/setuptools packages;
+- ONE is not installed and no IBL data have been downloaded.
 
 Reason:
 
@@ -89,4 +95,5 @@ source .venv/bin/activate
 python scripts/run_registered_experiment.py --session artifacts/datasets/allen/<id>
 ```
 
-The Allen exporter is not implemented yet. The artifact contract is implemented in `neurotwin_mvp/artifacts.py`.
+The Allen exporter and NWB-derived state/anatomy sidecar exporter are
+implemented. The IBL exporter remains a guarded adapter contract only.

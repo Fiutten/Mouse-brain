@@ -168,14 +168,18 @@ recording-quality stratification rather than removed from the cohort.
 
 Defensible:
 
-- the expanded cohort contains a reproducible positive aggregate
-  `pre_response` signal and a substantial negative-case subgroup;
+- the expanded cohort contains a reproducible positive aggregate dynamic-window
+  prediction result and a substantial negative-case subgroup;
 - the negative subgroup is not explained by the current coarse behavioral
   covariates;
-- the current model should be described as state/session-dependent.
+- the dynamic-window result is largely target-timing contaminated and should
+  be retained as a falsification result, not biological evidence;
+- fixed-window predictivity is state/session-dependent and not yet confirmed
+  beyond direct running/pupil adjustment.
 
 Not defensible:
 
+- using dynamic `pre_response` as clean neural evidence;
 - claiming a universal pre-response mechanism;
 - excluding fragile sessions to strengthen the aggregate claim;
 - attributing fragility to probe/unit count without fine placement, depth and
@@ -184,18 +188,18 @@ Not defensible:
 
 ## Required Follow-Up
 
-1. Quantify probe placement, depth, cell-type and unit-quality coverage within
-   each coarse region.
-2. Add richer within-session state features such as running/pupil proxies,
-   block position and temporal nonstationarity.
+1. Confirm fixed-window/landmark neural gain after direct state adjustment.
+2. Add finer fixed neural time bins for a discrete-time hazard analysis.
 3. Extend the completed leave-one-animal-out summary into a hierarchical
    predictive model.
 4. Validate the state-dependent/persistent-null split in a second dataset.
 
 ## Completed Validation Addendum
 
-- The expanded 29-session `pre_response` result is confirmed with 500
-  permutations per session: mean gain `0.149`, significant fraction `0.552`.
+- The expanded 29-session dynamic `pre_response` computation is reproducible
+  with 500 permutations per session: mean gain `0.149`, significant fraction
+  `0.552`. It is not clean neural evidence because target-derived window timing
+  alone predicts the target.
 - Leave-one-animal-out aggregate gain remains positive for all 23 animals:
   minimum `0.128`, maximum `0.160`.
 - Coarse presence of visual cortex, visual thalamus, hippocampus and
@@ -203,3 +207,6 @@ Not defensible:
 - The metadata join was corrected so Allen project metadata, rather than the
   latest batch snapshot, is authoritative. All 29 usable sessions now have
   probe/unit/task metadata in the relationship analysis.
+- Direct running, pupil, unit-quality and channel-coordinate sidecars were
+  exported for all 30 locally available NWBs. No simple session-level feature
+  explains gain after 20,000-permutation tests and BH correction.

@@ -1,7 +1,7 @@
 PYTHON := .venv/bin/python
 PIP := .venv/bin/pip
 
-.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-selector-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-permutation-confirm-warm allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-fragility-analysis allen-fragility-explanations allen-fragile-alternative-windows allen-within-session-states allen-animal-aware-validation allen-recording-coverage allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
+.PHONY: help venv install test run register export-synthetic allen-smoke allen-smoke-s3 allen-select allen-target-aware-select allen-prune-cache-plan allen-export-candidate allen-export-batch-plan allen-export-selector-batch-plan allen-export-batch allen-evidence allen-targets allen-go-evidence-until-10 allen-session-relations allen-regional-ablation allen-temporal-reexport allen-temporal-windows allen-temporal-permutation allen-temporal-permutation-confirm allen-temporal-permutation-confirm-warm allen-temporal-falsification allen-blocked-fixed-validation allen-state-anatomy-export allen-direct-state-anatomy allen-state-adjusted-signal allen-hierarchical-heterogeneity external-replication-readiness allen-temporal-regional-ablation allen-uncertainty allen-response-controls allen-functional-graph allen-generative-surrogate allen-scientific-agent allen-study-manifest allen-stability-matrix allen-fragility-analysis allen-fragility-explanations allen-fragile-alternative-windows allen-within-session-states allen-animal-aware-validation allen-recording-coverage allen-latent-temporal allen-graph-evidence-registry allen-session-generator-v2 allen-advanced-scientific-agent allen-selected-microcircuit allen-microcircuit-validation allen-advanced-evidence allen-stabilize verify clean
 
 help:
 	@echo "Targets:"
@@ -30,6 +30,13 @@ help:
 	@echo "  make allen-temporal-permutation Run pre_response temporal permutation screen"
 	@echo "  make allen-temporal-permutation-confirm Run 500-permutation pre_response confirmation"
 	@echo "  make allen-temporal-permutation-confirm-warm Warm 500-permutation cache for 3 sessions"
+	@echo "  make allen-temporal-falsification Audit timing leakage and response-independent windows"
+	@echo "  make allen-hierarchical-heterogeneity Audit animal/session heterogeneity"
+	@echo "  make external-replication-readiness Audit IBL replication readiness"
+	@echo "  make allen-state-anatomy-export Export direct state/anatomy sidecars from local NWB"
+	@echo "  make allen-direct-state-anatomy Test direct state/anatomy explanations"
+	@echo "  make allen-blocked-fixed-validation Validate fixed windows across chronological splits"
+	@echo "  make allen-state-adjusted-signal Test fixed neural signal beyond running and pupil"
 	@echo "  make allen-temporal-regional-ablation Run significant pre_response region ablation"
 	@echo "  make allen-uncertainty Estimate cross-session uncertainty"
 	@echo "  make allen-response-controls Run response-window and latency controls"
@@ -129,6 +136,27 @@ allen-temporal-permutation-confirm:
 
 allen-temporal-permutation-confirm-warm:
 	$(PYTHON) scripts/run_allen_temporal_permutation.py --target-name go_response --window-name pre_response --require-usable-target --n-permutations 500 --cache-warm-only --max-cache-misses 3
+
+allen-temporal-falsification:
+	$(PYTHON) scripts/analyze_allen_temporal_falsification.py
+
+allen-hierarchical-heterogeneity:
+	$(PYTHON) scripts/analyze_allen_hierarchical_heterogeneity.py
+
+external-replication-readiness:
+	$(PYTHON) scripts/audit_external_replication_readiness.py
+
+allen-state-anatomy-export:
+	.venv-allen/bin/python scripts/export_allen_state_anatomy.py
+
+allen-direct-state-anatomy:
+	$(PYTHON) scripts/analyze_allen_direct_state_anatomy.py
+
+allen-blocked-fixed-validation:
+	$(PYTHON) scripts/analyze_allen_blocked_fixed_validation.py
+
+allen-state-adjusted-signal:
+	$(PYTHON) scripts/analyze_allen_state_adjusted_signal.py
 
 allen-temporal-regional-ablation:
 	$(PYTHON) scripts/run_allen_temporal_regional_ablation.py --target-name go_response --window-name pre_response --require-usable-target --significant-only

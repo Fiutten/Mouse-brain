@@ -1035,24 +1035,19 @@ Command:
 Current result:
 
 ```text
-102 tests OK
+113 tests OK
 ```
 
 ## Current scientific decision
 
-Do not claim causal regional necessity yet.
+Superseded by the falsification section below.
 
-Current defensible claim: in the expanded strict Allen `go_response` cohort,
-the `pre_response` temporal window adds predictive signal beyond
-task/image/history baselines, passes current negative window controls, and has
-a positive session-bootstrap CI over 29 usable sessions. This supports a
-controlled predictive-evidence claim. It does not yet support causal regional
-necessity, strong latent-representation claims, or a validated mechanistic
-microcircuit. The graph and microcircuit layers are now best framed as
-evidence-organized hypothesis generators that need deeper fragility analysis
-and external replication before publication-level mechanistic language.
+The earlier decision treated dynamic `pre_response` as controlled predictive
+evidence. Timing-only metadata later achieved mean balanced accuracy `0.985`,
+so that biological interpretation is withdrawn. The historical result remains
+recorded to preserve the full reasoning path.
 
-Next required controls:
+Controls that were required at this point:
 
 - stronger response-aligned controls with more permutations;
 - deeper reaction-time and animal/session-quality stratification;
@@ -1060,3 +1055,84 @@ Next required controls:
 - region-by-window uncertainty with larger session cohorts;
 - failure analysis of fragile sessions and latent-negative sessions;
 - dependency lockfile and dataset-version capture in the study manifest.
+
+## Response-independent falsification and direct-state enrichment
+
+Purpose: challenge the dynamic `pre_response` result using response-independent
+features and replace normalized engagement proxies with directly measured
+running, pupil, unit-quality and channel-coordinate variables.
+
+New commands:
+
+```bash
+make allen-temporal-falsification
+make allen-blocked-fixed-validation
+make allen-state-anatomy-export
+make allen-direct-state-anatomy
+make allen-state-adjusted-signal
+make allen-hierarchical-heterogeneity
+make external-replication-readiness
+```
+
+Direct NWB enrichment:
+
+- 30 locally available NWB sessions exported successfully to independent
+  `state_anatomy.json` sidecars;
+- no existing normalized `session.json` was modified;
+- sidecars contain trial-level running/pupil summaries, unit-quality summaries
+  and channel CCF-coordinate coverage.
+
+Blocked fixed-window sensitivity:
+
+| analysis | train fractions | mean gain range | positive fraction range |
+| --- | --- | ---: | ---: |
+| fixed stimulus 0-250 ms | 0.5, 0.6, 0.7, 0.8 | 0.042 to 0.070 | 0.552 to 0.724 |
+| 250-ms landmark stimulus | 0.5, 0.6, 0.7, 0.8 | 0.049 to 0.066 | 0.571 to 0.607 |
+
+The 750-ms landmark is not identifiable in this cohort because nearly all
+positive responses have already occurred and the positive at-risk class is
+lost.
+
+Direct-state/anatomy explanation screen:
+
+- 29 usable sessions tested;
+- 20,000 label permutations per prespecified session-level feature;
+- no running, pupil, unit-quality or fine channel-coverage feature survives
+  Benjamini-Hochberg correction.
+
+State-adjusted fixed-window result:
+
+| metric | result |
+| --- | ---: |
+| sessions | 29 |
+| mean direct-state gain | 0.057 |
+| mean state-adjusted fixed neural gain | 0.027 |
+| state-adjusted fixed neural CI95 | -0.031 to 0.078 |
+| positive adjusted-neural fraction | 0.586 |
+| decision | `fixed_neural_signal_not_confirmed_after_direct_state_adjustment` |
+
+Animal-aware heterogeneity:
+
+| metric | result |
+| --- | ---: |
+| animal-cluster bootstrap CI95 for original gain | 0.091 to 0.214 |
+| positive-animal exact one-sided p-value | 0.0466 |
+| descriptive ICC | 0.112 |
+| repeated animals | 6 |
+
+Interpretation: the original dynamic-window aggregate is robust to animal
+clustering, but the dynamic window is invalid as clean neural evidence:
+duration/end/validity metadata alone predict `go_response` with mean balanced
+accuracy `0.985`, and all 29 sessions exceed 0.55. The response-independent
+early neural contribution is also not confirmed after direct state adjustment.
+The original `pre_response` biological interpretation is withdrawn. The
+correct current narrative is temporal-alignment leakage plus
+state/alignment-sensitive fixed-window predictivity with unresolved neural
+independence.
+
+External replication remains blocked. The protocol is frozen in
+`docs/EXTERNAL_REPLICATION_PROTOCOL.md`, but no normalized external sessions
+exist and the IBL adapter is not implemented. Creation of an isolated Python
+3.11 `.venv-ibl` was attempted and stopped at Conda verification because the
+local Python/setuptools package cache was corrupted. The working Allen
+environment was not modified.
