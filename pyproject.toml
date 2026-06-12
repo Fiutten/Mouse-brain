@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cognitive-organism"
+version = "0.1.0"
+description = "Falsifiable benchmark for modular cognitive architectures"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "gymnasium>=1.0,<2",
+  "numpy>=1.26,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<10",
+  "ruff>=0.9,<1",
+]
+learning = [
+  "stable-baselines3>=2.5,<3",
+  "torch>=2.5,<3",
+]
+
+[tool.setuptools.packages.find]
+include = ["cognitive_organism*"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

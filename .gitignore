@@ -1,4 +1,13 @@
 .DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+runs/
 data/**
 !data/.gitkeep
 !data/allen/

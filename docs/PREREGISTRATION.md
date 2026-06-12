@@ -1,0 +1,103 @@
+# Protocolo experimental preliminar
+
+Este documento fija las reglas antes de entrenar arquitecturas complejas. No es
+una preregistración pública todavía; es un contrato interno contra decisiones
+retrospectivas.
+
+## Pregunta primaria
+
+¿Un canal de broadcast limitado entre módulos mejora la adaptación después de
+un cambio de régimen oculto frente a arquitecturas emparejadas sin broadcast?
+
+## Hipótesis
+
+### H1: adaptación fuera de distribución
+
+Un agente con broadcast limitado tendrá menor arrepentimiento acumulado durante
+los primeros pasos posteriores a un cambio de régimen no visto.
+
+### H2: lesión específica
+
+Corromper o retrasar el broadcast reducirá especialmente el rendimiento en
+tareas que requieren integrar información social, espacial y corporal, pero no
+en controles unimodales.
+
+### H3: cuello de botella
+
+Existirá un rango intermedio de capacidad del workspace que preserve
+generalización. Si más capacidad siempre mejora el resultado, la explicación de
+cuello de botella no estará apoyada.
+
+## Variable experimental primaria
+
+Mecanismo de comunicación entre módulos:
+
+- broadcast competitivo limitado;
+- concatenación completa emparejada;
+- memoria recurrente emparejada;
+- broadcast barajado o retrasado;
+- módulos aislados.
+
+Todos los agentes deben recibir la misma información, usar un presupuesto de
+parámetros comparable y entrenarse con el mismo número de transiciones.
+
+## Entorno mínimo
+
+`SocialSurvivalWorld` es un POMDP de rejilla destinado a validar el protocolo,
+no a sostener por sí solo una publicación.
+
+- El agente observa únicamente una vecindad local.
+- Una señal social recomienda una dirección.
+- La señal puede ser útil o engañosa según un régimen oculto.
+- El régimen puede cambiar durante el episodio.
+- Energía y estrés introducen consecuencias homeostáticas observables.
+- Las variables ocultas solo aparecen en `info` para evaluación, nunca en la
+  observación del agente.
+
+## Métrica primaria
+
+Arrepentimiento post-cambio durante una ventana fijada antes del entrenamiento:
+
+`retorno del oráculo - retorno del agente`.
+
+## Métricas secundarias
+
+- retorno y supervivencia;
+- tasa de peligro por paso, evitando sesgo por distinta supervivencia;
+- tiempo hasta recuperar rendimiento tras el cambio;
+- calibración de confianza;
+- éxito al integrar modalidades;
+- información mutua entre broadcast y variables latentes;
+- efecto causal de lesiones;
+- coste computacional y eficiencia muestral.
+
+## Diseño de evaluación
+
+- Semillas de entrenamiento y evaluación separadas.
+- Regímenes, mapas y composiciones retenidos durante entrenamiento.
+- Intervalos de confianza por semilla.
+- Comparaciones pareadas y corrección por multiplicidad.
+- Una métrica primaria; el resto se declara secundario.
+- Reportar resultados negativos.
+
+## Puertas de decisión
+
+### Gate 1: validez del entorno
+
+Debe existir una política simple mejor que azar, una política oráculo claramente
+superior y ninguna fuga de las variables ocultas.
+
+### Gate 2: baselines
+
+PPO y un baseline recurrente deben aprender de forma estable. Si no lo hacen,
+no se evaluará ninguna arquitectura cognitiva.
+
+### Gate 3: prueba del workspace
+
+La ventaja debe sobrevivir al emparejamiento de parámetros, información,
+entrenamiento y búsqueda de hiperparámetros.
+
+### Gate 4: generalización
+
+La ventaja debe replicarse en al menos otra familia de entornos o se considerará
+específica del benchmark.
