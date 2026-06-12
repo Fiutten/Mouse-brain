@@ -1,0 +1,7 @@
+algorithm,train_seed,train_steps,trainable_parameters,mean_return,survival_rate,mean_resources,mean_move_rate,action_entropy
+ppo,11,30000,11142,-0.3110,0.30,0.40,0.2205,0.7911
+ppo,23,30000,11142,-0.6144,0.02,0.06,0.2413,0.7282
+ppo,37,30000,11142,-0.6700,0.00,0.00,0.0285,0.6926
+recurrent_ppo,11,30000,30214,-0.6612,0.00,0.08,0.0513,0.0000
+recurrent_ppo,23,30000,30214,-0.6257,0.00,0.07,0.0375,0.0000
+recurrent_ppo,37,30000,30214,-0.6612,0.00,0.08,0.0889,0.1067

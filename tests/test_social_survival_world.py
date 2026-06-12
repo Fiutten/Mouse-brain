@@ -75,6 +75,18 @@ def test_episode_truncates_at_fixed_horizon():
     assert truncated
 
 
+def test_info_reports_whether_action_changed_position():
+    env = SocialSurvivalWorld()
+    env.reset(seed=5)
+    env.agent_pos = np.array((0, 0), dtype=np.int64)
+
+    _, _, _, _, blocked_info = env.step(Action.UP)
+    _, _, _, _, moved_info = env.step(Action.RIGHT)
+
+    assert blocked_info["moved"] == 0.0
+    assert moved_info["moved"] == 1.0
+
+
 def test_invalid_action_is_rejected():
     env = SocialSurvivalWorld()
     env.reset(seed=1)

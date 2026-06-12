@@ -92,6 +92,7 @@ class SocialSurvivalWorld(gym.Env[dict[str, np.ndarray], int]):
         self.helpful_regime = True
         self.last_reward = 0.0
         self.last_danger = 0.0
+        self.last_moved = 0.0
         self._visited: set[tuple[int, int]] = set()
 
     def reset(
@@ -104,6 +105,7 @@ class SocialSurvivalWorld(gym.Env[dict[str, np.ndarray], int]):
         self.stress = 0.0
         self.last_reward = 0.0
         self.last_danger = 0.0
+        self.last_moved = 0.0
         self.helpful_regime = bool(
             options.get("helpful_regime", self.np_random.integers(0, 2))
         )
@@ -127,9 +129,11 @@ class SocialSurvivalWorld(gym.Env[dict[str, np.ndarray], int]):
             self.helpful_regime = not self.helpful_regime
 
         previous_energy = self.energy
+        previous_position = self.agent_pos.copy()
         self.agent_pos = np.clip(
             self.agent_pos + MOVE_DELTAS[Action(action)], 0, self.config.size - 1
         )
+        self.last_moved = float(not np.array_equal(previous_position, self.agent_pos))
         position = tuple(self.agent_pos)
         novelty = float(position not in self._visited)
         self._visited.add(position)
@@ -191,6 +195,7 @@ class SocialSurvivalWorld(gym.Env[dict[str, np.ndarray], int]):
         return {
             "novelty": novelty,
             "danger": self.last_danger,
+            "moved": self.last_moved,
             "energy_delta": energy_delta,
             "rule_switch": rule_switch,
             "hidden_helpful_regime": self.helpful_regime,

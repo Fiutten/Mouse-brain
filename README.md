@@ -14,10 +14,13 @@ falsable.
 - Auditoría científica inicial y criterios `go/no-go`.
 - Protocolo experimental preregistrado.
 - Entorno mínimo `SocialSurvivalWorld`.
-- Pruebas de API, reproducibilidad y dinámica causal del entorno.
+- Entorno diagnóstico `AdvisorSwitchTask` para aislar memoria.
+- Pruebas de API, reproducibilidad y dinámica causal.
+- Gate 2: existe señal recurrente aislada, pero todavía no es estable entre
+  semillas.
 
 Todavía no se ha implementado ninguna arquitectura propuesta como contribución.
-Ese trabajo solo comenzará después de validar el entorno y los baselines.
+Ese trabajo solo comenzará después de estabilizar y confirmar los baselines.
 
 ## Instalación
 

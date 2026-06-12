@@ -19,6 +19,7 @@ dev = [
   "ruff>=0.9,<1",
 ]
 learning = [
+  "sb3-contrib>=2.5,<3",
   "stable-baselines3>=2.5,<3",
   "torch>=2.5,<3",
 ]

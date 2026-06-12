@@ -92,6 +92,41 @@ superior y ninguna fuga de las variables ocultas.
 PPO y un baseline recurrente deben aprender de forma estable. Si no lo hacen,
 no se evaluará ninguna arquitectura cognitiva.
 
+El primer piloto PPO/RecurrentPPO es una prueba de aprendibilidad, no una
+comparación causal entre arquitecturas. Se registrarán parámetros y presupuesto,
+pero no se afirmará una ventaja de memoria hasta construir controles emparejados.
+
+#### Protocolo piloto fijado
+
+- Algoritmos: PPO `MultiInputPolicy` y RecurrentPPO `MultiInputLstmPolicy`.
+- Transiciones de entrenamiento: 30 000 por algoritmo y semilla.
+- Semillas de entrenamiento: 11, 23 y 37.
+- Episodios de evaluación: 100 por semilla, con semillas no usadas al entrenar.
+- Métrica primaria del gate: retorno post-cambio medio.
+- Métricas secundarias: retorno total, retorno pre-cambio, supervivencia,
+  recursos, tasa de peligro por paso y seguimiento de la señal social antes y
+  después del cambio.
+- Interpretación permitida: aprendibilidad y presencia o ausencia de señal
+  recurrente exploratoria.
+- Interpretación prohibida: superioridad causal de memoria o workspace.
+
+#### Gate 2c: diagnóstico aislado de memoria
+
+Tras rechazar los entornos de rejilla como pruebas de aprendibilidad, se fija
+una tarea diagnóstica mínima antes de ejecutarla:
+
+- Tarea: escoger entre dos consejeros; la identidad útil cambia una vez.
+- Observación: únicamente el resultado anterior.
+- Información necesaria: resultado anterior + acción anterior.
+- PPO feed-forward no recibe la acción anterior.
+- RecurrentPPO puede mantenerla en estado recurrente.
+- Presupuesto: 30 000 transiciones, semillas 11, 23 y 37.
+- Evaluación: 200 episodios retenidos.
+- Métrica primaria: precisión post-cambio.
+- Umbral de continuidad: RecurrentPPO debe superar `0.80` de precisión
+  post-cambio en las tres semillas.
+- Si no supera el umbral, se rechaza esta configuración recurrente.
+
 ### Gate 3: prueba del workspace
 
 La ventaja debe sobrevivir al emparejamiento de parámetros, información,

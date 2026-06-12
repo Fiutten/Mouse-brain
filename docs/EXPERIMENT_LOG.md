@@ -51,3 +51,110 @@ supervivencia que también deberá controlarse en experimentos futuros.
 **Gate 1 aprobado con limitaciones.** Se permite avanzar a baselines simples,
 pero no a módulos cognitivos complejos. El siguiente gate debe demostrar que un
 agente recurrente puede inferir cambios de régimen mejor que PPO sin memoria.
+
+## 2026-06-12 — Gate 2a: PPO frente a RecurrentPPO en el entorno original
+
+### Objetivo
+
+Comprobar aprendibilidad y buscar una señal recurrente exploratoria antes de
+implementar componentes cognitivos.
+
+### Configuración
+
+- PPO: 11 142 parámetros entrenables.
+- RecurrentPPO: 30 214 parámetros entrenables.
+- 30 000 transiciones por algoritmo y semilla.
+- Semillas: 11, 23 y 37.
+- 100 episodios de evaluación compartidos por modelo.
+
+### Resultado resumido
+
+| Algoritmo | Semilla | Retorno | Supervivencia | Recursos | Movimiento | Entropía acciones |
+|---|---:|---:|---:|---:|---:|---:|
+| PPO | 11 | -0.3110 | 0.30 | 0.40 | 0.2205 | 0.7911 |
+| PPO | 23 | -0.6144 | 0.02 | 0.06 | 0.2413 | 0.7282 |
+| PPO | 37 | -0.6700 | 0.00 | 0.00 | 0.0285 | 0.6926 |
+| RecurrentPPO | 11 | -0.6612 | 0.00 | 0.08 | 0.0513 | 0.0000 |
+| RecurrentPPO | 23 | -0.6257 | 0.00 | 0.07 | 0.0375 | 0.0000 |
+| RecurrentPPO | 37 | -0.6612 | 0.00 | 0.08 | 0.0889 | 0.1067 |
+
+### Interpretación
+
+**Gate 2a rechazado.** Ningún algoritmo aprende de manera estable. RecurrentPPO
+colapsa prácticamente a una sola acción y PPO también muestra políticas de baja
+movilidad que evitan amenazas, pero no encuentran recursos.
+
+El problema no se resuelve entrenando más. En el régimen engañoso, la única señal
+global apunta a la amenaza y no existe una fuente alternativa que informe dónde
+está el recurso. Ignorar la señal obliga a una búsqueda casi ciega. El entorno
+confunde necesidad de memoria con ausencia de información.
+
+### Decisión
+
+Se congela `SocialSurvivalWorld` como ejemplo negativo. Se diseñará un entorno
+separado con dos fuentes observables, una útil y otra engañosa, cuya identidad
+oculta cambia. No se permite implementar workspace mientras el nuevo entorno no
+supere Gate 1 y Gate 2.
+
+## 2026-06-12 — Gate 2b: dos consejeros observables en rejilla
+
+### Cambio realizado
+
+`SocialInferenceWorld` presenta simultáneamente dos direcciones: una conduce al
+recurso y otra a la amenaza. La identidad del consejero útil es oculta y cambia.
+El oráculo alcanza retorno `14.6982`; elegir consejero al azar obtiene `-0.5393`.
+
+### Resultado de aprendizaje
+
+Con el mismo protocolo de 30 000 transiciones y tres semillas, ningún PPO ni
+RecurrentPPO aprende una política estable. Los retornos están entre `-0.6257` y
+`-0.6700`, salvo variaciones menores; la supervivencia es esencialmente cero y
+el seguimiento del consejero útil también.
+
+### Decisión
+
+**Gate 2b rechazado.** La tarea todavía confunde inferencia de fuente,
+navegación, recompensa dispersa y homeostasis. No se aumentará retrospectivamente
+el presupuesto. Se aislará primero la hipótesis de memoria en una tarea mínima
+de cambio de consejero.
+
+## 2026-06-12 — Gate 2c: diagnóstico aislado de memoria
+
+### Diseño
+
+`AdvisorSwitchTask` elimina navegación, metabolismo y recompensa dispersa. El
+agente elige uno de dos consejeros. Solo observa el resultado anterior; para
+aplicar una estrategia `win-stay/lose-shift` debe recordar también su acción
+anterior. La identidad útil cambia antes de puntuar la acción del paso 20.
+
+El criterio fijado antes de ejecutar fue que RecurrentPPO superase `0.80` de
+precisión post-cambio en las tres semillas.
+
+### Resultados
+
+| Algoritmo | Semilla | Retorno | Precisión pre | Precisión post | Primeros 5 post |
+|---|---:|---:|---:|---:|---:|
+| PPO | 11 | -1.80 | 0.7395 | 0.2405 | 0.2020 |
+| PPO | 23 | -1.80 | 0.7395 | 0.2405 | 0.2020 |
+| PPO | 37 | -2.20 | 0.7342 | 0.2357 | 0.1980 |
+| RecurrentPPO | 11 | 29.09 | 0.8692 | 0.8586 | 0.5050 |
+| RecurrentPPO | 23 | 22.89 | 0.8421 | 0.7355 | 0.4950 |
+| RecurrentPPO | 37 | 25.11 | 0.6613 | 0.9519 | 0.7980 |
+
+La media post-cambio es aproximadamente `0.239` para PPO y `0.849` para
+RecurrentPPO. La precisión máxima posible en los primeros cinco pasos post-cambio
+es `0.80`, porque la primera elección ocurre antes de disponer de evidencia del
+cambio.
+
+### Decisión
+
+**Gate 2c rechazado según el umbral preregistrado:** RecurrentPPO supera `0.80`
+en dos de tres semillas, no en las tres.
+
+Existe una señal clara de que el estado recurrente permite resolver la tarea,
+pero la optimización no es suficientemente estable para usarla como baseline
+científico. No se implementará workspace todavía.
+
+El siguiente paso permitido es desarrollar una configuración recurrente estable
+usando semillas distintas de 11, 23 y 37. Después se congelará la configuración
+y se realizará una confirmación única con semillas nuevas.

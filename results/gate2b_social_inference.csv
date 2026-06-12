@@ -1,0 +1,7 @@
+algorithm,train_seed,train_steps,trainable_parameters,mean_return,survival_rate,mean_resources,mean_move_rate,post_switch_helpful_follow_rate
+ppo,11,30000,11782,-0.6257,0.00,0.07,0.0375,0.0000
+ppo,23,30000,11782,-0.6313,0.00,0.09,0.0543,0.0000
+ppo,37,30000,11782,-0.6486,0.00,0.03,0.1461,0.0071
+recurrent_ppo,11,30000,31494,-0.6700,0.00,0.00,0.0000,0.0000
+recurrent_ppo,23,30000,31494,-0.6526,0.01,0.09,0.0448,0.0002
+recurrent_ppo,37,30000,31494,-0.6257,0.00,0.07,0.0375,0.0000
