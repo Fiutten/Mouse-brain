@@ -20,6 +20,8 @@ falsable.
   semillas.
 - Confirmación independiente: RecurrentPPO rechazado como baseline estable; un
   controlador determinista de memoria mínima sí resuelve la tarea.
+- PPO con estado mínimo explícito también es inestable entre semillas. El
+  desarrollo arquitectónico está pausado mientras se audita el stack de RL.
 
 Todavía no se ha implementado ninguna arquitectura propuesta como contribución.
 Ese trabajo solo comenzará después de estabilizar y confirmar los baselines.

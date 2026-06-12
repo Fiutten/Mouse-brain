@@ -1,0 +1,6 @@
+algorithm,train_seed,train_steps,trainable_parameters,mean_return,mean_pre_switch_accuracy,mean_post_switch_accuracy,mean_early_post_switch_accuracy,passes_threshold
+ppo,127,30000,9155,18.00,0.7342105263,0.7166666667,0.6020,false
+ppo,131,30000,9155,18.00,0.7342105263,0.7166666667,0.6020,false
+ppo,137,30000,9155,18.00,0.7394736842,0.7119047619,0.5980,false
+ppo,139,30000,9155,18.00,0.7342105263,0.7166666667,0.6020,false
+ppo,149,30000,9155,37.01,0.9739473684,0.9523809524,0.8000,true

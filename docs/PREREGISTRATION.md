@@ -147,6 +147,22 @@ La estabilización se divide estrictamente en desarrollo y confirmación.
   semillas.
 - No se reajustará la configuración después de observar la confirmación.
 
+#### Gate 2f: control Markov con acción anterior explícita
+
+Este control prueba si la inestabilidad observada procede de aprender y
+conservar internamente el único estado faltante.
+
+- Entorno: misma dinámica que `AdvisorSwitchTask`.
+- Diferencia única: la observación incluye `previous_action`.
+- Algoritmo: PPO feed-forward con la configuración base ya utilizada.
+- Presupuesto: 30 000 transiciones por semilla.
+- Semillas selladas: 127, 131, 137, 139 y 149.
+- Evaluación: 200 episodios retenidos por modelo.
+- Métrica primaria: precisión post-cambio.
+- Criterio de éxito: precisión post-cambio superior a `0.90` en las cinco
+  semillas.
+- No se ajustarán hiperparámetros después de observar este resultado.
+
 ### Gate 3: prueba del workspace
 
 La ventaja debe sobrevivir al emparejamiento de parámetros, información,

@@ -225,3 +225,39 @@ en Markov. Esto permitirá contrastar:
 
 Este control es obligatorio antes de diseñar workspace: el benchmark actual solo
 requiere recordar una acción, no coordinación cognitiva global.
+
+## 2026-06-13 — Gate 2f: PPO con estado mínimo explícito
+
+### Diseño
+
+`MarkovAdvisorSwitchTask` añade únicamente la acción anterior a la observación.
+Se mantuvieron PPO, dinámica, presupuesto de 30 000 transiciones y evaluación de
+200 episodios. El criterio exigía precisión post-cambio superior a `0.90` en las
+cinco semillas selladas.
+
+### Resultados
+
+| Semilla | Retorno | Precisión pre | Precisión post | Supera 0.90 |
+|---:|---:|---:|---:|---:|
+| 127 | 18.00 | 0.7342 | 0.7167 | no |
+| 131 | 18.00 | 0.7342 | 0.7167 | no |
+| 137 | 18.00 | 0.7395 | 0.7119 | no |
+| 139 | 18.00 | 0.7342 | 0.7167 | no |
+| 149 | 37.01 | 0.9739 | 0.9524 | sí |
+
+### Auditoría de la política
+
+Las semillas 127, 131 y 139 aprenden tres transiciones correctas, pero cambian
+erróneamente a la acción 0 después de obtener recompensa positiva con la acción
+1. La semilla 137 presenta el fallo simétrico para la acción 0. La semilla 149
+aprende las cuatro transiciones `win-stay/lose-shift`.
+
+### Decisión
+
+**Gate 2f rechazado.** Exponer el estado mínimo eleva fuertemente el rendimiento,
+pero PPO continúa siendo inestable por ruptura de simetría y exploración
+insuficiente de uno de los estados positivos.
+
+Según el roadmap, se pausa el desarrollo arquitectónico. El siguiente paso no
+es ajustar PPO ni construir workspace: se auditará el stack mediante un baseline
+tabular exacto sobre el mismo MDP.

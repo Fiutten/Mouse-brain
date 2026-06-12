@@ -35,11 +35,12 @@ def evaluate_advisor_memory_model(
     trainable_parameters: int,
     episodes: int = 100,
     evaluation_seed: int = 200_000,
+    env: AdvisorSwitchTask | None = None,
 ) -> AdvisorMemorySummary:
     """Evaluate accuracy around the hidden switch using held-out episodes."""
 
     algorithm = BaselineKind(algorithm)
-    env = AdvisorSwitchTask()
+    env = env or AdvisorSwitchTask()
     returns: list[float] = []
     pre_accuracy: list[float] = []
     post_accuracy: list[float] = []
