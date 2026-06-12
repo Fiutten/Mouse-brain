@@ -1,0 +1,29 @@
+{
+  "decision_date": "2026-06-12",
+  "selected_config": "shared_default",
+  "selection_rule": [
+    "maximize worst post-switch accuracy",
+    "maximize mean post-switch accuracy",
+    "minimize trainable parameters",
+    "lexicographic config name"
+  ],
+  "development_seeds": [41, 43, 47],
+  "confirmation_seeds": [101, 103, 107, 109, 113],
+  "train_steps": 30000,
+  "evaluation_episodes": 200,
+  "confirmation_threshold": {
+    "metric": "mean_post_switch_accuracy",
+    "operator": ">",
+    "value": 0.8,
+    "required_seeds": 5
+  },
+  "configuration": {
+    "learning_rate": 0.0003,
+    "n_steps": 256,
+    "batch_size": 64,
+    "n_epochs": 5,
+    "lstm_hidden_size": 64,
+    "shared_lstm": true,
+    "enable_critic_lstm": false
+  }
+}

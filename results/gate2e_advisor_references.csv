@@ -1,0 +1,4 @@
+reference,mean_return,pre_switch_accuracy,post_switch_accuracy,early_post_accuracy
+random,-0.3920,0.4943,0.4958,0.4856
+always_zero,0.0320,0.4920,0.5080,0.5080
+win_stay_lose_shift,36.9240,0.9717,0.9524,0.8000

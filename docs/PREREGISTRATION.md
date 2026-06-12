@@ -127,6 +127,26 @@ una tarea diagnóstica mínima antes de ejecutarla:
   post-cambio en las tres semillas.
 - Si no supera el umbral, se rechaza esta configuración recurrente.
 
+#### Gate 2d: estabilización y confirmación recurrente
+
+La estabilización se divide estrictamente en desarrollo y confirmación.
+
+- Semillas de desarrollo: 41, 43 y 47.
+- Presupuesto por entrenamiento: 30 000 transiciones.
+- Episodios de evaluación por modelo: 200.
+- Criterio de selección: maximizar la peor precisión post-cambio entre semillas;
+  desempatar por media post-cambio y después por menor número de parámetros.
+- Configuraciones candidatas:
+  - `shared_default`: configuración usada en Gate 2c.
+  - `shared_low_lr`: recurrencia compartida con tasa `1e-4`.
+  - `shared_long_rollout`: rollout `512`, batch `128`, diez épocas.
+  - `separate_actor_critic`: LSTM separadas para actor y crítico.
+- Semillas confirmatorias selladas: 101, 103, 107, 109 y 113.
+- La configuración seleccionada se congelará antes de abrir la confirmación.
+- Criterio confirmatorio: precisión post-cambio superior a `0.80` en las cinco
+  semillas.
+- No se reajustará la configuración después de observar la confirmación.
+
 ### Gate 3: prueba del workspace
 
 La ventaja debe sobrevivir al emparejamiento de parámetros, información,

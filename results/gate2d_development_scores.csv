@@ -1,0 +1,5 @@
+config_name,worst_post_switch_accuracy,mean_post_switch_accuracy,trainable_parameters
+shared_default,0.7119047619,0.8172222222,25667
+shared_low_lr,0.5911904762,0.6658730159,25667
+shared_long_rollout,0.4950000000,0.8236507937,25667
+separate_actor_critic,0.4242857143,0.7607936508,42819

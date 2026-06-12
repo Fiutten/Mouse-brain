@@ -1,0 +1,6 @@
+config_name,train_seed,train_steps,trainable_parameters,mean_return,mean_pre_switch_accuracy,mean_post_switch_accuracy,mean_early_post_switch_accuracy,passes_threshold
+shared_default,101,30000,25667,4.34,0.6352631579,0.4809523810,0.4040,false
+shared_default,103,30000,25667,18.18,0.7655263158,0.6926190476,0.3030,false
+shared_default,107,30000,25667,19.19,0.6613157895,0.8109523810,0.4040,true
+shared_default,109,30000,25667,27.88,0.6810526316,1.0000000000,1.0000,true
+shared_default,113,30000,25667,0.02,0.4950000000,0.5050000000,0.5050,false

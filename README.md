@@ -18,6 +18,8 @@ falsable.
 - Pruebas de API, reproducibilidad y dinámica causal.
 - Gate 2: existe señal recurrente aislada, pero todavía no es estable entre
   semillas.
+- Confirmación independiente: RecurrentPPO rechazado como baseline estable; un
+  controlador determinista de memoria mínima sí resuelve la tarea.
 
 Todavía no se ha implementado ninguna arquitectura propuesta como contribución.
 Ese trabajo solo comenzará después de estabilizar y confirmar los baselines.

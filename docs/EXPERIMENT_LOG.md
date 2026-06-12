@@ -158,3 +158,70 @@ científico. No se implementará workspace todavía.
 El siguiente paso permitido es desarrollar una configuración recurrente estable
 usando semillas distintas de 11, 23 y 37. Después se congelará la configuración
 y se realizará una confirmación única con semillas nuevas.
+
+## 2026-06-12 — Gate 2d: estabilización y confirmación independiente
+
+### Desarrollo
+
+Se evaluaron cuatro configuraciones con semillas 41, 43 y 47. La selección se
+realizó por la peor precisión post-cambio:
+
+| Configuración | Peor precisión post | Media post | Parámetros |
+|---|---:|---:|---:|
+| `shared_default` | 0.7119 | 0.8172 | 25 667 |
+| `shared_low_lr` | 0.5912 | 0.6659 | 25 667 |
+| `shared_long_rollout` | 0.4950 | 0.8237 | 25 667 |
+| `separate_actor_critic` | 0.4243 | 0.7608 | 42 819 |
+
+`shared_default` fue congelada antes de abrir las semillas confirmatorias. El
+rollout largo tenía mejor media, pero colapsó en una semilla y fue descartado
+por el criterio robusto preregistrado.
+
+### Confirmación única
+
+El criterio exigía superar `0.80` en las cinco semillas:
+
+| Semilla | Precisión post | Supera 0.80 |
+|---:|---:|---:|
+| 101 | 0.4810 | no |
+| 103 | 0.6926 | no |
+| 107 | 0.8110 | sí |
+| 109 | 1.0000 | sí |
+| 113 | 0.5050 | no |
+
+### Decisión
+
+**Gate 2d rechazado.** RecurrentPPO no es un baseline estable para esta tarea
+bajo el protocolo fijado. No habrá más ajuste sobre estas semillas ni se usará
+su mejor ejecución como evidencia.
+
+Para separar validez de tarea y fallo de optimización, se evalúa a continuación
+un controlador determinista de memoria mínima `win-stay/lose-shift`.
+
+## 2026-06-12 — Gate 2e: control de validez con memoria mínima
+
+### Resultados
+
+| Referencia | Retorno | Precisión pre | Precisión post | Primeros 5 post |
+|---|---:|---:|---:|---:|
+| azar | -0.3920 | 0.4943 | 0.4958 | 0.4856 |
+| siempre consejero 0 | 0.0320 | 0.4920 | 0.5080 | 0.5080 |
+| `win-stay/lose-shift` | 36.9240 | 0.9717 | 0.9524 | 0.8000 |
+
+### Interpretación y decisión
+
+La tarea diagnóstica es válida y puede resolverse casi óptimamente con memoria
+funcional mínima. El fallo confirmatorio corresponde a la optimización de
+RecurrentPPO, no a una tarea irresoluble.
+
+No se continuará ajustando RecurrentPPO. El siguiente experimento deberá añadir
+explícitamente la acción anterior a la observación de PPO, convirtiendo la tarea
+en Markov. Esto permitirá contrastar:
+
+- PPO reactivo sin estado suficiente;
+- PPO reactivo con estado mínimo explícito;
+- controlador determinista con un bit funcional de memoria;
+- RecurrentPPO que debe aprender internamente ese estado.
+
+Este control es obligatorio antes de diseñar workspace: el benchmark actual solo
+requiere recordar una acción, no coordinación cognitiva global.
