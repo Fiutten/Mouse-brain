@@ -1,0 +1,128 @@
+"""Contract tests for the real-data Allen VBN loader using a tiny NWB fixture."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+
+import h5py
+import numpy as np
+import pandas as pd
+
+from mousebrainbench.data.loaders.allen_vbn import AllenVBNRepository
+from mousebrainbench.benchmarks.allen_vbn import run_benchmark
+
+
+def _repository_fixture(tmp_path) -> AllenVBNRepository:
+    root = tmp_path / "visual-behavior-neuropixels-0.5.0"
+    metadata = root / "project_metadata"
+    metadata.mkdir(parents=True)
+    units = pd.DataFrame(
+        {
+            "unit_id": list(range(1, 9)),
+            "ecephys_session_id": [101] * 4 + [102] * 4,
+            "structure_acronym": ["VISp", "VISp", "VISl", "VISl"] * 2,
+            "quality": ["good"] * 8,
+            "valid_data": [True] * 8,
+            "amplitude_cutoff": [0.01] * 8,
+            "presence_ratio": [0.99] * 8,
+            "isi_violations": [0.01] * 8,
+        }
+    )
+    sessions = pd.DataFrame(
+        {
+            "ecephys_session_id": [101, 102],
+            "mouse_id": [9, 10],
+            "experience_level": ["Familiar", "Novel"],
+        }
+    )
+    files = {
+        "units": units.to_csv(index=False),
+        "ecephys_sessions": sessions.to_csv(index=False),
+        "probes": "id\n",
+        "channels": "id\n",
+        "behavior_sessions": "id\n",
+    }
+    manifest_metadata = {}
+    for name, content in files.items():
+        path = metadata / f"{name}.csv"
+        path.write_text(content)
+        manifest_metadata[name] = {"file_hash": hashlib.blake2b(path.read_bytes()).hexdigest()}
+    manifest = {
+        "manifest_version": "0.5.0",
+        "data_pipeline": [{"name": "fixture", "version": "1"}],
+        "metadata_files": manifest_metadata,
+    }
+    (tmp_path / "visual-behavior-neuropixels_project_manifest_v0.5.0.json").write_text(
+        json.dumps(manifest)
+    )
+    for session_id, unit_ids in ((101, [1, 2, 3, 4]), (102, [5, 6, 7, 8])):
+        session_dir = root / "behavior_ecephys_sessions" / str(session_id)
+        session_dir.mkdir(parents=True)
+        with h5py.File(session_dir / f"ecephys_session_{session_id}.nwb", "w") as nwb:
+            unit_group = nwb.create_group("units")
+            unit_group.create_dataset("id", data=np.array(unit_ids))
+            unit_group.create_dataset(
+                "spike_times",
+                data=np.array(
+                    [
+                        0.2,
+                        1.2,
+                        2.2,
+                        3.2,
+                        0.3,
+                        1.3,
+                        2.3,
+                        3.3,
+                        0.4,
+                        1.4,
+                        2.4,
+                        3.4,
+                        0.5,
+                        1.5,
+                        2.5,
+                        3.5,
+                    ]
+                ),
+            )
+            unit_group.create_dataset("spike_times_index", data=np.array([4, 8, 12, 16]))
+            spontaneous = nwb.create_group("intervals/spontaneous_presentations")
+            spontaneous.create_dataset("start_time", data=np.array([0.0]))
+            spontaneous.create_dataset("stop_time", data=np.array([4.0]))
+    return AllenVBNRepository(root)
+
+
+def test_allen_metadata_hashes_and_qualification(tmp_path) -> None:
+    repository = _repository_fixture(tmp_path)
+    assert all(repository.verify_metadata_hashes().values())
+    decision = repository.qualify_sessions(("VISp", "VISl"), min_units_per_region=2)[0]
+    assert decision.accepted
+    assert decision.mouse_id == 9
+
+
+def test_allen_spontaneous_activity_extraction(tmp_path) -> None:
+    repository = _repository_fixture(tmp_path)
+    activity = repository.extract_spontaneous_activity(
+        101, ("VISp", "VISl"), bin_size_seconds=1.0, min_units_per_region=2
+    )
+    assert activity.activity_hz.shape == (4, 2)
+    np.testing.assert_array_equal(activity.activity_hz, np.ones((4, 2)))
+    assert activity.metadata["biological"] is True
+
+
+def test_allen_benchmark_runs_end_to_end(tmp_path) -> None:
+    repository = _repository_fixture(tmp_path)
+    config = {
+        "data": {
+            "root": str(repository.root),
+            "regions": ["VISp", "VISl"],
+            "min_units_per_region": 2,
+            "bin_size_seconds": 1.0,
+        },
+        "analysis": {"minimum_sessions": 2, "permutations": 5, "seed": 3},
+        "output": {"root": str(tmp_path / "outputs"), "name": "fixture"},
+    }
+    output = run_benchmark(config)
+    metrics = json.loads((output / "metrics.json").read_text())
+    assert metrics["dataset"]["successfully_extracted_sessions"] == 2
+    assert all(metrics["dataset"]["metadata_hashes_valid"].values())

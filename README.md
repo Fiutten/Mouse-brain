@@ -13,6 +13,12 @@ del cerebro de ratón. La primera versión valida la infraestructura mediante
 conectividad sintética explícitamente no biológica. Todavía no integra Allen
 MCModels, BMTK/SONATA, The Virtual Brain ni MICrONS.
 
+La Fase 2 añade un extractor real para Allen Visual Behavior Neuropixels y un
+benchmark de fiabilidad regional. Su primera puerta científica fue rechazada:
+el target de FC espontánea es moderadamente reproducible, pero no supera el
+criterio nulo fijado en suficientes sesiones. No se usa todavía para validar
+simuladores.
+
 ## Capacidades de la Fase 1
 
 - Contratos validados para regiones, conectividad y estados simulados.
@@ -29,12 +35,16 @@ MCModels, BMTK/SONATA, The Virtual Brain ni MICrONS.
 ```bash
 python -m pip install -e ".[dev]"
 mousebrainbench-run configs/default.yaml
+mousebrainbench-allen-benchmark configs/allen_vbn_phase2.yaml
 pytest
 ```
 
 Los resultados se guardan bajo `outputs/<run_id>/`. Consulta
 [SCIENTIFIC_SCOPE.md](docs/SCIENTIFIC_SCOPE.md) antes de interpretar cualquier
 resultado.
+
+Consulta [PHASE2_ACCEPTANCE.md](docs/PHASE2_ACCEPTANCE.md) para el resultado
+empírico y la decisión de continuidad.
 
 ## Lo que no demuestra
 

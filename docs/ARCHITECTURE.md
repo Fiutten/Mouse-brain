@@ -11,6 +11,8 @@ dinámicos reciben esa matriz y producen actividad regional `time x region`.
 6. `config.py` y `cli.py`: construcción estricta y ejecución reproducible.
 7. `artifacts.py`: configuración, procedencia, métricas y arrays portables.
 8. `visualization/`: gráficos opcionales, desacoplados del runner para CI y servidores.
+9. `data/loaders/allen_vbn.py`: extracción NWB read-only y cualificación por metadatos.
+10. `benchmarks/allen_vbn.py`: fiabilidad empírica leave-one-mouse-out y controles nulos.
 
 La simulación basal y la intervenida parten de la misma semilla. Las
 perturbaciones trabajan sobre copias y nunca alteran la conectividad de entrada.

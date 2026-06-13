@@ -9,6 +9,11 @@ contra un fixture versionado.
 El adaptador deberá producir `BrainRegion` y `ConnectivityMatrix`, documentar la
 resolución y transformación espacial, y conservar IDs y versión de Allen.
 
+La Fase 2 ya integra actividad funcional Allen Visual Behavior Neuropixels. Esto
+no equivale a integrar CCF o MCModels: las etiquetas regionales se usan para
+agregación funcional, pero no existe todavía conectividad anatómica Allen en el
+modelo.
+
 ## BMTK y SONATA
 
 Se usarán como motores y formatos existentes para módulos detallados. El contrato

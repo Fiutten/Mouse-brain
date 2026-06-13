@@ -28,11 +28,11 @@ def _json_safe(value: Any) -> Any:
 
 
 def code_revision() -> str:
-    """Return the checked-out Git revision, without making Git a runtime requirement."""
+    """Return the Git revision and mark uncommitted source states as dirty."""
 
     try:
         return subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL
+            ["git", "describe", "--always", "--dirty"], text=True, stderr=subprocess.DEVNULL
         ).strip()
     except (OSError, subprocess.CalledProcessError):
         return "unknown"
