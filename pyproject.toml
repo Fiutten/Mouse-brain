@@ -3,14 +3,17 @@ requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cognitive-organism"
+name = "mousebrainbench"
 version = "0.1.0"
-description = "Falsifiable benchmark for modular cognitive architectures"
+description = "Reproducible benchmarking for lightweight mesoscopic mouse-brain models"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-  "gymnasium>=1.0,<2",
+  "matplotlib>=3.8,<4",
+  "networkx>=3.2,<4",
   "numpy>=1.26,<3",
+  "pyyaml>=6,<7",
+  "scipy>=1.12,<2",
 ]
 
 [project.optional-dependencies]
@@ -18,14 +21,18 @@ dev = [
   "pytest>=8,<10",
   "ruff>=0.9,<1",
 ]
-learning = [
+legacy-cognitive = [
+  "gymnasium>=1.0,<2",
   "sb3-contrib>=2.5,<3",
   "stable-baselines3>=2.5,<3",
   "torch>=2.5,<3",
 ]
 
+[project.scripts]
+mousebrainbench-run = "mousebrainbench.cli:main"
+
 [tool.setuptools.packages.find]
-include = ["cognitive_organism*"]
+include = ["mousebrainbench*", "cognitive_organism*"]
 
 [tool.pytest.ini_options]
 addopts = "-q"

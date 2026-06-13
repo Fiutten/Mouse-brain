@@ -1,0 +1,17 @@
+# Arquitectura de MouseBrainBench-core
+
+La orientación de conectividad es siempre `weights[target, source]`. Los modelos
+dinámicos reciben esa matriz y producen actividad regional `time x region`.
+
+1. `schemas.py`: contratos validados y neutrales respecto a la fuente.
+2. `connectivity/`: fixture sintético, normalización y conversión a grafo.
+3. `dynamics/`: modelos transparentes intercambiables.
+4. `simulation/`: integración, estímulos y perturbaciones reversibles.
+5. `validation/`: métricas descriptivas, funcionales, perturbacionales y coste.
+6. `config.py` y `cli.py`: construcción estricta y ejecución reproducible.
+7. `artifacts.py`: configuración, procedencia, métricas y arrays portables.
+8. `visualization/`: gráficos opcionales, desacoplados del runner para CI y servidores.
+
+La simulación basal y la intervenida parten de la misma semilla. Las
+perturbaciones trabajan sobre copias y nunca alteran la conectividad de entrada.
+Los directorios de salida se identifican por un hash de configuración.

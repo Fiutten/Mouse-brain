@@ -1,48 +1,44 @@
-# Cognitive Organism Research Benchmark
+# MouseBrainBench-core
 
-Repositorio experimental para estudiar si una arquitectura cognitiva modular con
-un canal de difusión global limitado produce ventajas funcionales y firmas
-causales reproducibles en entornos parcialmente observables.
+**MouseBrainBench is not a full digital mouse brain.**
 
-Este proyecto **no** pretende construir ni demostrar consciencia. Tampoco asume
-que añadir módulos con nombres cognitivos mejore un agente. Cada componente debe
-tener una definición operacional, una intervención posible y una hipótesis
-falsable.
+It is a reproducible framework for building, running, and evaluating simplified
+mouse-brain models across scales. It focuses on integration, benchmarking, and
+validation of models constrained by public anatomical and functional resources.
 
-## Estado actual
+**MouseBrainBench no es una emulación completa del cerebro de un ratón.**
 
-- Auditoría científica inicial y criterios `go/no-go`.
-- Protocolo experimental preregistrado.
-- Entorno mínimo `SocialSurvivalWorld`.
-- Entorno diagnóstico `AdvisorSwitchTask` para aislar memoria.
-- Pruebas de API, reproducibilidad y dinámica causal.
-- Gate 2: existe señal recurrente aislada, pero todavía no es estable entre
-  semillas.
-- Confirmación independiente: RecurrentPPO rechazado como baseline estable; un
-  controlador determinista de memoria mínima sí resuelve la tarea.
-- PPO con estado mínimo explícito también es inestable entre semillas. El
-  desarrollo arquitectónico está pausado mientras se audita el stack de RL.
+Es una plataforma reproducible para construir y evaluar modelos simplificados
+del cerebro de ratón. La primera versión valida la infraestructura mediante
+conectividad sintética explícitamente no biológica. Todavía no integra Allen
+MCModels, BMTK/SONATA, The Virtual Brain ni MICrONS.
 
-Todavía no se ha implementado ninguna arquitectura propuesta como contribución.
-Ese trabajo solo comenzará después de estabilizar y confirmar los baselines.
+## Capacidades de la Fase 1
 
-## Instalación
+- Contratos validados para regiones, conectividad y estados simulados.
+- Grafos dirigidos ponderados y normalización configurable.
+- Modelos transparentes `LinearRateModel` y `WilsonCowanModel`.
+- Integración Euler y RK4, ruido reproducible y estímulos regionales.
+- Perturbaciones reversibles: lesión, inhibición, estimulación, aumento de ruido
+  y escalado de conectividad.
+- Métricas anatómicas, funcionales, perturbacionales y de coste.
+- Runner YAML y artefactos reproducibles con configuración, versión y semilla.
 
-Se requiere Python 3.11 o posterior.
+## Instalación y uso
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
 python -m pip install -e ".[dev]"
+mousebrainbench-run configs/default.yaml
 pytest
 ```
 
-## Principio científico
+Los resultados se guardan bajo `outputs/<run_id>/`. Consulta
+[SCIENTIFIC_SCOPE.md](docs/SCIENTIFIC_SCOPE.md) antes de interpretar cualquier
+resultado.
 
-La comparación principal será entre agentes emparejados en parámetros y
-presupuesto de entrenamiento. La variable experimental será la forma de
-comunicación entre módulos, no el número de módulos ni el acceso a información
-adicional.
+## Lo que no demuestra
 
-Consulta [SCIENTIFIC_DECISION.md](docs/SCIENTIFIC_DECISION.md) y
-[PREREGISTRATION.md](docs/PREREGISTRATION.md) antes de ampliar el sistema.
+Una simulación sintética que funciona no valida un modelo neurocientífico. Los
+parámetros de la Fase 1 son arbitrarios y sirven para probar ingeniería,
+estabilidad numérica y reproducibilidad. La validación científica empieza al
+integrar conectividad y actividad de referencia reales.

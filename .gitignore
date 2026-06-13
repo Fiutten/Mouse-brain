@@ -9,6 +9,7 @@ __pycache__/
 dist/
 build/
 runs/
+outputs/
 data/**
 !data/.gitkeep
 !data/allen/
