@@ -19,6 +19,11 @@ el target de FC espontánea es moderadamente reproducible, pero no supera el
 criterio nulo fijado en suficientes sesiones. No se usa todavía para validar
 simuladores.
 
+La Fase 2b descompone esa variabilidad y evalúa perfiles espontáneos y evocados.
+Ninguno de los tres targets candidatos supera la puerta fijada. El proyecto
+conserva estos resultados negativos y no ajustará simuladores contra ellos como
+métrica primaria.
+
 ## Capacidades de la Fase 1
 
 - Contratos validados para regiones, conectividad y estados simulados.
@@ -36,6 +41,7 @@ simuladores.
 python -m pip install -e ".[dev]"
 mousebrainbench-run configs/default.yaml
 mousebrainbench-allen-benchmark configs/allen_vbn_phase2.yaml
+mousebrainbench-allen-phase2b configs/allen_vbn_phase2b.yaml
 pytest
 ```
 

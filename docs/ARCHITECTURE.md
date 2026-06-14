@@ -13,6 +13,8 @@ dinámicos reciben esa matriz y producen actividad regional `time x region`.
 8. `visualization/`: gráficos opcionales, desacoplados del runner para CI y servidores.
 9. `data/loaders/allen_vbn.py`: extracción NWB read-only y cualificación por metadatos.
 10. `benchmarks/allen_vbn.py`: fiabilidad empírica leave-one-mouse-out y controles nulos.
+11. `benchmarks/allen_vbn_phase2b.py`: selección preregistrada de targets,
+    sensibilidad temporal y diagnósticos agrupados por ratón.
 
 La simulación basal y la intervenida parten de la misma semilla. Las
 perturbaciones trabajan sobre copias y nunca alteran la conectividad de entrada.

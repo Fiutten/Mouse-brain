@@ -27,6 +27,8 @@ siguiente trabajo permitido es estudiar, de forma explícitamente exploratoria,
 la fuente de variabilidad y preregistrar un observable alternativo. El resultado
 negativo se conserva.
 
+Ese trabajo se completó en Fase 2b. Consulta `PHASE2B_ACCEPTANCE.md`.
+
 La diferencia entre la fiabilidad split-half (`0.7537`) y la fiabilidad entre
 ratones (`0.5203`) sugiere que la principal limitación no es solo duración de la
 ventana. Son plausibles la heterogeneidad entre animales, el muestreo distinto

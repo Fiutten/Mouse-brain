@@ -27,3 +27,16 @@ manifest, versión, filtros, sesiones incluidas/excluidas y hashes verificados.
 
 La transformación produce una representación funcional derivada. No produce
 conectividad anatómica, conectividad efectiva ni un conectoma.
+
+## Transformación de Fase 2b
+
+Además de reutilizar la FC y tasa espontáneas, se extraen eventos de cambio
+visual desde la única tabla NWB cuyo nombre sigue
+`Natural_Images_Lum_Matched_set_ophys_*_presentations`. Se incluyen únicamente
+cambios activos y no omitidos. La respuesta regional es la diferencia de tasa
+entre `[0, 250 ms)` y `[-250 ms, 0)` agregada sobre eventos y unidades
+cualificadas.
+
+La búsqueda de la tabla admite conjuntos de imágenes `G` y `H`; fijar solo uno
+sesgaría la cohorte. Los resultados conservan versión, filtros, configuración y
+commit de código.

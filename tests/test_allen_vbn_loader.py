@@ -11,6 +11,7 @@ import pandas as pd
 
 from mousebrainbench.data.loaders.allen_vbn import AllenVBNRepository
 from mousebrainbench.benchmarks.allen_vbn import run_benchmark
+from mousebrainbench.benchmarks.allen_vbn_phase2b import run_phase2b
 
 
 def _repository_fixture(tmp_path) -> AllenVBNRepository:
@@ -89,6 +90,14 @@ def _repository_fixture(tmp_path) -> AllenVBNRepository:
             spontaneous = nwb.create_group("intervals/spontaneous_presentations")
             spontaneous.create_dataset("start_time", data=np.array([0.0]))
             spontaneous.create_dataset("stop_time", data=np.array([4.0]))
+            image_set = "G" if session_id == 101 else "H"
+            presentations = nwb.create_group(
+                f"intervals/Natural_Images_Lum_Matched_set_ophys_{image_set}_2019_presentations"
+            )
+            presentations.create_dataset("start_time", data=np.array([0.5, 1.5, 2.5, 3.5]))
+            presentations.create_dataset("is_change", data=np.ones(4))
+            presentations.create_dataset("omitted", data=np.zeros(4))
+            presentations.create_dataset("active", data=np.ones(4, dtype=bool))
     return AllenVBNRepository(root)
 
 
@@ -126,3 +135,42 @@ def test_allen_benchmark_runs_end_to_end(tmp_path) -> None:
     metrics = json.loads((output / "metrics.json").read_text())
     assert metrics["dataset"]["successfully_extracted_sessions"] == 2
     assert all(metrics["dataset"]["metadata_hashes_valid"].values())
+
+
+def test_allen_change_response_and_phase2b_run_end_to_end(tmp_path) -> None:
+    repository = _repository_fixture(tmp_path)
+    response = repository.extract_change_response_profile(
+        101, ("VISp", "VISl"), min_units_per_region=2, window_seconds=0.25
+    )
+    assert response.response_hz.shape == (2,)
+    assert response.event_count == 4
+    config = {
+        "data": {
+            "root": str(repository.root),
+            "regions": ["VISp", "VISl"],
+            "min_units_per_region": 2,
+        },
+        "analysis": {
+            "base_bin_seconds": 1.0,
+            "sensitivity_bin_seconds": [1.0],
+            "sensitivity_window_seconds": [2],
+            "evoked_window_seconds": 0.25,
+            "minimum_sessions": 2,
+            "permutations": 5,
+            "bootstrap_samples": 10,
+            "seed": 3,
+            "candidate_thresholds": {
+                "median_cross_mouse_correlation_gt": 0.5,
+                "median_split_half_correlation_gt": 0.5,
+                "fraction_above_null_95_gte": 0.5,
+            },
+        },
+        "output": {"root": str(tmp_path / "outputs"), "name": "phase2b-fixture"},
+    }
+    output = run_phase2b(config)
+    metrics = json.loads((output / "metrics.json").read_text())
+    assert set(metrics["candidate_results"]) == {
+        "spontaneous_fc",
+        "spontaneous_rate_profile",
+        "visual_change_response_profile",
+    }

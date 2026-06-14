@@ -12,7 +12,7 @@ import h5py
 import numpy as np
 import pandas as pd
 
-from mousebrainbench.empirical import RegionalActivity
+from mousebrainbench.empirical import EvokedRegionalProfile, RegionalActivity
 
 QUALITY_FILTER = {
     "quality": "good",
@@ -185,6 +185,99 @@ class AllenVBNRepository:
                 "bin_size_seconds": bin_size_seconds,
                 "quality_filter": QUALITY_FILTER,
                 "n_nwb_units_not_quality_qualified": len(missing_ids),
+            },
+        )
+
+    def extract_change_response_profile(
+        self,
+        session_id: int,
+        regions: tuple[str, ...],
+        *,
+        min_units_per_region: int = 20,
+        window_seconds: float = 0.25,
+    ) -> EvokedRegionalProfile:
+        """Aggregate baseline-corrected firing around active visual-change events."""
+
+        if window_seconds <= 0:
+            raise ValueError("window_seconds must be positive")
+        path = self.session_path(session_id)
+        metadata = self.qualified_units()
+        metadata = metadata[metadata["ecephys_session_id"] == session_id].set_index("unit_id")
+        with h5py.File(path, "r") as nwb:
+            unit_ids = np.asarray(nwb["units/id"], dtype=np.int64)
+            selected = metadata.reindex(unit_ids).dropna(subset=["structure_acronym"])
+            selected = selected[selected["structure_acronym"].isin(regions)]
+            presentation_names = [
+                name
+                for name in nwb["intervals"]
+                if name.startswith("Natural_Images_Lum_Matched_set_ophys_")
+                and name.endswith("_presentations")
+            ]
+            if len(presentation_names) != 1:
+                raise ValueError(
+                    f"session {session_id} has {len(presentation_names)} matching image tables"
+                )
+            presentations = nwb[f"intervals/{presentation_names[0]}"]
+            event_mask = (
+                (np.asarray(presentations["is_change"], dtype=float) == 1)
+                & (np.asarray(presentations["omitted"], dtype=float) == 0)
+                & np.asarray(presentations["active"], dtype=bool)
+            )
+            events = np.asarray(presentations["start_time"], dtype=float)[event_mask]
+            if len(events) < 2:
+                raise ValueError(f"session {session_id} has fewer than two visual-change events")
+            spike_times = nwb["units/spike_times"]
+            spike_index = np.asarray(nwb["units/spike_times_index"], dtype=np.int64)
+            nwb_position = {int(unit_id): index for index, unit_id in enumerate(unit_ids)}
+            full = np.zeros(len(regions), dtype=float)
+            odd = np.zeros(len(regions), dtype=float)
+            even = np.zeros(len(regions), dtype=float)
+            unit_counts = []
+            for region_index, region in enumerate(regions):
+                region_ids = [int(value) for value in selected[selected["structure_acronym"] == region].index]
+                if len(region_ids) < min_units_per_region:
+                    raise ValueError(
+                        f"session {session_id} has {len(region_ids)} qualified units in {region}; "
+                        f"minimum is {min_units_per_region}"
+                    )
+                unit_counts.append(len(region_ids))
+                for unit_id in region_ids:
+                    position = nwb_position[unit_id]
+                    left = 0 if position == 0 else int(spike_index[position - 1])
+                    right = int(spike_index[position])
+                    spikes = np.asarray(spike_times[left:right], dtype=float)
+                    event_indices = np.searchsorted(spikes, events, side="left")
+                    response_counts = np.searchsorted(
+                        spikes, events + window_seconds, side="left"
+                    ) - event_indices
+                    baseline_counts = event_indices - np.searchsorted(
+                        spikes, events - window_seconds, side="left"
+                    )
+                    response = np.asarray(response_counts - baseline_counts, dtype=float)
+                    full[region_index] += response.mean()
+                    odd[region_index] += response[::2].mean()
+                    even[region_index] += response[1::2].mean()
+                scale = len(region_ids) * window_seconds
+                full[region_index] /= scale
+                odd[region_index] /= scale
+                even[region_index] /= scale
+        return EvokedRegionalProfile(
+            response_hz=full,
+            odd_event_response_hz=odd,
+            even_event_response_hz=even,
+            region_acronyms=regions,
+            unit_counts=tuple(unit_counts),
+            session_id=session_id,
+            event_count=len(events),
+            metadata={
+                "source": "Allen Visual Behavior Neuropixels",
+                "biological": True,
+                "manifest_version": self.manifest["manifest_version"],
+                "event_definition": "active non-omitted visual changes",
+                "presentation_table": presentation_names[0],
+                "baseline_window_seconds": [-window_seconds, 0.0],
+                "response_window_seconds": [0.0, window_seconds],
+                "quality_filter": QUALITY_FILTER,
             },
         )
 
