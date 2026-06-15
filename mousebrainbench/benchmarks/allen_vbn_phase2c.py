@@ -277,7 +277,14 @@ def run_confirmation(config: dict[str, Any]) -> Path:
     session_ids = [int(item["session_id"]) for item in plan["sessions"]]
     timecourses, failures = _extract(repository, session_ids, config)
     mouse_by_session = {int(item["session_id"]): int(item["mouse_id"]) for item in plan["sessions"]}
+    experience_by_session = {
+        int(item["session_id"]): str(item["experience_level"]) for item in plan["sessions"]
+    }
+    successful_session_ids = [item.session_id for item in timecourses]
     mouse_ids = np.asarray([mouse_by_session[item.session_id] for item in timecourses])
+    experience_levels = np.asarray(
+        [experience_by_session[item.session_id] for item in timecourses]
+    )
     results, arrays = _evaluate_candidates(timecourses, mouse_ids, config, [plan["selected_target"]])
     result = results[plan["selected_target"]]
     sufficient = len(timecourses) >= int(config["confirmation"]["minimum_successful_sessions"])
@@ -286,6 +293,7 @@ def run_confirmation(config: dict[str, Any]) -> Path:
         "selected_target": plan["selected_target"],
         "sealed_sessions": len(session_ids),
         "successful_sessions": len(timecourses),
+        "successful_session_ids": successful_session_ids,
         "failures": failures,
         "target_result": result,
         "minimum_successful_sessions_passed": sufficient,
@@ -299,7 +307,13 @@ def run_confirmation(config: dict[str, Any]) -> Path:
     (output / "provenance.json").write_text(
         json.dumps({"version": __version__, "git_revision": code_revision()}, indent=2)
     )
-    np.savez_compressed(output / "confirmation_arrays.npz", **arrays[plan["selected_target"]])
+    np.savez_compressed(
+        output / "confirmation_arrays.npz",
+        session_ids=np.asarray(successful_session_ids),
+        mouse_ids=mouse_ids,
+        experience_levels=experience_levels,
+        **arrays[plan["selected_target"]],
+    )
     return output
 
 
