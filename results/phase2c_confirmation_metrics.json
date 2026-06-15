@@ -1,0 +1,21 @@
+{
+  "interpretation": "single_external_confirmation",
+  "selected_target": "temporal_derivative",
+  "sealed_sessions": 20,
+  "successful_sessions": 20,
+  "failed_sessions": 0,
+  "git_revision": "3b07ce3",
+  "target_result": {
+    "median_cross_mouse_correlation": 0.8907712835025543,
+    "median_split_half_correlation": 0.989581126345437,
+    "fraction_above_own_null_95th": 0.75,
+    "cluster_bootstrap_95_interval_for_median": [
+      0.8416704600736803,
+      0.9214329761128501
+    ],
+    "passed": true
+  },
+  "minimum_successful_sessions_passed": true,
+  "confirmation_passed": true,
+  "decision": "target_confirmed"
+}

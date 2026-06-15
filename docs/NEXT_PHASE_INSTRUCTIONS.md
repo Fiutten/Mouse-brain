@@ -1,35 +1,51 @@
-# Siguiente fase: desarrollo y confirmación externa del target
+# Siguiente fase: benchmark anatómico-funcional fuera de muestra
 
-## Decisión metodológica
+## Punto de partida
 
-La siguiente fase no será otra búsqueda sobre las mismas 21 sesiones. Hacerlo
-convertiría la selección de target en sobreajuste analítico.
+La Fase 2c confirmó externamente `temporal_derivative` como target funcional
+evocado reproducible. Esto permite evaluar modelos, pero no valida todavía
+ninguna dinámica ni conectividad.
 
-## Fase 2c propuesta
+## Fase 3 propuesta
 
-1. Usar las 21 sesiones actuales exclusivamente como cohorte de desarrollo.
-2. Definir un target condicionado por estado/estímulo y una transformación fija.
-3. Seleccionar como máximo un target primario y un control negativo.
-4. Descargar una cohorte confirmatoria nueva de ratones no usados, verificando
-   antes espacio disponible y cobertura regional.
-5. Ejecutar una única confirmación con separación por ratón.
-6. Solo si pasa, comparar modelos mesoscópicos contra ese target.
+1. Integrar una matriz región-región procedente de Allen MCModels/CCF para las
+   seis regiones visuales, conservando procedencia y orientación.
+2. Construir controles emparejados: grafo desconectado y grafos permutados que
+   conserven densidad y distribución de pesos.
+3. Calibrar solo un conjunto pequeño y declarado de parámetros dinámicos usando
+   las 21 sesiones de desarrollo.
+4. Congelar parámetros, modelos, métricas y umbrales.
+5. Evaluar una sola vez sobre las 20 sesiones confirmatorias ya selladas.
+6. Comparar capacidad predictiva, robustez a perturbaciones y coste.
 
-## Candidato de desarrollo recomendado
+## Pregunta falsable
 
-Respuesta temporal evocada multibin, no un único perfil medio:
+> ¿La conectividad anatómica Allen mejora la predicción fuera de muestra de la
+> dinámica temporal regional frente a topologías nulas emparejadas?
 
-- ventanas pre/post cambio visual;
-- dinámica regional completa y latencias;
-- normalización dentro de sesión;
-- evaluación de geometría temporal entre regiones;
-- control negativo con eventos desplazados o etiquetas regionales permutadas.
+La contribución potencial no es que un modelo produzca actividad parecida, sino
+determinar si la restricción anatómica aporta información predictiva medible.
 
-La recomendación se basa en su split-half alto, pero todavía debe desarrollarse
-y confirmarse externamente. No constituye un resultado positivo actual.
+## Modelos permitidos inicialmente
+
+- `LinearRateModel`, como baseline interpretable.
+- `WilsonCowanModel`, como dinámica no lineal mesoscópica.
+- Ningún modelo profundo hasta resolver esta puerta.
+
+Ambos deben usar idéntico protocolo de calibración y presupuesto. No se
+seleccionará retrospectivamente el modelo con mejor resultado como evidencia
+única.
+
+## Métricas primarias
+
+- correlación con el target temporal por sesión;
+- mejora frente a grafos permutados emparejados;
+- generalización desarrollo-confirmación;
+- sensibilidad a lesiones regionales predefinidas;
+- coste computacional.
 
 ## Criterio de parada
 
-Si el target fijado no replica en la cohorte nueva, se abandona esta vía
-funcional como objetivo primario y se prioriza integración anatómica
-Allen MCModels/CCF antes de seguir construyendo dinámica.
+Si Allen MCModels no mejora de forma robusta frente a controles topológicos, se
+rechazará que esa conectividad mesoscópica aporte capacidad predictiva para este
+target y escala. No se añadirá complejidad neuronal para rescatar el resultado.

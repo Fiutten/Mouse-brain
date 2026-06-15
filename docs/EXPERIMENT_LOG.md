@@ -261,3 +261,34 @@ insuficiente de uno de los estados positivos.
 Según el roadmap, se pausa el desarrollo arquitectónico. El siguiente paso no
 es ajustar PPO ni construir workspace: se auditará el stack mediante un baseline
 tabular exacto sobre el mismo MDP.
+
+## 2026-06-15 — MouseBrainBench Fase 2c: confirmación funcional externa
+
+### Diseño
+
+Las 21 sesiones locales de desarrollo se usaron para seleccionar una única
+transformación temporal. `temporal_derivative` quedó sellada antes de descargar
+una cohorte confirmatoria de 20 sesiones pertenecientes a 20 ratones nuevos,
+equilibrada entre Familiar y Novel.
+
+### Confirmación única
+
+| Métrica | Resultado | Umbral | Pasa |
+|---|---:|---:|---|
+| Correlación mediana entre ratones | 0.8908 | > 0.50 | sí |
+| Split-half mediano | 0.9896 | > 0.70 | sí |
+| Sesiones sobre nulo individual 95% | 75% | >= 50% | sí |
+| Límite inferior bootstrap agrupado | 0.8417 | > 0 | sí |
+
+Se procesaron las 20 sesiones sin fallos. El intervalo bootstrap agrupado fue
+`[0.8417, 0.9214]`. El análisis se ejecutó una vez desde el commit `3b07ce3`.
+
+### Decisión
+
+**Target confirmado.** Puede utilizarse como variable funcional fuera de muestra
+para evaluar modelos mesoscópicos. El resultado no valida un mecanismo,
+conectividad efectiva ni un gemelo digital.
+
+La siguiente puerta comprobará si conectividad Allen MCModels predice el target
+mejor que topologías nulas emparejadas, calibrando únicamente sobre la cohorte de
+desarrollo.

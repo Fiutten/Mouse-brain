@@ -24,6 +24,10 @@ Ninguno de los tres targets candidatos supera la puerta fijada. El proyecto
 conserva estos resultados negativos y no ajustará simuladores contra ellos como
 métrica primaria.
 
+La Fase 2c confirma externamente una representación temporal evocada en 20
+ratones nuevos. El resultado permite iniciar un benchmark anatómico-funcional,
+pero no valida todavía ningún modelo ni constituye un gemelo digital.
+
 ## Capacidades de la Fase 1
 
 - Contratos validados para regiones, conectividad y estados simulados.
@@ -43,6 +47,7 @@ mousebrainbench-run configs/default.yaml
 mousebrainbench-allen-benchmark configs/allen_vbn_phase2.yaml
 mousebrainbench-allen-phase2b configs/allen_vbn_phase2b.yaml
 mousebrainbench-allen-phase2c develop configs/allen_vbn_phase2c.yaml
+mousebrainbench-allen-phase2c confirm configs/allen_vbn_phase2c.yaml
 pytest
 ```
 

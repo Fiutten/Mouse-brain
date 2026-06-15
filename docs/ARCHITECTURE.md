@@ -15,6 +15,8 @@ dinámicos reciben esa matriz y producen actividad regional `time x region`.
 10. `benchmarks/allen_vbn.py`: fiabilidad empírica leave-one-mouse-out y controles nulos.
 11. `benchmarks/allen_vbn_phase2b.py`: selección preregistrada de targets,
     sensibilidad temporal y diagnósticos agrupados por ratón.
+12. `benchmarks/allen_vbn_phase2c.py`: desarrollo, sellado y confirmación externa
+    de un target temporal evocado, con bloqueo explícito ante deriva del plan.
 
 La simulación basal y la intervenida parten de la misma semilla. Las
 perturbaciones trabajan sobre copias y nunca alteran la conectividad de entrada.
