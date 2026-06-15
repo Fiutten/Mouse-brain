@@ -12,7 +12,11 @@ import h5py
 import numpy as np
 import pandas as pd
 
-from mousebrainbench.empirical import EvokedRegionalProfile, RegionalActivity
+from mousebrainbench.empirical import (
+    EvokedRegionalProfile,
+    EvokedRegionalTimecourse,
+    RegionalActivity,
+)
 
 QUALITY_FILTER = {
     "quality": "good",
@@ -86,7 +90,11 @@ class AllenVBNRepository:
         ]
 
     def qualify_sessions(
-        self, regions: tuple[str, ...], *, min_units_per_region: int
+        self,
+        regions: tuple[str, ...],
+        *,
+        min_units_per_region: int,
+        available_only: bool = True,
     ) -> tuple[SessionQualification, ...]:
         """Qualify available sessions without opening large NWB files."""
 
@@ -95,7 +103,8 @@ class AllenVBNRepository:
         counts = units.groupby(["ecephys_session_id", "structure_acronym"]).size().unstack(fill_value=0)
         sessions = self.sessions().set_index("ecephys_session_id")
         decisions = []
-        for session_id in sorted(available):
+        session_ids = available if available_only else set(int(value) for value in sessions.index)
+        for session_id in sorted(session_ids):
             region_counts = {
                 region: int(counts.at[session_id, region])
                 if session_id in counts.index and region in counts.columns
@@ -280,6 +289,93 @@ class AllenVBNRepository:
                 "quality_filter": QUALITY_FILTER,
             },
         )
+
+    def extract_change_response_timecourse(
+        self,
+        session_id: int,
+        regions: tuple[str, ...],
+        *,
+        min_units_per_region: int = 20,
+        start_seconds: float = -0.25,
+        stop_seconds: float = 0.75,
+        bin_size_seconds: float = 0.05,
+    ) -> EvokedRegionalTimecourse:
+        """Extract event-aligned regional firing around active visual changes."""
+
+        if not start_seconds < 0 < stop_seconds or bin_size_seconds <= 0:
+            raise ValueError("timecourse requires start < 0 < stop and positive bins")
+        relative_edges = np.arange(start_seconds, stop_seconds + bin_size_seconds * 0.5, bin_size_seconds)
+        if len(relative_edges) < 3 or not np.isclose(relative_edges[-1], stop_seconds):
+            raise ValueError("timecourse range must be evenly divisible by bin size")
+        path = self.session_path(session_id)
+        metadata = self.qualified_units()
+        metadata = metadata[metadata["ecephys_session_id"] == session_id].set_index("unit_id")
+        with h5py.File(path, "r") as nwb:
+            unit_ids = np.asarray(nwb["units/id"], dtype=np.int64)
+            selected = metadata.reindex(unit_ids).dropna(subset=["structure_acronym"])
+            selected = selected[selected["structure_acronym"].isin(regions)]
+            presentations = self._visual_presentations(nwb, session_id)
+            event_mask = (
+                (np.asarray(presentations["is_change"], dtype=float) == 1)
+                & (np.asarray(presentations["omitted"], dtype=float) == 0)
+                & np.asarray(presentations["active"], dtype=bool)
+            )
+            events = np.asarray(presentations["start_time"], dtype=float)[event_mask]
+            if len(events) < 2:
+                raise ValueError(f"session {session_id} has fewer than two visual-change events")
+            spike_times = nwb["units/spike_times"]
+            spike_index = np.asarray(nwb["units/spike_times_index"], dtype=np.int64)
+            nwb_position = {int(unit_id): index for index, unit_id in enumerate(unit_ids)}
+            event_activity = np.zeros((len(events), len(relative_edges) - 1, len(regions)), dtype=float)
+            unit_counts = []
+            for region_index, region in enumerate(regions):
+                region_ids = [int(value) for value in selected[selected["structure_acronym"] == region].index]
+                if len(region_ids) < min_units_per_region:
+                    raise ValueError(
+                        f"session {session_id} has {len(region_ids)} qualified units in {region}; "
+                        f"minimum is {min_units_per_region}"
+                    )
+                unit_counts.append(len(region_ids))
+                for unit_id in region_ids:
+                    position = nwb_position[unit_id]
+                    left = 0 if position == 0 else int(spike_index[position - 1])
+                    right = int(spike_index[position])
+                    spikes = np.asarray(spike_times[left:right], dtype=float)
+                    event_edges = events[:, None] + relative_edges[None, :]
+                    edge_indices = np.searchsorted(spikes, event_edges, side="left")
+                    event_activity[:, :, region_index] += np.diff(edge_indices, axis=1)
+                event_activity[:, :, region_index] /= len(region_ids) * bin_size_seconds
+        return EvokedRegionalTimecourse(
+            time=(relative_edges[:-1] + relative_edges[1:]) / 2,
+            activity_hz=event_activity.mean(axis=0),
+            odd_event_activity_hz=event_activity[::2].mean(axis=0),
+            even_event_activity_hz=event_activity[1::2].mean(axis=0),
+            region_acronyms=regions,
+            unit_counts=tuple(unit_counts),
+            session_id=session_id,
+            event_count=len(events),
+            metadata={
+                "source": "Allen Visual Behavior Neuropixels",
+                "biological": True,
+                "manifest_version": self.manifest["manifest_version"],
+                "event_definition": "active non-omitted visual changes",
+                "time_range_seconds": [start_seconds, stop_seconds],
+                "bin_size_seconds": bin_size_seconds,
+                "quality_filter": QUALITY_FILTER,
+            },
+        )
+
+    @staticmethod
+    def _visual_presentations(nwb: h5py.File, session_id: int) -> h5py.Group:
+        presentation_names = [
+            name
+            for name in nwb["intervals"]
+            if name.startswith("Natural_Images_Lum_Matched_set_ophys_")
+            and name.endswith("_presentations")
+        ]
+        if len(presentation_names) != 1:
+            raise ValueError(f"session {session_id} has {len(presentation_names)} matching image tables")
+        return nwb[f"intervals/{presentation_names[0]}"]
 
 
 def qualification_records(decisions: Iterable[SessionQualification]) -> list[dict[str, Any]]:

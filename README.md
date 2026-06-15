@@ -42,6 +42,7 @@ python -m pip install -e ".[dev]"
 mousebrainbench-run configs/default.yaml
 mousebrainbench-allen-benchmark configs/allen_vbn_phase2.yaml
 mousebrainbench-allen-phase2b configs/allen_vbn_phase2b.yaml
+mousebrainbench-allen-phase2c develop configs/allen_vbn_phase2c.yaml
 pytest
 ```
 

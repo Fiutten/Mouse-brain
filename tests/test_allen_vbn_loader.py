@@ -12,6 +12,7 @@ import pandas as pd
 from mousebrainbench.data.loaders.allen_vbn import AllenVBNRepository
 from mousebrainbench.benchmarks.allen_vbn import run_benchmark
 from mousebrainbench.benchmarks.allen_vbn_phase2b import run_phase2b
+from mousebrainbench.benchmarks.allen_vbn_phase2c import run_development, transform_timecourse
 
 
 def _repository_fixture(tmp_path) -> AllenVBNRepository:
@@ -174,3 +175,47 @@ def test_allen_change_response_and_phase2b_run_end_to_end(tmp_path) -> None:
         "spontaneous_rate_profile",
         "visual_change_response_profile",
     }
+
+
+def test_allen_temporal_response_and_phase2c_development(tmp_path) -> None:
+    repository = _repository_fixture(tmp_path)
+    response = repository.extract_change_response_timecourse(
+        101,
+        ("VISp", "VISl"),
+        min_units_per_region=2,
+        start_seconds=-0.25,
+        stop_seconds=0.75,
+        bin_size_seconds=0.25,
+    )
+    assert response.activity_hz.shape == (4, 2)
+    assert transform_timecourse(response.activity_hz, response.time, "baseline_subtracted").shape == (
+        4,
+        2,
+    )
+    config = {
+        "data": {
+            "root": str(repository.root),
+            "regions": ["VISp", "VISl"],
+            "min_units_per_region": 2,
+        },
+        "target": {
+            "start_seconds": -0.25,
+            "stop_seconds": 0.75,
+            "bin_size_seconds": 0.25,
+            "candidates": ["baseline_subtracted"],
+        },
+        "analysis": {
+            "permutations": 5,
+            "bootstrap_samples": 10,
+            "seed": 3,
+            "thresholds": {
+                "median_cross_mouse_correlation_gt": -1.0,
+                "median_split_half_correlation_gt": -1.0,
+                "fraction_above_null_95_gte": 0.0,
+                "bootstrap_lower_bound_gt": -1.0,
+            },
+        },
+        "output": {"root": str(tmp_path / "outputs"), "development_name": "phase2c"},
+    }
+    output = run_development(config)
+    assert (output / "development_arrays.npz").exists()

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mousebrainbench"
-version = "0.3.0"
+version = "0.4.0"
 description = "Reproducible benchmarking for lightweight mesoscopic mouse-brain models"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -33,6 +33,7 @@ legacy-cognitive = [
 [project.scripts]
 mousebrainbench-allen-benchmark = "mousebrainbench.benchmarks.allen_vbn:main"
 mousebrainbench-allen-phase2b = "mousebrainbench.benchmarks.allen_vbn_phase2b:main"
+mousebrainbench-allen-phase2c = "mousebrainbench.benchmarks.allen_vbn_phase2c:main"
 mousebrainbench-run = "mousebrainbench.cli:main"
 
 [tool.setuptools.packages.find]

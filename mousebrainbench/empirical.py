@@ -55,3 +55,30 @@ class EvokedRegionalProfile:
                 raise ValueError(f"{name} must be a finite regional vector")
         if self.event_count < 2:
             raise ValueError("at least two events are required")
+
+
+@dataclass(frozen=True)
+class EvokedRegionalTimecourse:
+    """Event-aligned regional population response with odd/even event splits."""
+
+    time: np.ndarray
+    activity_hz: np.ndarray
+    odd_event_activity_hz: np.ndarray
+    even_event_activity_hz: np.ndarray
+    region_acronyms: tuple[str, ...]
+    unit_counts: tuple[int, ...]
+    session_id: int
+    event_count: int
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        expected = (len(self.time), len(self.region_acronyms))
+        for name, values in (
+            ("activity_hz", self.activity_hz),
+            ("odd_event_activity_hz", self.odd_event_activity_hz),
+            ("even_event_activity_hz", self.even_event_activity_hz),
+        ):
+            if values.shape != expected or not np.all(np.isfinite(values)):
+                raise ValueError(f"{name} must have finite shape {expected}")
+        if self.event_count < 2:
+            raise ValueError("at least two events are required")
