@@ -1,0 +1,19 @@
+{
+  "interpretation": "phase3_development_only",
+  "sessions": 21,
+  "git_revision": "4fabc03",
+  "selected_family": "linear_rate",
+  "allen_parameters": {
+    "tau": 0.05,
+    "coupling": 1.0,
+    "drive_scale": 0.5
+  },
+  "allen_median_correlation": 0.5835645026657731,
+  "wilson_cowan_median_correlation": 0.4367816191333115,
+  "disconnected_median_correlation": 0.5731488228189824,
+  "transposed_median_correlation": 0.587528190489725,
+  "median_permutation_correlation": 0.5859705683530835,
+  "allen_minus_disconnected": 0.010415679846790704,
+  "allen_minus_transposed": -0.003963687823951956,
+  "fraction_permutations_outperformed": 0.27
+}

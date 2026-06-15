@@ -48,6 +48,7 @@ mousebrainbench-allen-benchmark configs/allen_vbn_phase2.yaml
 mousebrainbench-allen-phase2b configs/allen_vbn_phase2b.yaml
 mousebrainbench-allen-phase2c develop configs/allen_vbn_phase2c.yaml
 mousebrainbench-allen-phase2c confirm configs/allen_vbn_phase2c.yaml
+mousebrainbench-allen-phase3 develop configs/allen_visual_phase3.yaml
 pytest
 ```
 
