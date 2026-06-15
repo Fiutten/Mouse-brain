@@ -8,11 +8,16 @@ import json
 import h5py
 import numpy as np
 import pandas as pd
+import pytest
 
 from mousebrainbench.data.loaders.allen_vbn import AllenVBNRepository
 from mousebrainbench.benchmarks.allen_vbn import run_benchmark
 from mousebrainbench.benchmarks.allen_vbn_phase2b import run_phase2b
-from mousebrainbench.benchmarks.allen_vbn_phase2c import run_development, transform_timecourse
+from mousebrainbench.benchmarks.allen_vbn_phase2c import (
+    _validate_confirmation_plan,
+    run_development,
+    transform_timecourse,
+)
 
 
 def _repository_fixture(tmp_path) -> AllenVBNRepository:
@@ -219,3 +224,28 @@ def test_allen_temporal_response_and_phase2c_development(tmp_path) -> None:
     }
     output = run_development(config)
     assert (output / "development_arrays.npz").exists()
+
+
+def test_phase2c_confirmation_rejects_configuration_drift() -> None:
+    target = {
+        "start_seconds": -0.25,
+        "stop_seconds": 0.75,
+        "bin_size_seconds": 0.05,
+        "candidates": ["temporal_derivative"],
+    }
+    thresholds = {
+        "median_cross_mouse_correlation_gt": 0.5,
+        "median_split_half_correlation_gt": 0.7,
+        "fraction_above_null_95_gte": 0.5,
+        "bootstrap_lower_bound_gt": 0.0,
+    }
+    plan = {
+        "sealed_before_download": True,
+        "selected_target": "temporal_derivative",
+        "target": target,
+        "thresholds": thresholds,
+    }
+    config = {"target": target, "analysis": {"thresholds": thresholds | {"extra": 1.0}}}
+
+    with pytest.raises(ValueError, match="thresholds differ"):
+        _validate_confirmation_plan(plan, config)

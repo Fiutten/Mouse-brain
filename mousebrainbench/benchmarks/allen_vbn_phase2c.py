@@ -257,8 +257,22 @@ def seal_confirmation(config: dict[str, Any], development_output: str | Path) ->
     return destination
 
 
+def _validate_confirmation_plan(plan: dict[str, Any], config: dict[str, Any]) -> None:
+    """Reject configuration drift before opening the sealed confirmation cohort."""
+
+    if not plan.get("sealed_before_download"):
+        raise ValueError("confirmation plan is not marked as sealed before download")
+    if plan["target"] != config["target"]:
+        raise ValueError("configured target differs from the sealed confirmation target")
+    if plan["thresholds"] != config["analysis"]["thresholds"]:
+        raise ValueError("configured thresholds differ from the sealed confirmation thresholds")
+    if plan["selected_target"] not in plan["target"]["candidates"]:
+        raise ValueError("selected target is absent from the sealed candidate set")
+
+
 def run_confirmation(config: dict[str, Any]) -> Path:
     plan = json.loads(Path(config["confirmation"]["sealed_plan"]).read_text())
+    _validate_confirmation_plan(plan, config)
     repository = AllenVBNRepository(config["data"]["root"])
     session_ids = [int(item["session_id"]) for item in plan["sessions"]]
     timecourses, failures = _extract(repository, session_ids, config)
