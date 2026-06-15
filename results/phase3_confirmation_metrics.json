@@ -1,0 +1,20 @@
+{
+  "interpretation": "single_external_phase3_confirmation",
+  "git_revision": "673e5cc",
+  "selected_family": "linear_rate",
+  "sessions": 20,
+  "unique_mice": 20,
+  "allen_median_correlation": 0.5281134455695291,
+  "disconnected_median_correlation": 0.5246130100250409,
+  "transposed_median_correlation": 0.5313156967043606,
+  "median_permutation_correlation": 0.5334919134754539,
+  "allen_minus_median_permutation": -0.0053784679059247775,
+  "fraction_permutations_outperformed": 0.21,
+  "paired_advantage_bootstrap_95_interval": [
+    -0.007462997435285529,
+    -0.0012198967439512043
+  ],
+  "allen_minus_disconnected": 0.0035004355444882007,
+  "confirmation_passed": false,
+  "decision": "anatomical_connectivity_not_supported"
+}

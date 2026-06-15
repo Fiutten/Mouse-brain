@@ -1,51 +1,39 @@
-# Siguiente fase: benchmark anatómico-funcional fuera de muestra
+# Siguiente fase: comprobar identificabilidad de propagación dirigida
 
 ## Punto de partida
 
-La Fase 2c confirmó externamente `temporal_derivative` como target funcional
-evocado reproducible. Esto permite evaluar modelos, pero no valida todavía
-ninguna dinámica ni conectividad.
+La Fase 3 rechazó que la topología anatómica Allen aporte valor predictivo
+específico para `temporal_derivative`. La correlación moderada del modelo se
+conserva con grafos desconectados, transpuestos y permutados.
 
-## Fase 3 propuesta
+## Fase 4 propuesta
 
-1. Integrar una matriz región-región procedente de Allen MCModels/CCF para las
-   seis regiones visuales, conservando procedencia y orientación.
-2. Construir controles emparejados: grafo desconectado y grafos permutados que
-   conserven densidad y distribución de pesos.
-3. Calibrar solo un conjunto pequeño y declarado de parámetros dinámicos usando
-   las 21 sesiones de desarrollo.
-4. Congelar parámetros, modelos, métricas y umbrales.
-5. Evaluar una sola vez sobre las 20 sesiones confirmatorias ya selladas.
-6. Comparar capacidad predictiva, robustez a perturbaciones y coste.
+1. Trabajar solo con la cohorte de desarrollo.
+2. Medir latencias regionales y estructura lead-lag por sesión.
+3. Evaluar fiabilidad split-half y entre ratones.
+4. Comparar contra eventos desplazados y etiquetas regionales permutadas.
+5. Determinar antes de modelar si existe una señal reproducible que una
+   topología dirigida pueda explicar.
+6. Solo si existe, sellar el target y obtener una tercera cohorte independiente.
 
 ## Pregunta falsable
 
-> ¿La conectividad anatómica Allen mejora la predicción fuera de muestra de la
-> dinámica temporal regional frente a topologías nulas emparejadas?
+> ¿Contiene Allen VBN una firma regional reproducible de propagación dirigida
+> que pueda distinguir una topología anatómica de controles nulos?
 
-La contribución potencial no es que un modelo produzca actividad parecida, sino
-determinar si la restricción anatómica aporta información predictiva medible.
+Esta puerta evita añadir capas dinámicas a un target que quizá sea incapaz de
+identificar topología por construcción.
 
-## Modelos permitidos inicialmente
+## Métricas necesarias
 
-- `LinearRateModel`, como baseline interpretable.
-- `WilsonCowanModel`, como dinámica no lineal mesoscópica.
-- Ningún modelo profundo hasta resolver esta puerta.
-
-Ambos deben usar idéntico protocolo de calibración y presupuesto. No se
-seleccionará retrospectivamente el modelo con mejor resultado como evidencia
-única.
-
-## Métricas primarias
-
-- correlación con el target temporal por sesión;
-- mejora frente a grafos permutados emparejados;
-- generalización desarrollo-confirmación;
-- sensibilidad a lesiones regionales predefinidas;
-- coste computacional.
+- fiabilidad de latencias y lead-lag;
+- separación frente a controles nulos;
+- estabilidad por experiencia y ratón;
+- cobertura temporal suficiente respecto al bin de 50 ms.
 
 ## Criterio de parada
 
-Si Allen MCModels no mejora de forma robusta frente a controles topológicos, se
-rechazará que esa conectividad mesoscópica aporte capacidad predictiva para este
-target y escala. No se añadirá complejidad neuronal para rescatar el resultado.
+Si no existe una firma dirigida fiable, se detendrá esta línea con Allen VBN y
+se buscará un recurso funcional con resolución temporal o diseño perturbacional
+adecuado. No se construirá un modelo más complejo sobre un target no
+identificable.

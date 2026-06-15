@@ -28,6 +28,11 @@ La Fase 2c confirma externamente una representación temporal evocada en 20
 ratones nuevos. El resultado permite iniciar un benchmark anatómico-funcional,
 pero no valida todavía ningún modelo ni constituye un gemelo digital.
 
+La Fase 3 demuestra que un modelo lineal simple predice moderadamente esa
+representación, pero rechaza que la topología regional Allen aporte valor
+específico frente a grafos desconectados, transpuestos y permutados
+recalibrados. El resultado negativo se conserva como decisión científica.
+
 ## Capacidades de la Fase 1
 
 - Contratos validados para regiones, conectividad y estados simulados.

@@ -292,3 +292,42 @@ conectividad efectiva ni un gemelo digital.
 La siguiente puerta comprobará si conectividad Allen MCModels predice el target
 mejor que topologías nulas emparejadas, calibrando únicamente sobre la cohorte de
 desarrollo.
+
+## 2026-06-15 — MouseBrainBench Fase 3: benchmark anatómico-funcional
+
+### Diseño
+
+Se construyó una matriz dirigida de seis áreas visuales a partir de 200
+experimentos oficiales de trazado Allen. `LinearRateModel` y `WilsonCowanModel`
+se calibraron sobre 21 sesiones de desarrollo. El modelo lineal fue seleccionado
+y comparado contra un grafo desconectado, el grafo transpuesto y cien
+permutaciones de pesos, todas recalibradas en desarrollo.
+
+### Desarrollo
+
+Allen obtuvo correlación mediana `0.5836`, pero solo superó el 27% de
+permutaciones. El desconectado obtuvo `0.5731` y el transpuesto `0.5875`. La
+configuración completa se selló en el commit `673e5cc`.
+
+### Confirmación única
+
+| Topología | Correlación mediana |
+|---|---:|
+| Allen | 0.5281 |
+| Desconectada | 0.5246 |
+| Transpuesta | 0.5313 |
+| Mediana de permutaciones | 0.5335 |
+
+Allen superó solo el 21% de permutaciones. La ventaja pareada frente a la
+mediana de permutaciones fue negativa, con IC95%
+`[-0.0075, -0.0012]`.
+
+### Decisión
+
+**Hipótesis anatómica rechazada bajo el protocolo.** La dinámica lineal captura
+parte de la respuesta temporal, pero la topología Allen no explica ese
+rendimiento. No se añadirá complejidad al mismo target para rescatar la
+hipótesis.
+
+La siguiente puerta deberá demostrar primero que existe una firma funcional
+reproducible de propagación dirigida.

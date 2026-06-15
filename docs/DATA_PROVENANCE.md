@@ -52,3 +52,15 @@ confirmatoria contiene 20 sesiones de 20 ratones nuevos, equilibradas entre
 Familiar y Novel. La lista, URLs y hashes se sellaron en
 `configs/allen_vbn_phase2c_confirmation_sealed.json` antes de descargar sus NWB.
 Los veinte archivos confirmatorios pasaron verificación BLAKE2b.
+
+## Conectividad regional de Fase 3
+
+La matriz de seis áreas procede de la API oficial del Allen Mouse Brain
+Connectivity Atlas. Incluye 200 experimentos del producto `5` cuya estructura
+primaria de inyección coincide exactamente con la región fuente. Cada arista es
+la mediana bilateral de `normalized_projection_volume`; la diagonal se fija a
+cero para excluir contaminación del sitio de inyección.
+
+El recurso derivado y la lista de experimentos se versionan en
+`mousebrainbench/data/reference/allen_visual_connectivity.json`. La cobertura
+por fuente es desigual y se conserva explícitamente como limitación.
