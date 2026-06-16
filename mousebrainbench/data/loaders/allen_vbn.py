@@ -299,6 +299,7 @@ class AllenVBNRepository:
         start_seconds: float = -0.25,
         stop_seconds: float = 0.75,
         bin_size_seconds: float = 0.05,
+        event_time_offset_seconds: float = 0.0,
     ) -> EvokedRegionalTimecourse:
         """Extract event-aligned regional firing around active visual changes."""
 
@@ -321,6 +322,8 @@ class AllenVBNRepository:
                 & np.asarray(presentations["active"], dtype=bool)
             )
             events = np.asarray(presentations["start_time"], dtype=float)[event_mask]
+            if event_time_offset_seconds:
+                events = events + event_time_offset_seconds
             if len(events) < 2:
                 raise ValueError(f"session {session_id} has fewer than two visual-change events")
             spike_times = nwb["units/spike_times"]
@@ -361,6 +364,7 @@ class AllenVBNRepository:
                 "event_definition": "active non-omitted visual changes",
                 "time_range_seconds": [start_seconds, stop_seconds],
                 "bin_size_seconds": bin_size_seconds,
+                "event_time_offset_seconds": event_time_offset_seconds,
                 "quality_filter": QUALITY_FILTER,
             },
         )
