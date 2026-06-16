@@ -1,0 +1,22 @@
+{
+  "interpretation": "phase4_development_identifiability_only",
+  "git_revision": "5b2200d",
+  "sessions": 21,
+  "unique_mice": 19,
+  "latency": {
+    "median_cross_mouse_tau": 0.0,
+    "median_split_half_tau": 0.0,
+    "fraction_above_own_null_95th": 0.0,
+    "median_resolvable_pair_fraction": 0.0
+  },
+  "lead_lag": {
+    "median_cross_mouse_agreement": 1.0,
+    "median_split_half_agreement": 1.0,
+    "fraction_above_own_null_95th": 0.0,
+    "shifted_event_median_cross_mouse_agreement": 0.6666666666666666,
+    "actual_minus_shifted_median_agreement": 0.33333333333333337,
+    "median_nonzero_pair_fraction": 0.0
+  },
+  "identifiability_passed": false,
+  "decision": "directed_signature_not_supported"
+}

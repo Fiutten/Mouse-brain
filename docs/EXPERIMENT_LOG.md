@@ -331,3 +331,31 @@ hipótesis.
 
 La siguiente puerta deberá demostrar primero que existe una firma funcional
 reproducible de propagación dirigida.
+
+## 2026-06-16 — MouseBrainBench Fase 4: identificabilidad dirigida
+
+### Diseño
+
+Se analizaron únicamente las 21 sesiones de desarrollo. Se midieron latencias
+regionales y signos lead-lag con bins de `50 ms`, comparando split-half,
+leave-one-mouse-out, permutaciones de etiquetas regionales y pseudo-eventos
+desplazados `+10 s`.
+
+### Resultados
+
+| Criterio | Resultado | Decisión |
+|---|---:|---|
+| Latencia cross-mouse tau | 0.0000 | falla |
+| Latencia split-half tau | 0.0000 | falla |
+| Latencias sobre nulo 95% | 0% | falla |
+| Pares con latencia resoluble | 0.0000 | falla |
+| Lead-lag cross-mouse | 1.0000 | pasa |
+| Lead-lag split-half | 1.0000 | pasa |
+| Lead-lag sobre nulo 95% | 0% | falla |
+| Pares lead-lag no simultáneos | 0.0000 | falla |
+
+### Decisión
+
+**Firma dirigida no soportada.** La respuesta confirmada en Fase 2c es
+reproducible, pero no identifica propagación dirigida a esta resolución. No se
+debe construir un modelo anatómico más complejo sobre este target.

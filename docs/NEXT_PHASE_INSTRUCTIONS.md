@@ -1,39 +1,38 @@
-# Siguiente fase: comprobar identificabilidad de propagación dirigida
+# Siguiente fase: decisión estratégica tras Fase 4
 
 ## Punto de partida
 
-La Fase 3 rechazó que la topología anatómica Allen aporte valor predictivo
-específico para `temporal_derivative`. La correlación moderada del modelo se
-conserva con grafos desconectados, transpuestos y permutados.
+La Fase 4 rechazó que el target Allen VBN contenga una firma dirigida
+identificable. La señal es reproducible como respuesta evocada común, pero no
+permite distinguir topologías regionales dirigidas.
 
-## Fase 4 propuesta
+## Ruta recomendada
 
-1. Trabajar solo con la cohorte de desarrollo.
-2. Medir latencias regionales y estructura lead-lag por sesión.
-3. Evaluar fiabilidad split-half y entre ratones.
-4. Comparar contra eventos desplazados y etiquetas regionales permutadas.
-5. Determinar antes de modelar si existe una señal reproducible que una
-   topología dirigida pueda explicar.
-6. Solo si existe, sellar el target y obtener una tercera cohorte independiente.
+1. Congelar Allen VBN como caso de estudio negativo-controlado.
+2. Convertir Fases 2c-4 en contribución metodológica: confirmación de target,
+   benchmark anatómico y falsación de identificabilidad.
+3. Buscar un recurso alternativo con mejor resolución temporal o perturbaciones
+   causales explícitas antes de modelar propagación anatómica.
+4. Mantener los modelos actuales como baselines mínimos, no como supuestos
+   mecanismos cerebrales.
 
 ## Pregunta falsable
 
-> ¿Contiene Allen VBN una firma regional reproducible de propagación dirigida
-> que pueda distinguir una topología anatómica de controles nulos?
+> ¿Cómo debe validarse de forma falsable un target funcional antes de usarlo
+> para construir modelos digitales parciales del cerebro?
 
-Esta puerta evita añadir capas dinámicas a un target que quizá sea incapaz de
-identificar topología por construcción.
+Esta pregunta sí es coherente con lo que hemos aprendido: un target puede ser
+reproducible y aun así no ser útil para inferir anatomía o dinámica dirigida.
 
-## Métricas necesarias
+## Próximos pasos concretos
 
-- fiabilidad de latencias y lead-lag;
-- separación frente a controles nulos;
-- estabilidad por experiencia y ratón;
-- cobertura temporal suficiente respecto al bin de 50 ms.
+- redactar una matriz de contribuciones y límites publicables;
+- revisar recursos alternativos antes de descargar datos;
+- priorizar datasets con estimulación, perturbación o resolución temporal fina;
+- evitar cualquier ampliación de modelo sin target identificable.
 
 ## Criterio de parada
 
-Si no existe una firma dirigida fiable, se detendrá esta línea con Allen VBN y
-se buscará un recurso funcional con resolución temporal o diseño perturbacional
-adecuado. No se construirá un modelo más complejo sobre un target no
-identificable.
+No se debe descargar una tercera cohorte Allen VBN para este target. Tampoco se
+debe aumentar complejidad neuronal esperando que aparezca información que la
+señal agregada no contiene.

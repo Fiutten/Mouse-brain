@@ -33,6 +33,10 @@ representación, pero rechaza que la topología regional Allen aporte valor
 específico frente a grafos desconectados, transpuestos y permutados
 recalibrados. El resultado negativo se conserva como decisión científica.
 
+La Fase 4 comprueba identificabilidad dirigida y vuelve a cerrar la puerta
+anatómico-dinámica para este target: la señal confirmada es reproducible, pero
+no contiene latencias o lead-lag no triviales suficientes con bins de `50 ms`.
+
 ## Capacidades de la Fase 1
 
 - Contratos validados para regiones, conectividad y estados simulados.
