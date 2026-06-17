@@ -83,7 +83,31 @@ def _feature_vector(stimulus: np.ndarray, modality: Modality) -> np.ndarray:
         )
     else:
         features.extend([0.0, 0.0, 1.0])
+
+    # A global intensity summary is too weak for natural images. The pooled
+    # spatial descriptor keeps the baseline transparent while preserving coarse
+    # retinotopic information that a visual cortical response can exploit.
+    image = values.mean(axis=0) if modality == "dynamic" and values.ndim >= 3 else values
+    features.extend(_pooled_spatial_features(np.squeeze(image), bins=(8, 8)).tolist())
     return np.asarray(features, dtype=float)
+
+
+def _pooled_spatial_features(image: np.ndarray, *, bins: tuple[int, int]) -> np.ndarray:
+    """Average an image into a fixed grid without image-processing dependencies."""
+
+    values = np.asarray(image, dtype=float)
+    if values.ndim > 2:
+        values = values.reshape(values.shape[0], -1)
+    if values.ndim != 2:
+        return np.zeros(bins[0] * bins[1], dtype=float)
+    row_edges = np.linspace(0, values.shape[0], bins[0] + 1, dtype=int)
+    col_edges = np.linspace(0, values.shape[1], bins[1] + 1, dtype=int)
+    pooled = []
+    for row in range(bins[0]):
+        for col in range(bins[1]):
+            patch = values[row_edges[row] : row_edges[row + 1], col_edges[col] : col_edges[col + 1]]
+            pooled.append(float(np.mean(patch)) if patch.size else 0.0)
+    return np.asarray(pooled, dtype=float)
 
 
 def _response_vector(response: np.ndarray) -> np.ndarray:
@@ -155,4 +179,3 @@ def load_sensorium_directory(
         stimulus_ids=stimulus_ids,
         neuron_ids=neuron_ids,
     )
-

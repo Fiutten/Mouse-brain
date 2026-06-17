@@ -129,13 +129,14 @@ def run_sensorium_benchmark(
     output: str | Path = DEFAULT_OUTPUT,
     alpha: float = 1.0,
     seed: int = 17,
+    eval_tiers: tuple[str, ...] = ("validation", "val"),
     has_structural_or_interventional_constraint: bool = False,
     has_ood_generalization_gate: bool = False,
 ) -> Path:
     """Evaluate transparent predictive baselines and write MIS diagnostics."""
 
     train_mask = _tier_mask(table.tiers, ("train",))
-    eval_mask = _tier_mask(table.tiers, ("validation", "val", "test", "final_test"))
+    eval_mask = _tier_mask(table.tiers, eval_tiers)
     if not np.any(train_mask) or not np.any(eval_mask):
         raise ValueError("Sensorium benchmark requires train and held-out tiers")
     train_x = table.stimulus_features[train_mask]
@@ -175,6 +176,7 @@ def run_sensorium_benchmark(
             "modality": table.modality,
             "n_trials": table.n_trials,
             "n_neurons": table.n_neurons,
+            "eval_tiers": list(eval_tiers),
             "tiers": {tier: int(np.sum(table.tiers == tier)) for tier in sorted(set(table.tiers))},
         },
         "baselines": {
@@ -208,9 +210,10 @@ def run(
     modality: str | None = None,
     max_trials: int | None = None,
     alpha: float = 1.0,
+    eval_tiers: tuple[str, ...] = ("validation", "val"),
 ) -> Path:
     table = load_sensorium_directory(root, modality=modality, max_trials=max_trials)
-    return run_sensorium_benchmark(table, output=output, alpha=alpha)
+    return run_sensorium_benchmark(table, output=output, alpha=alpha, eval_tiers=eval_tiers)
 
 
 def main() -> None:
@@ -220,6 +223,13 @@ def main() -> None:
     parser.add_argument("--modality", choices=("static", "dynamic"), default=None)
     parser.add_argument("--max-trials", type=int, default=None)
     parser.add_argument("--alpha", type=float, default=1.0)
+    parser.add_argument(
+        "--eval-tier",
+        action="append",
+        dest="eval_tiers",
+        default=None,
+        help="Held-out tier to evaluate; repeat for multiple tiers. Defaults to validation/val.",
+    )
     args = parser.parse_args()
     output = run(
         args.root,
@@ -227,6 +237,7 @@ def main() -> None:
         modality=args.modality,
         max_trials=args.max_trials,
         alpha=args.alpha,
+        eval_tiers=tuple(args.eval_tiers) if args.eval_tiers else ("validation", "val"),
     )
     print(json.dumps({"output": str(output.resolve())}))
 

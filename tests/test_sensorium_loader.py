@@ -21,6 +21,5 @@ def test_load_sensorium_static_directory(tmp_path) -> None:
     assert table.modality == "static"
     assert table.n_trials == 4
     assert table.n_neurons == 2
-    assert table.stimulus_features.shape == (4, 7)
+    assert table.stimulus_features.shape == (4, 71)
     assert table.stimulus_ids.tolist() == [0, 1, 2, 2]
-

@@ -103,6 +103,7 @@ Tras descargar y descomprimir un zip oficial:
 mousebrainbench-sensorium-mis /path/to/unzipped/sensorium_mouse \
   --modality static \
   --max-trials 1000 \
+  --eval-tier validation \
   --output results/sensorium_real_mouse_mis.json
 ```
 
@@ -112,11 +113,17 @@ Para Dynamic Sensorium:
 mousebrainbench-sensorium-mis /path/to/unzipped/dynamic_mouse \
   --modality dynamic \
   --max-trials 1000 \
+  --eval-tier validation \
   --output results/dynamic_sensorium_real_mouse_mis.json
 ```
 
 `--max-trials` es intencional en la primera ejecución real: queremos validar
 formato, memoria y tiempos antes de procesar un ratón completo.
+
+Por defecto se evalúa `validation`/`val`. En los datasets de competición
+Sensorium 2022 las tiers `test` y `final_test` no deben usarse para calcular
+correlación directa porque sus respuestas están retenidas o zeroed para el
+protocolo de leaderboard.
 
 ## Criterio de avance
 
@@ -136,3 +143,5 @@ Tras un primer ratón real, los siguientes pasos son:
    oficial;
 4. solo entonces discutir una reclamación Q1 de IA.
 
+La primera ejecución real con tres zips Sensorium 2022 está documentada en
+[PHASE5_SENSORIUM_REAL_RESULTS.md](PHASE5_SENSORIUM_REAL_RESULTS.md).
