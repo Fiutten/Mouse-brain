@@ -87,8 +87,11 @@ versionar datos externos ni infringir condiciones de licencia. Cualquier
 análisis publicable sobre Dynamic Sensorium debe revisar la licencia `CC
 BY-NC-ND 4.0` y, si procede, solicitar permiso a los responsables del dataset.
 
-El 17 de junio de 2026 se descargaron tres zips Sensorium 2022 estáticos
-(`26872`, `27204`, `22846`) y se validaron con `unzip -t`. Los hashes, tamaños y
-resultados están en
+El 17 de junio de 2026 se descargó la cohorte completa Sensorium 2022 estática:
+siete zips (`21067`, `22846`, `23343`, `23656`, `23964`, `26872`, `27204`) y se
+validaron con `unzip -t`. Los hashes, tamaños y resultados están en
 [PHASE5_SENSORIUM_REAL_RESULTS.md](PHASE5_SENSORIUM_REAL_RESULTS.md). Los datos
 permanecen fuera de Git bajo `data/sensorium/`.
+
+Sensorium 2022 no contiene 17 ratones adicionales. Una ampliación a ese orden de
+magnitud requiere otro recurso, como Dynamic Sensorium u otro benchmark visual.

@@ -3,17 +3,17 @@
   "git_revision": "1b3b7cd",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
-    "root": "data/sensorium/extracted/static22846-10-16-GrayImageNet-94c6ff995dac583098847cfecd43e7b6",
+    "root": "data/sensorium/extracted/static23343-5-17-GrayImageNet-94c6ff995dac583098847cfecd43e7b6",
     "modality": "static",
-    "n_trials": 5997,
-    "n_neurons": 7344,
+    "n_trials": 5951,
+    "n_neurons": 7334,
     "eval_tiers": [
       "test"
     ],
     "tiers": {
-      "test": 999,
-      "train": 4498,
-      "validation": 500
+      "test": 989,
+      "train": 4466,
+      "validation": 496
     }
   },
   "baselines": {
@@ -24,26 +24,26 @@
     "scrambled_stimulus_context_ridge": "context-preserving control with permuted train stimuli"
   },
   "metrics": {
-    "mean_correlation": 0.24039226422303622,
-    "ridge_correlation": 0.29644780838886714,
-    "scrambled_correlation": 0.21303376603491467,
-    "ridge_median_neuron_correlation": 0.11797590023469058,
+    "mean_correlation": 0.24616863969162,
+    "ridge_correlation": 0.2974088592268037,
+    "scrambled_correlation": 0.22054633647141952,
+    "ridge_median_neuron_correlation": 0.11976686207036377,
     "context_available": true,
-    "stimulus_context_ridge_correlation": 0.3409994388602396,
-    "stimulus_context_scrambled_correlation": 0.27264558369755676,
-    "stimulus_context_ridge_median_neuron_correlation": 0.19625090805710116,
+    "stimulus_context_ridge_correlation": 0.33407561024379845,
+    "stimulus_context_scrambled_correlation": 0.2698715423961715,
+    "stimulus_context_ridge_median_neuron_correlation": 0.18961744894263563,
     "best_model_is_contextual": true,
-    "best_predictive_correlation": 0.3409994388602396,
-    "best_predictive_scrambled_correlation": 0.27264558369755676,
-    "reliability": 0.6532415748602713,
+    "best_predictive_correlation": 0.33407561024379845,
+    "best_predictive_scrambled_correlation": 0.2698715423961715,
+    "reliability": 0.5908439278700237,
     "has_structural_or_interventional_constraint": false,
     "has_ood_generalization_gate": false,
-    "ridge_minus_mean": 0.05605554416583092,
-    "ridge_minus_scrambled": 0.08341404235395247,
-    "stimulus_context_ridge_minus_mean": 0.10060717463720337,
-    "stimulus_context_ridge_minus_scrambled": 0.06835385516268283,
-    "best_predictive_minus_mean": 0.10060717463720337,
-    "best_predictive_minus_scrambled": 0.06835385516268283
+    "ridge_minus_mean": 0.051240219535183706,
+    "ridge_minus_scrambled": 0.07686252275538419,
+    "stimulus_context_ridge_minus_mean": 0.08790697055217844,
+    "stimulus_context_ridge_minus_scrambled": 0.06420406784762694,
+    "best_predictive_minus_mean": 0.08790697055217844,
+    "best_predictive_minus_scrambled": 0.06420406784762694
   },
   "mis": {
     "score": 0.6666666666666666,
@@ -56,7 +56,7 @@
         "criteria": [
           {
             "name": "heldout_repeat_response_reliability",
-            "value": 0.6532415748602713,
+            "value": 0.5908439278700237,
             "threshold": 0.3,
             "direction": "gt",
             "passed": true,
@@ -71,7 +71,7 @@
         "criteria": [
           {
             "name": "best_predictive_minus_mean_correlation",
-            "value": 0.10060717463720337,
+            "value": 0.08790697055217844,
             "threshold": 0.05,
             "direction": "gt",
             "passed": true,
@@ -79,7 +79,7 @@
           },
           {
             "name": "best_predictive_minus_scrambled_correlation",
-            "value": 0.06835385516268283,
+            "value": 0.06420406784762694,
             "threshold": 0.05,
             "direction": "gt",
             "passed": true,
@@ -87,7 +87,7 @@
           },
           {
             "name": "best_predictive_test_correlation",
-            "value": 0.3409994388602396,
+            "value": 0.33407561024379845,
             "threshold": 0.1,
             "direction": "gt",
             "passed": true,
