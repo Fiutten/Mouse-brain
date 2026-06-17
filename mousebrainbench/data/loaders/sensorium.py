@@ -25,6 +25,7 @@ class SensoriumTrialTable:
     root: Path
     modality: Modality
     stimulus_features: np.ndarray
+    context_features: np.ndarray
     responses: np.ndarray
     tiers: np.ndarray
     trial_ids: np.ndarray
@@ -54,6 +55,16 @@ def _load_trial_arrays(directory: Path, *, max_trials: int | None = None) -> lis
     if not files:
         raise FileNotFoundError(f"no .npy trial files found in {directory}")
     return [np.load(file) for file in files]
+
+
+def _load_optional_trial_matrix(directory: Path, *, n_trials: int) -> np.ndarray:
+    """Load optional trial-level covariates as ``trial x feature`` arrays."""
+
+    if not directory.exists():
+        return np.empty((n_trials, 0), dtype=float)
+    arrays = _load_trial_arrays(directory, max_trials=n_trials)
+    features = [np.asarray(array, dtype=float).reshape(-1) for array in arrays[:n_trials]]
+    return np.vstack(features) if features else np.empty((n_trials, 0), dtype=float)
 
 
 def _feature_vector(stimulus: np.ndarray, modality: Modality) -> np.ndarray:
@@ -165,6 +176,12 @@ def load_sensorium_directory(
         base / "meta" / "trials" / "frame_image_id.npy", fallback=fallback_trial_ids
     )[:n_trials]
     response_matrix = np.stack([_response_vector(response) for response in responses])
+    context_features = np.column_stack(
+        [
+            _load_optional_trial_matrix(data_dir / "behavior", n_trials=n_trials),
+            _load_optional_trial_matrix(data_dir / "pupil_center", n_trials=n_trials),
+        ]
+    )
     neuron_ids = _load_meta_array(
         base / "meta" / "neurons" / "unit_ids.npy",
         fallback=np.arange(response_matrix.shape[1]),
@@ -173,6 +190,7 @@ def load_sensorium_directory(
         root=base,
         modality=modality,
         stimulus_features=np.stack([_feature_vector(stimulus, modality) for stimulus in stimuli]),
+        context_features=context_features,
         responses=response_matrix,
         tiers=tiers,
         trial_ids=trial_ids,

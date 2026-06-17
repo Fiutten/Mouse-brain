@@ -43,6 +43,7 @@ def make_synthetic_sensorium_table(
         root=Path("synthetic_sensorium_smoke"),
         modality="dynamic",
         stimulus_features=np.vstack([train_x, eval_x]),
+        context_features=np.empty((n_train + n_eval, 0), dtype=float),
         responses=np.vstack([train_y, eval_y]),
         tiers=tiers,
         trial_ids=np.arange(n_train + n_eval),
@@ -66,4 +67,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

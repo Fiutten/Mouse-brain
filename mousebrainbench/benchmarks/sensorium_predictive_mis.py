@@ -98,13 +98,21 @@ def predictive_mis_from_metrics(metrics: dict[str, float | bool]) -> Mechanistic
             Criterion("heldout_repeat_response_reliability", float(metrics["reliability"]), 0.30),
         ),
         topology_specificity=(
-            Criterion("ridge_minus_mean_correlation", float(metrics["ridge_minus_mean"]), 0.05),
             Criterion(
-                "ridge_minus_scrambled_correlation",
-                float(metrics["ridge_minus_scrambled"]),
+                "best_predictive_minus_mean_correlation",
+                float(metrics["best_predictive_minus_mean"]),
                 0.05,
             ),
-            Criterion("ridge_test_correlation", float(metrics["ridge_correlation"]), 0.10),
+            Criterion(
+                "best_predictive_minus_scrambled_correlation",
+                float(metrics["best_predictive_minus_scrambled"]),
+                0.05,
+            ),
+            Criterion(
+                "best_predictive_test_correlation",
+                float(metrics["best_predictive_correlation"]),
+                0.10,
+            ),
         ),
         directed_identifiability=(
             Criterion(
@@ -150,12 +158,52 @@ def run_sensorium_benchmark(
     scrambled_prediction = _ridge_fit_predict(
         rng.permutation(train_x), train_y, eval_x, alpha=alpha
     )
+    context_available = bool(
+        table.context_features.shape[1] > 0
+        and np.any(np.std(table.context_features[train_mask], axis=0) > 0)
+        and np.any(np.std(table.context_features[eval_mask], axis=0) > 0)
+    )
+    if context_available:
+        train_context_x = np.column_stack([train_x, table.context_features[train_mask]])
+        eval_context_x = np.column_stack([eval_x, table.context_features[eval_mask]])
+        context_prediction = _ridge_fit_predict(train_context_x, train_y, eval_context_x, alpha=alpha)
+        scrambled_context_prediction = _ridge_fit_predict(
+            np.column_stack([rng.permutation(train_x), table.context_features[train_mask]]),
+            train_y,
+            eval_context_x,
+            alpha=alpha,
+        )
+        context_correlation = _safe_correlation(context_prediction, eval_y)
+        scrambled_context_correlation = _safe_correlation(scrambled_context_prediction, eval_y)
+        context_median_neuron = _median_neuron_correlation(context_prediction, eval_y)
+    else:
+        context_correlation = 0.0
+        scrambled_context_correlation = 0.0
+        context_median_neuron = 0.0
+
+    stimulus_correlation = _safe_correlation(ridge_prediction, eval_y)
+    stimulus_scrambled_correlation = _safe_correlation(scrambled_prediction, eval_y)
+    if context_available and context_correlation > stimulus_correlation:
+        best_model = "stimulus_context_ridge"
+        best_correlation = context_correlation
+        best_scrambled = scrambled_context_correlation
+    else:
+        best_model = "stimulus_ridge"
+        best_correlation = stimulus_correlation
+        best_scrambled = stimulus_scrambled_correlation
 
     metrics: dict[str, float | bool] = {
         "mean_correlation": _safe_correlation(mean_prediction, eval_y),
-        "ridge_correlation": _safe_correlation(ridge_prediction, eval_y),
-        "scrambled_correlation": _safe_correlation(scrambled_prediction, eval_y),
+        "ridge_correlation": stimulus_correlation,
+        "scrambled_correlation": stimulus_scrambled_correlation,
         "ridge_median_neuron_correlation": _median_neuron_correlation(ridge_prediction, eval_y),
+        "context_available": context_available,
+        "stimulus_context_ridge_correlation": context_correlation,
+        "stimulus_context_scrambled_correlation": scrambled_context_correlation,
+        "stimulus_context_ridge_median_neuron_correlation": context_median_neuron,
+        "best_model_is_contextual": best_model == "stimulus_context_ridge",
+        "best_predictive_correlation": best_correlation,
+        "best_predictive_scrambled_correlation": best_scrambled,
         "reliability": _response_reliability(table, eval_mask),
         "has_structural_or_interventional_constraint": has_structural_or_interventional_constraint,
         "has_ood_generalization_gate": has_ood_generalization_gate,
@@ -166,6 +214,18 @@ def run_sensorium_benchmark(
     metrics["ridge_minus_scrambled"] = float(metrics["ridge_correlation"]) - float(
         metrics["scrambled_correlation"]
     )
+    metrics["stimulus_context_ridge_minus_mean"] = float(
+        metrics["stimulus_context_ridge_correlation"]
+    ) - float(metrics["mean_correlation"])
+    metrics["stimulus_context_ridge_minus_scrambled"] = float(
+        metrics["stimulus_context_ridge_correlation"]
+    ) - float(metrics["stimulus_context_scrambled_correlation"])
+    metrics["best_predictive_minus_mean"] = float(metrics["best_predictive_correlation"]) - float(
+        metrics["mean_correlation"]
+    )
+    metrics["best_predictive_minus_scrambled"] = float(
+        metrics["best_predictive_correlation"]
+    ) - float(metrics["best_predictive_scrambled_correlation"])
     mis = predictive_mis_from_metrics(metrics)
     payload: dict[str, Any] = {
         "version": __version__,
@@ -182,7 +242,11 @@ def run_sensorium_benchmark(
         "baselines": {
             "mean_response": "train-set neuron mean",
             "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
+            "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
             "scrambled_stimulus_ridge": "same model with permuted train stimuli",
+            "scrambled_stimulus_context_ridge": (
+                "context-preserving control with permuted train stimuli"
+            ),
         },
         "metrics": metrics,
         "mis": mis.as_dict(),

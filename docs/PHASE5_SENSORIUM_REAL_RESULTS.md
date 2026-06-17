@@ -41,17 +41,23 @@ Se usa `stimulus_ridge`, una regresión ridge transparente sobre:
 - descriptor espacial pooled `8 x 8`;
 - control `scrambled_stimulus_ridge` con estímulos de entrenamiento permutados.
 
+Además se calcula `stimulus_context_ridge`, que añade covariables de
+comportamiento y posición pupilar cuando no están zeroed. El control
+`scrambled_stimulus_context_ridge` conserva esas covariables y permuta solo los
+estímulos de entrenamiento. Esto permite distinguir mejora por estado
+conductual de mejora atribuible a imagen.
+
 Esto sigue siendo un baseline ligero, no SOTA. Su función es comprobar si el
 marco detecta señal predictiva antes de introducir modelos visuales profundos.
 
 ## Resultados
 
-| Artefacto | Eval tier | Reliability | Mean corr. | Ridge corr. | Scrambled corr. | Δ ridge-mean | Δ ridge-scrambled | MIS |
+| Artefacto | Eval tier | Reliability | Mean | Stimulus ridge | Context ridge | Best Δ mean | Best Δ scrambled | MIS |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| `static22846_test_mis.json` | `test` | `0.6532` | `0.2404` | `0.2964` | `0.2130` | `0.0561` | `0.0834` | fails |
-| `static22846_validation_mis.json` | `validation` | `0.0000` | `0.2301` | `0.2962` | `0.2032` | `0.0662` | `0.0930` | fails |
-| `static26872_validation_mis.json` | `validation` | `0.0000` | `0.2212` | `0.2725` | `0.1927` | `0.0513` | `0.0798` | fails |
-| `static27204_validation_mis.json` | `validation` | `0.0000` | `0.2383` | `0.2824` | `0.2204` | `0.0441` | `0.0620` | fails |
+| `static22846_test_mis.json` | `test` | `0.6532` | `0.2404` | `0.2964` | `0.3410` | `0.1006` | `0.0684` | fails |
+| `static22846_validation_mis.json` | `validation` | `0.0000` | `0.2301` | `0.2962` | `0.3325` | `0.1024` | `0.0775` | fails |
+| `static26872_validation_mis.json` | `validation` | `0.0000` | `0.2212` | `0.2725` | unavailable | `0.0513` | `0.0798` | fails |
+| `static27204_validation_mis.json` | `validation` | `0.0000` | `0.2383` | `0.2824` | `0.3152` | `0.0769` | `0.0594` | fails |
 
 `validation` no tiene estímulos repetidos, por eso `reliability=0.0` significa
 "no estimable con este cálculo", no ausencia demostrada de fiabilidad neural.
@@ -64,12 +70,13 @@ El caso real ya muestra el patrón que necesitamos para la tesis metodológica:
 
 1. Un baseline visual simple mejora de forma consistente frente a media y frente
    a control permutado.
-2. En `22846/test`, el target tiene fiabilidad por repeticiones.
-3. Aun así, el MIS no pasa porque falta evidencia mecanística:
+2. Las covariables conductuales/pupilares mejoran la predicción cuando están
+   disponibles, especialmente en `22846`.
+3. En `22846/test`, el target tiene fiabilidad por repeticiones.
+4. Aun así, el MIS no pasa porque falta evidencia mecanística:
    estructura, perturbación, restricción causal u OOD formal.
 
 Esto no es todavía una contribución Q1 fuerte. Es una base empírica válida para
 el siguiente paso: introducir un modelo visual más competitivo o un baseline
 oficial Sensorium y evaluar si su ganancia predictiva cambia o no la conclusión
 mecanística.
-
