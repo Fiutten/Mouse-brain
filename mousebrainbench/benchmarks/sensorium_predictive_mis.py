@@ -138,6 +138,7 @@ def run_sensorium_benchmark(
     alpha: float = 1.0,
     seed: int = 17,
     eval_tiers: tuple[str, ...] = ("validation", "val"),
+    git_revision: str | None = None,
     has_structural_or_interventional_constraint: bool = False,
     has_ood_generalization_gate: bool = False,
 ) -> Path:
@@ -229,7 +230,7 @@ def run_sensorium_benchmark(
     mis = predictive_mis_from_metrics(metrics)
     payload: dict[str, Any] = {
         "version": __version__,
-        "git_revision": code_revision(),
+        "git_revision": git_revision or code_revision(),
         "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
         "dataset": {
             "root": str(table.root),
@@ -275,9 +276,16 @@ def run(
     max_trials: int | None = None,
     alpha: float = 1.0,
     eval_tiers: tuple[str, ...] = ("validation", "val"),
+    git_revision: str | None = None,
 ) -> Path:
     table = load_sensorium_directory(root, modality=modality, max_trials=max_trials)
-    return run_sensorium_benchmark(table, output=output, alpha=alpha, eval_tiers=eval_tiers)
+    return run_sensorium_benchmark(
+        table,
+        output=output,
+        alpha=alpha,
+        eval_tiers=eval_tiers,
+        git_revision=git_revision,
+    )
 
 
 def main() -> None:
@@ -294,6 +302,11 @@ def main() -> None:
         default=None,
         help="Held-out tier to evaluate; repeat for multiple tiers. Defaults to validation/val.",
     )
+    parser.add_argument(
+        "--git-revision",
+        default=None,
+        help="Override provenance revision when regenerating several tracked artifacts.",
+    )
     args = parser.parse_args()
     output = run(
         args.root,
@@ -302,6 +315,7 @@ def main() -> None:
         max_trials=args.max_trials,
         alpha=args.alpha,
         eval_tiers=tuple(args.eval_tiers) if args.eval_tiers else ("validation", "val"),
+        git_revision=args.git_revision,
     )
     print(json.dumps({"output": str(output.resolve())}))
 

@@ -52,17 +52,20 @@ def make_synthetic_sensorium_table(
     )
 
 
-def run(output: str | Path = DEFAULT_OUTPUT) -> Path:
+def run(output: str | Path = DEFAULT_OUTPUT, *, git_revision: str | None = None) -> Path:
     """Run the Sensorium predictive/MIS smoke benchmark."""
 
-    return run_sensorium_benchmark(make_synthetic_sensorium_table(), output=output)
+    return run_sensorium_benchmark(
+        make_synthetic_sensorium_table(), output=output, git_revision=git_revision
+    )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--git-revision", default=None)
     args = parser.parse_args()
-    print(json.dumps({"output": str(run(args.output).resolve())}))
+    print(json.dumps({"output": str(run(args.output, git_revision=args.git_revision).resolve())}))
 
 
 if __name__ == "__main__":
