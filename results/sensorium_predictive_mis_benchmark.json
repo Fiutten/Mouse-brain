@@ -1,12 +1,16 @@
 {
   "version": "0.6.0",
-  "git_revision": "dbc7741",
+  "git_revision": "9a0ecb2",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "synthetic_sensorium_smoke",
     "modality": "dynamic",
     "n_trials": 120,
     "n_neurons": 24,
+    "eval_tiers": [
+      "validation",
+      "val"
+    ],
     "tiers": {
       "train": 90,
       "validation": 30
