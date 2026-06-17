@@ -1,0 +1,113 @@
+{
+  "version": "0.6.0",
+  "git_revision": "dbc7741",
+  "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
+  "dataset": {
+    "root": "synthetic_sensorium_smoke",
+    "modality": "dynamic",
+    "n_trials": 120,
+    "n_neurons": 24,
+    "tiers": {
+      "train": 90,
+      "validation": 30
+    }
+  },
+  "baselines": {
+    "mean_response": "train-set neuron mean",
+    "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
+    "scrambled_stimulus_ridge": "same model with permuted train stimuli"
+  },
+  "metrics": {
+    "mean_correlation": 0.1352844764746446,
+    "ridge_correlation": 0.9937845334292794,
+    "scrambled_correlation": 0.1307952942468991,
+    "ridge_median_neuron_correlation": 0.9931285471618845,
+    "reliability": 0.9887784783359936,
+    "has_structural_or_interventional_constraint": false,
+    "has_ood_generalization_gate": false,
+    "ridge_minus_mean": 0.8585000569546348,
+    "ridge_minus_scrambled": 0.8629892391823804
+  },
+  "mis": {
+    "score": 0.6666666666666666,
+    "passed": false,
+    "blocks": [
+      {
+        "name": "reproducibility",
+        "passed": true,
+        "score": 1.0,
+        "criteria": [
+          {
+            "name": "heldout_repeat_response_reliability",
+            "value": 0.9887784783359936,
+            "threshold": 0.3,
+            "direction": "gt",
+            "passed": true,
+            "normalized_score": 1.0
+          }
+        ]
+      },
+      {
+        "name": "topology_specificity",
+        "passed": true,
+        "score": 1.0,
+        "criteria": [
+          {
+            "name": "ridge_minus_mean_correlation",
+            "value": 0.8585000569546348,
+            "threshold": 0.05,
+            "direction": "gt",
+            "passed": true,
+            "normalized_score": 1.0
+          },
+          {
+            "name": "ridge_minus_scrambled_correlation",
+            "value": 0.8629892391823804,
+            "threshold": 0.05,
+            "direction": "gt",
+            "passed": true,
+            "normalized_score": 1.0
+          },
+          {
+            "name": "ridge_test_correlation",
+            "value": 0.9937845334292794,
+            "threshold": 0.1,
+            "direction": "gt",
+            "passed": true,
+            "normalized_score": 1.0
+          }
+        ]
+      },
+      {
+        "name": "directed_identifiability",
+        "passed": false,
+        "score": 0.0,
+        "criteria": [
+          {
+            "name": "has_structural_or_interventional_constraint",
+            "value": 0.0,
+            "threshold": 1.0,
+            "direction": "gte",
+            "passed": false,
+            "normalized_score": 0.0
+          },
+          {
+            "name": "has_ood_generalization_gate",
+            "value": 0.0,
+            "threshold": 1.0,
+            "direction": "gte",
+            "passed": false,
+            "normalized_score": 0.0
+          }
+        ]
+      }
+    ],
+    "interpretation": "not_mechanistically_identifiable"
+  },
+  "decision": "predictive_signal_requires_extra_mechanistic_evidence",
+  "limitations": [
+    "The baseline is intentionally transparent and not a Sensorium SOTA model.",
+    "Prediction from images/videos is not by itself mechanistic explanation.",
+    "A mechanistic claim requires structure, perturbation, OOD, or causal constraints."
+  ]
+}
