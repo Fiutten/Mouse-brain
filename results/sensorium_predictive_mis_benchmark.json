@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "9a0ecb2",
+  "git_revision": "f98bc83-dirty",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "synthetic_sensorium_smoke",
@@ -19,18 +19,31 @@
   "baselines": {
     "mean_response": "train-set neuron mean",
     "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
-    "scrambled_stimulus_ridge": "same model with permuted train stimuli"
+    "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
+    "scrambled_stimulus_ridge": "same model with permuted train stimuli",
+    "scrambled_stimulus_context_ridge": "context-preserving control with permuted train stimuli"
   },
   "metrics": {
     "mean_correlation": 0.1352844764746446,
     "ridge_correlation": 0.9937845334292794,
     "scrambled_correlation": 0.1307952942468991,
     "ridge_median_neuron_correlation": 0.9931285471618845,
+    "context_available": false,
+    "stimulus_context_ridge_correlation": 0.0,
+    "stimulus_context_scrambled_correlation": 0.0,
+    "stimulus_context_ridge_median_neuron_correlation": 0.0,
+    "best_model_is_contextual": false,
+    "best_predictive_correlation": 0.9937845334292794,
+    "best_predictive_scrambled_correlation": 0.1307952942468991,
     "reliability": 0.9887784783359936,
     "has_structural_or_interventional_constraint": false,
     "has_ood_generalization_gate": false,
     "ridge_minus_mean": 0.8585000569546348,
-    "ridge_minus_scrambled": 0.8629892391823804
+    "ridge_minus_scrambled": 0.8629892391823804,
+    "stimulus_context_ridge_minus_mean": -0.1352844764746446,
+    "stimulus_context_ridge_minus_scrambled": 0.0,
+    "best_predictive_minus_mean": 0.8585000569546348,
+    "best_predictive_minus_scrambled": 0.8629892391823804
   },
   "mis": {
     "score": 0.6666666666666666,
@@ -57,7 +70,7 @@
         "score": 1.0,
         "criteria": [
           {
-            "name": "ridge_minus_mean_correlation",
+            "name": "best_predictive_minus_mean_correlation",
             "value": 0.8585000569546348,
             "threshold": 0.05,
             "direction": "gt",
@@ -65,7 +78,7 @@
             "normalized_score": 1.0
           },
           {
-            "name": "ridge_minus_scrambled_correlation",
+            "name": "best_predictive_minus_scrambled_correlation",
             "value": 0.8629892391823804,
             "threshold": 0.05,
             "direction": "gt",
@@ -73,7 +86,7 @@
             "normalized_score": 1.0
           },
           {
-            "name": "ridge_test_correlation",
+            "name": "best_predictive_test_correlation",
             "value": 0.9937845334292794,
             "threshold": 0.1,
             "direction": "gt",

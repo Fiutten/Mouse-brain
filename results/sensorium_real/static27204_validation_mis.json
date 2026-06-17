@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "c48973f",
+  "git_revision": "f98bc83-dirty",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "data/sensorium/extracted/static27204-5-13-GrayImageNet-94c6ff995dac583098847cfecd43e7b6",
@@ -20,21 +20,34 @@
   "baselines": {
     "mean_response": "train-set neuron mean",
     "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
-    "scrambled_stimulus_ridge": "same model with permuted train stimuli"
+    "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
+    "scrambled_stimulus_ridge": "same model with permuted train stimuli",
+    "scrambled_stimulus_context_ridge": "context-preserving control with permuted train stimuli"
   },
   "metrics": {
     "mean_correlation": 0.2383235418423997,
     "ridge_correlation": 0.28237953041900044,
     "scrambled_correlation": 0.22038720046082402,
     "ridge_median_neuron_correlation": 0.12053392094493631,
+    "context_available": true,
+    "stimulus_context_ridge_correlation": 0.31517844502398756,
+    "stimulus_context_scrambled_correlation": 0.25579117736502205,
+    "stimulus_context_ridge_median_neuron_correlation": 0.16814673997762972,
+    "best_model_is_contextual": true,
+    "best_predictive_correlation": 0.31517844502398756,
+    "best_predictive_scrambled_correlation": 0.25579117736502205,
     "reliability": 0.0,
     "has_structural_or_interventional_constraint": false,
     "has_ood_generalization_gate": false,
     "ridge_minus_mean": 0.04405598857660073,
-    "ridge_minus_scrambled": 0.06199232995817641
+    "ridge_minus_scrambled": 0.06199232995817641,
+    "stimulus_context_ridge_minus_mean": 0.07685490318158786,
+    "stimulus_context_ridge_minus_scrambled": 0.059387267658965515,
+    "best_predictive_minus_mean": 0.07685490318158786,
+    "best_predictive_minus_scrambled": 0.059387267658965515
   },
   "mis": {
-    "score": 0.32012441905911276,
+    "score": 0.3333333333333333,
     "passed": false,
     "blocks": [
       {
@@ -54,28 +67,28 @@
       },
       {
         "name": "topology_specificity",
-        "passed": false,
-        "score": 0.9603732571773382,
+        "passed": true,
+        "score": 1.0,
         "criteria": [
           {
-            "name": "ridge_minus_mean_correlation",
-            "value": 0.04405598857660073,
-            "threshold": 0.05,
-            "direction": "gt",
-            "passed": false,
-            "normalized_score": 0.8811197715320146
-          },
-          {
-            "name": "ridge_minus_scrambled_correlation",
-            "value": 0.06199232995817641,
+            "name": "best_predictive_minus_mean_correlation",
+            "value": 0.07685490318158786,
             "threshold": 0.05,
             "direction": "gt",
             "passed": true,
             "normalized_score": 1.0
           },
           {
-            "name": "ridge_test_correlation",
-            "value": 0.28237953041900044,
+            "name": "best_predictive_minus_scrambled_correlation",
+            "value": 0.059387267658965515,
+            "threshold": 0.05,
+            "direction": "gt",
+            "passed": true,
+            "normalized_score": 1.0
+          },
+          {
+            "name": "best_predictive_test_correlation",
+            "value": 0.31517844502398756,
             "threshold": 0.1,
             "direction": "gt",
             "passed": true,

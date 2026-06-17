@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "c48973f",
+  "git_revision": "f98bc83-dirty",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "data/sensorium/extracted/static22846-10-16-GrayImageNet-94c6ff995dac583098847cfecd43e7b6",
@@ -19,18 +19,31 @@
   "baselines": {
     "mean_response": "train-set neuron mean",
     "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
-    "scrambled_stimulus_ridge": "same model with permuted train stimuli"
+    "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
+    "scrambled_stimulus_ridge": "same model with permuted train stimuli",
+    "scrambled_stimulus_context_ridge": "context-preserving control with permuted train stimuli"
   },
   "metrics": {
     "mean_correlation": 0.2300542220541963,
     "ridge_correlation": 0.29621757902394824,
     "scrambled_correlation": 0.20318569081017052,
     "ridge_median_neuron_correlation": 0.12347149044259836,
+    "context_available": true,
+    "stimulus_context_ridge_correlation": 0.33246009125987225,
+    "stimulus_context_scrambled_correlation": 0.2549454531392245,
+    "stimulus_context_ridge_median_neuron_correlation": 0.19287422183279923,
+    "best_model_is_contextual": true,
+    "best_predictive_correlation": 0.33246009125987225,
+    "best_predictive_scrambled_correlation": 0.2549454531392245,
     "reliability": 0.0,
     "has_structural_or_interventional_constraint": false,
     "has_ood_generalization_gate": false,
     "ridge_minus_mean": 0.06616335696975195,
-    "ridge_minus_scrambled": 0.09303188821377772
+    "ridge_minus_scrambled": 0.09303188821377772,
+    "stimulus_context_ridge_minus_mean": 0.10240586920567596,
+    "stimulus_context_ridge_minus_scrambled": 0.07751463812064774,
+    "best_predictive_minus_mean": 0.10240586920567596,
+    "best_predictive_minus_scrambled": 0.07751463812064774
   },
   "mis": {
     "score": 0.3333333333333333,
@@ -57,24 +70,24 @@
         "score": 1.0,
         "criteria": [
           {
-            "name": "ridge_minus_mean_correlation",
-            "value": 0.06616335696975195,
+            "name": "best_predictive_minus_mean_correlation",
+            "value": 0.10240586920567596,
             "threshold": 0.05,
             "direction": "gt",
             "passed": true,
             "normalized_score": 1.0
           },
           {
-            "name": "ridge_minus_scrambled_correlation",
-            "value": 0.09303188821377772,
+            "name": "best_predictive_minus_scrambled_correlation",
+            "value": 0.07751463812064774,
             "threshold": 0.05,
             "direction": "gt",
             "passed": true,
             "normalized_score": 1.0
           },
           {
-            "name": "ridge_test_correlation",
-            "value": 0.29621757902394824,
+            "name": "best_predictive_test_correlation",
+            "value": 0.33246009125987225,
             "threshold": 0.1,
             "direction": "gt",
             "passed": true,
