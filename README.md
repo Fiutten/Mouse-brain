@@ -44,6 +44,8 @@ La estrategia Q1 actual formaliza el
 [Mechanistic Identifiability Score](docs/MECHANISTIC_IDENTIFIABILITY_SCORE.md)
 y prioriza Sensorium/Dynamic Sensorium como siguiente caso real en
 [Q1_TECHNICAL_STRATEGY.md](docs/Q1_TECHNICAL_STRATEGY.md).
+La Fase 5 introduce un adaptador Sensorium y un benchmark predictivo/MIS en
+[PHASE5_SENSORIUM_PROTOCOL.md](docs/PHASE5_SENSORIUM_PROTOCOL.md).
 
 ## Capacidades de la Fase 1
 
@@ -67,6 +69,8 @@ mousebrainbench-allen-phase2c develop configs/allen_vbn_phase2c.yaml
 mousebrainbench-allen-phase2c confirm configs/allen_vbn_phase2c.yaml
 mousebrainbench-allen-phase3 develop configs/allen_visual_phase3.yaml
 mousebrainbench-allen-mis
+mousebrainbench-sensorium-smoke
+mousebrainbench-sensorium-mis /path/to/unzipped/sensorium_mouse --max-trials 1000
 mousebrainbench-synthetic-mis
 pytest
 ```

@@ -87,7 +87,7 @@ forzando una interpretación anatómica.
 
 ### 4. Sensorium/Dynamic Sensorium como caso predictivo moderno
 
-Decisión: debe entrar como siguiente fase técnica si queremos subir ambición.
+Decisión: entra como siguiente fase técnica si queremos subir ambición.
 
 Razón:
 
@@ -119,6 +119,18 @@ Resultado esperado útil:
   tesis: predicción no equivale a mecanismo.
 - Si un subconjunto pasa una puerta de identificabilidad parcial, tendríamos el
   caso positivo que falta para una propuesta Q1 más fuerte.
+
+Estado implementado:
+
+- loader compatible con la estructura oficial de zips Sensorium/Dynamic;
+- benchmark predictivo con `mean_response`, `stimulus_ridge` y control
+  `scrambled_stimulus_ridge`;
+- smoke sintético que demuestra alta correlación sin identificabilidad
+  mecanística;
+- protocolo en [PHASE5_SENSORIUM_PROTOCOL.md](PHASE5_SENSORIUM_PROTOCOL.md).
+
+La siguiente acción empírica es descargar un solo ratón oficial y ejecutar el
+benchmark con límite de trials antes de procesar el dataset completo.
 
 ### 5. MICrONS como caso estructura-función
 

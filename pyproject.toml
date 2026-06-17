@@ -37,6 +37,8 @@ mousebrainbench-allen-phase2c = "mousebrainbench.benchmarks.allen_vbn_phase2c:ma
 mousebrainbench-allen-phase3 = "mousebrainbench.benchmarks.allen_visual_phase3:main"
 mousebrainbench-allen-phase4 = "mousebrainbench.benchmarks.allen_vbn_phase4:main"
 mousebrainbench-allen-mis = "mousebrainbench.benchmarks.allen_vbn_mis:main"
+mousebrainbench-sensorium-mis = "mousebrainbench.benchmarks.sensorium_predictive_mis:main"
+mousebrainbench-sensorium-smoke = "mousebrainbench.benchmarks.sensorium_synthetic_smoke:main"
 mousebrainbench-synthetic-mis = "mousebrainbench.benchmarks.synthetic_identifiability:main"
 mousebrainbench-run = "mousebrainbench.cli:main"
 

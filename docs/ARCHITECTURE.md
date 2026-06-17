@@ -21,6 +21,10 @@ dinámicos reciben esa matriz y producen actividad regional `time x region`.
     experimentos oficiales de trazado Allen con orientación y procedencia.
 14. `benchmarks/allen_visual_phase3.py`: calibración en desarrollo y evaluación
     externa sellada frente a controles topológicos recalibrados.
+15. `data/loaders/sensorium.py`: adaptador ligero para la estructura documentada
+    de Sensorium/Dynamic Sensorium sin depender del stack oficial completo.
+16. `benchmarks/sensorium_predictive_mis.py`: comparación entre correlación
+    predictiva y puertas MIS para targets visuales modernos.
 
 La simulación basal y la intervenida parten de la misma semilla. Las
 perturbaciones trabajan sobre copias y nunca alteran la conectividad de entrada.

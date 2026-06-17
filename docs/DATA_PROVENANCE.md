@@ -64,3 +64,25 @@ cero para excluir contaminación del sitio de inyección.
 El recurso derivado y la lista de experimentos se versionan en
 `mousebrainbench/data/reference/allen_visual_connectivity.json`. La cobertura
 por fuente es desigual y se conserva explícitamente como limitación.
+
+## Sensorium/Dynamic Sensorium
+
+Sensorium 2022 y Dynamic Sensorium 2023 no se han descargado completos todavía.
+La procedencia oficial verificada es:
+
+- portal: `https://sensorium-competition.net/`;
+- código Sensorium 2022: `https://github.com/sinzlab/sensorium`;
+- código Dynamic Sensorium 2023: `https://github.com/ecker-lab/sensorium_2023`;
+- datos Sensorium 2022: `https://gin.g-node.org/cajal/Sensorium2022`;
+- datos Dynamic Sensorium 2023:
+  `https://gin.g-node.org/pollytur/sensorium_2023_dataset`.
+
+La estructura oficial documentada contiene zips por ratón que, al descomprimir,
+incluyen `data/images` o `data/videos`, `data/responses`, variables
+conductuales y metadatos bajo `meta/trials` y `meta/neurons`.
+
+Antes de descargar datos reales se ha implementado un adaptador compatible con
+esa estructura y un smoke sintético reproducible. Esto verifica el código sin
+versionar datos externos ni infringir condiciones de licencia. Cualquier
+análisis publicable sobre Dynamic Sensorium debe revisar la licencia `CC
+BY-NC-ND 4.0` y, si procede, solicitar permiso a los responsables del dataset.
