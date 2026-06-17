@@ -68,7 +68,7 @@ def _tier_mask(tiers: np.ndarray, names: tuple[str, ...]) -> np.ndarray:
     return np.asarray([tier in names for tier in tiers], dtype=bool)
 
 
-def _response_reliability(table: SensoriumTrialTable, eval_mask: np.ndarray) -> float:
+def _response_reliability(table: SensoriumTrialTable, eval_mask: np.ndarray) -> tuple[float, int]:
     """Estimate repeat reliability from repeated stimulus ids in held-out tiers."""
 
     correlations = []
@@ -82,7 +82,7 @@ def _response_reliability(table: SensoriumTrialTable, eval_mask: np.ndarray) -> 
         first = responses[indices[:half]].mean(axis=0)
         second = responses[indices[half:]].mean(axis=0)
         correlations.append(_safe_correlation(first, second))
-    return float(np.median(correlations)) if correlations else 0.0
+    return (float(np.median(correlations)) if correlations else 0.0, len(correlations))
 
 
 def predictive_mis_from_metrics(metrics: dict[str, float | bool]) -> MechanisticIdentifiabilityScore:
@@ -193,6 +193,7 @@ def run_sensorium_benchmark(
         best_correlation = stimulus_correlation
         best_scrambled = stimulus_scrambled_correlation
 
+    reliability, repeated_stimuli = _response_reliability(table, eval_mask)
     metrics: dict[str, float | bool] = {
         "mean_correlation": _safe_correlation(mean_prediction, eval_y),
         "ridge_correlation": stimulus_correlation,
@@ -205,7 +206,9 @@ def run_sensorium_benchmark(
         "best_model_is_contextual": best_model == "stimulus_context_ridge",
         "best_predictive_correlation": best_correlation,
         "best_predictive_scrambled_correlation": best_scrambled,
-        "reliability": _response_reliability(table, eval_mask),
+        "reliability": reliability,
+        "reliability_estimable": repeated_stimuli > 0,
+        "reliability_repeated_stimuli": float(repeated_stimuli),
         "has_structural_or_interventional_constraint": has_structural_or_interventional_constraint,
         "has_ood_generalization_gate": has_ood_generalization_gate,
     }
@@ -260,6 +263,7 @@ def run_sensorium_benchmark(
             "The baseline is intentionally transparent and not a Sensorium SOTA model.",
             "Prediction from images/videos is not by itself mechanistic explanation.",
             "A mechanistic claim requires structure, perturbation, OOD, or causal constraints.",
+            "Reliability is only estimable when held-out tiers contain repeated stimulus ids.",
         ],
     }
     path = Path(output)
