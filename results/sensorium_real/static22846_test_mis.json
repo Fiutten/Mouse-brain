@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "f98bc83-dirty",
+  "git_revision": "a037b4a",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "data/sensorium/extracted/static22846-10-16-GrayImageNet-94c6ff995dac583098847cfecd43e7b6",
