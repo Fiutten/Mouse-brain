@@ -40,6 +40,10 @@ no contiene latencias o lead-lag no triviales suficientes con bins de `50 ms`.
 La línea Allen VBN queda cerrada como caso metodológico en
 [ALLEN_VBN_CLOSURE.md](docs/ALLEN_VBN_CLOSURE.md). El paquete publicable actual
 está resumido en [PUBLICATION_PACKAGE.md](docs/PUBLICATION_PACKAGE.md).
+La estrategia Q1 actual formaliza el
+[Mechanistic Identifiability Score](docs/MECHANISTIC_IDENTIFIABILITY_SCORE.md)
+y prioriza Sensorium/Dynamic Sensorium como siguiente caso real en
+[Q1_TECHNICAL_STRATEGY.md](docs/Q1_TECHNICAL_STRATEGY.md).
 
 ## Capacidades de la Fase 1
 
@@ -62,6 +66,8 @@ mousebrainbench-allen-phase2b configs/allen_vbn_phase2b.yaml
 mousebrainbench-allen-phase2c develop configs/allen_vbn_phase2c.yaml
 mousebrainbench-allen-phase2c confirm configs/allen_vbn_phase2c.yaml
 mousebrainbench-allen-phase3 develop configs/allen_visual_phase3.yaml
+mousebrainbench-allen-mis
+mousebrainbench-synthetic-mis
 pytest
 ```
 

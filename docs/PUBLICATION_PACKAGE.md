@@ -157,12 +157,16 @@ Más difíciles:
 
 ## Qué faltaría para subir ambición
 
-1. Empaquetar notebooks/figuras reproducibles.
-2. Añadir un comparador con un recurso alternativo o una segunda tarea.
-3. Automatizar generación de tablas finales.
-4. Redactar una revisión corta de trabajos sobre digital twins, TVB, BMTK,
-   Allen models y validación de modelos.
-5. Hacer una auditoría externa de reproducibilidad en una instalación limpia.
+1. Usar el `Mechanistic Identifiability Score` como contribución formal, no
+   solo como interpretación verbal.
+2. Mantener Allen VBN como caso negativo real.
+3. Añadir Sensorium/Dynamic Sensorium como caso predictivo moderno.
+4. Decidir MICrONS solo tras un piloto estructura-función acotado.
+5. Automatizar generación de tablas finales y auditoría en instalación limpia.
+
+Los detalles técnicos están en
+[MECHANISTIC_IDENTIFIABILITY_SCORE.md](MECHANISTIC_IDENTIFIABILITY_SCORE.md) y
+[Q1_TECHNICAL_STRATEGY.md](Q1_TECHNICAL_STRATEGY.md).
 
 ## Decisión recomendada
 
