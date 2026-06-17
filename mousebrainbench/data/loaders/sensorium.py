@@ -63,7 +63,10 @@ def _load_optional_trial_matrix(directory: Path, *, n_trials: int) -> np.ndarray
     if not directory.exists():
         return np.empty((n_trials, 0), dtype=float)
     arrays = _load_trial_arrays(directory, max_trials=n_trials)
-    features = [np.asarray(array, dtype=float).reshape(-1) for array in arrays[:n_trials]]
+    features = [
+        np.nan_to_num(np.asarray(array, dtype=float).reshape(-1), nan=0.0)
+        for array in arrays[:n_trials]
+    ]
     return np.vstack(features) if features else np.empty((n_trials, 0), dtype=float)
 
 
@@ -74,7 +77,7 @@ def _feature_vector(stimulus: np.ndarray, modality: Modality) -> np.ndarray:
     deterministic baseline that can be tested before adding deep visual models.
     """
 
-    values = np.asarray(stimulus, dtype=float)
+    values = np.nan_to_num(np.asarray(stimulus, dtype=float), nan=0.0)
     flat = values.reshape(-1)
     features = [
         float(np.mean(flat)),
@@ -126,13 +129,15 @@ def _response_vector(response: np.ndarray) -> np.ndarray:
 
     values = np.asarray(response, dtype=float)
     if values.ndim == 1:
-        return values
+        return np.nan_to_num(values, nan=0.0)
     if values.ndim == 2:
         # Dynamic Sensorium responses are neuron x frame; static responses are
-        # usually already one value per neuron. Averaging preserves a simple
-        # trial-level target for first-pass benchmarking.
-        return values.mean(axis=1)
-    return values.reshape(values.shape[0], -1).mean(axis=1)
+        # usually already one value per neuron. Missing dynamic samples are
+        # encoded as NaN, so the transparent trial-level target uses nanmean
+        # rather than treating missing frames as zero activity.
+        return np.nan_to_num(np.nanmean(values, axis=1), nan=0.0)
+    collapsed = np.nanmean(values.reshape(values.shape[0], -1), axis=1)
+    return np.nan_to_num(collapsed, nan=0.0)
 
 
 def _load_meta_array(path: Path, *, fallback: np.ndarray) -> np.ndarray:
