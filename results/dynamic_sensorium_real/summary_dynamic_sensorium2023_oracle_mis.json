@@ -1,0 +1,181 @@
+{
+  "dataset": "Dynamic Sensorium 2023 current public GIN release",
+  "evaluation_tier": "oracle",
+  "git_revision": "b894697",
+  "n_mice": 5,
+  "rows": [
+    {
+      "mouse": "dynamic29515",
+      "n_trials": 711,
+      "n_neurons": 7863,
+      "tiers": {
+        "final_test_bonus": 134,
+        "final_test_main": 57,
+        "live_test_bonus": 58,
+        "live_test_main": 56,
+        "oracle": 58,
+        "train": 348
+      },
+      "mean_correlation": 0.42376986766324315,
+      "ridge_correlation": 0.2903449673718665,
+      "context_correlation": 0.15597461859464432,
+      "best_model_is_contextual": false,
+      "best_predictive_correlation": 0.2903449673718665,
+      "best_predictive_minus_mean": -0.13342490029137666,
+      "best_predictive_minus_scrambled": 0.05214250075061358,
+      "reliability": 0.0,
+      "reliability_estimable": false,
+      "reliability_repeated_stimuli": 0.0,
+      "mis_score": 0.2222222222222222,
+      "mis_passed": false
+    },
+    {
+      "mouse": "dynamic29623",
+      "n_trials": 682,
+      "n_neurons": 7908,
+      "tiers": {
+        "final_test_bonus": 131,
+        "final_test_main": 56,
+        "live_test_bonus": 57,
+        "live_test_main": 53,
+        "oracle": 56,
+        "train": 329
+      },
+      "mean_correlation": 0.3679818551875286,
+      "ridge_correlation": 0.1969374897607021,
+      "context_correlation": 0.14935564287477127,
+      "best_model_is_contextual": false,
+      "best_predictive_correlation": 0.1969374897607021,
+      "best_predictive_minus_mean": -0.17104436542682647,
+      "best_predictive_minus_scrambled": 0.005275406986293724,
+      "reliability": 0.0,
+      "reliability_estimable": false,
+      "reliability_repeated_stimuli": 0.0,
+      "mis_score": 0.12283423774731937,
+      "mis_passed": false
+    },
+    {
+      "mouse": "dynamic29647",
+      "n_trials": 711,
+      "n_neurons": 8202,
+      "tiers": {
+        "final_test_bonus": 120,
+        "final_test_main": 59,
+        "live_test_bonus": 58,
+        "live_test_main": 60,
+        "oracle": 60,
+        "train": 354
+      },
+      "mean_correlation": 0.4471551567489409,
+      "ridge_correlation": 0.41602431486627145,
+      "context_correlation": 0.17606047363178415,
+      "best_model_is_contextual": false,
+      "best_predictive_correlation": 0.41602431486627145,
+      "best_predictive_minus_mean": -0.031130841882669458,
+      "best_predictive_minus_scrambled": 0.07896808179959608,
+      "reliability": 0.0,
+      "reliability_estimable": false,
+      "reliability_repeated_stimuli": 0.0,
+      "mis_score": 0.2222222222222222,
+      "mis_passed": false
+    },
+    {
+      "mouse": "dynamic29712",
+      "n_trials": 739,
+      "n_neurons": 7939,
+      "tiers": {
+        "final_test_bonus": 120,
+        "final_test_main": 60,
+        "live_test_bonus": 80,
+        "live_test_main": 60,
+        "oracle": 60,
+        "train": 359
+      },
+      "mean_correlation": 0.45298415307462914,
+      "ridge_correlation": 0.40944547797630837,
+      "context_correlation": 0.1940597381282278,
+      "best_model_is_contextual": false,
+      "best_predictive_correlation": 0.40944547797630837,
+      "best_predictive_minus_mean": -0.04353867509832077,
+      "best_predictive_minus_scrambled": 0.09775758944183338,
+      "reliability": 0.0,
+      "reliability_estimable": false,
+      "reliability_repeated_stimuli": 0.0,
+      "mis_score": 0.2222222222222222,
+      "mis_passed": false
+    },
+    {
+      "mouse": "dynamic29755",
+      "n_trials": 712,
+      "n_neurons": 8122,
+      "tiers": {
+        "final_test_bonus": 119,
+        "final_test_main": 60,
+        "live_test_bonus": 60,
+        "live_test_main": 60,
+        "oracle": 59,
+        "train": 354
+      },
+      "mean_correlation": 0.4805649600408238,
+      "ridge_correlation": 0.4379851301295673,
+      "context_correlation": 0.16642845920780053,
+      "best_model_is_contextual": false,
+      "best_predictive_correlation": 0.4379851301295673,
+      "best_predictive_minus_mean": -0.04257982991125647,
+      "best_predictive_minus_scrambled": 0.050527153640656575,
+      "reliability": 0.0,
+      "reliability_estimable": false,
+      "reliability_repeated_stimuli": 0.0,
+      "mis_score": 0.2222222222222222,
+      "mis_passed": false
+    }
+  ],
+  "summary": {
+    "best_predictive_correlation": {
+      "median": 0.40944547797630837,
+      "min": 0.1969374897607021,
+      "max": 0.4379851301295673
+    },
+    "best_predictive_minus_mean": {
+      "median": -0.04353867509832077,
+      "min": -0.17104436542682647,
+      "max": -0.031130841882669458
+    },
+    "best_predictive_minus_scrambled": {
+      "median": 0.05214250075061358,
+      "min": 0.005275406986293724,
+      "max": 0.09775758944183338
+    },
+    "reliability": {
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "mis_score": {
+      "median": 0.2222222222222222,
+      "min": 0.12283423774731937,
+      "max": 0.2222222222222222
+    },
+    "reliability_estimable_count": 0
+  },
+  "cross_dataset_readout": {
+    "static_sensorium2022_pretraining_test_median_best_predictive_minus_mean": 0.09477618467843874,
+    "dynamic_sensorium2023_oracle_median_best_predictive_minus_mean": -0.04353867509832077,
+    "static_sensorium2022_pretraining_test_median_best_predictive_minus_scrambled": 0.06835385516268283,
+    "dynamic_sensorium2023_oracle_median_best_predictive_minus_scrambled": 0.05214250075061358,
+    "static_sensorium2022_pretraining_test_median_reliability": 0.642032375657199,
+    "dynamic_sensorium2023_oracle_reliability_estimable_count": 0
+  },
+  "scientific_decision": "dynamic_public_oracle_is_a_negative_stress_test_for_trial_collapsed_features_not_a_failed_dataset",
+  "interpretation": [
+    "The dynamic oracle tier has public nonzero responses, but no repeated exact videos, so repeat reliability is not estimable from this split.",
+    "The transparent trial-collapsed video descriptor often beats a scrambled-stimulus control, but it does not beat the train mean response baseline.",
+    "This supports the framework distinction between prediction above a weak control, reproducibility evidence, and mechanistic identifiability."
+  ],
+  "important_limitations": [
+    "live_test and final_test tiers contain withheld zero responses in this public competition release",
+    "oracle is the public held-out tier used here for framework consistency, not official competition scoring",
+    "the baseline collapses temporal video and neural responses to trial-level descriptors, so it is a transparent stress test rather than a modern video model",
+    "a publishable predictive result on Dynamic Sensorium requires a temporal/video model or official Sensorium-style model adapter"
+  ]
+}

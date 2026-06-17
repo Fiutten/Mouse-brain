@@ -67,7 +67,6 @@ por fuente es desigual y se conserva explícitamente como limitación.
 
 ## Sensorium/Dynamic Sensorium
 
-Sensorium 2022 y Dynamic Sensorium 2023 no se han descargado completos todavía.
 La procedencia oficial verificada es:
 
 - portal: `https://sensorium-competition.net/`;
@@ -81,11 +80,11 @@ La estructura oficial documentada contiene zips por ratón que, al descomprimir,
 incluyen `data/images` o `data/videos`, `data/responses`, variables
 conductuales y metadatos bajo `meta/trials` y `meta/neurons`.
 
-Antes de descargar datos reales se ha implementado un adaptador compatible con
-esa estructura y un smoke sintético reproducible. Esto verifica el código sin
-versionar datos externos ni infringir condiciones de licencia. Cualquier
-análisis publicable sobre Dynamic Sensorium debe revisar la licencia `CC
-BY-NC-ND 4.0` y, si procede, solicitar permiso a los responsables del dataset.
+Se ha implementado un adaptador compatible con esa estructura y un smoke
+sintético reproducible. Esto verifica el código sin versionar datos externos ni
+infringir condiciones de licencia. Cualquier análisis publicable sobre Dynamic
+Sensorium debe revisar la licencia `CC BY-NC-ND 4.0` y, si procede, solicitar
+permiso a los responsables del dataset.
 
 El 17 de junio de 2026 se descargó la cohorte completa Sensorium 2022 estática:
 siete zips (`21067`, `22846`, `23343`, `23656`, `23964`, `26872`, `27204`) y se
@@ -95,3 +94,16 @@ permanecen fuera de Git bajo `data/sensorium/`.
 
 Sensorium 2022 no contiene 17 ratones adicionales. Una ampliación a ese orden de
 magnitud requiere otro recurso, como Dynamic Sensorium u otro benchmark visual.
+
+El 17 de junio de 2026 se descargó la cohorte pública visible Dynamic Sensorium
+2023 desde GIN: cinco zips (`29515`, `29623`, `29647`, `29712`, `29755`). Los
+cinco pasaron `unzip -t` y se extrajeron bajo
+`data/dynamic_sensorium/extracted/`. El uso local observado fue `48G` para raw y
+`94G` para extraído. Los hashes, tamaños, tiers y resultados están en
+[PHASE5_DYNAMIC_SENSORIUM_RESULTS.md](PHASE5_DYNAMIC_SENSORIUM_RESULTS.md).
+
+Los tiers `live_test_*` y `final_test_*` de Dynamic Sensorium contienen
+respuestas retenidas/zeroed en la release pública, por lo que no se usan para
+evaluación directa. El tier `oracle` contiene respuestas no nulas, pero no
+contiene vídeos repetidos exactos; la fiabilidad por repetición se marca como
+no estimable en los artefactos.

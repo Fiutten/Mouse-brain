@@ -1,5 +1,45 @@
 # Registro de experimentos
 
+## 2026-06-17 — Fase 5b: Dynamic Sensorium como prueba de consistencia
+
+### Objetivo
+
+Comprobar si el marco Sensorium/MIS se comporta de forma consistente al pasar
+de imágenes estáticas a vídeos dinámicos, sin presentar un baseline ligero como
+modelo predictivo moderno.
+
+### Datos
+
+Se descargaron los cinco zips públicos visibles de Dynamic Sensorium 2023 desde
+GIN (`dynamic29515`, `dynamic29623`, `dynamic29647`, `dynamic29712`,
+`dynamic29755`). Los cinco pasaron `unzip -t`; raw ocupa `48G` y la extracción
+`94G`.
+
+### Resultado
+
+La evaluación se realizó sobre `oracle`, porque `live_test_*` y `final_test_*`
+tienen respuestas retenidas/zeroed. El tier `oracle` contiene respuestas no
+nulas, pero no vídeos repetidos exactos por hash, así que la fiabilidad por
+repetición no es estimable.
+
+| Métrica | Mediana |
+|---|---:|
+| Best predictive correlation | `0.4094` |
+| Best Δ mean | `-0.0435` |
+| Best Δ scrambled | `0.0521` |
+| Reliability estimable | `0/5` |
+| MIS score | `0.2222` |
+
+### Decisión
+
+**Caso negativo útil.** El descriptor temporal colapsado captura algo de señal
+frente al control scrambled, pero no supera al predictor medio. El MIS falla de
+forma correcta porque no hay reproducibilidad estimable, ganancia frente a mean
+ni evidencia mecanística. El siguiente paso para una contribución fuerte es
+añadir un adaptador a un modelo temporal competitivo u oficial Sensorium y
+evaluarlo con la misma separación entre predicción, reproducibilidad e
+identificabilidad.
+
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 
 ### Objetivo
