@@ -37,6 +37,10 @@ La Fase 4 comprueba identificabilidad dirigida y vuelve a cerrar la puerta
 anatómico-dinámica para este target: la señal confirmada es reproducible, pero
 no contiene latencias o lead-lag no triviales suficientes con bins de `50 ms`.
 
+La línea Allen VBN queda cerrada como caso metodológico en
+[ALLEN_VBN_CLOSURE.md](docs/ALLEN_VBN_CLOSURE.md). El paquete publicable actual
+está resumido en [PUBLICATION_PACKAGE.md](docs/PUBLICATION_PACKAGE.md).
+
 ## Capacidades de la Fase 1
 
 - Contratos validados para regiones, conectividad y estados simulados.

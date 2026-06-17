@@ -36,3 +36,9 @@ reproducible y aun así no ser útil para inferir anatomía o dinámica dirigida
 No se debe descargar una tercera cohorte Allen VBN para este target. Tampoco se
 debe aumentar complejidad neuronal esperando que aparezca información que la
 señal agregada no contiene.
+
+## Estado de cierre
+
+La ruta Allen VBN queda cerrada formalmente en
+`docs/ALLEN_VBN_CLOSURE.md`. La información publicable se resume en
+`docs/PUBLICATION_PACKAGE.md`.
