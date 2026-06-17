@@ -1,0 +1,214 @@
+{
+  "version": "0.6.0",
+  "git_revision": "ac5ac3a",
+  "cases": [
+    {
+      "case": "directed_truth",
+      "ground_truth_directed": true,
+      "mis": {
+        "score": 1.0,
+        "passed": true,
+        "blocks": [
+          {
+            "name": "reproducibility",
+            "passed": true,
+            "score": 1.0,
+            "criteria": [
+              {
+                "name": "median_cross_session_correlation",
+                "value": 0.9628383084137636,
+                "threshold": 0.7,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "median_split_half_correlation",
+                "value": 0.9818356446664687,
+                "threshold": 0.8,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "fraction_above_own_null_95th",
+                "value": 1.0,
+                "threshold": 0.5,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              }
+            ]
+          },
+          {
+            "name": "topology_specificity",
+            "passed": true,
+            "score": 1.0,
+            "criteria": [
+              {
+                "name": "true_minus_median_permutation",
+                "value": 0.8070901640449648,
+                "threshold": 0.05,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "fraction_permutations_outperformed",
+                "value": 1.0,
+                "threshold": 0.95,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "true_minus_disconnected",
+                "value": 0.7359535690155832,
+                "threshold": 0.05,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              }
+            ]
+          },
+          {
+            "name": "directed_identifiability",
+            "passed": true,
+            "score": 1.0,
+            "criteria": [
+              {
+                "name": "resolvable_latency_pair_fraction",
+                "value": 1.0,
+                "threshold": 0.5,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "nonzero_lead_lag_pair_fraction",
+                "value": 1.0,
+                "threshold": 0.25,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              }
+            ]
+          }
+        ],
+        "interpretation": "mechanistically_identifiable"
+      },
+      "summary": {
+        "median_reproducibility": 0.9628383084137636,
+        "median_split_half": 0.9818356446664687,
+        "median_true_prediction": 0.9586030677041502,
+        "median_disconnected_prediction": 0.22264949868856698,
+        "median_permutation_prediction": 0.1515129036591854,
+        "resolvable_latency_pair_fraction": 1.0
+      }
+    },
+    {
+      "case": "common_drive_nonidentifiable",
+      "ground_truth_directed": false,
+      "mis": {
+        "score": 0.3333333333333333,
+        "passed": false,
+        "blocks": [
+          {
+            "name": "reproducibility",
+            "passed": true,
+            "score": 1.0,
+            "criteria": [
+              {
+                "name": "median_cross_session_correlation",
+                "value": 0.9623532990411787,
+                "threshold": 0.7,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "median_split_half_correlation",
+                "value": 0.9815650207503228,
+                "threshold": 0.8,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "fraction_above_own_null_95th",
+                "value": 0.7916666666666666,
+                "threshold": 0.5,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              }
+            ]
+          },
+          {
+            "name": "topology_specificity",
+            "passed": false,
+            "score": 0.0,
+            "criteria": [
+              {
+                "name": "true_minus_median_permutation",
+                "value": -0.0008928082644565905,
+                "threshold": 0.05,
+                "direction": "gt",
+                "passed": false,
+                "normalized_score": 0.0
+              },
+              {
+                "name": "fraction_permutations_outperformed",
+                "value": 0.0,
+                "threshold": 0.95,
+                "direction": "gte",
+                "passed": false,
+                "normalized_score": 0.0
+              },
+              {
+                "name": "true_minus_disconnected",
+                "value": -0.003221359014116465,
+                "threshold": 0.05,
+                "direction": "gt",
+                "passed": false,
+                "normalized_score": 0.0
+              }
+            ]
+          },
+          {
+            "name": "directed_identifiability",
+            "passed": false,
+            "score": 0.0,
+            "criteria": [
+              {
+                "name": "resolvable_latency_pair_fraction",
+                "value": 0.0,
+                "threshold": 0.5,
+                "direction": "gte",
+                "passed": false,
+                "normalized_score": 0.0
+              },
+              {
+                "name": "nonzero_lead_lag_pair_fraction",
+                "value": 0.0,
+                "threshold": 0.25,
+                "direction": "gte",
+                "passed": false,
+                "normalized_score": 0.0
+              }
+            ]
+          }
+        ],
+        "interpretation": "not_mechanistically_identifiable"
+      },
+      "summary": {
+        "median_reproducibility": 0.9623532990411787,
+        "median_split_half": 0.9815650207503228,
+        "median_true_prediction": 0.9561789777179796,
+        "median_disconnected_prediction": 0.959400336732096,
+        "median_permutation_prediction": 0.9570717859824361,
+        "resolvable_latency_pair_fraction": 0.0
+      }
+    }
+  ]
+}
