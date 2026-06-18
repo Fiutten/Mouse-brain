@@ -1,0 +1,653 @@
+{
+  "comparison": "dynamic_sensorium_predictive_model_comparator",
+  "cohorts": [
+    {
+      "cohort": "dynamic_sensorium2023_oracle",
+      "n_mice": 5,
+      "temporal_summary": "results/dynamic_sensorium_adapter/summary_dynamic_sensorium2023_temporal_filterbank_mis.json",
+      "svd_summary": "results/dynamic_sensorium_temporal_svd/summary_dynamic_sensorium2023_temporal_svd.json",
+      "models": [
+        "mean_response",
+        "summary_adapter",
+        "temporal_filterbank",
+        "temporal_svd"
+      ],
+      "model_rows": [
+        {
+          "mouse": "dynamic29515",
+          "mean_response": 0.42376986766324315,
+          "summary_adapter": 0.42244437965535253,
+          "temporal_filterbank": 0.4309167731569498,
+          "temporal_svd": 0.41452834204433525
+        },
+        {
+          "mouse": "dynamic29623",
+          "mean_response": 0.3679818551875286,
+          "summary_adapter": 0.39021845943639666,
+          "temporal_filterbank": 0.4030518685697743,
+          "temporal_svd": 0.4271261955135371
+        },
+        {
+          "mouse": "dynamic29647",
+          "mean_response": 0.4471551567489409,
+          "summary_adapter": 0.4801460889881136,
+          "temporal_filterbank": 0.47416792764925486,
+          "temporal_svd": 0.4861605114221228
+        },
+        {
+          "mouse": "dynamic29712",
+          "mean_response": 0.45298415307462914,
+          "summary_adapter": 0.47594909133200297,
+          "temporal_filterbank": 0.4841195675051003,
+          "temporal_svd": 0.49187043002797176
+        },
+        {
+          "mouse": "dynamic29755",
+          "mean_response": 0.4805649600408238,
+          "summary_adapter": 0.5009085699541823,
+          "temporal_filterbank": 0.5228131701240796,
+          "temporal_svd": 0.5169175866877092
+        }
+      ],
+      "best_models": [
+        {
+          "mouse": "dynamic29515",
+          "best_model": "temporal_filterbank",
+          "best_correlation": 0.4309167731569498,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        },
+        {
+          "mouse": "dynamic29623",
+          "best_model": "temporal_svd",
+          "best_correlation": 0.4271261955135371,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        },
+        {
+          "mouse": "dynamic29647",
+          "best_model": "temporal_svd",
+          "best_correlation": 0.4861605114221228,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        },
+        {
+          "mouse": "dynamic29712",
+          "best_model": "temporal_svd",
+          "best_correlation": 0.49187043002797176,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        },
+        {
+          "mouse": "dynamic29755",
+          "best_model": "temporal_filterbank",
+          "best_correlation": 0.5228131701240796,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        }
+      ],
+      "model_win_counts": {
+        "temporal_filterbank": 2,
+        "temporal_svd": 3
+      },
+      "pairwise": {
+        "summary_adapter_vs_temporal_filterbank": {
+          "left": "summary_adapter",
+          "right": "temporal_filterbank",
+          "n_paired": 5,
+          "right_wins": 4,
+          "left_wins": 1,
+          "ties": 0,
+          "median_delta": 0.008472393501597286,
+          "mean_delta": 0.009080543527822161,
+          "rows": [
+            {
+              "mouse": "dynamic29515",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.42244437965535253,
+              "right_correlation": 0.4309167731569498,
+              "delta": 0.008472393501597286
+            },
+            {
+              "mouse": "dynamic29623",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.39021845943639666,
+              "right_correlation": 0.4030518685697743,
+              "delta": 0.01283340913337766
+            },
+            {
+              "mouse": "dynamic29647",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.4801460889881136,
+              "right_correlation": 0.47416792764925486,
+              "delta": -0.005978161338858756
+            },
+            {
+              "mouse": "dynamic29712",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.47594909133200297,
+              "right_correlation": 0.4841195675051003,
+              "delta": 0.008170476173097352
+            },
+            {
+              "mouse": "dynamic29755",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.5009085699541823,
+              "right_correlation": 0.5228131701240796,
+              "delta": 0.02190460016989726
+            }
+          ]
+        },
+        "mean_response_vs_temporal_filterbank": {
+          "left": "mean_response",
+          "right": "temporal_filterbank",
+          "n_paired": 5,
+          "right_wins": 5,
+          "left_wins": 0,
+          "ties": 0,
+          "median_delta": 0.031135414430471187,
+          "mean_delta": 0.02852266285799867,
+          "rows": [
+            {
+              "mouse": "dynamic29515",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.42376986766324315,
+              "right_correlation": 0.4309167731569498,
+              "delta": 0.007146905493706668
+            },
+            {
+              "mouse": "dynamic29623",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.3679818551875286,
+              "right_correlation": 0.4030518685697743,
+              "delta": 0.035070013382245746
+            },
+            {
+              "mouse": "dynamic29647",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.4471551567489409,
+              "right_correlation": 0.47416792764925486,
+              "delta": 0.027012770900313954
+            },
+            {
+              "mouse": "dynamic29712",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.45298415307462914,
+              "right_correlation": 0.4841195675051003,
+              "delta": 0.031135414430471187
+            },
+            {
+              "mouse": "dynamic29755",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.4805649600408238,
+              "right_correlation": 0.5228131701240796,
+              "delta": 0.0422482100832558
+            }
+          ]
+        },
+        "mean_response_vs_temporal_svd": {
+          "left": "mean_response",
+          "right": "temporal_svd",
+          "n_paired": 5,
+          "right_wins": 4,
+          "left_wins": 1,
+          "ties": 0,
+          "median_delta": 0.038886276953342624,
+          "mean_delta": 0.0328294145961021,
+          "rows": [
+            {
+              "mouse": "dynamic29515",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.42376986766324315,
+              "right_correlation": 0.41452834204433525,
+              "delta": -0.009241525618907898
+            },
+            {
+              "mouse": "dynamic29623",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.3679818551875286,
+              "right_correlation": 0.4271261955135371,
+              "delta": 0.059144340326008515
+            },
+            {
+              "mouse": "dynamic29647",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.4471551567489409,
+              "right_correlation": 0.4861605114221228,
+              "delta": 0.03900535467318189
+            },
+            {
+              "mouse": "dynamic29712",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.45298415307462914,
+              "right_correlation": 0.49187043002797176,
+              "delta": 0.038886276953342624
+            },
+            {
+              "mouse": "dynamic29755",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.4805649600408238,
+              "right_correlation": 0.5169175866877092,
+              "delta": 0.03635262664688538
+            }
+          ]
+        },
+        "temporal_filterbank_vs_temporal_svd": {
+          "left": "temporal_filterbank",
+          "right": "temporal_svd",
+          "n_paired": 5,
+          "right_wins": 3,
+          "left_wins": 2,
+          "ties": 0,
+          "median_delta": 0.007750862522871438,
+          "mean_delta": 0.004306751738103432,
+          "rows": [
+            {
+              "mouse": "dynamic29515",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.4309167731569498,
+              "right_correlation": 0.41452834204433525,
+              "delta": -0.016388431112614565
+            },
+            {
+              "mouse": "dynamic29623",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.4030518685697743,
+              "right_correlation": 0.4271261955135371,
+              "delta": 0.02407432694376277
+            },
+            {
+              "mouse": "dynamic29647",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.47416792764925486,
+              "right_correlation": 0.4861605114221228,
+              "delta": 0.011992583772867937
+            },
+            {
+              "mouse": "dynamic29712",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.4841195675051003,
+              "right_correlation": 0.49187043002797176,
+              "delta": 0.007750862522871438
+            },
+            {
+              "mouse": "dynamic29755",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.5228131701240796,
+              "right_correlation": 0.5169175866877092,
+              "delta": -0.005895583436370422
+            }
+          ]
+        }
+      },
+      "mis_passed_count": 0,
+      "reliability_estimable_count": 0,
+      "evidence_label": "predictive_benchmark_requires_reliability_or_causal_constraints",
+      "interpretation": "Predictive deltas are paired by mouse. A positive SVD result is treated as predictive/OOD evidence only; MIS and reliability fields control whether the result can support a mechanistic claim."
+    },
+    {
+      "cohort": "dynamic_sensorium_legacy_ood",
+      "n_mice": 5,
+      "temporal_summary": "results/dynamic_sensorium_ood/summary_dynamic_sensorium_legacy_ood_temporal_comparison.json",
+      "svd_summary": "results/dynamic_sensorium_temporal_svd/summary_dynamic_sensorium_legacy_ood_temporal_svd.json",
+      "models": [
+        "mean_response",
+        "summary_adapter",
+        "temporal_filterbank",
+        "temporal_svd"
+      ],
+      "model_rows": [
+        {
+          "mouse": "dynamic29156",
+          "mean_response": 0.36495873496165293,
+          "summary_adapter": 0.36292557669545394,
+          "temporal_filterbank": 0.39149076829139556,
+          "temporal_svd": 0.3988372201491509
+        },
+        {
+          "mouse": "dynamic29228",
+          "mean_response": 0.4125726957327547,
+          "summary_adapter": 0.4177947569881028,
+          "temporal_filterbank": 0.42885706071431245,
+          "temporal_svd": 0.434712342706658
+        },
+        {
+          "mouse": "dynamic29234",
+          "mean_response": 0.3293878525880467,
+          "summary_adapter": 0.3228829080148688,
+          "temporal_filterbank": 0.3230042509452526,
+          "temporal_svd": 0.3602982743004778
+        },
+        {
+          "mouse": "dynamic29513",
+          "mean_response": 0.3885619161099073,
+          "summary_adapter": 0.4111338320559275,
+          "temporal_filterbank": 0.4217810590697307,
+          "temporal_svd": 0.42657398177945427
+        },
+        {
+          "mouse": "dynamic29514",
+          "mean_response": 0.4038027596907151,
+          "summary_adapter": 0.41616906735192394,
+          "temporal_filterbank": 0.4288110915950094,
+          "temporal_svd": 0.43318704379711154
+        }
+      ],
+      "best_models": [
+        {
+          "mouse": "dynamic29156",
+          "best_model": "temporal_svd",
+          "best_correlation": 0.3988372201491509,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        },
+        {
+          "mouse": "dynamic29228",
+          "best_model": "temporal_svd",
+          "best_correlation": 0.434712342706658,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        },
+        {
+          "mouse": "dynamic29234",
+          "best_model": "temporal_svd",
+          "best_correlation": 0.3602982743004778,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        },
+        {
+          "mouse": "dynamic29513",
+          "best_model": "temporal_svd",
+          "best_correlation": 0.42657398177945427,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        },
+        {
+          "mouse": "dynamic29514",
+          "best_model": "temporal_svd",
+          "best_correlation": 0.43318704379711154,
+          "available_models": [
+            "mean_response",
+            "summary_adapter",
+            "temporal_filterbank",
+            "temporal_svd"
+          ]
+        }
+      ],
+      "model_win_counts": {
+        "temporal_svd": 5
+      },
+      "pairwise": {
+        "summary_adapter_vs_temporal_filterbank": {
+          "left": "summary_adapter",
+          "right": "temporal_filterbank",
+          "n_paired": 5,
+          "right_wins": 5,
+          "left_wins": 0,
+          "ties": 0,
+          "median_delta": 0.011062303726209644,
+          "mean_delta": 0.012607617901884739,
+          "rows": [
+            {
+              "mouse": "dynamic29156",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.36292557669545394,
+              "right_correlation": 0.39149076829139556,
+              "delta": 0.02856519159594162
+            },
+            {
+              "mouse": "dynamic29228",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.4177947569881028,
+              "right_correlation": 0.42885706071431245,
+              "delta": 0.011062303726209644
+            },
+            {
+              "mouse": "dynamic29234",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.3228829080148688,
+              "right_correlation": 0.3230042509452526,
+              "delta": 0.00012134293038379429
+            },
+            {
+              "mouse": "dynamic29513",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.4111338320559275,
+              "right_correlation": 0.4217810590697307,
+              "delta": 0.010647227013803162
+            },
+            {
+              "mouse": "dynamic29514",
+              "left": "summary_adapter",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.41616906735192394,
+              "right_correlation": 0.4288110915950094,
+              "delta": 0.01264202424308547
+            }
+          ]
+        },
+        "mean_response_vs_temporal_filterbank": {
+          "left": "mean_response",
+          "right": "temporal_filterbank",
+          "n_paired": 5,
+          "right_wins": 4,
+          "left_wins": 1,
+          "ties": 0,
+          "median_delta": 0.0250083319042943,
+          "mean_delta": 0.018932054306524792,
+          "rows": [
+            {
+              "mouse": "dynamic29156",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.36495873496165293,
+              "right_correlation": 0.39149076829139556,
+              "delta": 0.026532033329742633
+            },
+            {
+              "mouse": "dynamic29228",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.4125726957327547,
+              "right_correlation": 0.42885706071431245,
+              "delta": 0.016284364981557775
+            },
+            {
+              "mouse": "dynamic29234",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.3293878525880467,
+              "right_correlation": 0.3230042509452526,
+              "delta": -0.006383601642794112
+            },
+            {
+              "mouse": "dynamic29513",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.3885619161099073,
+              "right_correlation": 0.4217810590697307,
+              "delta": 0.03321914295982337
+            },
+            {
+              "mouse": "dynamic29514",
+              "left": "mean_response",
+              "right": "temporal_filterbank",
+              "left_correlation": 0.4038027596907151,
+              "right_correlation": 0.4288110915950094,
+              "delta": 0.0250083319042943
+            }
+          ]
+        },
+        "mean_response_vs_temporal_svd": {
+          "left": "mean_response",
+          "right": "temporal_svd",
+          "n_paired": 5,
+          "right_wins": 5,
+          "left_wins": 0,
+          "ties": 0,
+          "median_delta": 0.03091042171243108,
+          "mean_delta": 0.03086498072995515,
+          "rows": [
+            {
+              "mouse": "dynamic29156",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.36495873496165293,
+              "right_correlation": 0.3988372201491509,
+              "delta": 0.033878485187497975
+            },
+            {
+              "mouse": "dynamic29228",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.4125726957327547,
+              "right_correlation": 0.434712342706658,
+              "delta": 0.022139646973903304
+            },
+            {
+              "mouse": "dynamic29234",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.3293878525880467,
+              "right_correlation": 0.3602982743004778,
+              "delta": 0.03091042171243108
+            },
+            {
+              "mouse": "dynamic29513",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.3885619161099073,
+              "right_correlation": 0.42657398177945427,
+              "delta": 0.03801206566954696
+            },
+            {
+              "mouse": "dynamic29514",
+              "left": "mean_response",
+              "right": "temporal_svd",
+              "left_correlation": 0.4038027596907151,
+              "right_correlation": 0.43318704379711154,
+              "delta": 0.02938428410639643
+            }
+          ]
+        },
+        "temporal_filterbank_vs_temporal_svd": {
+          "left": "temporal_filterbank",
+          "right": "temporal_svd",
+          "n_paired": 5,
+          "right_wins": 5,
+          "left_wins": 0,
+          "ties": 0,
+          "median_delta": 0.005855281992345529,
+          "mean_delta": 0.011932926423430357,
+          "rows": [
+            {
+              "mouse": "dynamic29156",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.39149076829139556,
+              "right_correlation": 0.3988372201491509,
+              "delta": 0.007346451857755343
+            },
+            {
+              "mouse": "dynamic29228",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.42885706071431245,
+              "right_correlation": 0.434712342706658,
+              "delta": 0.005855281992345529
+            },
+            {
+              "mouse": "dynamic29234",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.3230042509452526,
+              "right_correlation": 0.3602982743004778,
+              "delta": 0.03729402335522519
+            },
+            {
+              "mouse": "dynamic29513",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.4217810590697307,
+              "right_correlation": 0.42657398177945427,
+              "delta": 0.0047929227097235905
+            },
+            {
+              "mouse": "dynamic29514",
+              "left": "temporal_filterbank",
+              "right": "temporal_svd",
+              "left_correlation": 0.4288110915950094,
+              "right_correlation": 0.43318704379711154,
+              "delta": 0.004375952202102129
+            }
+          ]
+        }
+      },
+      "mis_passed_count": 0,
+      "reliability_estimable_count": 0,
+      "evidence_label": "positive_ood_prediction_without_mechanistic_identifiability",
+      "interpretation": "Predictive deltas are paired by mouse. A positive SVD result is treated as predictive/OOD evidence only; MIS and reliability fields control whether the result can support a mechanistic claim."
+    }
+  ],
+  "interpretation": "This comparator asks whether progressively stronger transparent models improve held-out prediction and whether that improvement is allowed to count as mechanistic evidence. Current Dynamic Sensorium artifacts remain predictive evidence only because MIS does not pass."
+}

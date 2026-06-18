@@ -361,6 +361,59 @@ repetición ni restricción estructural/causal. Por tanto, el resultado positivo
 debe presentarse como evaluación predictiva OOD y como control de no
 identificabilidad, no como evidencia de mecanismo cerebral.
 
+## 2026-06-18 — Fase 5h: comparador formal de modelos Sensorium
+
+### Objetivo
+
+Convertir las comparaciones dispersas entre `mean`, `summary`,
+`temporal_filterbank` y `temporal_svd` en un artefacto único, reproducible y
+auditable. El comparador no reentrena modelos: lee JSONs ya generados,
+empareja ratones por su identificador estable `dynamic<id>` y calcula deltas
+pareados.
+
+### Implementación
+
+Se añadió:
+
+- `mousebrainbench/benchmarks/sensorium_model_comparator.py`;
+- `scripts/compare_dynamic_sensorium_models.py`;
+- entry point `mousebrainbench-sensorium-compare`;
+- tests unitarios en `tests/test_sensorium_model_comparator.py`.
+
+Artefactos:
+
+```text
+results/dynamic_sensorium_model_comparator/summary.json
+results/dynamic_sensorium_model_comparator/summary.md
+```
+
+### Resultado
+
+| Cohorte | n | Mejor modelo | SVD > mean | SVD > temporal-filterbank | Evidencia |
+|---|---:|---|---:|---:|---|
+| Dynamic Sensorium 2023 `oracle` | `5` | SVD `3/5`, filterbank `2/5` | `4/5` | `3/5` | predicción sin fiabilidad |
+| Legacy OOD liberado | `5` | SVD `5/5` | `5/5` | `5/5` | OOD predictivo sin mecanismo |
+
+Medians:
+
+| Cohorte | Temporal - mean | SVD - mean | SVD - temporal |
+|---|---:|---:|---:|
+| Dynamic Sensorium 2023 `oracle` | `0.03114` | `0.03889` | `0.00775` |
+| Legacy OOD liberado | `0.02501` | `0.03091` | `0.00586` |
+
+### Decisión
+
+**El comparador confirma la contribución metodológica, no una conclusión
+mecanística.** La señal más fuerte está en OOD legacy: SVD es el mejor modelo en
+`5/5` ratones y mejora a mean y temporal-filterbank de forma pareada. En la
+cohorte `oracle`, SVD es competitivo pero no domina universalmente. En ambas
+cohortes `MIS passed = 0`, por lo que el marco evita convertir rendimiento
+predictivo en identificabilidad cerebral.
+
+La siguiente mejora técnica debe ser incorporar un baseline externo más fuerte
+u otro dataset con fiabilidad estimable. Sin una de esas dos cosas, seguir
+mejorando descriptores ligeros solo aporta incrementos pequeños.
+
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 
 ### Objetivo
