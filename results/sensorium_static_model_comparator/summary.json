@@ -1,6 +1,7 @@
 {
   "comparison": "sensorium2022_static_cross_dataset_comparator",
   "input_summary": "results/sensorium_real/summary_sensorium2022_static_mis.json",
+  "topographic_summary": "results/sensorium_topographic_constraint/summary_static_test.json",
   "validation_all_mice": {
     "n": 7,
     "median_reliability": 0.0,
@@ -18,6 +19,14 @@
     "median_best_minus_scrambled": 0.06835385516268283,
     "mis_passed_count": 0,
     "median_mis_score": 0.6666666666666666
+  },
+  "topographic_constraint": {
+    "available": true,
+    "passed_count": 5,
+    "n_datasets": 5,
+    "median_observed_spearman": 0.17748149035790178,
+    "median_effect_over_null": 0.1779421462041856,
+    "decision": "structural_constraint_supported"
   },
   "rows": [
     {
@@ -249,5 +258,5 @@
       "git_revision": "a037b4a"
     }
   ],
-  "interpretation": "Sensorium 2022 static is the current positive reliability case: repeated-test mice have estimable response reliability and positive stimulus-specific prediction, but MIS still rejects mechanistic identifiability because structural/causal constraints are absent."
+  "interpretation": "Sensorium 2022 static is the current positive reliability case: repeated-test mice have estimable response reliability and positive stimulus-specific prediction. When the topographic constraint is provided, it adds structural evidence; MIS still requires caution because this is not an interventional causal circuit test."
 }

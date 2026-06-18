@@ -490,6 +490,67 @@ perturbación o causalidad.
 Sin uno de esos dos elementos, el trabajo puede aspirar a paper de benchmark o
 workshop/congreso, pero no a Q1 fuerte.
 
+## 2026-06-19 — Fase 5j: restriccion mecanistica topografica
+
+### Objetivo
+
+Introducir una restriccion mecanistica verificable que no sea otro baseline
+predictivo. Sensorium 2022 static incluye `cell_motor_coordinates`, `area` y
+`layer`, por lo que permite comprobar si la similitud de tuning neuronal sigue
+la organizacion topografica cortical.
+
+### Metodo
+
+Se implemento
+`mousebrainbench/benchmarks/sensorium_topographic_constraint.py`.
+
+Para cada raton static con tier `test` repetido:
+
+1. se agregan respuestas por `frame_image_id`;
+2. se calcula el tuning neuronal por estimulo;
+3. se muestrean pares de neuronas con semilla fija;
+4. se calcula Spearman entre similitud de tuning y distancia cortical inversa;
+5. se compara contra nulos por permutacion de coordenadas.
+
+La prueba pasa solo si el efecto observado supera el percentil 95 del nulo y
+un umbral minimo de efecto (`0.03`).
+
+### Resultado
+
+Artefacto:
+
+```text
+results/sensorium_topographic_constraint/summary_static_test.json
+```
+
+| Raton | Passed | Spearman observado | Null p95 | p permutacion |
+|---|---:|---:|---:|---:|
+| `static21067` | `true` | `0.2034` | `0.0089` | `0.00498` |
+| `static22846` | `true` | `0.1775` | `0.0078` | `0.00498` |
+| `static23343` | `true` | `0.1903` | `0.0095` | `0.00498` |
+| `static23656` | `true` | `0.1285` | `0.0089` | `0.00498` |
+| `static23964` | `true` | `0.1637` | `0.0096` | `0.00498` |
+
+Resumen:
+
+- passed: `5/5`;
+- Spearman mediana: `0.17748`;
+- efecto mediano sobre nulo: `0.17794`;
+- decision: `structural_constraint_supported`.
+
+### Decision
+
+**Este es el primer componente mecanistico real del proyecto.** No es causalidad
+intervencional, pero si demuestra que el target neuronal de Sensorium static
+preserva una organizacion anatomica verificable. Combinado con fiabilidad
+repetida y prediccion estimulo-especifica, esto convierte Sensorium static en
+nuestro caso positivo mas fuerte.
+
+La propuesta final debe pivotar hacia esta formulacion: MouseBrainBench separa
+prediccion, OOD, fiabilidad y restriccion estructural. Dynamic Sensorium aporta
+OOD predictivo; Sensorium static aporta fiabilidad y topografia. Aun no debe
+afirmarse identificabilidad causal completa.
+
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 
 ### Objetivo
