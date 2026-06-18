@@ -76,6 +76,43 @@ def test_calibrated_residual_adapter_can_improve_over_mean(tmp_path) -> None:
     assert payload["adapter"]["diagnostics"]["adapter_beta"] > 0.0
 
 
+def test_temporal_svd_adapter_can_improve_over_mean(tmp_path) -> None:
+    rng = np.random.default_rng(321)
+    latent = rng.normal(size=(48, 5))
+    mixing = rng.normal(size=(5, 40))
+    stimulus_features = latent @ mixing + rng.normal(scale=0.03, size=(48, 40))
+    neural_weights = rng.normal(size=(5, 6))
+    baseline = np.asarray([[2.0, 2.5, 3.0, 3.5, 4.0, 4.5]])
+    responses = baseline + 0.45 * latent @ neural_weights
+    responses += rng.normal(scale=0.02, size=responses.shape)
+    tiers = np.asarray(["train"] * 36 + ["oracle"] * 12)
+    stimulus_ids = np.concatenate([np.arange(36), np.repeat(np.arange(36, 42), 2)])
+    table = SensoriumTrialTable(
+        root=tmp_path,
+        modality="dynamic",
+        stimulus_features=stimulus_features,
+        context_features=np.empty((48, 0), dtype=float),
+        responses=responses,
+        tiers=tiers,
+        trial_ids=np.arange(48),
+        stimulus_ids=stimulus_ids,
+        neuron_ids=np.arange(6),
+        feature_mode="temporal_filterbank",
+    )
+
+    output = run_sensorium_benchmark(
+        table,
+        output=tmp_path / "temporal_svd_adapter.json",
+        eval_tiers=("oracle",),
+        adapter="temporal_svd_residual_ridge",
+        adapter_alpha_grid=(0.1, 1.0, 10.0),
+    )
+    payload = json.loads(output.read_text())
+
+    assert payload["metrics"]["temporal_svd_residual_ridge_minus_mean"] > 0.05
+    assert payload["adapter"]["diagnostics"]["adapter_components"] > 0.0
+
+
 def test_sensorium_benchmark_records_ood_gate(tmp_path) -> None:
     table = SensoriumTrialTable(
         root=tmp_path,

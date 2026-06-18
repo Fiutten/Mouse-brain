@@ -140,3 +140,124 @@ def calibrated_residual_ridge_adapter(
             "adapter_alpha_candidates": float(len(alphas)),
         },
     )
+
+
+def _project_with_train_svd(
+    train_x: np.ndarray, eval_x: np.ndarray, *, components: int
+) -> tuple[np.ndarray, np.ndarray]:
+    """Project features onto train-only right singular vectors.
+
+    This is intentionally a small numerical building block rather than a new
+    deep model. The projection is fit only on the training split, so held-out
+    and OOD tiers cannot influence the temporal subspace.
+    """
+
+    train_x_std, eval_x_std, _, _ = _standardize_train_test(train_x, eval_x)
+    _, _, vt = np.linalg.svd(train_x_std, full_matrices=False)
+    width = max(1, min(int(components), vt.shape[0]))
+    basis = vt[:width].T
+    return train_x_std @ basis, eval_x_std @ basis
+
+
+def temporal_svd_residual_ridge_adapter(
+    train_x: np.ndarray,
+    train_y: np.ndarray,
+    eval_x: np.ndarray,
+    *,
+    alpha_grid: tuple[float, ...] | None = None,
+    component_grid: tuple[int, ...] = (8, 16, 32, 64),
+    seed: int = 17,
+    folds: int = 5,
+    beta_grid: np.ndarray | None = None,
+) -> SensoriumAdapterResult:
+    """Predict neural responses with train-only SVD temporal components.
+
+    The temporal filterbank can be high-dimensional relative to the number of
+    trials. This adapter tests a more serious but still auditable model:
+
+    1. standardize stimulus descriptors using the training split;
+    2. fit an SVD subspace on training descriptors only;
+    3. regress neural residuals in that low-dimensional temporal subspace;
+    4. choose components, ridge alpha, and residual shrinkage by train-only CV.
+
+    It is a stronger temporal baseline, not a mechanistic model and not a
+    replacement for official Sensorium deep networks.
+    """
+
+    if folds < 2:
+        raise ValueError("folds must be at least 2")
+    if len(train_x) != len(train_y):
+        raise ValueError("train_x and train_y must have the same number of trials")
+    if beta_grid is None:
+        beta_grid = np.linspace(0.0, 1.5, 61)
+    alphas = tuple(float(value) for value in (alpha_grid or (1.0, 3.0, 10.0, 30.0, 100.0)))
+    components = tuple(
+        sorted({max(1, min(int(value), train_x.shape[0] - 1, train_x.shape[1])) for value in component_grid})
+    )
+
+    indices = np.arange(len(train_x))
+    rng = np.random.default_rng(seed)
+    rng.shuffle(indices)
+    fold_indices = [fold for fold in np.array_split(indices, min(folds, len(indices))) if len(fold)]
+    cv_predictions: dict[tuple[int, float, float], np.ndarray] = {
+        (int(component), float(alpha), float(beta)): np.zeros_like(train_y, dtype=float)
+        for component in components
+        for alpha in alphas
+        for beta in beta_grid
+    }
+
+    for fold in fold_indices:
+        fit_indices = np.setdiff1d(indices, fold, assume_unique=False)
+        train_mean = train_y[fit_indices].mean(axis=0, keepdims=True)
+        residual = train_y[fit_indices] - train_mean
+        for component in components:
+            fit_x, heldout_x = _project_with_train_svd(
+                train_x[fit_indices], train_x[fold], components=component
+            )
+            for alpha in alphas:
+                residual_prediction = ridge_fit_predict(fit_x, residual, heldout_x, alpha=alpha)
+                for beta in beta_grid:
+                    cv_predictions[(component, alpha, float(beta))][fold] = (
+                        train_mean + float(beta) * residual_prediction
+                    )
+
+    cv_scores = {
+        params: _safe_correlation(prediction, train_y)
+        for params, prediction in cv_predictions.items()
+    }
+    best_components, best_alpha, best_beta = max(cv_scores, key=cv_scores.get)
+
+    full_mean = train_y.mean(axis=0, keepdims=True)
+    full_residual = train_y - full_mean
+    train_svd_x, eval_svd_x = _project_with_train_svd(
+        train_x, eval_x, components=best_components
+    )
+    residual_prediction = ridge_fit_predict(
+        train_svd_x, full_residual, eval_svd_x, alpha=best_alpha
+    )
+    prediction = np.repeat(full_mean, len(eval_x), axis=0) + best_beta * residual_prediction
+
+    scrambled_train_x = rng.permutation(train_x)
+    scrambled_svd_x, scrambled_eval_svd_x = _project_with_train_svd(
+        scrambled_train_x, eval_x, components=best_components
+    )
+    scrambled_residual = ridge_fit_predict(
+        scrambled_svd_x, full_residual, scrambled_eval_svd_x, alpha=best_alpha
+    )
+    scrambled_prediction = (
+        np.repeat(full_mean, len(eval_x), axis=0) + best_beta * scrambled_residual
+    )
+    return SensoriumAdapterResult(
+        name="temporal_svd_residual_ridge",
+        prediction=prediction,
+        scrambled_prediction=scrambled_prediction,
+        diagnostics={
+            "adapter_alpha": float(best_alpha),
+            "adapter_beta": float(best_beta),
+            "adapter_components": float(best_components),
+            "adapter_cv_correlation": float(cv_scores[(best_components, best_alpha, best_beta)]),
+            "adapter_cv_folds": float(len(fold_indices)),
+            "adapter_alpha_candidates": float(len(alphas)),
+            "adapter_component_candidates": float(len(components)),
+        },
+    )
