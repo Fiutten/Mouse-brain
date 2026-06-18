@@ -192,40 +192,49 @@ def temporal_svd_residual_ridge_adapter(
         beta_grid = np.linspace(0.0, 1.5, 61)
     alphas = tuple(float(value) for value in (alpha_grid or (1.0, 3.0, 10.0, 30.0, 100.0)))
     components = tuple(
-        sorted({max(1, min(int(value), train_x.shape[0] - 1, train_x.shape[1])) for value in component_grid})
+        sorted(
+            {
+                max(1, min(int(value), train_x.shape[0] - 1, train_x.shape[1]))
+                for value in component_grid
+            }
+        )
     )
 
     indices = np.arange(len(train_x))
     rng = np.random.default_rng(seed)
     rng.shuffle(indices)
     fold_indices = [fold for fold in np.array_split(indices, min(folds, len(indices))) if len(fold)]
-    cv_predictions: dict[tuple[int, float, float], np.ndarray] = {
-        (int(component), float(alpha), float(beta)): np.zeros_like(train_y, dtype=float)
-        for component in components
-        for alpha in alphas
-        for beta in beta_grid
-    }
+    best_score = -np.inf
+    best_components = components[0]
+    best_alpha = alphas[0]
+    best_beta = float(beta_grid[0])
 
-    for fold in fold_indices:
-        fit_indices = np.setdiff1d(indices, fold, assume_unique=False)
-        train_mean = train_y[fit_indices].mean(axis=0, keepdims=True)
-        residual = train_y[fit_indices] - train_mean
-        for component in components:
-            fit_x, heldout_x = _project_with_train_svd(
-                train_x[fit_indices], train_x[fold], components=component
-            )
-            for alpha in alphas:
-                residual_prediction = ridge_fit_predict(fit_x, residual, heldout_x, alpha=alpha)
-                for beta in beta_grid:
-                    cv_predictions[(component, alpha, float(beta))][fold] = (
-                        train_mean + float(beta) * residual_prediction
-                    )
-
-    cv_scores = {
-        params: _safe_correlation(prediction, train_y)
-        for params, prediction in cv_predictions.items()
-    }
-    best_components, best_alpha, best_beta = max(cv_scores, key=cv_scores.get)
+    for component in components:
+        for alpha in alphas:
+            cv_mean = np.zeros_like(train_y, dtype=float)
+            cv_residual_prediction = np.zeros_like(train_y, dtype=float)
+            for fold in fold_indices:
+                fit_indices = np.setdiff1d(indices, fold, assume_unique=False)
+                train_mean = train_y[fit_indices].mean(axis=0, keepdims=True)
+                residual = train_y[fit_indices] - train_mean
+                cv_mean[fold] = train_mean
+                # The SVD subspace is refit inside each fold, so model selection
+                # does not leak held-out training-fold information.
+                fit_x, heldout_x = _project_with_train_svd(
+                    train_x[fit_indices], train_x[fold], components=component
+                )
+                cv_residual_prediction[fold] = ridge_fit_predict(
+                    fit_x, residual, heldout_x, alpha=alpha
+                )
+            for beta in beta_grid:
+                score = _safe_correlation(
+                    cv_mean + float(beta) * cv_residual_prediction, train_y
+                )
+                if score > best_score:
+                    best_score = score
+                    best_components = component
+                    best_alpha = alpha
+                    best_beta = float(beta)
 
     full_mean = train_y.mean(axis=0, keepdims=True)
     full_residual = train_y - full_mean
@@ -255,7 +264,7 @@ def temporal_svd_residual_ridge_adapter(
             "adapter_alpha": float(best_alpha),
             "adapter_beta": float(best_beta),
             "adapter_components": float(best_components),
-            "adapter_cv_correlation": float(cv_scores[(best_components, best_alpha, best_beta)]),
+            "adapter_cv_correlation": float(best_score),
             "adapter_cv_folds": float(len(fold_indices)),
             "adapter_alpha_candidates": float(len(alphas)),
             "adapter_component_candidates": float(len(components)),
