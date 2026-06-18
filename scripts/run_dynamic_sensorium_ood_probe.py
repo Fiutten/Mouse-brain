@@ -32,8 +32,15 @@ def run_ood_probe(
     output_dir: Path,
     alpha_grid: tuple[float, ...],
     eval_tiers: tuple[str, ...] = DEFAULT_OOD_TIERS,
+    git_revision: str | None = None,
 ) -> Path:
-    """Run summary and temporal-filterbank OOD benchmarks for one mouse."""
+    """Run summary and temporal-filterbank OOD benchmarks for one mouse.
+
+    ``git_revision`` is passed through explicitly so that both child benchmark
+    artifacts are stamped with the same code revision. Without this, the first
+    write can make the working tree dirty before the second child run records
+    its provenance.
+    """
 
     output_dir.mkdir(parents=True, exist_ok=True)
     stem = root.name.split("-Video-")[0]
@@ -48,6 +55,7 @@ def run_ood_probe(
         adapter="calibrated_residual_ridge",
         adapter_alpha_grid=alpha_grid,
         has_ood_generalization_gate=True,
+        git_revision=git_revision,
     )
     run(
         root,
@@ -58,6 +66,7 @@ def run_ood_probe(
         adapter="calibrated_residual_ridge",
         adapter_alpha_grid=alpha_grid,
         has_ood_generalization_gate=True,
+        git_revision=git_revision,
     )
 
     summary_payload = json.loads(summary_output.read_text())
@@ -114,12 +123,18 @@ def main() -> None:
         default=None,
         help="OOD tier to evaluate. Defaults to all released live/final OOD tiers.",
     )
+    parser.add_argument(
+        "--git-revision",
+        default=None,
+        help="Explicit code revision to stamp into generated benchmark artifacts.",
+    )
     args = parser.parse_args()
     output = run_ood_probe(
         args.root,
         output_dir=args.output_dir,
         alpha_grid=tuple(float(value) for value in args.alpha_grid.split(",")),
         eval_tiers=tuple(args.eval_tiers) if args.eval_tiers else DEFAULT_OOD_TIERS,
+        git_revision=args.git_revision,
     )
     print(json.dumps({"output": str(output.resolve())}))
 
