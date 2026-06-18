@@ -1,0 +1,140 @@
+{
+  "dataset": "Dynamic Sensorium compact PyTorch MLP baseline",
+  "adapter": "torch_residual_mlp",
+  "n_mice": 5,
+  "positive_torch_mlp_minus_mean_count": 4,
+  "median_torch_mlp_minus_mean": 0.03607327704478808,
+  "rows": [
+    {
+      "mouse": "dynamic29156-11-10",
+      "root": "data/dynamic_sensorium_ood/extracted/dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce",
+      "eval_tiers": [
+        "live_test_main",
+        "live_test_bonus",
+        "final_test_main",
+        "final_test_bonus"
+      ],
+      "n_train_trials": 350,
+      "n_eval_trials": 311,
+      "n_neurons": 7440,
+      "mean_correlation": 0.36495873496165293,
+      "torch_mlp_correlation": 0.401032012006441,
+      "torch_mlp_minus_mean": 0.03607327704478808,
+      "diagnostics": {
+        "hidden": 128.0,
+        "weight_decay": 0.001,
+        "beta": 0.8,
+        "validation_correlation": 0.5082438282052884,
+        "epochs": 40.0
+      },
+      "has_ood_generalization_gate": true,
+      "interpretation": "Compact PyTorch MLP baseline; not official Sensorium SOTA. Hyperparameters are selected inside train only.",
+      "output": "results/dynamic_sensorium_torch_mlp/ood/dynamic29156-11-10_torch_mlp_mis.json"
+    },
+    {
+      "mouse": "dynamic29228-2-10",
+      "root": "data/dynamic_sensorium_ood/extracted/dynamic29228-2-10-Video-8744edeac3b4d1ce16b680916b5267ce",
+      "eval_tiers": [
+        "live_test_main",
+        "live_test_bonus",
+        "final_test_main",
+        "final_test_bonus"
+      ],
+      "n_train_trials": 352,
+      "n_eval_trials": 292,
+      "n_neurons": 7928,
+      "mean_correlation": 0.4125726957327547,
+      "torch_mlp_correlation": 0.4486740193073883,
+      "torch_mlp_minus_mean": 0.03610132357463364,
+      "diagnostics": {
+        "hidden": 128.0,
+        "weight_decay": 0.0001,
+        "beta": 0.9,
+        "validation_correlation": 0.5217346723029153,
+        "epochs": 40.0
+      },
+      "has_ood_generalization_gate": true,
+      "interpretation": "Compact PyTorch MLP baseline; not official Sensorium SOTA. Hyperparameters are selected inside train only.",
+      "output": "results/dynamic_sensorium_torch_mlp/ood/dynamic29228-2-10_torch_mlp_mis.json"
+    },
+    {
+      "mouse": "dynamic29234-6-9",
+      "root": "data/dynamic_sensorium_ood/extracted/dynamic29234-6-9-Video-8744edeac3b4d1ce16b680916b5267ce",
+      "eval_tiers": [
+        "live_test_main",
+        "live_test_bonus",
+        "final_test_main",
+        "final_test_bonus"
+      ],
+      "n_train_trials": 355,
+      "n_eval_trials": 316,
+      "n_neurons": 8285,
+      "mean_correlation": 0.3293878525880467,
+      "torch_mlp_correlation": 0.3433384432919462,
+      "torch_mlp_minus_mean": 0.01395059070389948,
+      "diagnostics": {
+        "hidden": 128.0,
+        "weight_decay": 0.0001,
+        "beta": 0.8,
+        "validation_correlation": 0.4512564190804469,
+        "epochs": 40.0
+      },
+      "has_ood_generalization_gate": true,
+      "interpretation": "Compact PyTorch MLP baseline; not official Sensorium SOTA. Hyperparameters are selected inside train only.",
+      "output": "results/dynamic_sensorium_torch_mlp/ood/dynamic29234-6-9_torch_mlp_mis.json"
+    },
+    {
+      "mouse": "dynamic29513-3-5",
+      "root": "data/dynamic_sensorium_ood/extracted/dynamic29513-3-5-Video-8744edeac3b4d1ce16b680916b5267ce",
+      "eval_tiers": [
+        "live_test_main",
+        "live_test_bonus",
+        "final_test_main",
+        "final_test_bonus"
+      ],
+      "n_train_trials": 356,
+      "n_eval_trials": 299,
+      "n_neurons": 7671,
+      "mean_correlation": 0.3885619161099073,
+      "torch_mlp_correlation": 0.3619902204355194,
+      "torch_mlp_minus_mean": -0.026571695674387885,
+      "diagnostics": {
+        "hidden": 128.0,
+        "weight_decay": 0.0001,
+        "beta": 0.9500000000000001,
+        "validation_correlation": 0.489608956365502,
+        "epochs": 40.0
+      },
+      "has_ood_generalization_gate": true,
+      "interpretation": "Compact PyTorch MLP baseline; not official Sensorium SOTA. Hyperparameters are selected inside train only.",
+      "output": "results/dynamic_sensorium_torch_mlp/ood/dynamic29513-3-5_torch_mlp_mis.json"
+    },
+    {
+      "mouse": "dynamic29514-2-9",
+      "root": "data/dynamic_sensorium_ood/extracted/dynamic29514-2-9-Video-8744edeac3b4d1ce16b680916b5267ce",
+      "eval_tiers": [
+        "live_test_main",
+        "live_test_bonus",
+        "final_test_main",
+        "final_test_bonus"
+      ],
+      "n_train_trials": 351,
+      "n_eval_trials": 312,
+      "n_neurons": 7495,
+      "mean_correlation": 0.4038027596907151,
+      "torch_mlp_correlation": 0.44034558910294047,
+      "torch_mlp_minus_mean": 0.036542829412225364,
+      "diagnostics": {
+        "hidden": 128.0,
+        "weight_decay": 0.0001,
+        "beta": 0.8,
+        "validation_correlation": 0.49576188536779603,
+        "epochs": 40.0
+      },
+      "has_ood_generalization_gate": true,
+      "interpretation": "Compact PyTorch MLP baseline; not official Sensorium SOTA. Hyperparameters are selected inside train only.",
+      "output": "results/dynamic_sensorium_torch_mlp/ood/dynamic29514-2-9_torch_mlp_mis.json"
+    }
+  ],
+  "interpretation": "This is the strongest local NN control available without installing the official Sensorium starter-kit stack. It is not a SOTA claim."
+}

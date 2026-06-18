@@ -15,7 +15,8 @@ raton. La propuesta defendible es:
 
 - Cohorte principal `oracle`: 5 ratones.
 - Cohorte legacy OOD con respuestas liberadas: 5 ratones.
-- Mejor baseline interno: `temporal_svd_residual_ridge`.
+- Baselines internos comparados: mean, summary adapter, temporal filterbank,
+  `temporal_svd_residual_ridge`, random features y `torch_residual_mlp`.
 - En OOD legacy:
   - SVD mejora a mean en `5/5`.
   - SVD mejora a temporal-filterbank en `5/5`.
@@ -23,9 +24,16 @@ raton. La propuesta defendible es:
 - Baseline no lineal local `random_feature_residual_ridge` no supera a SVD:
   - Dynamic `oracle`: `1/5`.
   - Legacy OOD: `1/5`.
+- Baseline neuronal local `torch_residual_mlp`:
+  - Dynamic `oracle`: mejora a mean en `5/5`, mejora a SVD en `3/5`,
+    mediana MLP - SVD `0.00386`.
+  - Legacy OOD: mejora a mean en `4/5`, mejora a SVD en `3/5`,
+    mediana MLP - SVD `0.00219`.
 
-Lectura: hay contribucion predictiva/OOD, pero no mecanismo por falta de
-fiabilidad repetida y restriccion causal en Dynamic Sensorium.
+Lectura: hay contribucion predictiva/OOD y el marco ya compara modelos lineales,
+no lineales y redes neuronales reales. El MLP no domina a SVD, por lo que no hay
+claim de superioridad neuronal; si hay evidencia de que MouseBrainBench separa
+rendimiento predictivo de identificabilidad mecanistica.
 
 ### Sensorium 2022 static
 
@@ -46,9 +54,11 @@ No es causalidad intervencional, pero es una restriccion mecanistica real.
 - No hay gemelo digital de cerebro de raton.
 - No hay conectoma funcional completo.
 - No hay identificabilidad causal completa.
-- No se ha batido un baseline oficial SOTA Sensorium.
+- No se ha batido ni reproducido un baseline oficial SOTA Sensorium.
 - La restriccion topografica no equivale a mecanismo causal; solo aporta una
   condicion estructural verificable.
+- El baseline `torch_residual_mlp` es una red neuronal local reproducible, no el
+  modelo oficial del starter kit Sensorium ni una afirmacion de estado del arte.
 
 ## Contribucion publicable
 
@@ -62,13 +72,14 @@ La contribucion fuerte no es un modelo neuronal especifico, sino el protocolo:
 
 ## Siguiente decision
 
-Para cerrar un paper Q1 fuerte falta uno de estos dos pasos:
+Para cerrar un paper Q1 fuerte falta al menos uno de estos pasos:
 
 1. Integrar un baseline externo oficial/SOTA del ecosistema Sensorium y mostrar
    que MouseBrainBench lo evalua de forma mas informativa que correlacion sola.
 2. Anadir una segunda restriccion mecanistica, idealmente causal o
    intervencional, que complemente la topografia estructural.
 
-Sin uno de esos dos pasos, la version actual es mas adecuada para workshop,
-congreso metodologico o articulo de benchmark reproducible, pero no para una
-afirmacion Q1 fuerte sobre mecanismo cerebral.
+El hueco metodologico principal se ha reducido: ya existe baseline NN local y
+restriccion estructural verificable. Para una contribucion Q1 fuerte, el
+siguiente salto no debe ser otro ajuste menor, sino validacion contra un baseline
+externo oficial o una restriccion causal/intervencional defendible.

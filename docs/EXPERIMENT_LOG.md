@@ -910,3 +910,42 @@ desplazados `+10 s`.
 **Firma dirigida no soportada.** La respuesta confirmada en Fase 2c es
 reproducible, pero no identifica propagación dirigida a esta resolución. No se
 debe construir un modelo anatómico más complejo sobre este target.
+
+## 2026-06-19 — Dynamic Sensorium: baseline neuronal local
+
+### Diseño
+
+Se añadió `torch_residual_mlp`, una red PyTorch compacta que predice residuos
+neuronales sobre la media de entrenamiento usando las mismas features
+`temporal_filterbank` que los baselines transparentes. La selección de
+hiperparámetros se hace dentro del conjunto `train` mediante una partición
+interna 80/20. No utiliza respuestas de test para ajustar arquitectura, peso de
+decaimiento ni mezcla residual.
+
+Este baseline es deliberadamente modesto y reproducible. No es el modelo oficial
+del starter kit Sensorium ni una comparación SOTA; su función es cerrar el
+control metodológico mínimo de red neuronal no lineal dentro de MouseBrainBench.
+
+### Resultados
+
+| Cohorte | MLP > mean | MLP > SVD | Mediana MLP - mean | Mediana MLP - SVD |
+|---|---:|---:|---:|---:|
+| Dynamic Sensorium 2023 `oracle` | 5/5 | 3/5 | 0.04286 | 0.00386 |
+| Dynamic Sensorium legacy OOD | 4/5 | 3/5 | 0.03607 | 0.00219 |
+
+En la cohorte `oracle`, el MLP es el mejor modelo en 2/5 ratones. En legacy OOD,
+es el mejor en 3/5 ratones. El resultado es positivo pero pequeño: el MLP mejora
+claramente a la media, compite con SVD y no domina de forma universal.
+
+### Decisión
+
+El hueco de "baseline neuronal real" queda cubierto a nivel local y
+reproducible. La conclusión científica sigue siendo conservadora: MouseBrainBench
+puede comparar predicción, generalización OOD, modelos transparentes y modelos
+neuronales no lineales sin convertir una mejora de correlación en un claim
+mecanicista.
+
+Para un Q1 fuerte todavía falta una de dos piezas: reproducir un baseline
+externo oficial del ecosistema Sensorium o añadir una restricción causal /
+intervencional verificable. No se recomienda seguir iterando con ajustes menores
+del MLP como vía principal.

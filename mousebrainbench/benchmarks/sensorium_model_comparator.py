@@ -23,6 +23,7 @@ MODEL_ORDER = (
     "temporal_filterbank",
     "temporal_svd",
     "random_feature",
+    "torch_mlp",
 )
 
 
@@ -146,6 +147,26 @@ def _merge_random_feature_summary(
         )
 
 
+def _merge_torch_mlp_summary(
+    rows: dict[str, dict[str, ModelObservation]],
+    path: Path,
+) -> None:
+    payload = _load_json(path)
+    for row in payload["rows"]:
+        mouse = str(row["mouse"])
+        key = mouse_key(mouse)
+        rows.setdefault(key, {})
+        rows[key]["torch_mlp"] = ModelObservation(
+            mouse=mouse,
+            model="torch_mlp",
+            correlation=float(row["torch_mlp_correlation"]),
+            minus_mean=float(row["torch_mlp_minus_mean"]),
+            minus_scrambled=None,
+            reliability_estimable=False,
+            mis_passed=False,
+        )
+
+
 def _pairwise(rows: dict[str, dict[str, ModelObservation]], left: str, right: str) -> dict[str, Any]:
     deltas: list[float] = []
     paired: list[dict[str, Any]] = []
@@ -251,6 +272,7 @@ def compare_sensorium_artifacts(
     temporal_summary: Path,
     svd_summary: Path,
     random_feature_summary: Path | None = None,
+    torch_mlp_summary: Path | None = None,
     cohort_name: str | None = None,
 ) -> dict[str, Any]:
     """Compare summary/temporal/SVD artifacts for one Sensorium cohort."""
@@ -259,6 +281,8 @@ def compare_sensorium_artifacts(
     _merge_svd_summary(rows, svd_summary)
     if random_feature_summary is not None:
         _merge_random_feature_summary(rows, random_feature_summary)
+    if torch_mlp_summary is not None:
+        _merge_torch_mlp_summary(rows, torch_mlp_summary)
     cohort = cohort_name or _cohort_label(svd_summary, svd_summary.stem)
     pairwise = {
         "summary_adapter_vs_temporal_filterbank": _pairwise(
@@ -274,6 +298,7 @@ def compare_sensorium_artifacts(
         "temporal_svd_vs_random_feature": _pairwise(
             rows, "temporal_svd", "random_feature"
         ),
+        "temporal_svd_vs_torch_mlp": _pairwise(rows, "temporal_svd", "torch_mlp"),
     }
     best_rows = _best_models(rows)
     model_win_counts: dict[str, int] = {}
@@ -286,6 +311,7 @@ def compare_sensorium_artifacts(
         "temporal_summary": str(temporal_summary),
         "svd_summary": str(svd_summary),
         "random_feature_summary": str(random_feature_summary) if random_feature_summary else None,
+        "torch_mlp_summary": str(torch_mlp_summary) if torch_mlp_summary else None,
         "models": list(MODEL_ORDER),
         "model_rows": _model_table(rows),
         "best_models": best_rows,
@@ -343,8 +369,11 @@ def _markdown_for_cohort(cohort: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | Random feature | Best |",
-            "|---|---:|---:|---:|---:|---:|---|",
+            (
+                "| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | "
+                "Random feature | Torch MLP | Best |"
+            ),
+            "|---|---:|---:|---:|---:|---:|---:|---|",
         ]
     )
     best_by_mouse = {row["mouse"]: row["best_model"] for row in cohort["best_models"]}
@@ -357,6 +386,7 @@ def _markdown_for_cohort(cohort: dict[str, Any]) -> str:
             f"`{_round(row['temporal_filterbank'])}` | "
             f"`{_round(row['temporal_svd'])}` | "
             f"`{_round(row['random_feature'])}` | "
+            f"`{_round(row['torch_mlp'])}` | "
             f"`{best_by_mouse.get(row['mouse'])}` |"
         )
     return "\n".join(lines)
@@ -401,6 +431,10 @@ def compare_default_dynamic_sensorium(
                 "results/dynamic_sensorium_random_feature/"
                 "summary_dynamic_sensorium2023_random_feature.json"
             ),
+            torch_mlp_summary=Path(
+                "results/dynamic_sensorium_torch_mlp/"
+                "summary_dynamic_sensorium2023_torch_mlp.json"
+            ),
             cohort_name="dynamic_sensorium2023_oracle",
         ),
         compare_sensorium_artifacts(
@@ -415,6 +449,10 @@ def compare_default_dynamic_sensorium(
             random_feature_summary=Path(
                 "results/dynamic_sensorium_random_feature/"
                 "summary_dynamic_sensorium_legacy_ood_random_feature.json"
+            ),
+            torch_mlp_summary=Path(
+                "results/dynamic_sensorium_torch_mlp/"
+                "summary_dynamic_sensorium_legacy_ood_torch_mlp.json"
             ),
             cohort_name="dynamic_sensorium_legacy_ood",
         ),

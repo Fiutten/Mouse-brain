@@ -16,14 +16,15 @@ This comparator asks whether progressively stronger transparent models improve h
 | mean_response_vs_temporal_svd | `4/5` | `0.038886` | `0.032829` |
 | temporal_filterbank_vs_temporal_svd | `3/5` | `0.007751` | `0.004307` |
 | temporal_svd_vs_random_feature | `1/5` | `-0.034472` | `-0.032311` |
+| temporal_svd_vs_torch_mlp | `3/5` | `0.003856` | `0.003012` |
 
-| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | Random feature | Best |
-|---|---:|---:|---:|---:|---:|---|
-| `dynamic29515` | `0.42377` | `0.422444` | `0.430917` | `0.414528` | `0.417132` | `temporal_filterbank` |
-| `dynamic29623` | `0.367982` | `0.390218` | `0.403052` | `0.427126` | `0.354533` | `temporal_svd` |
-| `dynamic29647` | `0.447155` | `0.480146` | `0.474168` | `0.486161` | `0.451688` | `temporal_svd` |
-| `dynamic29712` | `0.452984` | `0.475949` | `0.48412` | `0.49187` | `0.452112` | `temporal_svd` |
-| `dynamic29755` | `0.480565` | `0.500909` | `0.522813` | `0.516918` | `0.499584` | `temporal_filterbank` |
+| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | Random feature | Torch MLP | Best |
+|---|---:|---:|---:|---:|---:|---:|---|
+| `dynamic29515` | `0.42377` | `0.422444` | `0.430917` | `0.414528` | `0.417132` | `0.426902` | `temporal_filterbank` |
+| `dynamic29623` | `0.367982` | `0.390218` | `0.403052` | `0.427126` | `0.354533` | `0.417994` | `temporal_svd` |
+| `dynamic29647` | `0.447155` | `0.480146` | `0.474168` | `0.486161` | `0.451688` | `0.490016` | `torch_mlp` |
+| `dynamic29712` | `0.452984` | `0.475949` | `0.48412` | `0.49187` | `0.452112` | `0.490358` | `temporal_svd` |
+| `dynamic29755` | `0.480565` | `0.500909` | `0.522813` | `0.516918` | `0.499584` | `0.526393` | `torch_mlp` |
 
 ## dynamic_sensorium_legacy_ood
 
@@ -39,11 +40,12 @@ This comparator asks whether progressively stronger transparent models improve h
 | mean_response_vs_temporal_svd | `5/5` | `0.03091` | `0.030865` |
 | temporal_filterbank_vs_temporal_svd | `5/5` | `0.005855` | `0.011933` |
 | temporal_svd_vs_random_feature | `1/5` | `-0.012473` | `-0.02034` |
+| temporal_svd_vs_torch_mlp | `3/5` | `0.002195` | `-0.011646` |
 
-| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | Random feature | Best |
-|---|---:|---:|---:|---:|---:|---|
-| `dynamic29156` | `0.364959` | `0.362926` | `0.391491` | `0.398837` | `0.386364` | `temporal_svd` |
-| `dynamic29228` | `0.412573` | `0.417795` | `0.428857` | `0.434712` | `0.437185` | `random_feature` |
-| `dynamic29234` | `0.329388` | `0.322883` | `0.323004` | `0.360298` | `0.356199` | `temporal_svd` |
-| `dynamic29513` | `0.388562` | `0.411134` | `0.421781` | `0.426574` | `0.369238` | `temporal_svd` |
-| `dynamic29514` | `0.403803` | `0.416169` | `0.428811` | `0.433187` | `0.402924` | `temporal_svd` |
+| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | Random feature | Torch MLP | Best |
+|---|---:|---:|---:|---:|---:|---:|---|
+| `dynamic29156` | `0.364959` | `0.362926` | `0.391491` | `0.398837` | `0.386364` | `0.401032` | `torch_mlp` |
+| `dynamic29228` | `0.412573` | `0.417795` | `0.428857` | `0.434712` | `0.437185` | `0.448674` | `torch_mlp` |
+| `dynamic29234` | `0.329388` | `0.322883` | `0.323004` | `0.360298` | `0.356199` | `0.343338` | `temporal_svd` |
+| `dynamic29513` | `0.388562` | `0.411134` | `0.421781` | `0.426574` | `0.369238` | `0.36199` | `temporal_svd` |
+| `dynamic29514` | `0.403803` | `0.416169` | `0.428811` | `0.433187` | `0.402924` | `0.440346` | `torch_mlp` |

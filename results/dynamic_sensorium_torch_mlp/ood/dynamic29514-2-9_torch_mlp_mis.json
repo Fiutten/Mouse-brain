@@ -1,0 +1,25 @@
+{
+  "mouse": "dynamic29514-2-9",
+  "root": "data/dynamic_sensorium_ood/extracted/dynamic29514-2-9-Video-8744edeac3b4d1ce16b680916b5267ce",
+  "eval_tiers": [
+    "live_test_main",
+    "live_test_bonus",
+    "final_test_main",
+    "final_test_bonus"
+  ],
+  "n_train_trials": 351,
+  "n_eval_trials": 312,
+  "n_neurons": 7495,
+  "mean_correlation": 0.4038027596907151,
+  "torch_mlp_correlation": 0.44034558910294047,
+  "torch_mlp_minus_mean": 0.036542829412225364,
+  "diagnostics": {
+    "hidden": 128.0,
+    "weight_decay": 0.0001,
+    "beta": 0.8,
+    "validation_correlation": 0.49576188536779603,
+    "epochs": 40.0
+  },
+  "has_ood_generalization_gate": true,
+  "interpretation": "Compact PyTorch MLP baseline; not official Sensorium SOTA. Hyperparameters are selected inside train only."
+}
