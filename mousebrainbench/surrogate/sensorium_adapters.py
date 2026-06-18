@@ -65,6 +65,7 @@ def calibrated_residual_ridge_adapter(
     eval_x: np.ndarray,
     *,
     alpha: float = 10.0,
+    alpha_grid: tuple[float, ...] | None = None,
     seed: int = 17,
     folds: int = 5,
     beta_grid: np.ndarray | None = None,
@@ -84,38 +85,46 @@ def calibrated_residual_ridge_adapter(
         raise ValueError("train_x and train_y must have the same number of trials")
     if beta_grid is None:
         beta_grid = np.linspace(0.0, 1.5, 61)
+    alphas = tuple(float(value) for value in (alpha_grid or (alpha,)))
 
     indices = np.arange(len(train_x))
     rng = np.random.default_rng(seed)
     rng.shuffle(indices)
     fold_indices = [fold for fold in np.array_split(indices, min(folds, len(indices))) if len(fold)]
-    cv_predictions: dict[float, np.ndarray] = {
-        float(beta): np.zeros_like(train_y, dtype=float) for beta in beta_grid
+    cv_predictions: dict[tuple[float, float], np.ndarray] = {
+        (float(alpha_value), float(beta)): np.zeros_like(train_y, dtype=float)
+        for alpha_value in alphas
+        for beta in beta_grid
     }
 
     for fold in fold_indices:
         fit_indices = np.setdiff1d(indices, fold, assume_unique=False)
         train_mean = train_y[fit_indices].mean(axis=0, keepdims=True)
         residual = train_y[fit_indices] - train_mean
-        residual_prediction = ridge_fit_predict(
-            train_x[fit_indices], residual, train_x[fold], alpha=alpha
-        )
-        for beta in beta_grid:
-            cv_predictions[float(beta)][fold] = train_mean + float(beta) * residual_prediction
+        for alpha_value in alphas:
+            residual_prediction = ridge_fit_predict(
+                train_x[fit_indices], residual, train_x[fold], alpha=alpha_value
+            )
+            for beta in beta_grid:
+                cv_predictions[(float(alpha_value), float(beta))][fold] = (
+                    train_mean + float(beta) * residual_prediction
+                )
 
     cv_scores = {
-        beta: _safe_correlation(prediction, train_y)
-        for beta, prediction in cv_predictions.items()
+        params: _safe_correlation(prediction, train_y)
+        for params, prediction in cv_predictions.items()
     }
-    best_beta = max(cv_scores, key=cv_scores.get)
+    best_alpha, best_beta = max(cv_scores, key=cv_scores.get)
 
     full_mean = train_y.mean(axis=0, keepdims=True)
     full_residual = train_y - full_mean
-    residual_prediction = ridge_fit_predict(train_x, full_residual, eval_x, alpha=alpha)
+    residual_prediction = ridge_fit_predict(train_x, full_residual, eval_x, alpha=best_alpha)
     prediction = np.repeat(full_mean, len(eval_x), axis=0) + best_beta * residual_prediction
 
     scrambled_train_x = rng.permutation(train_x)
-    scrambled_residual = ridge_fit_predict(scrambled_train_x, full_residual, eval_x, alpha=alpha)
+    scrambled_residual = ridge_fit_predict(
+        scrambled_train_x, full_residual, eval_x, alpha=best_alpha
+    )
     scrambled_prediction = (
         np.repeat(full_mean, len(eval_x), axis=0) + best_beta * scrambled_residual
     )
@@ -124,9 +133,10 @@ def calibrated_residual_ridge_adapter(
         prediction=prediction,
         scrambled_prediction=scrambled_prediction,
         diagnostics={
-            "adapter_alpha": float(alpha),
+            "adapter_alpha": float(best_alpha),
             "adapter_beta": float(best_beta),
-            "adapter_cv_correlation": float(cv_scores[best_beta]),
+            "adapter_cv_correlation": float(cv_scores[(best_alpha, best_beta)]),
             "adapter_cv_folds": float(len(fold_indices)),
+            "adapter_alpha_candidates": float(len(alphas)),
         },
     )

@@ -144,6 +144,7 @@ def run_sensorium_benchmark(
     has_ood_generalization_gate: bool = False,
     adapter: str = "ridge",
     adapter_alpha: float = 10.0,
+    adapter_alpha_grid: tuple[float, ...] | None = None,
 ) -> Path:
     """Evaluate transparent predictive baselines and write MIS diagnostics."""
 
@@ -206,6 +207,7 @@ def run_sensorium_benchmark(
             train_y,
             eval_x,
             alpha=adapter_alpha,
+            alpha_grid=adapter_alpha_grid,
             seed=seed,
         )
         adapter_diagnostics = adapter_result.diagnostics
@@ -325,6 +327,7 @@ def run(
     git_revision: str | None = None,
     adapter: str = "ridge",
     adapter_alpha: float = 10.0,
+    adapter_alpha_grid: tuple[float, ...] | None = None,
 ) -> Path:
     table = load_sensorium_directory(root, modality=modality, max_trials=max_trials)
     return run_sensorium_benchmark(
@@ -335,6 +338,7 @@ def run(
         git_revision=git_revision,
         adapter=adapter,
         adapter_alpha=adapter_alpha,
+        adapter_alpha_grid=adapter_alpha_grid,
     )
 
 
@@ -356,6 +360,11 @@ def main() -> None:
         type=float,
         default=10.0,
         help="Ridge alpha used by calibrated residual adapters.",
+    )
+    parser.add_argument(
+        "--adapter-alpha-grid",
+        default=None,
+        help="Comma-separated alpha candidates selected by train-only CV for calibrated adapters.",
     )
     parser.add_argument(
         "--eval-tier",
@@ -380,6 +389,11 @@ def main() -> None:
         git_revision=args.git_revision,
         adapter=args.adapter,
         adapter_alpha=args.adapter_alpha,
+        adapter_alpha_grid=(
+            tuple(float(value) for value in args.adapter_alpha_grid.split(","))
+            if args.adapter_alpha_grid
+            else None
+        ),
     )
     print(json.dumps({"output": str(output.resolve())}))
 
