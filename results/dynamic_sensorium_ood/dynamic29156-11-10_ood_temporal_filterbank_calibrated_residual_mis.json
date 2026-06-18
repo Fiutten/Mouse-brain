@@ -3,21 +3,24 @@
   "git_revision": "ee348f1-dirty",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
-    "root": "data/dynamic_sensorium/extracted/dynamic29755-2-8-Video-9b4f6a1a067fe51e15306b9628efea20",
+    "root": "data/dynamic_sensorium_ood/extracted/dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce",
     "modality": "dynamic",
-    "feature_mode": "summary",
-    "n_trials": 712,
-    "n_neurons": 8122,
+    "feature_mode": "temporal_filterbank",
+    "n_trials": 720,
+    "n_neurons": 7440,
     "eval_tiers": [
-      "oracle"
+      "live_test_main",
+      "live_test_bonus",
+      "final_test_main",
+      "final_test_bonus"
     ],
     "tiers": {
-      "final_test_bonus": 119,
-      "final_test_main": 60,
-      "live_test_bonus": 60,
-      "live_test_main": 60,
+      "final_test_bonus": 138,
+      "final_test_main": 58,
+      "live_test_bonus": 59,
+      "live_test_main": 56,
       "oracle": 59,
-      "train": 354
+      "train": 350
     }
   },
   "baselines": {
@@ -32,44 +35,44 @@
     "name": "calibrated_residual_ridge",
     "diagnostics": {
       "adapter_alpha": 100.0,
-      "adapter_beta": 0.7250000000000001,
-      "adapter_cv_correlation": 0.48243015059375505,
+      "adapter_beta": 0.5,
+      "adapter_cv_correlation": 0.5211333401446263,
       "adapter_cv_folds": 5.0,
       "adapter_alpha_candidates": 7.0
     }
   },
   "metrics": {
-    "mean_correlation": 0.4805649600408238,
-    "ridge_correlation": 0.4379851301295673,
-    "scrambled_correlation": 0.3874579764889107,
-    "ridge_median_neuron_correlation": 0.09846824335067315,
+    "mean_correlation": 0.36495873496165293,
+    "ridge_correlation": 0.22873742877986092,
+    "scrambled_correlation": 0.10012507766481023,
+    "ridge_median_neuron_correlation": 0.07636731656398751,
     "context_available": true,
-    "stimulus_context_ridge_correlation": 0.16642845920780053,
-    "stimulus_context_scrambled_correlation": 0.15193418226743124,
-    "stimulus_context_ridge_median_neuron_correlation": 0.0447001917934095,
-    "calibrated_residual_ridge_correlation": 0.5009085699541823,
-    "calibrated_residual_ridge_scrambled_correlation": 0.45945348249230034,
-    "calibrated_residual_ridge_median_neuron_correlation": 0.12478949616454009,
+    "stimulus_context_ridge_correlation": 0.0015571458439284267,
+    "stimulus_context_scrambled_correlation": -0.03368032563805161,
+    "stimulus_context_ridge_median_neuron_correlation": 0.023236409807661618,
+    "calibrated_residual_ridge_correlation": 0.39149076829139556,
+    "calibrated_residual_ridge_scrambled_correlation": 0.3295345285856288,
+    "calibrated_residual_ridge_median_neuron_correlation": 0.11728697608957905,
     "best_model_is_contextual": false,
     "best_model": "calibrated_residual_ridge",
-    "best_predictive_correlation": 0.5009085699541823,
-    "best_predictive_scrambled_correlation": 0.45945348249230034,
+    "best_predictive_correlation": 0.39149076829139556,
+    "best_predictive_scrambled_correlation": 0.3295345285856288,
     "reliability": 0.0,
     "reliability_estimable": false,
     "reliability_repeated_stimuli": 0.0,
     "has_structural_or_interventional_constraint": false,
-    "has_ood_generalization_gate": false,
-    "ridge_minus_mean": -0.04257982991125647,
-    "ridge_minus_scrambled": 0.050527153640656575,
-    "stimulus_context_ridge_minus_mean": -0.31413650083302325,
-    "stimulus_context_ridge_minus_scrambled": 0.014494276940369283,
-    "calibrated_residual_ridge_minus_mean": 0.02034360991335854,
-    "calibrated_residual_ridge_minus_scrambled": 0.04145508746188198,
-    "best_predictive_minus_mean": 0.02034360991335854,
-    "best_predictive_minus_scrambled": 0.04145508746188198
+    "has_ood_generalization_gate": true,
+    "ridge_minus_mean": -0.136221306181792,
+    "ridge_minus_scrambled": 0.1286123511150507,
+    "stimulus_context_ridge_minus_mean": -0.3634015891177245,
+    "stimulus_context_ridge_minus_scrambled": 0.03523747148198004,
+    "calibrated_residual_ridge_minus_mean": 0.026532033329742633,
+    "calibrated_residual_ridge_minus_scrambled": 0.06195623970576675,
+    "best_predictive_minus_mean": 0.026532033329742633,
+    "best_predictive_minus_scrambled": 0.06195623970576675
   },
   "mis": {
-    "score": 0.24844154972275667,
+    "score": 0.4478489629549836,
     "passed": false,
     "blocks": [
       {
@@ -90,27 +93,27 @@
       {
         "name": "topology_specificity",
         "passed": false,
-        "score": 0.74532464916827,
+        "score": 0.8435468888649509,
         "criteria": [
           {
             "name": "best_predictive_minus_mean_correlation",
-            "value": 0.02034360991335854,
+            "value": 0.026532033329742633,
             "threshold": 0.05,
             "direction": "gt",
             "passed": false,
-            "normalized_score": 0.4068721982671708
+            "normalized_score": 0.5306406665948527
           },
           {
             "name": "best_predictive_minus_scrambled_correlation",
-            "value": 0.04145508746188198,
+            "value": 0.06195623970576675,
             "threshold": 0.05,
             "direction": "gt",
-            "passed": false,
-            "normalized_score": 0.8291017492376396
+            "passed": true,
+            "normalized_score": 1.0
           },
           {
             "name": "best_predictive_test_correlation",
-            "value": 0.5009085699541823,
+            "value": 0.39149076829139556,
             "threshold": 0.1,
             "direction": "gt",
             "passed": true,
@@ -121,7 +124,7 @@
       {
         "name": "directed_identifiability",
         "passed": false,
-        "score": 0.0,
+        "score": 0.5,
         "criteria": [
           {
             "name": "has_structural_or_interventional_constraint",
@@ -133,11 +136,11 @@
           },
           {
             "name": "has_ood_generalization_gate",
-            "value": 0.0,
+            "value": 1.0,
             "threshold": 1.0,
             "direction": "gte",
-            "passed": false,
-            "normalized_score": 0.0
+            "passed": true,
+            "normalized_score": 1.0
           }
         ]
       }

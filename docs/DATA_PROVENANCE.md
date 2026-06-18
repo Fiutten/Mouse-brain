@@ -113,3 +113,24 @@ guardó sus artefactos en `results/dynamic_sensorium_adapter/`. La selección de
 `alpha` y `beta` se realiza exclusivamente por CV interna en `train`; `oracle`
 queda como held-out. Los resultados y limitaciones están en
 [PHASE5_DYNAMIC_SENSORIUM_ADAPTER.md](PHASE5_DYNAMIC_SENSORIUM_ADAPTER.md).
+
+El 18 de junio de 2026 se verificó también la release legacy enlazada desde el
+README oficial de Dynamic Sensorium 2023 como "previous dataset" con respuestas
+OOD liberadas. Se descargó y extrajo inicialmente un animal:
+
+```text
+dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
+sha256 61915fa4e3f29da6c136cf71185e4cc38b0eb2c16fe2559db24fe8efffb178e7
+```
+
+El zip pasó `unzip -t`. Uso local observado tras interrumpir la descarga del
+segundo zip parcial: `data/dynamic_sensorium_ood/raw` `7.7G` y
+`data/dynamic_sensorium_ood/extracted` `8.6G`. La release contiene respuestas
+no nulas en `live_test_main`, `live_test_bonus`, `final_test_main` y
+`final_test_bonus`, por lo que permite una prueba OOD pública que no estaba
+disponible en la cohorte principal descargada antes. Los artefactos quedan en
+`results/dynamic_sensorium_ood/`.
+
+Nota legal: el README de GIN indica licencia `CC BY-NC-ND 4.0` y solicita
+permiso de publicación a los organizadores. Cualquier uso en artículo debe
+respetar esa condición antes de enviar resultados.

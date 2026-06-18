@@ -278,6 +278,7 @@ def run_sensorium_benchmark(
         "dataset": {
             "root": str(table.root),
             "modality": table.modality,
+            "feature_mode": table.feature_mode,
             "n_trials": table.n_trials,
             "n_neurons": table.n_neurons,
             "eval_tiers": list(eval_tiers),
@@ -322,14 +323,19 @@ def run(
     output: str | Path = DEFAULT_OUTPUT,
     modality: str | None = None,
     max_trials: int | None = None,
+    feature_mode: str = "summary",
     alpha: float = 1.0,
     eval_tiers: tuple[str, ...] = ("validation", "val"),
     git_revision: str | None = None,
     adapter: str = "ridge",
     adapter_alpha: float = 10.0,
     adapter_alpha_grid: tuple[float, ...] | None = None,
+    has_structural_or_interventional_constraint: bool = False,
+    has_ood_generalization_gate: bool = False,
 ) -> Path:
-    table = load_sensorium_directory(root, modality=modality, max_trials=max_trials)
+    table = load_sensorium_directory(
+        root, modality=modality, max_trials=max_trials, feature_mode=feature_mode
+    )
     return run_sensorium_benchmark(
         table,
         output=output,
@@ -339,6 +345,8 @@ def run(
         adapter=adapter,
         adapter_alpha=adapter_alpha,
         adapter_alpha_grid=adapter_alpha_grid,
+        has_structural_or_interventional_constraint=has_structural_or_interventional_constraint,
+        has_ood_generalization_gate=has_ood_generalization_gate,
     )
 
 
@@ -348,6 +356,12 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--modality", choices=("static", "dynamic"), default=None)
     parser.add_argument("--max-trials", type=int, default=None)
+    parser.add_argument(
+        "--feature-mode",
+        choices=("summary", "temporal_filterbank"),
+        default="summary",
+        help="Stimulus descriptor family. temporal_filterbank keeps coarse video timing.",
+    )
     parser.add_argument("--alpha", type=float, default=1.0)
     parser.add_argument(
         "--adapter",
@@ -378,12 +392,23 @@ def main() -> None:
         default=None,
         help="Override provenance revision when regenerating several tracked artifacts.",
     )
+    parser.add_argument(
+        "--has-structural-or-interventional-constraint",
+        action="store_true",
+        help="Mark MIS directed-identifiability structure/causal evidence as present.",
+    )
+    parser.add_argument(
+        "--has-ood-generalization-gate",
+        action="store_true",
+        help="Mark that the held-out tier is an explicit OOD generalization gate.",
+    )
     args = parser.parse_args()
     output = run(
         args.root,
         output=args.output,
         modality=args.modality,
         max_trials=args.max_trials,
+        feature_mode=args.feature_mode,
         alpha=args.alpha,
         eval_tiers=tuple(args.eval_tiers) if args.eval_tiers else ("validation", "val"),
         git_revision=args.git_revision,
@@ -394,6 +419,10 @@ def main() -> None:
             if args.adapter_alpha_grid
             else None
         ),
+        has_structural_or_interventional_constraint=(
+            args.has_structural_or_interventional_constraint
+        ),
+        has_ood_generalization_gate=args.has_ood_generalization_gate,
     )
     print(json.dumps({"output": str(output.resolve())}))
 

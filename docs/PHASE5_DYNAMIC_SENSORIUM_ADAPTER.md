@@ -109,3 +109,78 @@ frente a scrambled. Para una contribución fuerte, el siguiente paso debe ser
 comparar este adaptador contra un modelo temporal más competente y, en paralelo,
 buscar una fuente de evaluación con repeticiones, OOD o restricciones
 estructurales.
+
+## Extensión 5d: descriptor temporal transparente
+
+Se añadió `feature_mode=temporal_filterbank` en
+`mousebrainbench/data/loaders/sensorium.py`. Este modo conserva:
+
+- ventanas temporales gruesas del vídeo;
+- energía de movimiento frame-a-frame;
+- modulación de baja frecuencia de luminancia y contraste;
+- pooling espacial por ventanas temporales.
+
+No es un modelo profundo ni SOTA Sensorium. Es un baseline temporal auditable
+para probar si la información temporal explícita aporta señal antes de pasar a
+un modelo más pesado.
+
+Comando reproducible:
+
+```bash
+.venv/bin/python scripts/run_dynamic_sensorium_temporal_filterbank.py --force
+```
+
+Artefacto:
+
+```text
+results/dynamic_sensorium_adapter/summary_dynamic_sensorium2023_temporal_filterbank_mis.json
+```
+
+Resultado agregado:
+
+| Métrica | Valor |
+|---|---:|
+| Ratones | `5` |
+| Temporal mejora frente a summary | `4/5` |
+| Mediana temporal - summary | `0.00847` |
+| Mediana temporal - mean | `0.03114` |
+| Mediana temporal - scrambled | `0.05168` |
+
+## Extensión 5e: OOD con respuestas liberadas
+
+El README oficial de Dynamic Sensorium enlaza una release legacy con cinco
+ratones y respuestas OOD liberadas. Se descargó inicialmente `dynamic29156-11-10`
+y se verificó con `unzip -t` y SHA256:
+
+```text
+61915fa4e3f29da6c136cf71185e4cc38b0eb2c16fe2559db24fe8efffb178e7
+```
+
+El loader corregido carga `720` ensayos y excluye automáticamente trials sin
+respuesta porque alinea por ID de archivo. Los tiers `live_test_main`,
+`live_test_bonus`, `final_test_main` y `final_test_bonus` tienen respuestas
+no nulas.
+
+Comando reproducible:
+
+```bash
+.venv/bin/python scripts/run_dynamic_sensorium_ood_probe.py \
+  data/dynamic_sensorium_ood/extracted/dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce
+```
+
+Artefacto:
+
+```text
+results/dynamic_sensorium_ood/dynamic29156-11-10_ood_temporal_comparison.json
+```
+
+| Métrica OOD | Summary | Temporal filterbank |
+|---|---:|---:|
+| Correlación adapter | `0.36293` | `0.39149` |
+| Δ mean | `-0.00203` | `0.02653` |
+| Δ scrambled | `0.02078` | `0.06196` |
+
+Interpretación: este es un resultado positivo de generalización OOD, pero no
+una conclusión mecanística. `reliability_estimable=false` y el MIS completo no
+pasa; la contribución defendible es que el marco separa explícitamente
+predicción, OOD e identificabilidad.

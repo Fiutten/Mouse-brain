@@ -22,9 +22,16 @@ dinámicos reciben esa matriz y producen actividad regional `time x region`.
 14. `benchmarks/allen_visual_phase3.py`: calibración en desarrollo y evaluación
     externa sellada frente a controles topológicos recalibrados.
 15. `data/loaders/sensorium.py`: adaptador ligero para la estructura documentada
-    de Sensorium/Dynamic Sensorium sin depender del stack oficial completo.
+    de Sensorium/Dynamic Sensorium sin depender del stack oficial completo. Alinea
+    estímulos, respuestas y covariables por `trial_id` derivado del nombre del
+    archivo, para soportar releases con trials retenidos o no consecutivos.
 16. `benchmarks/sensorium_predictive_mis.py`: comparación entre correlación
     predictiva y puertas MIS para targets visuales modernos.
+17. `scripts/run_dynamic_sensorium_temporal_filterbank.py`: regeneración
+    reproducible de la comparación entre descriptores dinámicos colapsados y
+    `temporal_filterbank`.
+18. `scripts/run_dynamic_sensorium_ood_probe.py`: evaluación OOD con respuestas
+    liberadas en la release legacy de Dynamic Sensorium.
 
 La simulación basal y la intervenida parten de la misma semilla. Las
 perturbaciones trabajan sobre copias y nunca alteran la conectividad de entrada.

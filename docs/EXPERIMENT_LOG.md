@@ -71,6 +71,66 @@ medio y supera al control scrambled en todos los ratones. No es todavía
 identificabilidad mecanística ni SOTA; sí aporta una señal predictiva defendible
 para continuar hacia un modelo temporal más potente.
 
+## 2026-06-18 — Fase 5d: descriptor temporal y prueba OOD legacy
+
+### Objetivo
+
+Comprobar si una representación temporal explícita de vídeo mejora el adaptador
+transparente y si la mejora se sostiene en tiers OOD con respuestas públicas.
+
+### Cambios técnicos
+
+- `data/loaders/sensorium.py` alinea estímulos, respuestas y covariables por
+  `trial_id` derivado del nombre de archivo. Esto corrige releases con trials
+  no consecutivos o sin respuesta pública.
+- Se añadió `feature_mode=temporal_filterbank`: conserva ventanas temporales
+  gruesas, energía de movimiento y modulación baja frecuencia del vídeo.
+- Se añadieron scripts reproducibles:
+  - `scripts/run_dynamic_sensorium_temporal_filterbank.py`;
+  - `scripts/run_dynamic_sensorium_ood_probe.py`.
+
+### Dynamic Sensorium 2023 principal
+
+Comparación regenerada en:
+
+```text
+results/dynamic_sensorium_adapter/summary_dynamic_sensorium2023_temporal_filterbank_mis.json
+```
+
+| Métrica | Valor |
+|---|---:|
+| Ratones | `5` |
+| Temporal mejora frente a summary | `4/5` |
+| Mediana temporal - summary | `0.00847` |
+| Mediana temporal - mean | `0.03114` |
+| Mediana temporal - scrambled | `0.05168` |
+
+### Dynamic Sensorium legacy OOD
+
+Se descargó y verificó `dynamic29156-11-10`. El loader cargó `720` ensayos,
+`7440` neuronas y respuestas no nulas en `live_test_*` y `final_test_*`.
+
+Artefacto:
+
+```text
+results/dynamic_sensorium_ood/dynamic29156-11-10_ood_temporal_comparison.json
+```
+
+| Métrica OOD | Summary | Temporal filterbank |
+|---|---:|---:|
+| Correlación adapter | `0.36293` | `0.39149` |
+| Δ mean | `-0.00203` | `0.02653` |
+| Δ scrambled | `0.02078` | `0.06196` |
+
+### Decisión
+
+**Evidencia positiva, no cierre mecanístico.** El descriptor temporal aporta
+señal en 4/5 ratones de la cohorte principal y mejora el caso OOD legacy en el
+primer animal verificado. El MIS no pasa porque la fiabilidad por repetición
+no es estimable y no hay restricción estructural/causal. Esto es exactamente
+útil para nuestra tesis: el marco distingue predicción, OOD y mecanismo sin
+confundirlos.
+
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 
 ### Objetivo

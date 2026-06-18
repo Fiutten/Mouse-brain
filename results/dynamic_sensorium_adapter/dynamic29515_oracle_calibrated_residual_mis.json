@@ -1,10 +1,11 @@
 {
   "version": "0.6.0",
-  "git_revision": "ff333fd",
+  "git_revision": "ee348f1-dirty",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "data/dynamic_sensorium/extracted/dynamic29515-10-12-Video-9b4f6a1a067fe51e15306b9628efea20",
     "modality": "dynamic",
+    "feature_mode": "summary",
     "n_trials": 711,
     "n_neurons": 7863,
     "eval_tiers": [

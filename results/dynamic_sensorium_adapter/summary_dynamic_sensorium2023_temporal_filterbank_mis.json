@@ -1,0 +1,74 @@
+{
+  "dataset": "Dynamic Sensorium 2023 public release",
+  "eval_tier": "oracle",
+  "adapter": "calibrated_residual_ridge",
+  "comparison": "summary stimulus descriptors vs temporal_filterbank descriptors",
+  "n_mice": 5,
+  "positive_temporal_minus_summary_count": 4,
+  "median_temporal_minus_summary_correlation": 0.008472393501597286,
+  "median_temporal_minus_mean": 0.031135414430471187,
+  "median_temporal_minus_scrambled": 0.05167637201618558,
+  "rows": [
+    {
+      "mouse": "dynamic29515",
+      "summary_feature_mode_correlation": 0.42244437965535253,
+      "temporal_filterbank_correlation": 0.4309167731569498,
+      "temporal_minus_summary_correlation": 0.008472393501597286,
+      "summary_minus_mean": -0.0013254880078906184,
+      "temporal_minus_mean": 0.007146905493706668,
+      "summary_minus_scrambled": 0.037679684932730106,
+      "temporal_minus_scrambled": 0.048729170418282064,
+      "temporal_adapter_beta": 0.375,
+      "temporal_adapter_alpha": 100.0
+    },
+    {
+      "mouse": "dynamic29623",
+      "summary_feature_mode_correlation": 0.39021845943639666,
+      "temporal_filterbank_correlation": 0.4030518685697743,
+      "temporal_minus_summary_correlation": 0.01283340913337766,
+      "summary_minus_mean": 0.022236604248868086,
+      "temporal_minus_mean": 0.035070013382245746,
+      "summary_minus_scrambled": 0.03266941370730059,
+      "temporal_minus_scrambled": 0.0664949806923576,
+      "temporal_adapter_beta": 0.47500000000000003,
+      "temporal_adapter_alpha": 100.0
+    },
+    {
+      "mouse": "dynamic29647",
+      "summary_feature_mode_correlation": 0.4801460889881136,
+      "temporal_filterbank_correlation": 0.47416792764925486,
+      "temporal_minus_summary_correlation": -0.005978161338858756,
+      "summary_minus_mean": 0.03299093223917271,
+      "temporal_minus_mean": 0.027012770900313954,
+      "summary_minus_scrambled": 0.04450779551885714,
+      "temporal_minus_scrambled": 0.0461921415997516,
+      "temporal_adapter_beta": 0.47500000000000003,
+      "temporal_adapter_alpha": 100.0
+    },
+    {
+      "mouse": "dynamic29712",
+      "summary_feature_mode_correlation": 0.47594909133200297,
+      "temporal_filterbank_correlation": 0.4841195675051003,
+      "temporal_minus_summary_correlation": 0.008170476173097352,
+      "summary_minus_mean": 0.022964938257373835,
+      "temporal_minus_mean": 0.031135414430471187,
+      "summary_minus_scrambled": 0.033650911127088956,
+      "temporal_minus_scrambled": 0.05167637201618558,
+      "temporal_adapter_beta": 0.47500000000000003,
+      "temporal_adapter_alpha": 100.0
+    },
+    {
+      "mouse": "dynamic29755",
+      "summary_feature_mode_correlation": 0.5009085699541823,
+      "temporal_filterbank_correlation": 0.5228131701240796,
+      "temporal_minus_summary_correlation": 0.02190460016989726,
+      "summary_minus_mean": 0.02034360991335854,
+      "temporal_minus_mean": 0.0422482100832558,
+      "summary_minus_scrambled": 0.04145508746188198,
+      "temporal_minus_scrambled": 0.07075164512585902,
+      "temporal_adapter_beta": 0.525,
+      "temporal_adapter_alpha": 100.0
+    }
+  ],
+  "interpretation": "Temporal descriptors are treated as a stronger transparent baseline. They improve most, not all, mice and must be retested on OOD/released-repeat data."
+}

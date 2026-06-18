@@ -16,6 +16,7 @@ import numpy as np
 
 
 Modality = Literal["static", "dynamic"]
+FeatureMode = Literal["summary", "temporal_filterbank"]
 
 
 @dataclass(frozen=True)
@@ -31,6 +32,7 @@ class SensoriumTrialTable:
     trial_ids: np.ndarray
     stimulus_ids: np.ndarray
     neuron_ids: np.ndarray
+    feature_mode: str = "summary"
 
     @property
     def n_trials(self) -> int:
@@ -57,20 +59,67 @@ def _load_trial_arrays(directory: Path, *, max_trials: int | None = None) -> lis
     return [np.load(file) for file in files]
 
 
-def _load_optional_trial_matrix(directory: Path, *, n_trials: int) -> np.ndarray:
+def _load_trial_file_map(directory: Path) -> dict[int, Path]:
+    """Index trial files by their numeric stem."""
+
+    files: dict[int, Path] = {}
+    for path in directory.glob("*.npy"):
+        try:
+            files[int(path.stem)] = path
+        except ValueError:
+            continue
+    if not files:
+        raise FileNotFoundError(f"no numeric .npy trial files found in {directory}")
+    return files
+
+
+def _load_optional_trial_matrix(
+    directory: Path,
+    *,
+    n_trials: int | None = None,
+    trial_ids: np.ndarray | None = None,
+) -> np.ndarray:
     """Load optional trial-level covariates as ``trial x feature`` arrays."""
 
     if not directory.exists():
-        return np.empty((n_trials, 0), dtype=float)
-    arrays = _load_trial_arrays(directory, max_trials=n_trials)
-    features = [
-        np.nan_to_num(np.asarray(array, dtype=float).reshape(-1), nan=0.0)
-        for array in arrays[:n_trials]
-    ]
+        if n_trials is None and trial_ids is not None:
+            n_trials = len(trial_ids)
+        return np.empty((int(n_trials or 0), 0), dtype=float)
+    if n_trials is None and trial_ids is not None:
+        n_trials = len(trial_ids)
+    if trial_ids is None:
+        if n_trials is None:
+            raise ValueError("n_trials is required when trial_ids is not provided")
+        arrays = _load_trial_arrays(directory, max_trials=n_trials)
+        features = [
+            np.nan_to_num(np.asarray(array, dtype=float).reshape(-1), nan=0.0)
+            for array in arrays[:n_trials]
+        ]
+    else:
+        files = _load_trial_file_map(directory)
+        loaded: list[np.ndarray | None] = [
+            np.load(files[int(trial_id)]) if int(trial_id) in files else None
+            for trial_id in trial_ids
+        ]
+        first = next((array for array in loaded if array is not None), None)
+        if first is None:
+            return np.empty((int(n_trials or 0), 0), dtype=float)
+        width = np.asarray(first, dtype=float).reshape(-1).shape[0]
+        features = [
+            np.nan_to_num(np.asarray(array, dtype=float).reshape(-1), nan=0.0)
+            if array is not None
+            else np.zeros(width, dtype=float)
+            for array in loaded
+        ]
     return np.vstack(features) if features else np.empty((n_trials, 0), dtype=float)
 
 
-def _feature_vector(stimulus: np.ndarray, modality: Modality) -> np.ndarray:
+def _feature_vector(
+    stimulus: np.ndarray,
+    modality: Modality,
+    *,
+    feature_mode: FeatureMode = "summary",
+) -> np.ndarray:
     """Extract cheap stimulus descriptors for transparent baselines.
 
     These features are not intended to be state of the art. They provide a
@@ -103,6 +152,10 @@ def _feature_vector(stimulus: np.ndarray, modality: Modality) -> np.ndarray:
     # retinotopic information that a visual cortical response can exploit.
     image = values.mean(axis=0) if modality == "dynamic" and values.ndim >= 3 else values
     features.extend(_pooled_spatial_features(np.squeeze(image), bins=(8, 8)).tolist())
+    if modality == "dynamic" and feature_mode == "temporal_filterbank":
+        features.extend(_dynamic_temporal_filterbank_features(values).tolist())
+    elif feature_mode != "summary":
+        raise ValueError(f"unknown Sensorium feature mode: {feature_mode}")
     return np.asarray(features, dtype=float)
 
 
@@ -122,6 +175,75 @@ def _pooled_spatial_features(image: np.ndarray, *, bins: tuple[int, int]) -> np.
             patch = values[row_edges[row] : row_edges[row + 1], col_edges[col] : col_edges[col + 1]]
             pooled.append(float(np.mean(patch)) if patch.size else 0.0)
     return np.asarray(pooled, dtype=float)
+
+
+def _as_frame_images(stimulus: np.ndarray) -> np.ndarray:
+    """Return a ``frame x row x col`` view for common Sensorium video layouts."""
+
+    values = np.nan_to_num(np.asarray(stimulus, dtype=float), nan=0.0)
+    if values.ndim == 3:
+        return values
+    if values.ndim == 4:
+        if values.shape[-1] <= 4:
+            return values.mean(axis=-1)
+        if values.shape[1] <= 4:
+            return values.mean(axis=1)
+    if values.ndim < 3:
+        return values.reshape(1, values.shape[0], -1)
+    return values.reshape(values.shape[0], values.shape[1], -1)
+
+
+def _temporal_pooled_features(
+    values: np.ndarray, *, bins: int, spatial_bins: tuple[int, int]
+) -> list[float]:
+    """Pool temporal windows into a fixed-size spatial descriptor."""
+
+    features: list[float] = []
+    for indices in np.array_split(np.arange(values.shape[0]), bins):
+        if len(indices):
+            image = values[indices].mean(axis=0)
+            features.extend(_pooled_spatial_features(image, bins=spatial_bins).tolist())
+        else:
+            features.extend([0.0] * (spatial_bins[0] * spatial_bins[1]))
+    return features
+
+
+def _dynamic_temporal_filterbank_features(stimulus: np.ndarray) -> np.ndarray:
+    """Extract auditable temporal descriptors from a dynamic Sensorium video.
+
+    The filterbank keeps explicit time information that the original summary
+    descriptor discarded: coarse temporal windows, frame-to-frame motion energy,
+    and low-frequency modulation of global luminance. This is still a baseline,
+    not a replacement for official deep Sensorium models.
+    """
+
+    frames = _as_frame_images(stimulus)
+    frame_means = frames.mean(axis=(1, 2))
+    frame_stds = frames.std(axis=(1, 2))
+    motion = np.abs(np.diff(frames, axis=0)) if frames.shape[0] > 1 else np.zeros_like(frames)
+    motion_means = motion.mean(axis=(1, 2)) if motion.size else np.asarray([0.0])
+
+    features: list[float] = []
+    for trace in (frame_means, frame_stds, motion_means):
+        trace = np.asarray(trace, dtype=float)
+        centered = trace - trace.mean()
+        spectrum = np.abs(np.fft.rfft(centered))
+        features.extend(
+            [
+                float(trace.mean()),
+                float(trace.std()),
+                float(np.percentile(trace, 10)),
+                float(np.percentile(trace, 50)),
+                float(np.percentile(trace, 90)),
+            ]
+        )
+        spectral_features = spectrum[1:9].tolist() if spectrum.size > 1 else []
+        features.extend(spectral_features)
+        features.extend([0.0] * (8 - len(spectral_features)))
+
+    features.extend(_temporal_pooled_features(frames, bins=4, spatial_bins=(4, 4)))
+    features.extend(_temporal_pooled_features(motion, bins=4, spatial_bins=(4, 4)))
+    return np.asarray(features, dtype=float)
 
 
 def _response_vector(response: np.ndarray) -> np.ndarray:
@@ -149,6 +271,7 @@ def load_sensorium_directory(
     *,
     modality: Modality | None = None,
     max_trials: int | None = None,
+    feature_mode: FeatureMode = "summary",
 ) -> SensoriumTrialTable:
     """Load a documented Sensorium 2022/2023 directory into compact arrays."""
 
@@ -163,28 +286,47 @@ def load_sensorium_directory(
             raise FileNotFoundError("expected data/images or data/videos under Sensorium root")
     stimulus_dir = data_dir / ("videos" if modality == "dynamic" else "images")
     response_dir = data_dir / "responses"
-    stimuli = _load_trial_arrays(stimulus_dir, max_trials=max_trials)
-    responses = _load_trial_arrays(response_dir, max_trials=max_trials)
-    if len(stimuli) != len(responses):
-        raise ValueError("stimulus and response trial counts do not match")
+    stimulus_files = _load_trial_file_map(stimulus_dir)
+    response_files = _load_trial_file_map(response_dir)
+    trial_keys = np.asarray(sorted(set(stimulus_files) & set(response_files)), dtype=int)
+    if max_trials is not None:
+        trial_keys = trial_keys[:max_trials]
+    if len(trial_keys) == 0:
+        raise ValueError("stimulus and response trial ids do not overlap")
+    stimuli = [np.load(stimulus_files[int(trial_id)]) for trial_id in trial_keys]
+    responses = [np.load(response_files[int(trial_id)]) for trial_id in trial_keys]
 
     n_trials = len(responses)
-    fallback_trial_ids = np.arange(n_trials)
-    tiers = _load_meta_array(
-        base / "meta" / "trials" / "tiers.npy",
-        fallback=np.full(n_trials, "train", dtype=object),
-    )[:n_trials].astype(str)
-    trial_ids = _load_meta_array(
+    fallback_trial_ids = trial_keys
+    tier_fallback = np.full(n_trials, "train", dtype=object)
+    all_tiers = _load_meta_array(base / "meta" / "trials" / "tiers.npy", fallback=tier_fallback)
+    if int(trial_keys.max()) < len(all_tiers):
+        tiers = all_tiers[trial_keys].astype(str)
+    else:
+        tiers = tier_fallback.astype(str)
+    all_trial_ids = _load_meta_array(
         base / "meta" / "trials" / "trial_idx.npy", fallback=fallback_trial_ids
-    )[:n_trials]
-    stimulus_ids = _load_meta_array(
+    )
+    if int(trial_keys.max()) < len(all_trial_ids):
+        trial_ids = all_trial_ids[trial_keys]
+    else:
+        trial_ids = fallback_trial_ids
+    all_stimulus_ids = _load_meta_array(
         base / "meta" / "trials" / "frame_image_id.npy", fallback=fallback_trial_ids
-    )[:n_trials]
+    )
+    if int(trial_keys.max()) < len(all_stimulus_ids):
+        stimulus_ids = all_stimulus_ids[trial_keys]
+    else:
+        stimulus_ids = fallback_trial_ids
     response_matrix = np.stack([_response_vector(response) for response in responses])
     context_features = np.column_stack(
         [
-            _load_optional_trial_matrix(data_dir / "behavior", n_trials=n_trials),
-            _load_optional_trial_matrix(data_dir / "pupil_center", n_trials=n_trials),
+            _load_optional_trial_matrix(
+                data_dir / "behavior", n_trials=n_trials, trial_ids=trial_keys
+            ),
+            _load_optional_trial_matrix(
+                data_dir / "pupil_center", n_trials=n_trials, trial_ids=trial_keys
+            ),
         ]
     )
     neuron_ids = _load_meta_array(
@@ -194,11 +336,14 @@ def load_sensorium_directory(
     return SensoriumTrialTable(
         root=base,
         modality=modality,
-        stimulus_features=np.stack([_feature_vector(stimulus, modality) for stimulus in stimuli]),
+        stimulus_features=np.stack(
+            [_feature_vector(stimulus, modality, feature_mode=feature_mode) for stimulus in stimuli]
+        ),
         context_features=context_features,
         responses=response_matrix,
         tiers=tiers,
         trial_ids=trial_ids,
         stimulus_ids=stimulus_ids,
         neuron_ids=neuron_ids,
+        feature_mode=feature_mode,
     )

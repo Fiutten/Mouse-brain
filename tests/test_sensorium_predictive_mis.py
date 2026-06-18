@@ -74,3 +74,28 @@ def test_calibrated_residual_adapter_can_improve_over_mean(tmp_path) -> None:
 
     assert payload["metrics"]["calibrated_residual_ridge_minus_mean"] > 0.05
     assert payload["adapter"]["diagnostics"]["adapter_beta"] > 0.0
+
+
+def test_sensorium_benchmark_records_ood_gate(tmp_path) -> None:
+    table = SensoriumTrialTable(
+        root=tmp_path,
+        modality="dynamic",
+        stimulus_features=np.arange(40, dtype=float).reshape(8, 5),
+        context_features=np.empty((8, 0), dtype=float),
+        responses=np.arange(24, dtype=float).reshape(8, 3),
+        tiers=np.asarray(["train"] * 4 + ["live_test_main"] * 4),
+        trial_ids=np.arange(8),
+        stimulus_ids=np.arange(8),
+        neuron_ids=np.arange(3),
+    )
+
+    output = run_sensorium_benchmark(
+        table,
+        output=tmp_path / "ood_gate.json",
+        eval_tiers=("live_test_main",),
+        has_ood_generalization_gate=True,
+    )
+    payload = json.loads(output.read_text())
+
+    assert payload["metrics"]["has_ood_generalization_gate"]
+    assert payload["dataset"]["eval_tiers"] == ["live_test_main"]
