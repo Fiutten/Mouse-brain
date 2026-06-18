@@ -149,38 +149,52 @@ Resultado agregado:
 ## Extensión 5e: OOD con respuestas liberadas
 
 El README oficial de Dynamic Sensorium enlaza una release legacy con cinco
-ratones y respuestas OOD liberadas. Se descargó inicialmente `dynamic29156-11-10`
-y se verificó con `unzip -t` y SHA256:
+ratones y respuestas OOD liberadas. Se validaron tres ratones con `unzip -t`:
 
 ```text
-61915fa4e3f29da6c136cf71185e4cc38b0eb2c16fe2559db24fe8efffb178e7
+dynamic29156-11-10
+dynamic29234-6-9
+dynamic29514-2-9
 ```
 
-El loader corregido carga `720` ensayos y excluye automáticamente trials sin
-respuesta porque alinea por ID de archivo. Los tiers `live_test_main`,
-`live_test_bonus`, `final_test_main` y `final_test_bonus` tienen respuestas
-no nulas.
+Los hashes SHA256 y las descargas parciales excluidas están documentados en
+`docs/DATA_PROVENANCE.md`. El loader corregido excluye automáticamente trials
+sin respuesta porque alinea por ID de archivo. Los tiers `live_test_main`,
+`live_test_bonus`, `final_test_main` y `final_test_bonus` tienen respuestas no
+nulas.
 
 Comando reproducible:
 
 ```bash
-.venv/bin/python scripts/run_dynamic_sensorium_ood_probe.py \
-  data/dynamic_sensorium_ood/extracted/dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce
+for root in data/dynamic_sensorium_ood/extracted/dynamic*-Video-*; do
+  .venv/bin/python scripts/run_dynamic_sensorium_ood_probe.py "$root"
+done
+.venv/bin/python scripts/summarize_dynamic_sensorium_ood.py
 ```
 
-Artefacto:
+Artefacto agregado:
 
 ```text
-results/dynamic_sensorium_ood/dynamic29156-11-10_ood_temporal_comparison.json
+results/dynamic_sensorium_ood/summary_dynamic_sensorium_legacy_ood_temporal_comparison.json
 ```
 
-| Métrica OOD | Summary | Temporal filterbank |
-|---|---:|---:|
-| Correlación adapter | `0.36293` | `0.39149` |
-| Δ mean | `-0.00203` | `0.02653` |
-| Δ scrambled | `0.02078` | `0.06196` |
+| Métrica OOD | Valor |
+|---|---:|
+| Ratones válidos | `3` |
+| Temporal mejora frente a summary | `3/3` |
+| Temporal mejora frente a mean | `2/3` |
+| Temporal mejora frente a scrambled | `3/3` |
+| Mediana summary correlation | `0.36293` |
+| Mediana temporal correlation | `0.39149` |
+| Mediana temporal - summary | `0.01264` |
+| Mediana temporal - mean | `0.02501` |
+| Mediana temporal - scrambled | `0.02095` |
+| Reliability estimable | `0/3` |
+| MIS passed | `0/3` |
 
-Interpretación: este es un resultado positivo de generalización OOD, pero no
-una conclusión mecanística. `reliability_estimable=false` y el MIS completo no
-pasa; la contribución defendible es que el marco separa explícitamente
-predicción, OOD e identificabilidad.
+Interpretación: este es un resultado positivo moderado de generalización OOD,
+pero no una conclusión mecanística. El descriptor temporal mejora frente a
+summary y scrambled en los tres ratones, aunque solo mejora frente al predictor
+medio en dos de tres. `reliability_estimable=false` y el MIS completo no pasa;
+la contribución defendible es que el marco separa explícitamente predicción,
+OOD e identificabilidad.

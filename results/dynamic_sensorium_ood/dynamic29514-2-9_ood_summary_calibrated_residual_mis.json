@@ -3,11 +3,11 @@
   "git_revision": "e2594cb",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
-    "root": "data/dynamic_sensorium_ood/extracted/dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce",
+    "root": "data/dynamic_sensorium_ood/extracted/dynamic29514-2-9-Video-8744edeac3b4d1ce16b680916b5267ce",
     "modality": "dynamic",
     "feature_mode": "summary",
-    "n_trials": 720,
-    "n_neurons": 7440,
+    "n_trials": 723,
+    "n_neurons": 7495,
     "eval_tiers": [
       "live_test_main",
       "live_test_bonus",
@@ -15,12 +15,12 @@
       "final_test_bonus"
     ],
     "tiers": {
-      "final_test_bonus": 138,
-      "final_test_main": 58,
-      "live_test_bonus": 59,
-      "live_test_main": 56,
-      "oracle": 59,
-      "train": 350
+      "final_test_bonus": 137,
+      "final_test_main": 60,
+      "live_test_bonus": 58,
+      "live_test_main": 57,
+      "oracle": 60,
+      "train": 351
     }
   },
   "baselines": {
@@ -35,44 +35,44 @@
     "name": "calibrated_residual_ridge",
     "diagnostics": {
       "adapter_alpha": 100.0,
-      "adapter_beta": 0.7000000000000001,
-      "adapter_cv_correlation": 0.5151091174608508,
+      "adapter_beta": 0.625,
+      "adapter_cv_correlation": 0.4780462611142393,
       "adapter_cv_folds": 5.0,
       "adapter_alpha_candidates": 7.0
     }
   },
   "metrics": {
-    "mean_correlation": 0.36495873496165293,
-    "ridge_correlation": 0.2925762272292795,
-    "scrambled_correlation": 0.1829401469786443,
-    "ridge_median_neuron_correlation": 0.06919356400384845,
+    "mean_correlation": 0.4038027596907151,
+    "ridge_correlation": 0.34893160578744575,
+    "scrambled_correlation": 0.3007429320712405,
+    "ridge_median_neuron_correlation": 0.041220768492889276,
     "context_available": true,
-    "stimulus_context_ridge_correlation": -0.0010964154745186532,
-    "stimulus_context_scrambled_correlation": -0.011259342947708079,
-    "stimulus_context_ridge_median_neuron_correlation": -0.01412310537867171,
-    "calibrated_residual_ridge_correlation": 0.36292557669545394,
-    "calibrated_residual_ridge_scrambled_correlation": 0.34214127839951675,
-    "calibrated_residual_ridge_median_neuron_correlation": 0.07981060729989983,
+    "stimulus_context_ridge_correlation": 0.06804724461279904,
+    "stimulus_context_scrambled_correlation": 0.05863991755082502,
+    "stimulus_context_ridge_median_neuron_correlation": 0.02241864251927985,
+    "calibrated_residual_ridge_correlation": 0.41616906735192394,
+    "calibrated_residual_ridge_scrambled_correlation": 0.4063021869492926,
+    "calibrated_residual_ridge_median_neuron_correlation": 0.06146722364527759,
     "best_model_is_contextual": false,
     "best_model": "calibrated_residual_ridge",
-    "best_predictive_correlation": 0.36292557669545394,
-    "best_predictive_scrambled_correlation": 0.34214127839951675,
+    "best_predictive_correlation": 0.41616906735192394,
+    "best_predictive_scrambled_correlation": 0.4063021869492926,
     "reliability": 0.0,
     "reliability_estimable": false,
     "reliability_repeated_stimuli": 0.0,
     "has_structural_or_interventional_constraint": false,
     "has_ood_generalization_gate": true,
-    "ridge_minus_mean": -0.07238250773237342,
-    "ridge_minus_scrambled": 0.1096360802506352,
-    "stimulus_context_ridge_minus_mean": -0.3660551504361716,
-    "stimulus_context_ridge_minus_scrambled": 0.010162927473189426,
-    "calibrated_residual_ridge_minus_mean": -0.0020331582661989867,
-    "calibrated_residual_ridge_minus_scrambled": 0.020784298295937198,
-    "best_predictive_minus_mean": -0.0020331582661989867,
-    "best_predictive_minus_scrambled": 0.020784298295937198
+    "ridge_minus_mean": -0.054871153903269354,
+    "ridge_minus_scrambled": 0.04818867371620528,
+    "stimulus_context_ridge_minus_mean": -0.33575551507791607,
+    "stimulus_context_ridge_minus_scrambled": 0.009407327061974023,
+    "calibrated_residual_ridge_minus_mean": 0.01236630766120883,
+    "calibrated_residual_ridge_minus_scrambled": 0.00986688040263134,
+    "best_predictive_minus_mean": 0.01236630766120883,
+    "best_predictive_minus_scrambled": 0.00986688040263134
   },
   "mis": {
-    "score": 0.3239651073243049,
+    "score": 0.3271848623640892,
     "passed": false,
     "blocks": [
       {
@@ -93,27 +93,27 @@
       {
         "name": "topology_specificity",
         "passed": false,
-        "score": 0.47189532197291467,
+        "score": 0.4815545870922678,
         "criteria": [
           {
             "name": "best_predictive_minus_mean_correlation",
-            "value": -0.0020331582661989867,
+            "value": 0.01236630766120883,
             "threshold": 0.05,
             "direction": "gt",
             "passed": false,
-            "normalized_score": 0.0
+            "normalized_score": 0.24732615322417661
           },
           {
             "name": "best_predictive_minus_scrambled_correlation",
-            "value": 0.020784298295937198,
+            "value": 0.00986688040263134,
             "threshold": 0.05,
             "direction": "gt",
             "passed": false,
-            "normalized_score": 0.41568596591874396
+            "normalized_score": 0.1973376080526268
           },
           {
             "name": "best_predictive_test_correlation",
-            "value": 0.36292557669545394,
+            "value": 0.41616906735192394,
             "threshold": 0.1,
             "direction": "gt",
             "passed": true,

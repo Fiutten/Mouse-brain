@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "ee348f1-dirty",
+  "git_revision": "e2594cb",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "data/dynamic_sensorium_ood/extracted/dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce",

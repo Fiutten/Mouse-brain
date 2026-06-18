@@ -116,19 +116,35 @@ queda como held-out. Los resultados y limitaciones están en
 
 El 18 de junio de 2026 se verificó también la release legacy enlazada desde el
 README oficial de Dynamic Sensorium 2023 como "previous dataset" con respuestas
-OOD liberadas. Se descargó y extrajo inicialmente un animal:
+OOD liberadas. Se descargaron y validaron tres animales con `unzip -t`:
 
 ```text
 dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
 sha256 61915fa4e3f29da6c136cf71185e4cc38b0eb2c16fe2559db24fe8efffb178e7
+
+dynamic29234-6-9-Video-8744edeac3b4d1ce16b680916b5267ce.zip
+sha256 1c3af339e6b2611264bed6b0036fed5c2ce6a15b5ae6811b80ebc68d31fb146a
+
+dynamic29514-2-9-Video-8744edeac3b4d1ce16b680916b5267ce.zip
+sha256 66fcc95ecdcbdb8d464a7aa5d34626fe2cee83d8c956ee3da2a082ff346304bf
 ```
 
-El zip pasó `unzip -t`. Uso local observado tras interrumpir la descarga del
-segundo zip parcial: `data/dynamic_sensorium_ood/raw` `7.7G` y
-`data/dynamic_sensorium_ood/extracted` `8.6G`. La release contiene respuestas
-no nulas en `live_test_main`, `live_test_bonus`, `final_test_main` y
-`final_test_bonus`, por lo que permite una prueba OOD pública que no estaba
-disponible en la cohorte principal descargada antes. Los artefactos quedan en
+Dos descargas adicionales quedaron parciales y no se usaron en ningún análisis:
+
+```text
+dynamic29228-2-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
+estado local: 760M parcial; el servidor rechazo reanudacion por byte ranges.
+
+dynamic29513-3-5-Video-8744edeac3b4d1ce16b680916b5267ce.zip
+estado local: 2.3G parcial; la transferencia se corto y el servidor rechazo reanudacion.
+```
+
+Uso local observado tras la ampliación: `data/dynamic_sensorium_ood/raw` `24G`,
+`data/dynamic_sensorium_ood/extracted` `27G` y
+`results/dynamic_sensorium_ood` `68K`. La release contiene respuestas no nulas
+en `live_test_main`, `live_test_bonus`, `final_test_main` y `final_test_bonus`,
+por lo que permite una prueba OOD pública que no estaba disponible en la cohorte
+principal descargada antes. Los artefactos quedan en
 `results/dynamic_sensorium_ood/`.
 
 Nota legal: el README de GIN indica licencia `CC BY-NC-ND 4.0` y solicita

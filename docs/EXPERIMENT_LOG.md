@@ -131,6 +131,70 @@ no es estimable y no hay restricción estructural/causal. Esto es exactamente
 útil para nuestra tesis: el marco distingue predicción, OOD y mecanismo sin
 confundirlos.
 
+## 2026-06-18 — Fase 5e: ampliación OOD legacy a tres ratones
+
+### Objetivo
+
+Evitar que la prueba OOD legacy descansara en un único animal. Se intentó
+ampliar la cohorte con los zips legacy disponibles en GIN y se incorporaron
+solo los archivos que pasaron validación completa.
+
+### Datos
+
+Entraron en análisis tres animales:
+
+- `dynamic29156-11-10`;
+- `dynamic29234-6-9`;
+- `dynamic29514-2-9`.
+
+Los tres zips pasaron `unzip -t` y tienen SHA256 registrados en
+`docs/DATA_PROVENANCE.md`. Dos intentos adicionales no entraron:
+`dynamic29228-2-10` quedó parcial a `760M` y `dynamic29513-3-5` quedó parcial a
+`2.3G`; en ambos casos el servidor rechazó reanudación por byte ranges.
+
+### Resultado agregado
+
+Artefacto:
+
+```text
+results/dynamic_sensorium_ood/summary_dynamic_sensorium_legacy_ood_temporal_comparison.json
+```
+
+| Métrica OOD | Valor |
+|---|---:|
+| Ratones válidos | `3` |
+| Temporal mejora frente a summary | `3/3` |
+| Temporal mejora frente a mean | `2/3` |
+| Temporal mejora frente a scrambled | `3/3` |
+| Mediana summary correlation | `0.36293` |
+| Mediana temporal correlation | `0.39149` |
+| Mediana temporal - summary | `0.01264` |
+| Mediana temporal - mean | `0.02501` |
+| Mediana temporal - scrambled | `0.02095` |
+| Reliability estimable | `0/3` |
+| MIS passed | `0/3` |
+
+### Resultados individuales
+
+| Mouse | Summary | Temporal | Temporal - summary | Temporal - mean | Temporal - scrambled |
+|---|---:|---:|---:|---:|---:|
+| `dynamic29156-11-10` | `0.36293` | `0.39149` | `0.02857` | `0.02653` | `0.06196` |
+| `dynamic29234-6-9` | `0.32288` | `0.32300` | `0.00012` | `-0.00638` | `0.01091` |
+| `dynamic29514-2-9` | `0.41617` | `0.42881` | `0.01264` | `0.02501` | `0.02095` |
+
+### Decisión
+
+**Evidencia OOD positiva moderada.** El descriptor temporal mejora de forma
+consistente frente al descriptor summary y frente al control scrambled en los
+tres animales validados. La mejora frente al predictor medio es positiva en
+dos de tres, lo que obliga a una lectura prudente: hay señal temporal útil y
+generalización OOD, pero no una ventaja universal ni una afirmación mecanística.
+
+El MIS hace lo correcto al no pasar: no hay fiabilidad por repetición estimable
+ni restricción estructural/causal. Este resultado sirve para sostener el
+argumento metodológico del proyecto, no para reclamar un modelo neuronal
+explicativo completo.
+
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 
 ### Objetivo
