@@ -195,6 +195,79 @@ ni restricción estructural/causal. Este resultado sirve para sostener el
 argumento metodológico del proyecto, no para reclamar un modelo neuronal
 explicativo completo.
 
+## 2026-06-18 — Fase 5f: adaptador temporal SVD
+
+### Objetivo
+
+Probar un modelo temporal más serio que el descriptor temporal transparente,
+sin saltar todavía a deep learning ni usar test/OOD para seleccionar
+hiperparámetros.
+
+### Modelo
+
+Se añadió `temporal_svd_residual_ridge`:
+
+1. estandariza descriptores `temporal_filterbank` solo con `train`;
+2. aprende una subbase SVD solo en `train`;
+3. predice residuales neuronales con ridge en esa subbase;
+4. selecciona componentes, `alpha` y escala residual `beta` por CV interna;
+5. evalúa `oracle` u OOD sin tocar sus respuestas durante selección.
+
+La primera implementación era demasiado costosa porque acumulaba predicciones
+CV para todos los candidatos. Se sustituyó por selección streaming, manteniendo
+una matriz CV por combinación componentes/alpha y evaluando beta sin almacenar
+todo el grid. Esto reduce memoria y deja el experimento operativo.
+
+### Dynamic Sensorium 2023 principal
+
+Artefacto:
+
+```text
+results/dynamic_sensorium_temporal_svd/summary_dynamic_sensorium2023_temporal_svd.json
+```
+
+| Métrica | Valor |
+|---|---:|
+| Ratones | `5` |
+| SVD mejora frente a mean | `4/5` |
+| SVD mejora frente a scrambled | `5/5` |
+| Mediana SVD - mean | `0.03889` |
+| Mediana SVD - scrambled | `0.05480` |
+| SVD mejora frente al temporal-filterbank previo | `3/5` |
+| Mediana SVD - temporal-filterbank previo | `0.00775` |
+| Reliability estimable | `0/5` |
+| MIS passed | `0/5` |
+
+### Dynamic Sensorium legacy OOD
+
+Artefacto:
+
+```text
+results/dynamic_sensorium_temporal_svd/summary_dynamic_sensorium_legacy_ood_temporal_svd.json
+```
+
+| Métrica OOD | Valor |
+|---|---:|
+| Ratones válidos | `3` |
+| SVD mejora frente a mean | `3/3` |
+| SVD mejora frente a scrambled | `3/3` |
+| Mediana SVD - mean | `0.03091` |
+| Mediana SVD - scrambled | `0.02820` |
+| SVD mejora frente al temporal-filterbank previo | `3/3` |
+| Mediana SVD - temporal-filterbank previo | `0.00735` |
+| Reliability estimable | `0/3` |
+| MIS passed | `0/3` |
+
+### Decisión
+
+**Avance positivo, todavía no Q1 por sí solo.** El adaptador SVD aporta una
+mejora incremental pequeña pero consistente en OOD frente al baseline temporal
+previo. La señal principal es que el marco detecta una mejora predictiva real
+sin convertirla en identificabilidad mecanística. Para una publicación fuerte,
+el siguiente paso debe comparar contra un modelo temporal externo/oficial o
+un baseline profundo ligero, y buscar un dataset/tier con repeticiones que
+permita estimar fiabilidad.
+
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 
 ### Objetivo

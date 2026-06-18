@@ -1,0 +1,59 @@
+{
+  "dataset": "Dynamic Sensorium temporal SVD adapter comparison",
+  "eval_tiers": [
+    "live_test_main",
+    "live_test_bonus",
+    "final_test_main",
+    "final_test_bonus"
+  ],
+  "adapter": "temporal_svd_residual_ridge",
+  "n_mice": 3,
+  "positive_temporal_svd_minus_mean_count": 3,
+  "positive_temporal_svd_minus_scrambled_count": 3,
+  "median_temporal_svd_minus_mean": 0.03091042171243108,
+  "median_temporal_svd_minus_scrambled": 0.02820325759118425,
+  "reliability_estimable_count": 0,
+  "mis_passed_count": 0,
+  "rows": [
+    {
+      "mouse": "dynamic29156-11-10",
+      "output": "results/dynamic_sensorium_temporal_svd/ood/dynamic29156-11-10_temporal_svd_residual_mis.json",
+      "temporal_svd_correlation": 0.3988372201491509,
+      "temporal_svd_minus_mean": 0.033878485187497975,
+      "temporal_svd_minus_scrambled": 0.06351319424751306,
+      "best_model": "temporal_svd_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.9,
+      "selected_components": 16.0,
+      "mis_passed": false,
+      "reliability_estimable": false
+    },
+    {
+      "mouse": "dynamic29234-6-9",
+      "output": "results/dynamic_sensorium_temporal_svd/ood/dynamic29234-6-9_temporal_svd_residual_mis.json",
+      "temporal_svd_correlation": 0.3602982743004778,
+      "temporal_svd_minus_mean": 0.03091042171243108,
+      "temporal_svd_minus_scrambled": 0.021014393931170716,
+      "best_model": "temporal_svd_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.875,
+      "selected_components": 16.0,
+      "mis_passed": false,
+      "reliability_estimable": false
+    },
+    {
+      "mouse": "dynamic29514-2-9",
+      "output": "results/dynamic_sensorium_temporal_svd/ood/dynamic29514-2-9_temporal_svd_residual_mis.json",
+      "temporal_svd_correlation": 0.43318704379711154,
+      "temporal_svd_minus_mean": 0.02938428410639643,
+      "temporal_svd_minus_scrambled": 0.02820325759118425,
+      "best_model": "temporal_svd_residual_ridge",
+      "selected_alpha": 1.0,
+      "selected_beta": 0.625,
+      "selected_components": 16.0,
+      "mis_passed": false,
+      "reliability_estimable": false
+    }
+  ],
+  "interpretation": "The SVD adapter is a stronger temporal baseline, but still only predictive evidence. MIS should remain negative without repeat reliability or structural/causal constraints."
+}

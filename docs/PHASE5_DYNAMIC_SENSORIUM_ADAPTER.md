@@ -198,3 +198,52 @@ summary y scrambled en los tres ratones, aunque solo mejora frente al predictor
 medio en dos de tres. `reliability_estimable=false` y el MIS completo no pasa;
 la contribución defendible es que el marco separa explícitamente predicción,
 OOD e identificabilidad.
+
+## Extensión 5f: adaptador temporal SVD
+
+Se añadió `temporal_svd_residual_ridge` como baseline temporal más fuerte sin
+introducir todavía deep learning. El adaptador aprende una subbase SVD de los
+descriptores `temporal_filterbank` usando solo `train`, predice residuales con
+ridge y calibra componentes, `alpha` y `beta` por CV interna.
+
+Comando reproducible para la cohorte principal:
+
+```bash
+.venv/bin/python scripts/run_dynamic_sensorium_temporal_svd.py \
+  --extracted-root data/dynamic_sensorium/extracted \
+  --output-dir results/dynamic_sensorium_temporal_svd/main \
+  --summary-output results/dynamic_sensorium_temporal_svd/summary_dynamic_sensorium2023_temporal_svd.json \
+  --eval-tier oracle \
+  --alpha-grid 1,10,100 \
+  --git-revision 439d9ae \
+  --force
+```
+
+Comando reproducible para OOD legacy:
+
+```bash
+.venv/bin/python scripts/run_dynamic_sensorium_temporal_svd.py \
+  --extracted-root data/dynamic_sensorium_ood/extracted \
+  --output-dir results/dynamic_sensorium_temporal_svd/ood \
+  --summary-output results/dynamic_sensorium_temporal_svd/summary_dynamic_sensorium_legacy_ood_temporal_svd.json \
+  --eval-tier live_test_main \
+  --eval-tier live_test_bonus \
+  --eval-tier final_test_main \
+  --eval-tier final_test_bonus \
+  --alpha-grid 1,10,100 \
+  --git-revision 439d9ae \
+  --ood-gate \
+  --force
+```
+
+Resultado:
+
+| Cohorte | n | SVD > mean | SVD > scrambled | Mediana SVD - mean | SVD > temporal previo |
+|---|---:|---:|---:|---:|---:|
+| Dynamic Sensorium 2023 `oracle` | `5` | `4/5` | `5/5` | `0.03889` | `3/5` |
+| Legacy OOD liberado | `3` | `3/3` | `3/3` | `0.03091` | `3/3` |
+
+Interpretación crítica: el SVD temporal aporta una mejora incremental defendible,
+especialmente en OOD, pero sigue siendo evidencia predictiva. El MIS permanece
+negativo (`0/5` y `0/3`) porque no existe fiabilidad por repetición ni una
+restricción estructural/causal activa.

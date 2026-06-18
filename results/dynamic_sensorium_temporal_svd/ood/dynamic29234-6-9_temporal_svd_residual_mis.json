@@ -1,0 +1,165 @@
+{
+  "version": "0.6.0",
+  "git_revision": "439d9ae",
+  "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
+  "dataset": {
+    "root": "data/dynamic_sensorium_ood/extracted/dynamic29234-6-9-Video-8744edeac3b4d1ce16b680916b5267ce",
+    "modality": "dynamic",
+    "feature_mode": "temporal_filterbank",
+    "n_trials": 729,
+    "n_neurons": 8285,
+    "eval_tiers": [
+      "live_test_main",
+      "live_test_bonus",
+      "final_test_main",
+      "final_test_bonus"
+    ],
+    "tiers": {
+      "final_test_bonus": 119,
+      "final_test_main": 59,
+      "live_test_bonus": 80,
+      "live_test_main": 58,
+      "oracle": 58,
+      "train": 355
+    }
+  },
+  "baselines": {
+    "mean_response": "train-set neuron mean",
+    "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
+    "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
+    "scrambled_stimulus_ridge": "same model with permuted train stimuli",
+    "scrambled_stimulus_context_ridge": "context-preserving control with permuted train stimuli",
+    "calibrated_residual_ridge": "train-calibrated mean response plus shrinkage-scaled stimulus residual",
+    "temporal_svd_residual_ridge": "train-only SVD temporal subspace plus calibrated residual ridge"
+  },
+  "adapter": {
+    "name": "temporal_svd_residual_ridge",
+    "diagnostics": {
+      "adapter_alpha": 100.0,
+      "adapter_beta": 0.875,
+      "adapter_components": 16.0,
+      "adapter_cv_correlation": 0.44601918900044324,
+      "adapter_cv_folds": 5.0,
+      "adapter_alpha_candidates": 3.0,
+      "adapter_component_candidates": 4.0
+    }
+  },
+  "metrics": {
+    "mean_correlation": 0.3293878525880467,
+    "ridge_correlation": 0.17537833115234736,
+    "scrambled_correlation": 0.09306471797113658,
+    "ridge_median_neuron_correlation": 0.05828799975085587,
+    "context_available": true,
+    "stimulus_context_ridge_correlation": -0.03693666779135927,
+    "stimulus_context_scrambled_correlation": 0.06364922669408321,
+    "stimulus_context_ridge_median_neuron_correlation": 0.020099017722649107,
+    "calibrated_residual_ridge_correlation": 0.0,
+    "calibrated_residual_ridge_scrambled_correlation": 0.0,
+    "calibrated_residual_ridge_median_neuron_correlation": 0.0,
+    "temporal_svd_residual_ridge_correlation": 0.3602982743004778,
+    "temporal_svd_residual_ridge_scrambled_correlation": 0.33928388036930707,
+    "temporal_svd_residual_ridge_median_neuron_correlation": 0.12316650419654478,
+    "best_model_is_contextual": false,
+    "best_model": "temporal_svd_residual_ridge",
+    "best_predictive_correlation": 0.3602982743004778,
+    "best_predictive_scrambled_correlation": 0.33928388036930707,
+    "reliability": 0.0,
+    "reliability_estimable": false,
+    "reliability_repeated_stimuli": 0.0,
+    "has_structural_or_interventional_constraint": false,
+    "has_ood_generalization_gate": true,
+    "ridge_minus_mean": -0.15400952143569935,
+    "ridge_minus_scrambled": 0.08231361318121078,
+    "stimulus_context_ridge_minus_mean": -0.366324520379406,
+    "stimulus_context_ridge_minus_scrambled": -0.10058589448544247,
+    "calibrated_residual_ridge_minus_mean": -0.3293878525880467,
+    "calibrated_residual_ridge_minus_scrambled": 0.0,
+    "temporal_svd_residual_ridge_minus_mean": 0.03091042171243108,
+    "temporal_svd_residual_ridge_minus_scrambled": 0.021014393931170716,
+    "best_predictive_minus_mean": 0.03091042171243108,
+    "best_predictive_minus_scrambled": 0.021014393931170716
+  },
+  "mis": {
+    "score": 0.3931662569857817,
+    "passed": false,
+    "blocks": [
+      {
+        "name": "reproducibility",
+        "passed": false,
+        "score": 0.0,
+        "criteria": [
+          {
+            "name": "heldout_repeat_response_reliability",
+            "value": 0.0,
+            "threshold": 0.3,
+            "direction": "gt",
+            "passed": false,
+            "normalized_score": 0.0
+          }
+        ]
+      },
+      {
+        "name": "topology_specificity",
+        "passed": false,
+        "score": 0.6794987709573453,
+        "criteria": [
+          {
+            "name": "best_predictive_minus_mean_correlation",
+            "value": 0.03091042171243108,
+            "threshold": 0.05,
+            "direction": "gt",
+            "passed": false,
+            "normalized_score": 0.6182084342486216
+          },
+          {
+            "name": "best_predictive_minus_scrambled_correlation",
+            "value": 0.021014393931170716,
+            "threshold": 0.05,
+            "direction": "gt",
+            "passed": false,
+            "normalized_score": 0.4202878786234143
+          },
+          {
+            "name": "best_predictive_test_correlation",
+            "value": 0.3602982743004778,
+            "threshold": 0.1,
+            "direction": "gt",
+            "passed": true,
+            "normalized_score": 1.0
+          }
+        ]
+      },
+      {
+        "name": "directed_identifiability",
+        "passed": false,
+        "score": 0.5,
+        "criteria": [
+          {
+            "name": "has_structural_or_interventional_constraint",
+            "value": 0.0,
+            "threshold": 1.0,
+            "direction": "gte",
+            "passed": false,
+            "normalized_score": 0.0
+          },
+          {
+            "name": "has_ood_generalization_gate",
+            "value": 1.0,
+            "threshold": 1.0,
+            "direction": "gte",
+            "passed": true,
+            "normalized_score": 1.0
+          }
+        ]
+      }
+    ],
+    "interpretation": "not_mechanistically_identifiable"
+  },
+  "decision": "predictive_signal_requires_extra_mechanistic_evidence",
+  "limitations": [
+    "The baseline is intentionally transparent and not a Sensorium SOTA model.",
+    "Prediction from images/videos is not by itself mechanistic explanation.",
+    "A mechanistic claim requires structure, perturbation, OOD, or causal constraints.",
+    "Reliability is only estimable when held-out tiers contain repeated stimulus ids."
+  ]
+}

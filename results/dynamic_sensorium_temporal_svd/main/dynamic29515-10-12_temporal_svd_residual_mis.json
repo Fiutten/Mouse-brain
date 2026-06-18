@@ -1,0 +1,162 @@
+{
+  "version": "0.6.0",
+  "git_revision": "439d9ae",
+  "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
+  "dataset": {
+    "root": "data/dynamic_sensorium/extracted/dynamic29515-10-12-Video-9b4f6a1a067fe51e15306b9628efea20",
+    "modality": "dynamic",
+    "feature_mode": "temporal_filterbank",
+    "n_trials": 711,
+    "n_neurons": 7863,
+    "eval_tiers": [
+      "oracle"
+    ],
+    "tiers": {
+      "final_test_bonus": 134,
+      "final_test_main": 57,
+      "live_test_bonus": 58,
+      "live_test_main": 56,
+      "oracle": 58,
+      "train": 348
+    }
+  },
+  "baselines": {
+    "mean_response": "train-set neuron mean",
+    "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
+    "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
+    "scrambled_stimulus_ridge": "same model with permuted train stimuli",
+    "scrambled_stimulus_context_ridge": "context-preserving control with permuted train stimuli",
+    "calibrated_residual_ridge": "train-calibrated mean response plus shrinkage-scaled stimulus residual",
+    "temporal_svd_residual_ridge": "train-only SVD temporal subspace plus calibrated residual ridge"
+  },
+  "adapter": {
+    "name": "temporal_svd_residual_ridge",
+    "diagnostics": {
+      "adapter_alpha": 100.0,
+      "adapter_beta": 0.7250000000000001,
+      "adapter_components": 16.0,
+      "adapter_cv_correlation": 0.44404572121884595,
+      "adapter_cv_folds": 5.0,
+      "adapter_alpha_candidates": 3.0,
+      "adapter_component_candidates": 4.0
+    }
+  },
+  "metrics": {
+    "mean_correlation": 0.42376986766324315,
+    "ridge_correlation": 0.20556917284702964,
+    "scrambled_correlation": 0.11094031627434298,
+    "ridge_median_neuron_correlation": 0.05095775669772734,
+    "context_available": true,
+    "stimulus_context_ridge_correlation": 0.2043001183700836,
+    "stimulus_context_scrambled_correlation": 0.0984186352251367,
+    "stimulus_context_ridge_median_neuron_correlation": 0.06244955349757042,
+    "calibrated_residual_ridge_correlation": 0.0,
+    "calibrated_residual_ridge_scrambled_correlation": 0.0,
+    "calibrated_residual_ridge_median_neuron_correlation": 0.0,
+    "temporal_svd_residual_ridge_correlation": 0.41452834204433525,
+    "temporal_svd_residual_ridge_scrambled_correlation": 0.3763535985321909,
+    "temporal_svd_residual_ridge_median_neuron_correlation": 0.07358195524129964,
+    "best_model_is_contextual": false,
+    "best_model": "temporal_svd_residual_ridge",
+    "best_predictive_correlation": 0.41452834204433525,
+    "best_predictive_scrambled_correlation": 0.3763535985321909,
+    "reliability": 0.0,
+    "reliability_estimable": false,
+    "reliability_repeated_stimuli": 0.0,
+    "has_structural_or_interventional_constraint": false,
+    "has_ood_generalization_gate": false,
+    "ridge_minus_mean": -0.21820069481621351,
+    "ridge_minus_scrambled": 0.09462885657268666,
+    "stimulus_context_ridge_minus_mean": -0.21946974929315954,
+    "stimulus_context_ridge_minus_scrambled": 0.1058814831449469,
+    "calibrated_residual_ridge_minus_mean": -0.42376986766324315,
+    "calibrated_residual_ridge_minus_scrambled": 0.0,
+    "temporal_svd_residual_ridge_minus_mean": -0.009241525618907898,
+    "temporal_svd_residual_ridge_minus_scrambled": 0.03817474351214434,
+    "best_predictive_minus_mean": -0.009241525618907898,
+    "best_predictive_minus_scrambled": 0.03817474351214434
+  },
+  "mis": {
+    "score": 0.19594387447143188,
+    "passed": false,
+    "blocks": [
+      {
+        "name": "reproducibility",
+        "passed": false,
+        "score": 0.0,
+        "criteria": [
+          {
+            "name": "heldout_repeat_response_reliability",
+            "value": 0.0,
+            "threshold": 0.3,
+            "direction": "gt",
+            "passed": false,
+            "normalized_score": 0.0
+          }
+        ]
+      },
+      {
+        "name": "topology_specificity",
+        "passed": false,
+        "score": 0.5878316234142956,
+        "criteria": [
+          {
+            "name": "best_predictive_minus_mean_correlation",
+            "value": -0.009241525618907898,
+            "threshold": 0.05,
+            "direction": "gt",
+            "passed": false,
+            "normalized_score": 0.0
+          },
+          {
+            "name": "best_predictive_minus_scrambled_correlation",
+            "value": 0.03817474351214434,
+            "threshold": 0.05,
+            "direction": "gt",
+            "passed": false,
+            "normalized_score": 0.7634948702428868
+          },
+          {
+            "name": "best_predictive_test_correlation",
+            "value": 0.41452834204433525,
+            "threshold": 0.1,
+            "direction": "gt",
+            "passed": true,
+            "normalized_score": 1.0
+          }
+        ]
+      },
+      {
+        "name": "directed_identifiability",
+        "passed": false,
+        "score": 0.0,
+        "criteria": [
+          {
+            "name": "has_structural_or_interventional_constraint",
+            "value": 0.0,
+            "threshold": 1.0,
+            "direction": "gte",
+            "passed": false,
+            "normalized_score": 0.0
+          },
+          {
+            "name": "has_ood_generalization_gate",
+            "value": 0.0,
+            "threshold": 1.0,
+            "direction": "gte",
+            "passed": false,
+            "normalized_score": 0.0
+          }
+        ]
+      }
+    ],
+    "interpretation": "not_mechanistically_identifiable"
+  },
+  "decision": "predictive_signal_requires_extra_mechanistic_evidence",
+  "limitations": [
+    "The baseline is intentionally transparent and not a Sensorium SOTA model.",
+    "Prediction from images/videos is not by itself mechanistic explanation.",
+    "A mechanistic claim requires structure, perturbation, OOD, or causal constraints.",
+    "Reliability is only estimable when held-out tiers contain repeated stimulus ids."
+  ]
+}
