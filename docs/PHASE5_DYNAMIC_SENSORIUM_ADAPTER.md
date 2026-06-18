@@ -149,15 +149,18 @@ Resultado agregado:
 ## Extensión 5e: OOD con respuestas liberadas
 
 El README oficial de Dynamic Sensorium enlaza una release legacy con cinco
-ratones y respuestas OOD liberadas. Se validaron tres ratones con `unzip -t`:
+ratones y respuestas OOD liberadas. Se validaron los cinco ratones visibles con
+`unzip -t`:
 
 ```text
 dynamic29156-11-10
+dynamic29228-2-10
 dynamic29234-6-9
+dynamic29513-3-5
 dynamic29514-2-9
 ```
 
-Los hashes SHA256 y las descargas parciales excluidas están documentados en
+Los hashes SHA256 y los intentos parciales reemplazados están documentados en
 `docs/DATA_PROVENANCE.md`. El loader corregido excluye automáticamente trials
 sin respuesta porque alinea por ID de archivo. Los tiers `live_test_main`,
 `live_test_bonus`, `final_test_main` y `final_test_bonus` tienen respuestas no
@@ -180,24 +183,24 @@ results/dynamic_sensorium_ood/summary_dynamic_sensorium_legacy_ood_temporal_comp
 
 | Métrica OOD | Valor |
 |---|---:|
-| Ratones válidos | `3` |
-| Temporal mejora frente a summary | `3/3` |
-| Temporal mejora frente a mean | `2/3` |
-| Temporal mejora frente a scrambled | `3/3` |
-| Mediana summary correlation | `0.36293` |
-| Mediana temporal correlation | `0.39149` |
-| Mediana temporal - summary | `0.01264` |
+| Ratones válidos | `5` |
+| Temporal mejora frente a summary | `5/5` |
+| Temporal mejora frente a mean | `4/5` |
+| Temporal mejora frente a scrambled | `5/5` |
+| Mediana summary correlation | `0.41113` |
+| Mediana temporal correlation | `0.42178` |
+| Mediana temporal - summary | `0.01106` |
 | Mediana temporal - mean | `0.02501` |
-| Mediana temporal - scrambled | `0.02095` |
-| Reliability estimable | `0/3` |
-| MIS passed | `0/3` |
+| Mediana temporal - scrambled | `0.05062` |
+| Reliability estimable | `0/5` |
+| MIS passed | `0/5` |
 
 Interpretación: este es un resultado positivo moderado de generalización OOD,
 pero no una conclusión mecanística. El descriptor temporal mejora frente a
-summary y scrambled en los tres ratones, aunque solo mejora frente al predictor
-medio en dos de tres. `reliability_estimable=false` y el MIS completo no pasa;
-la contribución defendible es que el marco separa explícitamente predicción,
-OOD e identificabilidad.
+summary y scrambled en los cinco ratones, y frente al predictor medio en cuatro
+de cinco. `reliability_estimable=false` y el MIS completo no pasa; la
+contribución defendible es que el marco separa explícitamente predicción, OOD e
+identificabilidad.
 
 ## Extensión 5f: adaptador temporal SVD
 
@@ -241,9 +244,27 @@ Resultado:
 | Cohorte | n | SVD > mean | SVD > scrambled | Mediana SVD - mean | SVD > temporal previo |
 |---|---:|---:|---:|---:|---:|
 | Dynamic Sensorium 2023 `oracle` | `5` | `4/5` | `5/5` | `0.03889` | `3/5` |
-| Legacy OOD liberado | `3` | `3/3` | `3/3` | `0.03091` | `3/3` |
+| Legacy OOD liberado | `5` | `5/5` | `5/5` | `0.03091` | `5/5` |
 
 Interpretación crítica: el SVD temporal aporta una mejora incremental defendible,
 especialmente en OOD, pero sigue siendo evidencia predictiva. El MIS permanece
-negativo (`0/5` y `0/3`) porque no existe fiabilidad por repetición ni una
+negativo (`0/5` y `0/5`) porque no existe fiabilidad por repetición ni una
 restricción estructural/causal activa.
+
+### Cierre de cohorte OOD completa
+
+Al completar `dynamic29228-2-10` y `dynamic29513-3-5`, la comparación SVD frente
+al temporal-filterbank previo quedó:
+
+| Mouse | Temporal filterbank | Temporal SVD | SVD - filterbank |
+|---|---:|---:|---:|
+| `dynamic29156-11-10` | `0.39149` | `0.39884` | `0.00735` |
+| `dynamic29228-2-10` | `0.42886` | `0.43471` | `0.00586` |
+| `dynamic29234-6-9` | `0.32300` | `0.36030` | `0.03729` |
+| `dynamic29513-3-5` | `0.42178` | `0.42657` | `0.00479` |
+| `dynamic29514-2-9` | `0.42881` | `0.43319` | `0.00438` |
+
+SVD supera al temporal-filterbank en `5/5` ratones, con mediana `+0.00586`.
+La mejora es consistente pero pequeña; el valor metodológico está en que el
+benchmark detecta una mejora predictiva OOD sin permitir que esa mejora se
+confunda con identificabilidad mecanística.

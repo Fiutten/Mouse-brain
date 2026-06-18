@@ -116,32 +116,35 @@ queda como held-out. Los resultados y limitaciones están en
 
 El 18 de junio de 2026 se verificó también la release legacy enlazada desde el
 README oficial de Dynamic Sensorium 2023 como "previous dataset" con respuestas
-OOD liberadas. Se descargaron y validaron tres animales con `unzip -t`:
+OOD liberadas. Se descargaron y validaron los cinco animales visibles con
+`unzip -t`:
 
 ```text
 dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
 sha256 61915fa4e3f29da6c136cf71185e4cc38b0eb2c16fe2559db24fe8efffb178e7
 
+dynamic29228-2-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
+sha256 c8b72d8f402f2e22bf34a4a465124f4045a6515047bf714dc02e443170ea8b48
+
 dynamic29234-6-9-Video-8744edeac3b4d1ce16b680916b5267ce.zip
 sha256 1c3af339e6b2611264bed6b0036fed5c2ce6a15b5ae6811b80ebc68d31fb146a
+
+dynamic29513-3-5-Video-8744edeac3b4d1ce16b680916b5267ce.zip
+sha256 fbcebac34616e067d6838b1668ffe2eb7f40b720009f32176e59325d65bb761d
 
 dynamic29514-2-9-Video-8744edeac3b4d1ce16b680916b5267ce.zip
 sha256 66fcc95ecdcbdb8d464a7aa5d34626fe2cee83d8c956ee3da2a082ff346304bf
 ```
 
-Dos descargas adicionales quedaron parciales y no se usaron en ningún análisis:
+Los intentos iniciales de `dynamic29228-2-10` y `dynamic29513-3-5` quedaron
+parciales porque el servidor no aceptó la reanudación por byte ranges. Se
+descargaron de nuevo desde cero, pasaron `unzip -t` y solo entonces entraron en
+los benchmarks.
 
-```text
-dynamic29228-2-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
-estado local: 760M parcial; el servidor rechazo reanudacion por byte ranges.
-
-dynamic29513-3-5-Video-8744edeac3b4d1ce16b680916b5267ce.zip
-estado local: 2.3G parcial; la transferencia se corto y el servidor rechazo reanudacion.
-```
-
-Uso local observado tras la ampliación: `data/dynamic_sensorium_ood/raw` `24G`,
-`data/dynamic_sensorium_ood/extracted` `27G` y
-`results/dynamic_sensorium_ood` `68K`. La release contiene respuestas no nulas
+Uso local observado tras completar la cohorte legacy: `data/dynamic_sensorium_ood/raw`
+`36G`, `data/dynamic_sensorium_ood/extracted` `46G`,
+`results/dynamic_sensorium_ood` `108K` y
+`results/dynamic_sensorium_temporal_svd` `88K`. La release contiene respuestas no nulas
 en `live_test_main`, `live_test_bonus`, `final_test_main` y `final_test_bonus`,
 por lo que permite una prueba OOD pública que no estaba disponible en la cohorte
 principal descargada antes. Los artefactos quedan en

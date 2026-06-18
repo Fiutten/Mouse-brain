@@ -1,0 +1,22 @@
+{
+  "dataset": "Dynamic Sensorium 2023 legacy released-response OOD dataset",
+  "mouse": "dynamic29228-2-10",
+  "eval_tiers": [
+    "live_test_main",
+    "live_test_bonus",
+    "final_test_main",
+    "final_test_bonus"
+  ],
+  "summary_output": "results/dynamic_sensorium_ood/dynamic29228-2-10_ood_summary_calibrated_residual_mis.json",
+  "temporal_output": "results/dynamic_sensorium_ood/dynamic29228-2-10_ood_temporal_filterbank_calibrated_residual_mis.json",
+  "summary_correlation": 0.4177947569881028,
+  "temporal_filterbank_correlation": 0.42885706071431245,
+  "temporal_minus_summary_correlation": 0.011062303726209644,
+  "summary_minus_mean": 0.005222061255348132,
+  "temporal_minus_mean": 0.016284364981557775,
+  "summary_minus_scrambled": 0.0793048217575234,
+  "temporal_minus_scrambled": 0.08270692233219767,
+  "reliability_estimable": false,
+  "mis_passed": false,
+  "interpretation": "Positive OOD prediction is evidence of generalization, not sufficient mechanistic identification without repeat reliability or structural/causal constraints."
+}

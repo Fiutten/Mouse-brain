@@ -7,11 +7,11 @@
     "final_test_bonus"
   ],
   "adapter": "temporal_svd_residual_ridge",
-  "n_mice": 3,
-  "positive_temporal_svd_minus_mean_count": 3,
-  "positive_temporal_svd_minus_scrambled_count": 3,
+  "n_mice": 5,
+  "positive_temporal_svd_minus_mean_count": 5,
+  "positive_temporal_svd_minus_scrambled_count": 5,
   "median_temporal_svd_minus_mean": 0.03091042171243108,
-  "median_temporal_svd_minus_scrambled": 0.02820325759118425,
+  "median_temporal_svd_minus_scrambled": 0.05497996847142439,
   "reliability_estimable_count": 0,
   "mis_passed_count": 0,
   "rows": [
@@ -29,6 +29,19 @@
       "reliability_estimable": false
     },
     {
+      "mouse": "dynamic29228-2-10",
+      "output": "results/dynamic_sensorium_temporal_svd/ood/dynamic29228-2-10_temporal_svd_residual_mis.json",
+      "temporal_svd_correlation": 0.434712342706658,
+      "temporal_svd_minus_mean": 0.022139646973903304,
+      "temporal_svd_minus_scrambled": 0.05824990655306134,
+      "best_model": "temporal_svd_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.925,
+      "selected_components": 16.0,
+      "mis_passed": false,
+      "reliability_estimable": false
+    },
+    {
       "mouse": "dynamic29234-6-9",
       "output": "results/dynamic_sensorium_temporal_svd/ood/dynamic29234-6-9_temporal_svd_residual_mis.json",
       "temporal_svd_correlation": 0.3602982743004778,
@@ -37,6 +50,19 @@
       "best_model": "temporal_svd_residual_ridge",
       "selected_alpha": 100.0,
       "selected_beta": 0.875,
+      "selected_components": 16.0,
+      "mis_passed": false,
+      "reliability_estimable": false
+    },
+    {
+      "mouse": "dynamic29513-3-5",
+      "output": "results/dynamic_sensorium_temporal_svd/ood/dynamic29513-3-5_temporal_svd_residual_mis.json",
+      "temporal_svd_correlation": 0.42657398177945427,
+      "temporal_svd_minus_mean": 0.03801206566954696,
+      "temporal_svd_minus_scrambled": 0.05497996847142439,
+      "best_model": "temporal_svd_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.8500000000000001,
       "selected_components": 16.0,
       "mis_passed": false,
       "reliability_estimable": false

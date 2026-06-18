@@ -133,6 +133,9 @@ confundirlos.
 
 ## 2026-06-18 — Fase 5e: ampliación OOD legacy a tres ratones
 
+Nota: esta sección se conserva como trazabilidad histórica. La cohorte completa
+de cinco ratones y los resultados vigentes están en la Fase 5g.
+
 ### Objetivo
 
 Evitar que la prueba OOD legacy descansara en un único animal. Se intentó
@@ -248,15 +251,15 @@ results/dynamic_sensorium_temporal_svd/summary_dynamic_sensorium_legacy_ood_temp
 
 | Métrica OOD | Valor |
 |---|---:|
-| Ratones válidos | `3` |
-| SVD mejora frente a mean | `3/3` |
-| SVD mejora frente a scrambled | `3/3` |
+| Ratones válidos | `5` |
+| SVD mejora frente a mean | `5/5` |
+| SVD mejora frente a scrambled | `5/5` |
 | Mediana SVD - mean | `0.03091` |
-| Mediana SVD - scrambled | `0.02820` |
-| SVD mejora frente al temporal-filterbank previo | `3/3` |
-| Mediana SVD - temporal-filterbank previo | `0.00735` |
-| Reliability estimable | `0/3` |
-| MIS passed | `0/3` |
+| Mediana SVD - scrambled | `0.05498` |
+| SVD mejora frente al temporal-filterbank previo | `5/5` |
+| Mediana SVD - temporal-filterbank previo | `0.00586` |
+| Reliability estimable | `0/5` |
+| MIS passed | `0/5` |
 
 ### Decisión
 
@@ -267,6 +270,96 @@ sin convertirla en identificabilidad mecanística. Para una publicación fuerte,
 el siguiente paso debe comparar contra un modelo temporal externo/oficial o
 un baseline profundo ligero, y buscar un dataset/tier con repeticiones que
 permita estimar fiabilidad.
+
+## 2026-06-18 — Fase 5g: cohorte OOD legacy completa
+
+### Objetivo
+
+Cerrar la ambigüedad sobre la cohorte OOD legacy. La fase anterior usaba tres
+ratones porque dos descargas habían quedado parciales. Se repitieron esas dos
+descargas desde cero, se validaron con `unzip -t` y se reejecutaron todos los
+benchmarks sobre los cinco animales disponibles.
+
+### Datos
+
+Entraron en análisis cinco animales:
+
+- `dynamic29156-11-10`;
+- `dynamic29228-2-10`;
+- `dynamic29234-6-9`;
+- `dynamic29513-3-5`;
+- `dynamic29514-2-9`.
+
+Los hashes SHA256 y tamaños locales están registrados en
+`docs/DATA_PROVENANCE.md`. La ejecución quedó estampada con `git_revision`
+`afa91c6`.
+
+### Baseline temporal-filterbank
+
+Artefacto:
+
+```text
+results/dynamic_sensorium_ood/summary_dynamic_sensorium_legacy_ood_temporal_comparison.json
+```
+
+| Métrica OOD | Valor |
+|---|---:|
+| Ratones válidos | `5` |
+| Temporal mejora frente a summary | `5/5` |
+| Temporal mejora frente a mean | `4/5` |
+| Temporal mejora frente a scrambled | `5/5` |
+| Mediana summary correlation | `0.41113` |
+| Mediana temporal correlation | `0.42178` |
+| Mediana temporal - summary | `0.01106` |
+| Mediana temporal - mean | `0.02501` |
+| Mediana temporal - scrambled | `0.05062` |
+| Reliability estimable | `0/5` |
+| MIS passed | `0/5` |
+
+### Adaptador temporal SVD
+
+Artefacto:
+
+```text
+results/dynamic_sensorium_temporal_svd/summary_dynamic_sensorium_legacy_ood_temporal_svd.json
+```
+
+| Métrica OOD | Valor |
+|---|---:|
+| Ratones válidos | `5` |
+| SVD mejora frente a mean | `5/5` |
+| SVD mejora frente a scrambled | `5/5` |
+| SVD mejora frente al temporal-filterbank previo | `5/5` |
+| Mediana SVD - mean | `0.03091` |
+| Mediana SVD - scrambled | `0.05498` |
+| Mediana SVD - temporal-filterbank previo | `0.00586` |
+| Reliability estimable | `0/5` |
+| MIS passed | `0/5` |
+
+Resultados individuales frente al baseline temporal:
+
+| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | SVD - filterbank |
+|---|---:|---:|---:|---:|---:|
+| `dynamic29156-11-10` | `0.36496` | `0.36293` | `0.39149` | `0.39884` | `0.00735` |
+| `dynamic29228-2-10` | `0.41257` | `0.41779` | `0.42886` | `0.43471` | `0.00586` |
+| `dynamic29234-6-9` | `0.32939` | `0.32288` | `0.32300` | `0.36030` | `0.03729` |
+| `dynamic29513-3-5` | `0.38856` | `0.41113` | `0.42178` | `0.42657` | `0.00479` |
+| `dynamic29514-2-9` | `0.40380` | `0.41617` | `0.42881` | `0.43319` | `0.00438` |
+
+### Decisión
+
+**La señal predictiva se sostiene al completar la cohorte, pero no cambia la
+lectura mecanística.** El SVD temporal mejora a mean, scrambled y al
+temporal-filterbank en `5/5` ratones OOD, con una mejora mediana pequeña frente
+al filterbank (`+0.00586` de correlación) y un caso especialmente informativo
+(`dynamic29234-6-9`) donde el filterbank no superaba a mean pero el SVD sí.
+
+Esto es una contribución metodológica plausible para el benchmark: el marco
+distingue entre un modelo con mejor predicción OOD y un modelo identificable.
+El MIS sigue fallando de manera correcta (`0/5`) porque no hay fiabilidad por
+repetición ni restricción estructural/causal. Por tanto, el resultado positivo
+debe presentarse como evaluación predictiva OOD y como control de no
+identificabilidad, no como evidencia de mecanismo cerebral.
 
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 

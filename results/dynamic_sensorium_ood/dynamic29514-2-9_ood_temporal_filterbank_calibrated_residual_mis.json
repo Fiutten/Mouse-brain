@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "e2594cb",
+  "git_revision": "afa91c6",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "data/dynamic_sensorium_ood/extracted/dynamic29514-2-9-Video-8744edeac3b4d1ce16b680916b5267ce",
@@ -29,7 +29,8 @@
     "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
     "scrambled_stimulus_ridge": "same model with permuted train stimuli",
     "scrambled_stimulus_context_ridge": "context-preserving control with permuted train stimuli",
-    "calibrated_residual_ridge": "train-calibrated mean response plus shrinkage-scaled stimulus residual"
+    "calibrated_residual_ridge": "train-calibrated mean response plus shrinkage-scaled stimulus residual",
+    "temporal_svd_residual_ridge": "train-only SVD temporal subspace plus calibrated residual ridge"
   },
   "adapter": {
     "name": "calibrated_residual_ridge",
@@ -53,6 +54,9 @@
     "calibrated_residual_ridge_correlation": 0.4288110915950094,
     "calibrated_residual_ridge_scrambled_correlation": 0.40786031080524027,
     "calibrated_residual_ridge_median_neuron_correlation": 0.1156679718360139,
+    "temporal_svd_residual_ridge_correlation": 0.0,
+    "temporal_svd_residual_ridge_scrambled_correlation": 0.0,
+    "temporal_svd_residual_ridge_median_neuron_correlation": 0.0,
     "best_model_is_contextual": false,
     "best_model": "calibrated_residual_ridge",
     "best_predictive_correlation": 0.4288110915950094,
@@ -68,6 +72,8 @@
     "stimulus_context_ridge_minus_scrambled": -0.049587232394240496,
     "calibrated_residual_ridge_minus_mean": 0.0250083319042943,
     "calibrated_residual_ridge_minus_scrambled": 0.02095078078976914,
+    "temporal_svd_residual_ridge_minus_mean": -0.4038027596907151,
+    "temporal_svd_residual_ridge_minus_scrambled": 0.0,
     "best_predictive_minus_mean": 0.0250083319042943,
     "best_predictive_minus_scrambled": 0.02095078078976914
   },
