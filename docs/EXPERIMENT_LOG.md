@@ -414,6 +414,82 @@ La siguiente mejora técnica debe ser incorporar un baseline externo más fuerte
 u otro dataset con fiabilidad estimable. Sin una de esas dos cosas, seguir
 mejorando descriptores ligeros solo aporta incrementos pequeños.
 
+## 2026-06-18 — Fase 5i: baseline no lineal, fiabilidad y dataset cruzado
+
+### Objetivo
+
+Ejecutar los cuatro pasos pendientes sin inflar la interpretación:
+
+1. probar un baseline más fuerte;
+2. localizar una fuente con fiabilidad estimable;
+3. contrastar el marco en otro dataset;
+4. decidir si la línea actual merece escalarse o debe cambiar de evidencia.
+
+### Baseline no lineal local
+
+Se añadió `random_feature_residual_ridge`, un baseline de random Fourier
+features que aproxima kernel ridge RBF y mantiene selección train-only. No es
+un modelo oficial Sensorium ni SOTA; se usa como control local más fuerte que
+los descriptores lineales.
+
+Artefactos:
+
+```text
+results/dynamic_sensorium_random_feature/summary_dynamic_sensorium2023_random_feature.json
+results/dynamic_sensorium_random_feature/summary_dynamic_sensorium_legacy_ood_random_feature.json
+```
+
+Resultado frente a SVD:
+
+| Cohorte | Random feature > mean | Random feature > scrambled | Random feature > SVD | Mediana RF - SVD |
+|---|---:|---:|---:|---:|
+| Dynamic Sensorium 2023 `oracle` | `2/5` | `4/5` | `1/5` | `-0.03447` |
+| Legacy OOD liberado | `3/5` | `5/5` | `1/5` | `-0.01247` |
+
+Conclusión: el baseline no lineal local no mejora la situación. Aumentar
+capacidad de forma genérica no basta; SVD sigue siendo el baseline interno más
+fuerte y estable.
+
+### Fiabilidad y dataset cruzado
+
+Se generó un comparador para Sensorium 2022 estático usando los artefactos ya
+sellados:
+
+```text
+results/sensorium_static_model_comparator/summary.json
+results/sensorium_static_model_comparator/summary.md
+```
+
+| Cohorte | n | Reliability | Best corr | Best - mean | Best - scrambled | MIS score |
+|---|---:|---:|---:|---:|---:|---:|
+| Validation all mice | `7` | `0.0` | `0.32795` | `0.10241` | `0.07737` | `0.33333` |
+| Pretraining repeated test | `5` | `0.64203` | `0.34095` | `0.09478` | `0.06835` | `0.66667` |
+
+Sensorium 2022 estático es ahora nuestro caso positivo de fiabilidad:
+hay repetición estimable y predicción estímulo-específica, pero el MIS sigue sin
+pasar porque no existe restricción estructural, causal o intervencional.
+
+### Decisión
+
+**Punto científico actual:** la contribución es defendible como marco de
+benchmarking crítico que separa predicción, OOD, fiabilidad e identificabilidad.
+No es todavía una contribución mecanística fuerte. El resultado más sólido es:
+
+- Dynamic OOD: SVD mejora a mean y filterbank en `5/5`, pero sin fiabilidad.
+- Static Sensorium: hay fiabilidad positiva y predicción, pero sin causalidad.
+- Baseline no lineal local: no supera a SVD; no merece más inversión inmediata.
+
+La siguiente ruta publicable no debe ser "otro baseline interno". Debe ser una
+de dos:
+
+1. integrar un baseline externo real del ecosistema Sensorium/NN, aunque sea
+costoso;
+2. añadir una restricción mecanística verificable: repetición + estructura,
+perturbación o causalidad.
+
+Sin uno de esos dos elementos, el trabajo puede aspirar a paper de benchmark o
+workshop/congreso, pero no a Q1 fuerte.
+
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 
 ### Objetivo

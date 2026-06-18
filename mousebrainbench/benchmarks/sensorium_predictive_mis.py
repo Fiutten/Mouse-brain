@@ -14,6 +14,7 @@ from mousebrainbench.artifacts import code_revision
 from mousebrainbench.data.loaders.sensorium import SensoriumTrialTable, load_sensorium_directory
 from mousebrainbench.surrogate.sensorium_adapters import (
     calibrated_residual_ridge_adapter,
+    random_feature_residual_ridge_adapter,
     temporal_svd_residual_ridge_adapter,
 )
 from mousebrainbench.validation.mechanistic_identifiability import (
@@ -207,6 +208,9 @@ def run_sensorium_benchmark(
     temporal_svd_correlation = 0.0
     temporal_svd_scrambled_correlation = 0.0
     temporal_svd_median_neuron = 0.0
+    random_feature_correlation = 0.0
+    random_feature_scrambled_correlation = 0.0
+    random_feature_median_neuron = 0.0
     if adapter == "calibrated_residual_ridge":
         adapter_result = calibrated_residual_ridge_adapter(
             train_x,
@@ -246,6 +250,26 @@ def run_sensorium_benchmark(
             best_model = adapter_result.name
             best_correlation = temporal_svd_correlation
             best_scrambled = temporal_svd_scrambled_correlation
+    elif adapter == "random_feature_residual_ridge":
+        adapter_result = random_feature_residual_ridge_adapter(
+            train_x,
+            train_y,
+            eval_x,
+            alpha_grid=adapter_alpha_grid,
+            seed=seed,
+        )
+        adapter_diagnostics = adapter_result.diagnostics
+        random_feature_correlation = _safe_correlation(adapter_result.prediction, eval_y)
+        random_feature_scrambled_correlation = _safe_correlation(
+            adapter_result.scrambled_prediction, eval_y
+        )
+        random_feature_median_neuron = _median_neuron_correlation(
+            adapter_result.prediction, eval_y
+        )
+        if random_feature_correlation > best_correlation:
+            best_model = adapter_result.name
+            best_correlation = random_feature_correlation
+            best_scrambled = random_feature_scrambled_correlation
     elif adapter != "ridge":
         raise ValueError(f"unknown Sensorium adapter: {adapter}")
 
@@ -265,6 +289,9 @@ def run_sensorium_benchmark(
         "temporal_svd_residual_ridge_correlation": temporal_svd_correlation,
         "temporal_svd_residual_ridge_scrambled_correlation": temporal_svd_scrambled_correlation,
         "temporal_svd_residual_ridge_median_neuron_correlation": temporal_svd_median_neuron,
+        "random_feature_residual_ridge_correlation": random_feature_correlation,
+        "random_feature_residual_ridge_scrambled_correlation": random_feature_scrambled_correlation,
+        "random_feature_residual_ridge_median_neuron_correlation": random_feature_median_neuron,
         "best_model_is_contextual": best_model == "stimulus_context_ridge",
         "best_model": best_model,
         "best_predictive_correlation": best_correlation,
@@ -299,6 +326,12 @@ def run_sensorium_benchmark(
     metrics["temporal_svd_residual_ridge_minus_scrambled"] = float(
         metrics["temporal_svd_residual_ridge_correlation"]
     ) - float(metrics["temporal_svd_residual_ridge_scrambled_correlation"])
+    metrics["random_feature_residual_ridge_minus_mean"] = float(
+        metrics["random_feature_residual_ridge_correlation"]
+    ) - float(metrics["mean_correlation"])
+    metrics["random_feature_residual_ridge_minus_scrambled"] = float(
+        metrics["random_feature_residual_ridge_correlation"]
+    ) - float(metrics["random_feature_residual_ridge_scrambled_correlation"])
     metrics["best_predictive_minus_mean"] = float(metrics["best_predictive_correlation"]) - float(
         metrics["mean_correlation"]
     )
@@ -332,6 +365,9 @@ def run_sensorium_benchmark(
             ),
             "temporal_svd_residual_ridge": (
                 "train-only SVD temporal subspace plus calibrated residual ridge"
+            ),
+            "random_feature_residual_ridge": (
+                "train-only random Fourier feature map plus calibrated residual ridge"
             ),
         },
         "adapter": {"name": adapter, "diagnostics": adapter_diagnostics},
@@ -403,7 +439,12 @@ def main() -> None:
     parser.add_argument("--alpha", type=float, default=1.0)
     parser.add_argument(
         "--adapter",
-        choices=("ridge", "calibrated_residual_ridge", "temporal_svd_residual_ridge"),
+        choices=(
+            "ridge",
+            "calibrated_residual_ridge",
+            "temporal_svd_residual_ridge",
+            "random_feature_residual_ridge",
+        ),
         default="ridge",
         help="Optional predictive adapter. Defaults to the original transparent ridge baseline.",
     )

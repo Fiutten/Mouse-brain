@@ -270,3 +270,149 @@ def temporal_svd_residual_ridge_adapter(
             "adapter_component_candidates": float(len(components)),
         },
     )
+
+
+def _random_fourier_features(
+    train_x: np.ndarray,
+    eval_x: np.ndarray,
+    *,
+    components: int,
+    gamma: float,
+    seed: int,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Build train-standardized RBF random Fourier features.
+
+    This is a compact approximation to an RBF-kernel ridge model. The random
+    projection is generated from a fixed seed and the standardization is fit on
+    train only, so held-out tiers do not influence the feature map.
+    """
+
+    train_x_std, eval_x_std, _, _ = _standardize_train_test(train_x, eval_x)
+    width = max(1, int(components))
+    rng = np.random.default_rng(seed)
+    weights = rng.normal(scale=np.sqrt(2.0 * gamma), size=(train_x_std.shape[1], width))
+    phase = rng.uniform(0.0, 2.0 * np.pi, size=width)
+    scale = np.sqrt(2.0 / width)
+    return (
+        scale * np.cos(train_x_std @ weights + phase),
+        scale * np.cos(eval_x_std @ weights + phase),
+    )
+
+
+def random_feature_residual_ridge_adapter(
+    train_x: np.ndarray,
+    train_y: np.ndarray,
+    eval_x: np.ndarray,
+    *,
+    alpha_grid: tuple[float, ...] | None = None,
+    component_grid: tuple[int, ...] = (32, 64, 128),
+    gamma_grid: tuple[float, ...] = (0.01, 0.03, 0.1),
+    seed: int = 17,
+    folds: int = 5,
+    beta_grid: np.ndarray | None = None,
+) -> SensoriumAdapterResult:
+    """Approximate nonlinear kernel residual ridge with train-only selection.
+
+    This is a stronger local baseline than the linear temporal models, but it
+    is not an official Sensorium/SOTA model. It asks whether a modest nonlinear
+    stimulus map can explain held-out responses beyond mean and transparent
+    temporal descriptors while preserving the same MIS contract.
+    """
+
+    if folds < 2:
+        raise ValueError("folds must be at least 2")
+    if len(train_x) != len(train_y):
+        raise ValueError("train_x and train_y must have the same number of trials")
+    if beta_grid is None:
+        beta_grid = np.linspace(0.0, 1.5, 61)
+    alphas = tuple(float(value) for value in (alpha_grid or (1.0, 3.0, 10.0, 30.0, 100.0)))
+    components = tuple(
+        sorted({max(1, min(int(value), max(1, train_x.shape[0] - 1))) for value in component_grid})
+    )
+    gammas = tuple(float(value) for value in gamma_grid)
+
+    indices = np.arange(len(train_x))
+    rng = np.random.default_rng(seed)
+    rng.shuffle(indices)
+    fold_indices = [fold for fold in np.array_split(indices, min(folds, len(indices))) if len(fold)]
+    best_score = -np.inf
+    best_alpha = alphas[0]
+    best_beta = float(beta_grid[0])
+    best_components = components[0]
+    best_gamma = gammas[0]
+
+    for component in components:
+        for gamma in gammas:
+            for alpha in alphas:
+                cv_mean = np.zeros_like(train_y, dtype=float)
+                cv_residual_prediction = np.zeros_like(train_y, dtype=float)
+                for fold_number, fold in enumerate(fold_indices):
+                    fit_indices = np.setdiff1d(indices, fold, assume_unique=False)
+                    train_mean = train_y[fit_indices].mean(axis=0, keepdims=True)
+                    residual = train_y[fit_indices] - train_mean
+                    cv_mean[fold] = train_mean
+                    fit_x, heldout_x = _random_fourier_features(
+                        train_x[fit_indices],
+                        train_x[fold],
+                        components=component,
+                        gamma=gamma,
+                        seed=seed + 1009 * fold_number + 37 * component,
+                    )
+                    cv_residual_prediction[fold] = ridge_fit_predict(
+                        fit_x, residual, heldout_x, alpha=alpha
+                    )
+                for beta in beta_grid:
+                    score = _safe_correlation(
+                        cv_mean + float(beta) * cv_residual_prediction, train_y
+                    )
+                    if score > best_score:
+                        best_score = score
+                        best_alpha = alpha
+                        best_beta = float(beta)
+                        best_components = component
+                        best_gamma = gamma
+
+    full_mean = train_y.mean(axis=0, keepdims=True)
+    full_residual = train_y - full_mean
+    train_features, eval_features = _random_fourier_features(
+        train_x,
+        eval_x,
+        components=best_components,
+        gamma=best_gamma,
+        seed=seed + 7919,
+    )
+    residual_prediction = ridge_fit_predict(
+        train_features, full_residual, eval_features, alpha=best_alpha
+    )
+    prediction = np.repeat(full_mean, len(eval_x), axis=0) + best_beta * residual_prediction
+
+    scrambled_train_x = rng.permutation(train_x)
+    scrambled_train_features, scrambled_eval_features = _random_fourier_features(
+        scrambled_train_x,
+        eval_x,
+        components=best_components,
+        gamma=best_gamma,
+        seed=seed + 7919,
+    )
+    scrambled_residual = ridge_fit_predict(
+        scrambled_train_features, full_residual, scrambled_eval_features, alpha=best_alpha
+    )
+    scrambled_prediction = (
+        np.repeat(full_mean, len(eval_x), axis=0) + best_beta * scrambled_residual
+    )
+    return SensoriumAdapterResult(
+        name="random_feature_residual_ridge",
+        prediction=prediction,
+        scrambled_prediction=scrambled_prediction,
+        diagnostics={
+            "adapter_alpha": float(best_alpha),
+            "adapter_beta": float(best_beta),
+            "adapter_components": float(best_components),
+            "adapter_gamma": float(best_gamma),
+            "adapter_cv_correlation": float(best_score),
+            "adapter_cv_folds": float(len(fold_indices)),
+            "adapter_alpha_candidates": float(len(alphas)),
+            "adapter_component_candidates": float(len(components)),
+            "adapter_gamma_candidates": float(len(gammas)),
+        },
+    )

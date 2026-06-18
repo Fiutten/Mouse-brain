@@ -1,0 +1,90 @@
+{
+  "dataset": "Dynamic Sensorium random-feature residual baseline comparison",
+  "eval_tiers": [
+    "live_test_main",
+    "live_test_bonus",
+    "final_test_main",
+    "final_test_bonus"
+  ],
+  "adapter": "random_feature_residual_ridge",
+  "n_mice": 5,
+  "positive_random_feature_minus_mean_count": 3,
+  "positive_random_feature_minus_scrambled_count": 5,
+  "median_random_feature_minus_mean": 0.021404989374157246,
+  "median_random_feature_minus_scrambled": 0.014115130295253298,
+  "reliability_estimable_count": 0,
+  "mis_passed_count": 0,
+  "rows": [
+    {
+      "mouse": "dynamic29156-11-10",
+      "output": "results/dynamic_sensorium_random_feature/ood/dynamic29156-11-10_random_feature_residual_mis.json",
+      "random_feature_correlation": 0.3863637243358102,
+      "random_feature_minus_mean": 0.021404989374157246,
+      "random_feature_minus_scrambled": 0.012248263550553806,
+      "best_model": "random_feature_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.4,
+      "selected_components": 64.0,
+      "selected_gamma": 0.01,
+      "mis_passed": false,
+      "reliability_estimable": false
+    },
+    {
+      "mouse": "dynamic29228-2-10",
+      "output": "results/dynamic_sensorium_random_feature/ood/dynamic29228-2-10_random_feature_residual_mis.json",
+      "random_feature_correlation": 0.43718459294365525,
+      "random_feature_minus_mean": 0.02461189721090057,
+      "random_feature_minus_scrambled": 0.04845935479305241,
+      "best_model": "random_feature_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.325,
+      "selected_components": 128.0,
+      "selected_gamma": 0.01,
+      "mis_passed": false,
+      "reliability_estimable": false
+    },
+    {
+      "mouse": "dynamic29234-6-9",
+      "output": "results/dynamic_sensorium_random_feature/ood/dynamic29234-6-9_random_feature_residual_mis.json",
+      "random_feature_correlation": 0.3561994057514263,
+      "random_feature_minus_mean": 0.026811553163379576,
+      "random_feature_minus_scrambled": 0.038124061234226014,
+      "best_model": "random_feature_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.375,
+      "selected_components": 64.0,
+      "selected_gamma": 0.01,
+      "mis_passed": false,
+      "reliability_estimable": false
+    },
+    {
+      "mouse": "dynamic29513-3-5",
+      "output": "results/dynamic_sensorium_random_feature/ood/dynamic29513-3-5_random_feature_residual_mis.json",
+      "random_feature_correlation": 0.3692382147473705,
+      "random_feature_minus_mean": -0.019323701362536805,
+      "random_feature_minus_scrambled": 0.0028922459316835236,
+      "best_model": "random_feature_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.42500000000000004,
+      "selected_components": 64.0,
+      "selected_gamma": 0.01,
+      "mis_passed": false,
+      "reliability_estimable": false
+    },
+    {
+      "mouse": "dynamic29514-2-9",
+      "output": "results/dynamic_sensorium_random_feature/ood/dynamic29514-2-9_random_feature_residual_mis.json",
+      "random_feature_correlation": 0.4029242894553018,
+      "random_feature_minus_mean": -0.00087847023541332,
+      "random_feature_minus_scrambled": 0.014115130295253298,
+      "best_model": "random_feature_residual_ridge",
+      "selected_alpha": 100.0,
+      "selected_beta": 0.35000000000000003,
+      "selected_components": 64.0,
+      "selected_gamma": 0.01,
+      "mis_passed": false,
+      "reliability_estimable": false
+    }
+  ],
+  "interpretation": "Random Fourier residual ridge is a stronger local nonlinear baseline, not an official Sensorium/SOTA model. It remains predictive evidence unless reliability and mechanistic constraints pass."
+}

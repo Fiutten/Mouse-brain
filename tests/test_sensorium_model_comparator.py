@@ -115,6 +115,7 @@ def test_write_comparison_outputs_creates_json_and_markdown(tmp_path) -> None:
                         "summary_adapter": 0.2,
                         "temporal_filterbank": 0.3,
                         "temporal_svd": 0.4,
+                        "random_feature": 0.35,
                     }
                 ],
                 "best_models": [{"mouse": "dynamic1", "best_model": "temporal_svd"}],

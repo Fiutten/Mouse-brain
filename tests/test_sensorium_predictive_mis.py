@@ -113,6 +113,47 @@ def test_temporal_svd_adapter_can_improve_over_mean(tmp_path) -> None:
     assert payload["adapter"]["diagnostics"]["adapter_components"] > 0.0
 
 
+def test_random_feature_adapter_can_capture_nonlinear_signal(tmp_path) -> None:
+    rng = np.random.default_rng(456)
+    stimulus_features = rng.normal(size=(54, 8))
+    nonlinear = np.column_stack(
+        [
+            np.sin(stimulus_features[:, 0]),
+            stimulus_features[:, 1] * stimulus_features[:, 2],
+            np.cos(stimulus_features[:, 3]),
+        ]
+    )
+    weights = rng.normal(size=(3, 5))
+    baseline = np.asarray([[1.0, 1.5, 2.0, 2.5, 3.0]])
+    responses = baseline + 0.65 * nonlinear @ weights
+    responses += rng.normal(scale=0.02, size=responses.shape)
+    tiers = np.asarray(["train"] * 42 + ["oracle"] * 12)
+    table = SensoriumTrialTable(
+        root=tmp_path,
+        modality="dynamic",
+        stimulus_features=stimulus_features,
+        context_features=np.empty((54, 0), dtype=float),
+        responses=responses,
+        tiers=tiers,
+        trial_ids=np.arange(54),
+        stimulus_ids=np.arange(54),
+        neuron_ids=np.arange(5),
+    )
+
+    output = run_sensorium_benchmark(
+        table,
+        output=tmp_path / "random_feature_adapter.json",
+        eval_tiers=("oracle",),
+        adapter="random_feature_residual_ridge",
+        adapter_alpha_grid=(0.1, 1.0, 10.0),
+    )
+    payload = json.loads(output.read_text())
+
+    assert payload["metrics"]["random_feature_residual_ridge_minus_mean"] > 0.05
+    assert payload["adapter"]["diagnostics"]["adapter_components"] > 0.0
+    assert payload["adapter"]["diagnostics"]["adapter_gamma"] > 0.0
+
+
 def test_sensorium_benchmark_records_ood_gate(tmp_path) -> None:
     table = SensoriumTrialTable(
         root=tmp_path,
