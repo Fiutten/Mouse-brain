@@ -1,10 +1,11 @@
 {
   "version": "0.6.0",
-  "git_revision": "ac5ac3a",
+  "git_revision": "34feb97-dirty",
   "cases": [
     {
       "case": "directed_truth",
       "ground_truth_directed": true,
+      "ground_truth_region_specific": true,
       "mis": {
         "score": 1.0,
         "passed": true,
@@ -16,7 +17,7 @@
             "criteria": [
               {
                 "name": "median_cross_session_correlation",
-                "value": 0.9628383084137636,
+                "value": 0.9878245940537832,
                 "threshold": 0.7,
                 "direction": "gt",
                 "passed": true,
@@ -24,7 +25,7 @@
               },
               {
                 "name": "median_split_half_correlation",
-                "value": 0.9818356446664687,
+                "value": 0.993809806809858,
                 "threshold": 0.8,
                 "direction": "gt",
                 "passed": true,
@@ -47,7 +48,7 @@
             "criteria": [
               {
                 "name": "true_minus_median_permutation",
-                "value": 0.8070901640449648,
+                "value": 0.7831821885527478,
                 "threshold": 0.05,
                 "direction": "gt",
                 "passed": true,
@@ -63,7 +64,7 @@
               },
               {
                 "name": "true_minus_disconnected",
-                "value": 0.7359535690155832,
+                "value": 0.9162253448194699,
                 "threshold": 0.05,
                 "direction": "gt",
                 "passed": true,
@@ -98,17 +99,18 @@
         "interpretation": "mechanistically_identifiable"
       },
       "summary": {
-        "median_reproducibility": 0.9628383084137636,
-        "median_split_half": 0.9818356446664687,
-        "median_true_prediction": 0.9586030677041502,
-        "median_disconnected_prediction": 0.22264949868856698,
-        "median_permutation_prediction": 0.1515129036591854,
+        "median_reproducibility": 0.9878245940537832,
+        "median_split_half": 0.993809806809858,
+        "median_true_prediction": 0.9863537576297203,
+        "median_disconnected_prediction": 0.07012841281025034,
+        "median_permutation_prediction": 0.20317156907697254,
         "resolvable_latency_pair_fraction": 1.0
       }
     },
     {
       "case": "common_drive_nonidentifiable",
       "ground_truth_directed": false,
+      "ground_truth_region_specific": false,
       "mis": {
         "score": 0.3333333333333333,
         "passed": false,
@@ -209,6 +211,217 @@
         "median_permutation_prediction": 0.9570717859824361,
         "resolvable_latency_pair_fraction": 0.0
       }
+    },
+    {
+      "case": "topology_without_direction",
+      "ground_truth_directed": false,
+      "ground_truth_region_specific": true,
+      "mis": {
+        "score": 0.6666666666666666,
+        "passed": false,
+        "blocks": [
+          {
+            "name": "reproducibility",
+            "passed": true,
+            "score": 1.0,
+            "criteria": [
+              {
+                "name": "median_cross_session_correlation",
+                "value": 0.9875421735237553,
+                "threshold": 0.7,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "median_split_half_correlation",
+                "value": 0.9939063845474418,
+                "threshold": 0.8,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "fraction_above_own_null_95th",
+                "value": 1.0,
+                "threshold": 0.5,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              }
+            ]
+          },
+          {
+            "name": "topology_specificity",
+            "passed": true,
+            "score": 1.0,
+            "criteria": [
+              {
+                "name": "true_minus_median_permutation",
+                "value": 0.1574030058537007,
+                "threshold": 0.05,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "fraction_permutations_outperformed",
+                "value": 1.0,
+                "threshold": 0.95,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "true_minus_disconnected",
+                "value": 0.08139165525949543,
+                "threshold": 0.05,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              }
+            ]
+          },
+          {
+            "name": "directed_identifiability",
+            "passed": false,
+            "score": 0.0,
+            "criteria": [
+              {
+                "name": "resolvable_latency_pair_fraction",
+                "value": 0.0,
+                "threshold": 0.5,
+                "direction": "gte",
+                "passed": false,
+                "normalized_score": 0.0
+              },
+              {
+                "name": "nonzero_lead_lag_pair_fraction",
+                "value": 0.0,
+                "threshold": 0.25,
+                "direction": "gte",
+                "passed": false,
+                "normalized_score": 0.0
+              }
+            ]
+          }
+        ],
+        "interpretation": "not_mechanistically_identifiable"
+      },
+      "summary": {
+        "median_reproducibility": 0.9875421735237553,
+        "median_split_half": 0.9939063845474418,
+        "median_true_prediction": 0.9859085073429936,
+        "median_disconnected_prediction": 0.9045168520834982,
+        "median_permutation_prediction": 0.8285055014892929,
+        "resolvable_latency_pair_fraction": 0.0
+      }
+    },
+    {
+      "case": "direction_without_topology_specificity",
+      "ground_truth_directed": true,
+      "ground_truth_region_specific": false,
+      "mis": {
+        "score": 0.7187686716810112,
+        "passed": false,
+        "blocks": [
+          {
+            "name": "reproducibility",
+            "passed": true,
+            "score": 1.0,
+            "criteria": [
+              {
+                "name": "median_cross_session_correlation",
+                "value": 0.9632197389783883,
+                "threshold": 0.7,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "median_split_half_correlation",
+                "value": 0.9804476952344021,
+                "threshold": 0.8,
+                "direction": "gt",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "fraction_above_own_null_95th",
+                "value": 1.0,
+                "threshold": 0.5,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              }
+            ]
+          },
+          {
+            "name": "topology_specificity",
+            "passed": false,
+            "score": 0.1563060150430338,
+            "criteria": [
+              {
+                "name": "true_minus_median_permutation",
+                "value": -0.0005323121407466713,
+                "threshold": 0.05,
+                "direction": "gt",
+                "passed": false,
+                "normalized_score": 0.0
+              },
+              {
+                "name": "fraction_permutations_outperformed",
+                "value": 0.42,
+                "threshold": 0.95,
+                "direction": "gte",
+                "passed": false,
+                "normalized_score": 0.4421052631578947
+              },
+              {
+                "name": "true_minus_disconnected",
+                "value": 0.0013406390985603311,
+                "threshold": 0.05,
+                "direction": "gt",
+                "passed": false,
+                "normalized_score": 0.026812781971206623
+              }
+            ]
+          },
+          {
+            "name": "directed_identifiability",
+            "passed": true,
+            "score": 1.0,
+            "criteria": [
+              {
+                "name": "resolvable_latency_pair_fraction",
+                "value": 1.0,
+                "threshold": 0.5,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              },
+              {
+                "name": "nonzero_lead_lag_pair_fraction",
+                "value": 1.0,
+                "threshold": 0.25,
+                "direction": "gte",
+                "passed": true,
+                "normalized_score": 1.0
+              }
+            ]
+          }
+        ],
+        "interpretation": "not_mechanistically_identifiable"
+      },
+      "summary": {
+        "median_reproducibility": 0.9632197389783883,
+        "median_split_half": 0.9804476952344021,
+        "median_true_prediction": 0.22653199575083133,
+        "median_disconnected_prediction": 0.225191356652271,
+        "median_permutation_prediction": 0.227064307891578,
+        "resolvable_latency_pair_fraction": 1.0
+      }
     }
-  ]
+  ],
+  "interpretation": "Only directed_truth should pass the full conjunctive MIS. The other cases isolate common drive, structure without temporal direction, and direction-like timing without region-specific topology."
 }

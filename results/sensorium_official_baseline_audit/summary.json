@@ -1,0 +1,51 @@
+{
+  "version": "0.6.0",
+  "git_revision": "34feb97-dirty",
+  "official_repo_probe": {
+    "path": "external/sensorium_2023",
+    "exists": false,
+    "has_env_yml": false,
+    "has_pyproject": false,
+    "has_sensorium_package": false
+  },
+  "package_probes": [
+    {
+      "package": "sensorium",
+      "purpose": "official Sensorium data/model helper package",
+      "available": false
+    },
+    {
+      "package": "neuralpredictors",
+      "purpose": "standard Ecker/Sinz lab neural predictor models",
+      "available": false
+    },
+    {
+      "package": "nnfabrik",
+      "purpose": "model/dataloader factory used by official examples",
+      "available": false
+    },
+    {
+      "package": "datajoint",
+      "purpose": "metadata/backend dependency used by the ecosystem",
+      "available": false
+    },
+    {
+      "package": "pytorch_lightning",
+      "purpose": "training loop dependency used by many baselines",
+      "available": false
+    }
+  ],
+  "missing_packages": [
+    "sensorium",
+    "neuralpredictors",
+    "nnfabrik",
+    "datajoint",
+    "pytorch_lightning"
+  ],
+  "official_baseline_viable": false,
+  "local_mlp_summary": "results/dynamic_sensorium_torch_mlp/summary_dynamic_sensorium2023_torch_mlp.json",
+  "local_mlp_available": true,
+  "decision": "official_sensorium_baseline_not_locally_viable_use_tracked_torch_mlp",
+  "recommended_action": "Use the tracked compact PyTorch MLP as the local NN control, while stating explicitly that it is not an official/SOTA Sensorium model.",
+  "interpretation": "Official Sensorium baselines are the preferred external control, but they are only acceptable for this project when the environment can run them reproducibly. Otherwise the local MLP remains a neural-network control rather than a SOTA claim."
+}

@@ -33,6 +33,19 @@ La contribución defendible sería:
 
 ## Estado actual de los cinco puntos
 
+Actualización 2026-06-19:
+
+La fase de cierre produjo una decisión explícita:
+
+```text
+methodological_benchmark_paper_now_q1_requires_external_piece
+```
+
+Esto significa que el paquete ya es defendible como benchmark metodológico
+reproducible, pero todavía no debe presentarse como Q1 fuerte de IA hasta
+integrar un baseline oficial Sensorium o aprobar/ejecutar un piloto MICrONS
+estructura-función acotado.
+
 ### 1. MIS formalizado
 
 Implementado en:
@@ -57,9 +70,12 @@ Resultado actual:
 
 - `directed_truth`: pasa MIS.
 - `common_drive_nonidentifiable`: falla MIS.
+- `topology_without_direction`: falla MIS aunque pasa topología.
+- `direction_without_topology_specificity`: falla MIS aunque pasa dirección.
 
 Este benchmark protege contra un fallo conceptual importante: declarar mecanismo
-cuando solo hay una respuesta común reproducible.
+cuando solo hay una respuesta común reproducible, una topología parcial o una
+firma temporal parcial.
 
 ### 3. Allen VBN como caso negativo
 
@@ -128,9 +144,15 @@ Estado implementado:
 - smoke sintético que demuestra alta correlación sin identificabilidad
   mecanística;
 - protocolo en [PHASE5_SENSORIUM_PROTOCOL.md](PHASE5_SENSORIUM_PROTOCOL.md).
+- baseline NN local `torch_residual_mlp` evaluado en Dynamic Sensorium principal
+  y legacy OOD;
+- auditoría oficial Sensorium que concluye que el baseline oficial no es viable
+  localmente en el entorno actual.
 
-La siguiente acción empírica es descargar un solo ratón oficial y ejecutar el
-benchmark con límite de trials antes de procesar el dataset completo.
+La siguiente acción empírica ya no es descargar más ratones. La pieza que falta
+para Q1 es integrar un baseline oficial reproducible del ecosistema Sensorium o
+documentar formalmente que no se puede ejecutar y mantener el MLP local como
+control NN no-SOTA.
 
 ### 5. MICrONS como caso estructura-función
 
@@ -156,20 +178,23 @@ entrada estrictos:
 4. Abandonar MICrONS si el coste de integración supera el valor diferencial
    frente a Sensorium.
 
+Estado actual:
+
+- puerta MICrONS implementada;
+- no hay manifiesto local pequeño;
+- decisión: `defer_microns_until_small_manifest_available`.
+
 ## Qué hay que hacer ahora
 
-La siguiente fase técnica debe ser Sensorium/Dynamic Sensorium, con este orden:
+La siguiente fase técnica queda reducida a dos rutas, no a exploración abierta:
 
-1. Crear `mousebrainbench/datasets/sensorium.py` o adaptador equivalente.
-2. Añadir un benchmark predictivo mínimo y reproducible.
-3. Definir splits, métricas y artefactos sin entrenar todavía modelos complejos.
-4. Ejecutar baselines transparentes.
-5. Adaptar MIS a predicción visual moderna.
-6. Comparar explícitamente:
-   - sintético positivo;
-   - Allen negativo;
-   - Sensorium predictivo;
-   - MICrONS solo si el piloto es viable.
+1. **Ruta Q1 externa:** preparar un entorno reproducible para el baseline oficial
+   Sensorium y pasar sus predicciones por MouseBrainBench.
+2. **Ruta Q1 estructura-función:** localizar o construir un manifiesto MICrONS
+   pequeño que cumpla la puerta `microns_pilot_gate`.
+
+Sin una de esas dos rutas, se debe avanzar a paper metodológico fuerte, no a Q1
+de alto impacto en IA.
 
 ## Criterio de avance hacia Q1
 

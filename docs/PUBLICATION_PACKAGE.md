@@ -170,9 +170,29 @@ Los detalles técnicos están en
 
 ## Decisión recomendada
 
-Preparar primero un **preprint metodológico** con el caso Allen VBN cerrado.
-Después decidir si:
+Actualización 2026-06-19:
 
-- se envía a venue metodológico/neuroinformatics;
-- o se usa como pieza inicial de una publicación más ambiciosa añadiendo un
-  segundo recurso con perturbaciones.
+Preparar primero un **paper metodológico fuerte** con el caso Allen VBN cerrado,
+el benchmark sintético MIS ampliado, Sensorium/Dynamic Sensorium como caso
+predictivo moderno y Sensorium static como caso parcial positivo de fiabilidad y
+topografía.
+
+La ruta congelada es:
+
+```text
+methodological_benchmark_paper_now_q1_requires_external_piece
+```
+
+Esto significa:
+
+- el paquete actual puede sostener un artículo metodológico reproducible;
+- no debe venderse todavía como Q1 fuerte de IA;
+- para Q1 hace falta integrar un baseline oficial Sensorium ejecutable o aprobar
+  un piloto MICrONS estructura-función acotado.
+
+Artefactos de decisión:
+
+- `results/publication_freeze/summary.json`
+- `results/q1_sensitivity/summary.json`
+- `results/sensorium_official_baseline_audit/summary.json`
+- `results/microns_pilot_gate/summary.json`

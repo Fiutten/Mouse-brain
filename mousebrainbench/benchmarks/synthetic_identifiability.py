@@ -26,13 +26,16 @@ def _make_template(
     *,
     n_regions: int,
     n_time: int,
-    directed: bool,
+    directed_latency: bool,
+    region_specific_amplitude: bool,
 ) -> np.ndarray:
     time = np.linspace(0.0, 1.0, n_time)
     template = np.zeros((n_time, n_regions), dtype=float)
     for region in range(n_regions):
-        center = 0.18 + 0.08 * region if directed else 0.25
-        template[:, region] = np.exp(-((time - center) ** 2) / 0.006)
+        center = 0.18 + 0.08 * region if directed_latency else 0.25
+        amplitude = 1.0 + 0.25 * region if region_specific_amplitude else 1.0
+        width = 0.003 + 0.0015 * region if region_specific_amplitude else 0.006
+        template[:, region] = amplitude * np.exp(-((time - center) ** 2) / width)
     return template
 
 
@@ -46,14 +49,21 @@ def _pairwise_latency_fraction(template: np.ndarray) -> float:
 def _synthetic_case(
     *,
     name: str,
-    directed: bool,
+    directed_latency: bool,
+    region_specific_amplitude: bool,
+    topology_specific_prediction: bool = True,
     seed: int,
     n_sessions: int = 24,
     n_regions: int = 6,
     n_time: int = 24,
 ) -> dict[str, object]:
     rng = np.random.default_rng(seed)
-    template = _make_template(n_regions=n_regions, n_time=n_time, directed=directed)
+    template = _make_template(
+        n_regions=n_regions,
+        n_time=n_time,
+        directed_latency=directed_latency,
+        region_specific_amplitude=region_specific_amplitude,
+    )
     sessions = np.stack(
         [template + rng.normal(0.0, 0.08, template.shape) for _ in range(n_sessions)]
     )
@@ -69,8 +79,14 @@ def _synthetic_case(
         ]
     )
 
-    true_prediction = template + rng.normal(0.0, 0.02, template.shape)
-    disconnected_prediction = _make_template(n_regions=n_regions, n_time=n_time, directed=False)
+    disconnected_prediction = _make_template(
+        n_regions=n_regions,
+        n_time=n_time,
+        directed_latency=False,
+        region_specific_amplitude=False,
+    )
+    true_prediction_template = template if topology_specific_prediction else disconnected_prediction
+    true_prediction = true_prediction_template + rng.normal(0.0, 0.02, template.shape)
     permutation_predictions = np.stack(
         [true_prediction[:, rng.permutation(n_regions)] for _ in range(100)]
     )
@@ -123,7 +139,8 @@ def _synthetic_case(
     )
     return {
         "case": name,
-        "ground_truth_directed": directed,
+        "ground_truth_directed": directed_latency,
+        "ground_truth_region_specific": region_specific_amplitude,
         "mis": mis.as_dict(),
         "summary": {
             "median_reproducibility": float(np.median(reproducibility)),
@@ -137,7 +154,7 @@ def _synthetic_case(
 
 
 def run(output: str | Path = "results/synthetic_identifiability_benchmark.json") -> Path:
-    """Run a positive and a negative truth-known identifiability benchmark."""
+    """Run truth-known identifiability cases with positive and failure controls."""
 
     path = Path(output)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -145,9 +162,37 @@ def run(output: str | Path = "results/synthetic_identifiability_benchmark.json")
         "version": __version__,
         "git_revision": code_revision(),
         "cases": [
-            _synthetic_case(name="directed_truth", directed=True, seed=11),
-            _synthetic_case(name="common_drive_nonidentifiable", directed=False, seed=23),
+            _synthetic_case(
+                name="directed_truth",
+                directed_latency=True,
+                region_specific_amplitude=True,
+                seed=11,
+            ),
+            _synthetic_case(
+                name="common_drive_nonidentifiable",
+                directed_latency=False,
+                region_specific_amplitude=False,
+                seed=23,
+            ),
+            _synthetic_case(
+                name="topology_without_direction",
+                directed_latency=False,
+                region_specific_amplitude=True,
+                seed=31,
+            ),
+            _synthetic_case(
+                name="direction_without_topology_specificity",
+                directed_latency=True,
+                region_specific_amplitude=False,
+                topology_specific_prediction=False,
+                seed=43,
+            ),
         ],
+        "interpretation": (
+            "Only directed_truth should pass the full conjunctive MIS. The other "
+            "cases isolate common drive, structure without temporal direction, and "
+            "direction-like timing without region-specific topology."
+        ),
     }
     path.write_text(json.dumps(results, indent=2))
     return path

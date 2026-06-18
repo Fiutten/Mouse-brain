@@ -1,0 +1,29 @@
+{
+  "version": "0.6.0",
+  "git_revision": "34feb97-dirty",
+  "inputs": {
+    "official_audit": "results/sensorium_official_baseline_audit/summary.json",
+    "sensitivity": "results/q1_sensitivity/summary.json",
+    "microns_gate": "results/microns_pilot_gate/summary.json",
+    "proposal_status": "docs/PROPOSAL_STATUS.md"
+  },
+  "official_sensorium_baseline_viable": false,
+  "microns_pilot_approved": false,
+  "sensitivity_decision": "sensitivity_supports_methodological_claim_not_q1_mechanistic_claim",
+  "publication_route": "methodological_benchmark_paper_now_q1_requires_external_piece",
+  "q1_ready": false,
+  "methodological_paper_ready": true,
+  "claims_allowed": [
+    "MouseBrainBench separates prediction, OOD, reliability, and mechanistic gates.",
+    "Allen VBN is a real negative case: reproducible but not mechanistically identifiable.",
+    "Sensorium/Dynamic Sensorium provide modern predictive cases with local NN control.",
+    "Sensorium static provides partial positive reliability/topographic evidence."
+  ],
+  "claims_blocked": [
+    "A complete digital twin of mouse brain.",
+    "A SOTA Sensorium predictor.",
+    "Causal mechanistic identifiability in Dynamic Sensorium.",
+    "MICrONS structure-function claims without an approved bounded pilot."
+  ],
+  "next_required_piece": "None for a methodological benchmark paper; for Q1, integrate an official Sensorium baseline or execute an approved bounded MICrONS pilot."
+}

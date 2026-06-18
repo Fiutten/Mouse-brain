@@ -54,14 +54,19 @@ mecanística concreta.
 
 ### Benchmark sintético con verdad conocida
 
-El script `mousebrainbench-synthetic-mis` genera dos casos:
+El script `mousebrainbench-synthetic-mis` genera cuatro casos:
 
 - `directed_truth`: señal dirigida con latencias regionales conocidas.
 - `common_drive_nonidentifiable`: señal reproducible y predictible, pero sin
   estructura dirigida identificable.
+- `topology_without_direction`: señal con estructura regional específica, pero
+  sin latencias/lead-lag resolubles.
+- `direction_without_topology_specificity`: señal con timing dirigido, pero sin
+  predictor topológicamente específico.
 
-El resultado esperado es que el primer caso pase MIS y el segundo falle. Esto
-comprueba que el score no confunde reproducibilidad con mecanismo.
+El resultado esperado es que solo `directed_truth` pase MIS. Esto comprueba que
+el score no confunde reproducibilidad, topología parcial o timing parcial con
+una afirmación mecanística completa.
 
 Artefacto:
 
@@ -107,3 +112,20 @@ necesitamos aplicarlo a más de un régimen:
 - opcionalmente un caso estructura-función de alta resolución, candidato:
   MICrONS en escala piloto.
 
+## Sensibilidad
+
+El script `mousebrainbench-q1-sensitivity` comprueba que las conclusiones
+actuales no dependen de un único umbral:
+
+- Allen VBN debe permanecer negativo bajo perturbaciones razonables de los
+  umbrales.
+- Sensorium 2022 static debe conservar evidencia parcial de fiabilidad y
+  topografía.
+- Dynamic Sensorium debe reportarse como evidencia predictiva con ganancias NN
+  pequeñas, no como mecanismo.
+
+Artefacto:
+
+```text
+results/q1_sensitivity/summary.json
+```

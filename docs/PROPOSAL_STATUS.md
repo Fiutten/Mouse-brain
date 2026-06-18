@@ -72,6 +72,32 @@ La contribucion fuerte no es un modelo neuronal especifico, sino el protocolo:
 
 ## Siguiente decision
 
+La fase de cierre del 19 de junio de 2026 ejecutó cinco comprobaciones:
+
+1. Auditoría del baseline oficial Sensorium.
+2. MIS sintético ampliado con casos intermedios.
+3. Sensibilidad sobre Allen, Sensorium static y Dynamic Sensorium.
+4. Puerta MICrONS acotada.
+5. Congelado de ruta publicable.
+
+Resultado:
+
+- Baseline oficial Sensorium: no viable localmente ahora; faltan `sensorium`,
+  `neuralpredictors`, `nnfabrik`, `datajoint` y `pytorch_lightning`.
+- Baseline NN local: se mantiene `torch_residual_mlp` como control reproducible,
+  sin claim SOTA.
+- MIS sintético: solo pasa `directed_truth`; fallan correctamente common drive,
+  topología sin dirección y dirección sin topología específica.
+- Sensibilidad: Allen permanece negativo; Sensorium static mantiene evidencia
+  parcial `6/9`; Dynamic mantiene ganancias NN pequeñas.
+- MICrONS: deferido hasta disponer de un manifiesto pequeño estructura-función.
+
+Ruta congelada:
+
+```text
+methodological_benchmark_paper_now_q1_requires_external_piece
+```
+
 Para cerrar un paper Q1 fuerte falta al menos uno de estos pasos:
 
 1. Integrar un baseline externo oficial/SOTA del ecosistema Sensorium y mostrar
@@ -83,3 +109,10 @@ El hueco metodologico principal se ha reducido: ya existe baseline NN local y
 restriccion estructural verificable. Para una contribucion Q1 fuerte, el
 siguiente salto no debe ser otro ajuste menor, sino validacion contra un baseline
 externo oficial o una restriccion causal/intervencional defendible.
+
+Artefactos de cierre:
+
+- `results/sensorium_official_baseline_audit/summary.json`
+- `results/q1_sensitivity/summary.json`
+- `results/microns_pilot_gate/summary.json`
+- `results/publication_freeze/summary.json`
