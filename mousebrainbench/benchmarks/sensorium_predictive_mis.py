@@ -12,6 +12,7 @@ import numpy as np
 from mousebrainbench import __version__
 from mousebrainbench.artifacts import code_revision
 from mousebrainbench.data.loaders.sensorium import SensoriumTrialTable, load_sensorium_directory
+from mousebrainbench.surrogate.sensorium_adapters import calibrated_residual_ridge_adapter
 from mousebrainbench.validation.mechanistic_identifiability import (
     Criterion,
     MechanisticIdentifiabilityScore,
@@ -141,6 +142,8 @@ def run_sensorium_benchmark(
     git_revision: str | None = None,
     has_structural_or_interventional_constraint: bool = False,
     has_ood_generalization_gate: bool = False,
+    adapter: str = "ridge",
+    adapter_alpha: float = 10.0,
 ) -> Path:
     """Evaluate transparent predictive baselines and write MIS diagnostics."""
 
@@ -193,8 +196,33 @@ def run_sensorium_benchmark(
         best_correlation = stimulus_correlation
         best_scrambled = stimulus_scrambled_correlation
 
+    adapter_diagnostics: dict[str, float] = {}
+    adapter_correlation = 0.0
+    adapter_scrambled_correlation = 0.0
+    adapter_median_neuron = 0.0
+    if adapter == "calibrated_residual_ridge":
+        adapter_result = calibrated_residual_ridge_adapter(
+            train_x,
+            train_y,
+            eval_x,
+            alpha=adapter_alpha,
+            seed=seed,
+        )
+        adapter_diagnostics = adapter_result.diagnostics
+        adapter_correlation = _safe_correlation(adapter_result.prediction, eval_y)
+        adapter_scrambled_correlation = _safe_correlation(
+            adapter_result.scrambled_prediction, eval_y
+        )
+        adapter_median_neuron = _median_neuron_correlation(adapter_result.prediction, eval_y)
+        if adapter_correlation > best_correlation:
+            best_model = adapter_result.name
+            best_correlation = adapter_correlation
+            best_scrambled = adapter_scrambled_correlation
+    elif adapter != "ridge":
+        raise ValueError(f"unknown Sensorium adapter: {adapter}")
+
     reliability, repeated_stimuli = _response_reliability(table, eval_mask)
-    metrics: dict[str, float | bool] = {
+    metrics: dict[str, Any] = {
         "mean_correlation": _safe_correlation(mean_prediction, eval_y),
         "ridge_correlation": stimulus_correlation,
         "scrambled_correlation": stimulus_scrambled_correlation,
@@ -203,7 +231,11 @@ def run_sensorium_benchmark(
         "stimulus_context_ridge_correlation": context_correlation,
         "stimulus_context_scrambled_correlation": scrambled_context_correlation,
         "stimulus_context_ridge_median_neuron_correlation": context_median_neuron,
+        "calibrated_residual_ridge_correlation": adapter_correlation,
+        "calibrated_residual_ridge_scrambled_correlation": adapter_scrambled_correlation,
+        "calibrated_residual_ridge_median_neuron_correlation": adapter_median_neuron,
         "best_model_is_contextual": best_model == "stimulus_context_ridge",
+        "best_model": best_model,
         "best_predictive_correlation": best_correlation,
         "best_predictive_scrambled_correlation": best_scrambled,
         "reliability": reliability,
@@ -224,6 +256,12 @@ def run_sensorium_benchmark(
     metrics["stimulus_context_ridge_minus_scrambled"] = float(
         metrics["stimulus_context_ridge_correlation"]
     ) - float(metrics["stimulus_context_scrambled_correlation"])
+    metrics["calibrated_residual_ridge_minus_mean"] = float(
+        metrics["calibrated_residual_ridge_correlation"]
+    ) - float(metrics["mean_correlation"])
+    metrics["calibrated_residual_ridge_minus_scrambled"] = float(
+        metrics["calibrated_residual_ridge_correlation"]
+    ) - float(metrics["calibrated_residual_ridge_scrambled_correlation"])
     metrics["best_predictive_minus_mean"] = float(metrics["best_predictive_correlation"]) - float(
         metrics["mean_correlation"]
     )
@@ -251,7 +289,11 @@ def run_sensorium_benchmark(
             "scrambled_stimulus_context_ridge": (
                 "context-preserving control with permuted train stimuli"
             ),
+            "calibrated_residual_ridge": (
+                "train-calibrated mean response plus shrinkage-scaled stimulus residual"
+            ),
         },
+        "adapter": {"name": adapter, "diagnostics": adapter_diagnostics},
         "metrics": metrics,
         "mis": mis.as_dict(),
         "decision": (
@@ -281,6 +323,8 @@ def run(
     alpha: float = 1.0,
     eval_tiers: tuple[str, ...] = ("validation", "val"),
     git_revision: str | None = None,
+    adapter: str = "ridge",
+    adapter_alpha: float = 10.0,
 ) -> Path:
     table = load_sensorium_directory(root, modality=modality, max_trials=max_trials)
     return run_sensorium_benchmark(
@@ -289,6 +333,8 @@ def run(
         alpha=alpha,
         eval_tiers=eval_tiers,
         git_revision=git_revision,
+        adapter=adapter,
+        adapter_alpha=adapter_alpha,
     )
 
 
@@ -299,6 +345,18 @@ def main() -> None:
     parser.add_argument("--modality", choices=("static", "dynamic"), default=None)
     parser.add_argument("--max-trials", type=int, default=None)
     parser.add_argument("--alpha", type=float, default=1.0)
+    parser.add_argument(
+        "--adapter",
+        choices=("ridge", "calibrated_residual_ridge"),
+        default="ridge",
+        help="Optional predictive adapter. Defaults to the original transparent ridge baseline.",
+    )
+    parser.add_argument(
+        "--adapter-alpha",
+        type=float,
+        default=10.0,
+        help="Ridge alpha used by calibrated residual adapters.",
+    )
     parser.add_argument(
         "--eval-tier",
         action="append",
@@ -320,6 +378,8 @@ def main() -> None:
         alpha=args.alpha,
         eval_tiers=tuple(args.eval_tiers) if args.eval_tiers else ("validation", "val"),
         git_revision=args.git_revision,
+        adapter=args.adapter,
+        adapter_alpha=args.adapter_alpha,
     )
     print(json.dumps({"output": str(output.resolve())}))
 

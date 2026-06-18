@@ -41,3 +41,36 @@ def test_sensorium_benchmark_marks_reliability_not_estimable_without_repeats(tmp
     assert payload["metrics"]["reliability"] == 0.0
     assert not payload["metrics"]["reliability_estimable"]
     assert payload["metrics"]["reliability_repeated_stimuli"] == 0.0
+
+
+def test_calibrated_residual_adapter_can_improve_over_mean(tmp_path) -> None:
+    rng = np.random.default_rng(123)
+    stimulus_features = rng.normal(size=(36, 6))
+    weights = rng.normal(size=(6, 4))
+    baseline = np.asarray([[3.0, 4.0, 5.0, 6.0]])
+    responses = baseline + 0.35 * stimulus_features @ weights
+    responses += rng.normal(scale=0.02, size=responses.shape)
+    tiers = np.asarray(["train"] * 28 + ["oracle"] * 8)
+    stimulus_ids = np.concatenate([np.arange(28), np.repeat([28, 29, 30, 31], 2)])
+    table = SensoriumTrialTable(
+        root=tmp_path,
+        modality="dynamic",
+        stimulus_features=stimulus_features,
+        context_features=np.empty((36, 0), dtype=float),
+        responses=responses,
+        tiers=tiers,
+        trial_ids=np.arange(36),
+        stimulus_ids=stimulus_ids,
+        neuron_ids=np.arange(4),
+    )
+
+    output = run_sensorium_benchmark(
+        table,
+        output=tmp_path / "calibrated_adapter.json",
+        eval_tiers=("oracle",),
+        adapter="calibrated_residual_ridge",
+    )
+    payload = json.loads(output.read_text())
+
+    assert payload["metrics"]["calibrated_residual_ridge_minus_mean"] > 0.05
+    assert payload["adapter"]["diagnostics"]["adapter_beta"] > 0.0
