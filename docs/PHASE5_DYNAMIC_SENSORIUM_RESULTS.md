@@ -122,3 +122,27 @@ estimable e identificabilidad mecanística. Para un resultado Q1 fuerte, el
 siguiente paso no es inflar esta prueba, sino añadir un adaptador a un modelo
 temporal competitivo u oficial Sensorium y volver a evaluar si la mejora
 predictiva cambia o no la conclusión mecanística.
+
+## Seguimiento: adaptador calibrado
+
+Se implementó un adaptador `calibrated_residual_ridge` como siguiente paso
+positivo. El adaptador selecciona regularización y escala residual usando solo
+CV interna en `train`, y después evalúa `oracle`.
+
+Resultado agregado:
+
+```text
+results/dynamic_sensorium_adapter/summary_dynamic_sensorium2023_calibrated_residual_mis.json
+```
+
+Resumen:
+
+- mediana de correlación del adaptador: `0.4759`;
+- mediana `Δ mean`: `+0.0222`;
+- mediana `Δ scrambled`: `+0.0377`;
+- `Δ mean` positivo en `4/5` ratones;
+- `Δ scrambled` positivo en `5/5` ratones;
+- fiabilidad sigue no estimable en `oracle`.
+
+La documentación completa está en
+[PHASE5_DYNAMIC_SENSORIUM_ADAPTER.md](PHASE5_DYNAMIC_SENSORIUM_ADAPTER.md).

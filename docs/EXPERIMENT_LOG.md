@@ -40,6 +40,37 @@ añadir un adaptador a un modelo temporal competitivo u oficial Sensorium y
 evaluarlo con la misma separación entre predicción, reproducibilidad e
 identificabilidad.
 
+## 2026-06-18 — Fase 5c: adaptador residual calibrado
+
+### Objetivo
+
+Convertir el caso dinámico negativo en una prueba predictiva más fuerte sin
+ajustar hiperparámetros sobre `oracle`.
+
+### Cambio
+
+Se añadió `calibrated_residual_ridge`: respuesta media de entrenamiento más un
+residual de estímulo escalado por `beta`. Tanto `alpha` como `beta` se eligen
+por CV interna en `train`; `oracle` se mantiene como evaluación held-out.
+
+### Resultado
+
+| Métrica | Mediana |
+|---|---:|
+| Adapter correlation | `0.4759` |
+| Adapter Δ mean | `0.0222` |
+| Adapter Δ scrambled | `0.0377` |
+| Positive Δ mean | `4/5` |
+| Positive Δ scrambled | `5/5` |
+| Reliability estimable | `0/5` |
+
+### Decisión
+
+**Avance positivo moderado.** El adaptador mejora la mediana frente al predictor
+medio y supera al control scrambled en todos los ratones. No es todavía
+identificabilidad mecanística ni SOTA; sí aporta una señal predictiva defendible
+para continuar hacia un modelo temporal más potente.
+
 ## 2026-06-12 — Gate 1: estructura causal del entorno
 
 ### Objetivo

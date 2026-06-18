@@ -107,3 +107,9 @@ respuestas retenidas/zeroed en la release pública, por lo que no se usan para
 evaluación directa. El tier `oracle` contiene respuestas no nulas, pero no
 contiene vídeos repetidos exactos; la fiabilidad por repetición se marca como
 no estimable en los artefactos.
+
+El adaptador `calibrated_residual_ridge` se ejecutó sobre la misma extracción y
+guardó sus artefactos en `results/dynamic_sensorium_adapter/`. La selección de
+`alpha` y `beta` se realiza exclusivamente por CV interna en `train`; `oracle`
+queda como held-out. Los resultados y limitaciones están en
+[PHASE5_DYNAMIC_SENSORIUM_ADAPTER.md](PHASE5_DYNAMIC_SENSORIUM_ADAPTER.md).

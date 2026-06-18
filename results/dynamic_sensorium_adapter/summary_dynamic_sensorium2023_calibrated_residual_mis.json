@@ -1,0 +1,171 @@
+{
+  "dataset": "Dynamic Sensorium 2023 current public GIN release",
+  "evaluation_tier": "oracle",
+  "adapter": "calibrated_residual_ridge",
+  "alpha_selection": "train_only_cv_over_0.1_0.3_1_3_10_30_100",
+  "git_revision": "ff333fd",
+  "n_mice": 5,
+  "rows": [
+    {
+      "mouse": "dynamic29515",
+      "n_trials": 711,
+      "n_neurons": 7863,
+      "mean_correlation": 0.42376986766324315,
+      "ridge_correlation": 0.2903449673718665,
+      "calibrated_residual_ridge_correlation": 0.42244437965535253,
+      "calibrated_residual_ridge_minus_mean": -0.0013254880078906184,
+      "calibrated_residual_ridge_minus_scrambled": 0.037679684932730106,
+      "best_model": "calibrated_residual_ridge",
+      "best_predictive_correlation": 0.42244437965535253,
+      "best_predictive_minus_mean": -0.0013254880078906184,
+      "best_predictive_minus_scrambled": 0.037679684932730106,
+      "reliability_estimable": false,
+      "mis_score": 0.1948437442949558,
+      "adapter_alpha": 100.0,
+      "adapter_beta": 0.5750000000000001,
+      "adapter_cv_correlation": 0.43671552157960636,
+      "adapter_alpha_candidates": 7.0
+    },
+    {
+      "mouse": "dynamic29623",
+      "n_trials": 682,
+      "n_neurons": 7908,
+      "mean_correlation": 0.3679818551875286,
+      "ridge_correlation": 0.1969374897607021,
+      "calibrated_residual_ridge_correlation": 0.39021845943639666,
+      "calibrated_residual_ridge_minus_mean": 0.022236604248868086,
+      "calibrated_residual_ridge_minus_scrambled": 0.03266941370730059,
+      "best_model": "calibrated_residual_ridge",
+      "best_predictive_correlation": 0.39021845943639666,
+      "best_predictive_minus_mean": 0.022236604248868086,
+      "best_predictive_minus_scrambled": 0.03266941370730059,
+      "reliability_estimable": false,
+      "mis_score": 0.2331244843470415,
+      "adapter_alpha": 100.0,
+      "adapter_beta": 0.625,
+      "adapter_cv_correlation": 0.42267424844251633,
+      "adapter_alpha_candidates": 7.0
+    },
+    {
+      "mouse": "dynamic29647",
+      "n_trials": 711,
+      "n_neurons": 8202,
+      "mean_correlation": 0.4471551567489409,
+      "ridge_correlation": 0.41602431486627145,
+      "calibrated_residual_ridge_correlation": 0.4801460889881136,
+      "calibrated_residual_ridge_minus_mean": 0.03299093223917271,
+      "calibrated_residual_ridge_minus_scrambled": 0.04450779551885714,
+      "best_model": "calibrated_residual_ridge",
+      "best_predictive_correlation": 0.4801460889881136,
+      "best_predictive_minus_mean": 0.03299093223917271,
+      "best_predictive_minus_scrambled": 0.04450779551885714,
+      "reliability_estimable": false,
+      "mis_score": 0.2833305061289552,
+      "adapter_alpha": 100.0,
+      "adapter_beta": 0.675,
+      "adapter_cv_correlation": 0.4449415000202249,
+      "adapter_alpha_candidates": 7.0
+    },
+    {
+      "mouse": "dynamic29712",
+      "n_trials": 739,
+      "n_neurons": 7939,
+      "mean_correlation": 0.45298415307462914,
+      "ridge_correlation": 0.40944547797630837,
+      "calibrated_residual_ridge_correlation": 0.47594909133200297,
+      "calibrated_residual_ridge_minus_mean": 0.022964938257373835,
+      "calibrated_residual_ridge_minus_scrambled": 0.033650911127088956,
+      "best_model": "calibrated_residual_ridge",
+      "best_predictive_correlation": 0.47594909133200297,
+      "best_predictive_minus_mean": 0.022964938257373835,
+      "best_predictive_minus_scrambled": 0.033650911127088956,
+      "reliability_estimable": false,
+      "mis_score": 0.23692410974325065,
+      "adapter_alpha": 100.0,
+      "adapter_beta": 0.6000000000000001,
+      "adapter_cv_correlation": 0.4975273560893279,
+      "adapter_alpha_candidates": 7.0
+    },
+    {
+      "mouse": "dynamic29755",
+      "n_trials": 712,
+      "n_neurons": 8122,
+      "mean_correlation": 0.4805649600408238,
+      "ridge_correlation": 0.4379851301295673,
+      "calibrated_residual_ridge_correlation": 0.5009085699541823,
+      "calibrated_residual_ridge_minus_mean": 0.02034360991335854,
+      "calibrated_residual_ridge_minus_scrambled": 0.04145508746188198,
+      "best_model": "calibrated_residual_ridge",
+      "best_predictive_correlation": 0.5009085699541823,
+      "best_predictive_minus_mean": 0.02034360991335854,
+      "best_predictive_minus_scrambled": 0.04145508746188198,
+      "reliability_estimable": false,
+      "mis_score": 0.24844154972275667,
+      "adapter_alpha": 100.0,
+      "adapter_beta": 0.7250000000000001,
+      "adapter_cv_correlation": 0.48243015059375505,
+      "adapter_alpha_candidates": 7.0
+    }
+  ],
+  "summary": {
+    "calibrated_residual_ridge_correlation": {
+      "median": 0.47594909133200297,
+      "min": 0.39021845943639666,
+      "max": 0.5009085699541823
+    },
+    "calibrated_residual_ridge_minus_mean": {
+      "median": 0.022236604248868086,
+      "min": -0.0013254880078906184,
+      "max": 0.03299093223917271
+    },
+    "calibrated_residual_ridge_minus_scrambled": {
+      "median": 0.037679684932730106,
+      "min": 0.03266941370730059,
+      "max": 0.04450779551885714
+    },
+    "best_predictive_correlation": {
+      "median": 0.47594909133200297,
+      "min": 0.39021845943639666,
+      "max": 0.5009085699541823
+    },
+    "best_predictive_minus_mean": {
+      "median": 0.022236604248868086,
+      "min": -0.0013254880078906184,
+      "max": 0.03299093223917271
+    },
+    "best_predictive_minus_scrambled": {
+      "median": 0.037679684932730106,
+      "min": 0.03266941370730059,
+      "max": 0.04450779551885714
+    },
+    "adapter_alpha": {
+      "median": 100.0,
+      "min": 100.0,
+      "max": 100.0
+    },
+    "adapter_beta": {
+      "median": 0.625,
+      "min": 0.5750000000000001,
+      "max": 0.7250000000000001
+    },
+    "adapter_cv_correlation": {
+      "median": 0.4449415000202249,
+      "min": 0.42267424844251633,
+      "max": 0.4975273560893279
+    },
+    "mis_score": {
+      "median": 0.23692410974325065,
+      "min": 0.1948437442949558,
+      "max": 0.2833305061289552
+    },
+    "positive_minus_mean_count": 4,
+    "adapter_selected_as_best_count": 5,
+    "reliability_estimable_count": 0
+  },
+  "scientific_decision": "adapter_produces_modest_positive_predictive_gain_in_median_and_4_of_5_mice_but_not_mechanistic_identifiability",
+  "interpretation": [
+    "The train-calibrated residual adapter improves the median dynamic oracle correlation over the train-mean baseline and is positive in 4/5 mice.",
+    "The improvement is modest, but it is selected using train-only CV and remains above the scrambled-residual control in all five mice.",
+    "The result is predictive evidence, not mechanistic identifiability, because reliability is not estimable from oracle and no structural/causal/OOD constraint is present."
+  ]
+}
