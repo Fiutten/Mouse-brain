@@ -82,8 +82,9 @@ La fase de cierre del 19 de junio de 2026 ejecutó cinco comprobaciones:
 
 Resultado:
 
-- Baseline oficial Sensorium: no viable localmente ahora; faltan `sensorium`,
-  `neuralpredictors`, `nnfabrik`, `datajoint` y `pytorch_lightning`.
+- Baseline oficial Sensorium: stack integrado a nivel de forward-pass smoke
+  test; falta entrenar/evaluar una configuración oficial para que cuente como
+  baseline Q1.
 - Baseline NN local: se mantiene `torch_residual_mlp` como control reproducible,
   sin claim SOTA.
 - MIS sintético: solo pasa `directed_truth`; fallan correctamente common drive,
@@ -116,3 +117,13 @@ Artefactos de cierre:
 - `results/q1_sensitivity/summary.json`
 - `results/microns_pilot_gate/summary.json`
 - `results/publication_freeze/summary.json`
+
+Actualización adicional:
+
+- El stack oficial Sensorium 2023 ya corre un forward-pass smoke test sobre
+  datos locales Dynamic Sensorium.
+- La auditoría actual es `official_sensorium_stack_integrated_training_pending`.
+- Esto mejora la posición técnica, pero no cambia el dictamen Q1 porque todavía
+  no existe un baseline oficial entrenado/evaluado.
+- Documento técnico:
+  `docs/SENSORIUM_OFFICIAL_BASELINE_INTEGRATION.md`.

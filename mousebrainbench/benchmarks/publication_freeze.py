@@ -32,6 +32,7 @@ def build_freeze_payload(
     robust = _load(sensitivity)
     microns = _load(microns_gate)
     official_ready = bool(official["official_baseline_viable"])
+    official_stack_forward_ok = bool(official.get("official_stack_forward_ok", False))
     microns_ready = bool(microns["approved"])
 
     q1_ready = official_ready or microns_ready
@@ -50,6 +51,7 @@ def build_freeze_payload(
             "proposal_status": str(proposal_status),
         },
         "official_sensorium_baseline_viable": official_ready,
+        "official_sensorium_stack_forward_ok": official_stack_forward_ok,
         "microns_pilot_approved": microns_ready,
         "sensitivity_decision": robust["decision"],
         "publication_route": route,
@@ -60,16 +62,18 @@ def build_freeze_payload(
             "Allen VBN is a real negative case: reproducible but not mechanistically identifiable.",
             "Sensorium/Dynamic Sensorium provide modern predictive cases with local NN control.",
             "Sensorium static provides partial positive reliability/topographic evidence.",
+            "The official Sensorium stack can run a local forward-pass smoke test.",
         ],
         "claims_blocked": [
             "A complete digital twin of mouse brain.",
             "A SOTA Sensorium predictor.",
+            "An official trained Sensorium baseline until trained/evaluated predictions exist.",
             "Causal mechanistic identifiability in Dynamic Sensorium.",
             "MICrONS structure-function claims without an approved bounded pilot.",
         ],
         "next_required_piece": (
-            "None for a methodological benchmark paper; for Q1, integrate an official "
-            "Sensorium baseline or execute an approved bounded MICrONS pilot."
+            "None for a methodological benchmark paper; for Q1, train/evaluate an "
+            "official Sensorium baseline or execute an approved bounded MICrONS pilot."
         ),
     }
 
@@ -83,6 +87,7 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         f"- Publication route: `{payload['publication_route']}`",
         f"- Methodological paper ready: `{payload['methodological_paper_ready']}`",
         f"- Q1 ready now: `{payload['q1_ready']}`",
+        f"- Official Sensorium stack forward OK: `{payload['official_sensorium_stack_forward_ok']}`",
         f"- Official Sensorium baseline viable: `{payload['official_sensorium_baseline_viable']}`",
         f"- MICrONS pilot approved: `{payload['microns_pilot_approved']}`",
         "",

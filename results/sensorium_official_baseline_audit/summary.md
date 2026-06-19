@@ -1,20 +1,23 @@
 # Sensorium Official Baseline Audit
 
-- Decision: `official_sensorium_baseline_not_locally_viable_use_tracked_torch_mlp`
-- Official baseline viable: `False`
+- Decision: `official_sensorium_stack_integrated_training_pending`
+- Official stack forward OK: `True`
+- Official trained baseline available: `False`
+- Official baseline Q1-viable: `False`
 - Local MLP available: `True`
-- Recommended action: Use the tracked compact PyTorch MLP as the local NN control, while stating explicitly that it is not an official/SOTA Sensorium model.
+- Recommended action: Treat the official stack as integrated at smoke-test level, but keep the tracked compact PyTorch MLP as the evaluated NN control until an official trained baseline summary exists.
 
 ## Package probes
 
 | Package | Available | Purpose |
 |---|---:|---|
-| `sensorium` | `False` | official Sensorium data/model helper package |
-| `neuralpredictors` | `False` | standard Ecker/Sinz lab neural predictor models |
-| `nnfabrik` | `False` | model/dataloader factory used by official examples |
-| `datajoint` | `False` | metadata/backend dependency used by the ecosystem |
-| `pytorch_lightning` | `False` | training loop dependency used by many baselines |
+| `sensorium` | `True` | official Sensorium data/model helper package |
+| `neuralpredictors` | `True` | standard Ecker/Sinz lab neural predictor models |
+| `nnfabrik` | `True` | model/dataloader factory used by official examples |
+| `datajoint` | `True` | metadata/backend dependency used by the ecosystem |
+| `torch` | `True` | PyTorch runtime required by official Sensorium models |
+| `torchvision` | `True` | implicit neuralpredictors dependency for convolutional cores |
 
 ## Interpretation
 
-Official Sensorium baselines are the preferred external control, but they are only acceptable for this project when the environment can run them reproducibly. Otherwise the local MLP remains a neural-network control rather than a SOTA claim.
+Official Sensorium baselines are the preferred external control, but they only count for Q1 when trained/evaluated predictions are available. A forward-pass smoke test proves integration, not leaderboard-level performance.

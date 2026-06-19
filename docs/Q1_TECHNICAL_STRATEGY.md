@@ -146,13 +146,16 @@ Estado implementado:
 - protocolo en [PHASE5_SENSORIUM_PROTOCOL.md](PHASE5_SENSORIUM_PROTOCOL.md).
 - baseline NN local `torch_residual_mlp` evaluado en Dynamic Sensorium principal
   y legacy OOD;
-- auditoría oficial Sensorium que concluye que el baseline oficial no es viable
-  localmente en el entorno actual.
+- integración oficial Sensorium 2023 a nivel de smoke test: el loader oficial
+  abre datos locales y una arquitectura oficial ejecuta forward pass sobre un
+  batch real;
+- auditoría oficial Sensorium que concluye:
+  `official_sensorium_stack_integrated_training_pending`.
 
 La siguiente acción empírica ya no es descargar más ratones. La pieza que falta
-para Q1 es integrar un baseline oficial reproducible del ecosistema Sensorium o
-documentar formalmente que no se puede ejecutar y mantener el MLP local como
-control NN no-SOTA.
+para Q1 es entrenar/evaluar una configuración oficial reproducible del ecosistema
+Sensorium y pasarla por MouseBrainBench. El forward-pass smoke test no basta
+para claim Q1.
 
 ### 5. MICrONS como caso estructura-función
 
@@ -188,8 +191,8 @@ Estado actual:
 
 La siguiente fase técnica queda reducida a dos rutas, no a exploración abierta:
 
-1. **Ruta Q1 externa:** preparar un entorno reproducible para el baseline oficial
-   Sensorium y pasar sus predicciones por MouseBrainBench.
+1. **Ruta Q1 externa:** entrenar/evaluar un baseline oficial Sensorium en entorno
+   reproducible y pasar sus predicciones por MouseBrainBench.
 2. **Ruta Q1 estructura-función:** localizar o construir un manifiesto MICrONS
    pequeño que cumpla la puerta `microns_pilot_gate`.
 

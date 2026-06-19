@@ -44,7 +44,8 @@ OFFICIAL_STACK = (
     RequirementProbe("neuralpredictors", "standard Ecker/Sinz lab neural predictor models"),
     RequirementProbe("nnfabrik", "model/dataloader factory used by official examples"),
     RequirementProbe("datajoint", "metadata/backend dependency used by the ecosystem"),
-    RequirementProbe("pytorch_lightning", "training loop dependency used by many baselines"),
+    RequirementProbe("torch", "PyTorch runtime required by official Sensorium models"),
+    RequirementProbe("torchvision", "implicit neuralpredictors dependency for convolutional cores"),
 )
 
 
@@ -63,6 +64,12 @@ def _repo_probe(path: Path) -> dict[str, str | bool]:
 def audit(
     *,
     official_repo: Path = Path("external/sensorium_2023"),
+    official_smoke: Path = Path(
+        "results/sensorium_official_baseline_audit/official_model_smoke.json"
+    ),
+    official_trained_summary: Path = Path(
+        "results/sensorium_official_baseline_audit/official_trained_baseline_summary.json"
+    ),
     local_mlp_summary: Path = Path(
         "results/dynamic_sensorium_torch_mlp/summary_dynamic_sensorium2023_torch_mlp.json"
     ),
@@ -73,14 +80,27 @@ def audit(
     repo = _repo_probe(official_repo)
     missing = [item["package"] for item in packages if not item["available"]]
     repo_usable = bool(repo["exists"] and repo["has_sensorium_package"])
-    official_viable = not missing and repo_usable
+    smoke_payload = json.loads(official_smoke.read_text()) if official_smoke.exists() else None
+    official_stack_forward_ok = bool(
+        smoke_payload and smoke_payload.get("official_stack_forward_ok")
+    )
+    official_stack_viable = not missing and repo_usable and official_stack_forward_ok
+    official_trained_available = official_trained_summary.exists()
+    official_viable = official_stack_viable and official_trained_available
     local_mlp_available = local_mlp_summary.exists()
 
     if official_viable:
-        decision = "official_sensorium_baseline_locally_viable"
+        decision = "official_sensorium_trained_baseline_locally_viable"
         action = (
-            "Run the official baseline through the MouseBrainBench comparator before "
-            "freezing publication claims."
+            "Run the trained official baseline through the MouseBrainBench comparator "
+            "and update Q1 claims."
+        )
+    elif official_stack_viable and local_mlp_available:
+        decision = "official_sensorium_stack_integrated_training_pending"
+        action = (
+            "Treat the official stack as integrated at smoke-test level, but keep "
+            "the tracked compact PyTorch MLP as the evaluated NN control until an "
+            "official trained baseline summary exists."
         )
     elif local_mlp_available:
         decision = "official_sensorium_baseline_not_locally_viable_use_tracked_torch_mlp"
@@ -98,6 +118,11 @@ def audit(
         "official_repo_probe": repo,
         "package_probes": packages,
         "missing_packages": missing,
+        "official_smoke": str(official_smoke),
+        "official_stack_forward_ok": official_stack_forward_ok,
+        "official_stack_viable": official_stack_viable,
+        "official_trained_summary": str(official_trained_summary),
+        "official_trained_baseline_available": official_trained_available,
         "official_baseline_viable": official_viable,
         "local_mlp_summary": str(local_mlp_summary),
         "local_mlp_available": local_mlp_available,
@@ -105,9 +130,9 @@ def audit(
         "recommended_action": action,
         "interpretation": (
             "Official Sensorium baselines are the preferred external control, but "
-            "they are only acceptable for this project when the environment can run "
-            "them reproducibly. Otherwise the local MLP remains a neural-network "
-            "control rather than a SOTA claim."
+            "they only count for Q1 when trained/evaluated predictions are available. "
+            "A forward-pass smoke test proves integration, not leaderboard-level "
+            "performance."
         ),
     }
 
@@ -121,7 +146,12 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         "# Sensorium Official Baseline Audit",
         "",
         f"- Decision: `{payload['decision']}`",
-        f"- Official baseline viable: `{payload['official_baseline_viable']}`",
+        f"- Official stack forward OK: `{payload['official_stack_forward_ok']}`",
+        (
+            "- Official trained baseline available: "
+            f"`{payload['official_trained_baseline_available']}`"
+        ),
+        f"- Official baseline Q1-viable: `{payload['official_baseline_viable']}`",
         f"- Local MLP available: `{payload['local_mlp_available']}`",
         f"- Recommended action: {payload['recommended_action']}",
         "",

@@ -187,7 +187,8 @@ Esto significa:
 
 - el paquete actual puede sostener un artículo metodológico reproducible;
 - no debe venderse todavía como Q1 fuerte de IA;
-- para Q1 hace falta integrar un baseline oficial Sensorium ejecutable o aprobar
+- el stack oficial Sensorium ya es ejecutable a nivel de smoke test;
+- para Q1 hace falta entrenar/evaluar un baseline oficial Sensorium o aprobar
   un piloto MICrONS estructura-función acotado.
 
 Artefactos de decisión:
@@ -196,3 +197,4 @@ Artefactos de decisión:
 - `results/q1_sensitivity/summary.json`
 - `results/sensorium_official_baseline_audit/summary.json`
 - `results/microns_pilot_gate/summary.json`
+- `results/sensorium_official_baseline_audit/official_model_smoke.json`

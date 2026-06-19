@@ -1,51 +1,55 @@
 {
   "version": "0.6.0",
-  "git_revision": "34feb97-dirty",
+  "git_revision": "7032765-dirty",
   "official_repo_probe": {
     "path": "external/sensorium_2023",
-    "exists": false,
-    "has_env_yml": false,
-    "has_pyproject": false,
-    "has_sensorium_package": false
+    "exists": true,
+    "has_env_yml": true,
+    "has_pyproject": true,
+    "has_sensorium_package": true
   },
   "package_probes": [
     {
       "package": "sensorium",
       "purpose": "official Sensorium data/model helper package",
-      "available": false
+      "available": true
     },
     {
       "package": "neuralpredictors",
       "purpose": "standard Ecker/Sinz lab neural predictor models",
-      "available": false
+      "available": true
     },
     {
       "package": "nnfabrik",
       "purpose": "model/dataloader factory used by official examples",
-      "available": false
+      "available": true
     },
     {
       "package": "datajoint",
       "purpose": "metadata/backend dependency used by the ecosystem",
-      "available": false
+      "available": true
     },
     {
-      "package": "pytorch_lightning",
-      "purpose": "training loop dependency used by many baselines",
-      "available": false
+      "package": "torch",
+      "purpose": "PyTorch runtime required by official Sensorium models",
+      "available": true
+    },
+    {
+      "package": "torchvision",
+      "purpose": "implicit neuralpredictors dependency for convolutional cores",
+      "available": true
     }
   ],
-  "missing_packages": [
-    "sensorium",
-    "neuralpredictors",
-    "nnfabrik",
-    "datajoint",
-    "pytorch_lightning"
-  ],
+  "missing_packages": [],
+  "official_smoke": "results/sensorium_official_baseline_audit/official_model_smoke.json",
+  "official_stack_forward_ok": true,
+  "official_stack_viable": true,
+  "official_trained_summary": "results/sensorium_official_baseline_audit/official_trained_baseline_summary.json",
+  "official_trained_baseline_available": false,
   "official_baseline_viable": false,
   "local_mlp_summary": "results/dynamic_sensorium_torch_mlp/summary_dynamic_sensorium2023_torch_mlp.json",
   "local_mlp_available": true,
-  "decision": "official_sensorium_baseline_not_locally_viable_use_tracked_torch_mlp",
-  "recommended_action": "Use the tracked compact PyTorch MLP as the local NN control, while stating explicitly that it is not an official/SOTA Sensorium model.",
-  "interpretation": "Official Sensorium baselines are the preferred external control, but they are only acceptable for this project when the environment can run them reproducibly. Otherwise the local MLP remains a neural-network control rather than a SOTA claim."
+  "decision": "official_sensorium_stack_integrated_training_pending",
+  "recommended_action": "Treat the official stack as integrated at smoke-test level, but keep the tracked compact PyTorch MLP as the evaluated NN control until an official trained baseline summary exists.",
+  "interpretation": "Official Sensorium baselines are the preferred external control, but they only count for Q1 when trained/evaluated predictions are available. A forward-pass smoke test proves integration, not leaderboard-level performance."
 }

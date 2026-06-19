@@ -1,0 +1,34 @@
+{
+  "official_stack_forward_ok": true,
+  "mouse_root": "data/dynamic_sensorium/extracted/dynamic29515-10-12-Video-9b4f6a1a067fe51e15306b9628efea20",
+  "neuralpredictors_source": "/Users/fiutten/Documents/Codex/mouse-mind/external/neuralpredictors_43fa/neuralpredictors/__init__.py",
+  "available_tiers": [
+    "final_test_bonus",
+    "final_test_main",
+    "live_test_bonus",
+    "live_test_main",
+    "oracle",
+    "train"
+  ],
+  "input_shape": [
+    1,
+    1,
+    13,
+    9,
+    64
+  ],
+  "response_shape": [
+    1,
+    7863,
+    51
+  ],
+  "output_shape": [
+    1,
+    11,
+    7863
+  ],
+  "model_family": "official_sensorium_factorized3d_core_factorized_readout_smoke",
+  "trained_baseline": false,
+  "sota_claim": false,
+  "interpretation": "Official Sensorium loader/model code runs on local Dynamic Sensorium data, but this smoke test is not an official trained baseline."
+}
