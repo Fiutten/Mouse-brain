@@ -1,0 +1,129 @@
+{
+  "benchmark": "official_sensorium_tiny_trained_baseline",
+  "data_root": "data/dynamic_sensorium/extracted",
+  "trained_baseline": true,
+  "official_loader": true,
+  "official_model_factory": true,
+  "official_architecture_family": "Factorized3dCore + factorized readout",
+  "bounded_training": true,
+  "sota_claim": false,
+  "q1_baseline_qualified": false,
+  "q1_qualification_rule": "This artifact has 5 usable mice. It intentionally does not qualify as a Q1-level official baseline because it uses a tiny bounded training budget. Q1 qualification requires the published official budget/configuration or a documented external leaderboard checkpoint evaluated through MouseBrainBench.",
+  "n_mice": 5,
+  "n_usable_mice": 5,
+  "max_train_batches": 64,
+  "max_eval_batches": 24,
+  "mean_batches": 32,
+  "learning_rate": 0.001,
+  "seed": 13,
+  "device_requested": "mps",
+  "hidden_channels": [
+    8,
+    8
+  ],
+  "spatial_kernel": 5,
+  "temporal_kernel": 5,
+  "rows": [
+    {
+      "mouse": "dynamic29515-10-12-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "data_key": "dynamic29515-10-12-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "evaluation_tier": "oracle",
+      "n_train_batches": 64,
+      "n_eval_batches": 24,
+      "final_train_loss": 0.8006144762039185,
+      "median_train_loss": 1.3332643508911133,
+      "official_sensorium_correlation": 0.027006154792659293,
+      "mean_response_correlation": 0.0136147779298663,
+      "official_sensorium_minus_mean": 0.013391376862792993,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "hidden_channels": [
+        8,
+        8
+      ],
+      "spatial_kernel": 5,
+      "temporal_kernel": 5,
+      "device": "mps"
+    },
+    {
+      "mouse": "dynamic29623-4-9-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "data_key": "dynamic29623-4-9-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "evaluation_tier": "oracle",
+      "n_train_batches": 64,
+      "n_eval_batches": 24,
+      "final_train_loss": 0.27126067876815796,
+      "median_train_loss": 1.3477435111999512,
+      "official_sensorium_correlation": 0.03499293789864238,
+      "mean_response_correlation": 0.03490266720208549,
+      "official_sensorium_minus_mean": 9.027069655688502e-05,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "hidden_channels": [
+        8,
+        8
+      ],
+      "spatial_kernel": 5,
+      "temporal_kernel": 5,
+      "device": "mps"
+    },
+    {
+      "mouse": "dynamic29647-19-8-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "data_key": "dynamic29647-19-8-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "evaluation_tier": "oracle",
+      "n_train_batches": 64,
+      "n_eval_batches": 24,
+      "final_train_loss": 2.4864413738250732,
+      "median_train_loss": 1.1896305084228516,
+      "official_sensorium_correlation": 0.014152610094590515,
+      "mean_response_correlation": -0.0028699673928480503,
+      "official_sensorium_minus_mean": 0.017022577487438566,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "hidden_channels": [
+        8,
+        8
+      ],
+      "spatial_kernel": 5,
+      "temporal_kernel": 5,
+      "device": "mps"
+    },
+    {
+      "mouse": "dynamic29712-5-9-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "data_key": "dynamic29712-5-9-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "evaluation_tier": "oracle",
+      "n_train_batches": 64,
+      "n_eval_batches": 24,
+      "final_train_loss": 1.546938180923462,
+      "median_train_loss": 1.546938180923462,
+      "official_sensorium_correlation": 0.010642550300572096,
+      "mean_response_correlation": 0.012068763742146334,
+      "official_sensorium_minus_mean": -0.001426213441574238,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "hidden_channels": [
+        8,
+        8
+      ],
+      "spatial_kernel": 5,
+      "temporal_kernel": 5,
+      "device": "mps"
+    },
+    {
+      "mouse": "dynamic29755-2-8-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "data_key": "dynamic29755-2-8-Video-9b4f6a1a067fe51e15306b9628efea20",
+      "evaluation_tier": "oracle",
+      "n_train_batches": 64,
+      "n_eval_batches": 24,
+      "final_train_loss": 0.7971916794776917,
+      "median_train_loss": 1.1731349229812622,
+      "official_sensorium_correlation": 0.027590366184038817,
+      "mean_response_correlation": 0.006415701583042496,
+      "official_sensorium_minus_mean": 0.02117466460099632,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "hidden_channels": [
+        8,
+        8
+      ],
+      "spatial_kernel": 5,
+      "temporal_kernel": 5,
+      "device": "mps"
+    }
+  ],
+  "interpretation": "This artifact proves that official Sensorium code can be trained and evaluated inside MouseBrainBench. It is a bounded local control, not a SOTA Sensorium benchmark result."
+}

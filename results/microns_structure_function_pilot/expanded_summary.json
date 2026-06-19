@@ -1,0 +1,38 @@
+{
+  "analysis": "microns_structure_function_pilot",
+  "matched_units": "data/microns/expanded/dt_coreg_units_v1507_sample1000.csv",
+  "edges": "data/microns/expanded/dt_coreg_edges_v1507_sample1000.csv",
+  "n_units": 1000,
+  "n_synapses_loaded": 2267,
+  "n_edge_pairs_loaded": 2095,
+  "coarse_cell_type_coverage": 817,
+  "approved_analysis": true,
+  "positive_structure_function_result": false,
+  "scientific_decision": "negative_or_inconclusive_structure_function_pilot",
+  "n_pairs": 999000,
+  "n_connected_pairs": 2095,
+  "n_unconnected_pairs": 996905,
+  "observed_connected_mean_functional_similarity": -2.392951335617397,
+  "random_null_mean": -2.4701278474416593,
+  "random_null_delta": 0.07717651182426222,
+  "random_null_p_one_sided": 0.01098901098901099,
+  "distance_matched_null_mean": -2.4114263780911016,
+  "distance_matched_delta": 0.018475042473704573,
+  "distance_matched_p_one_sided": 0.2887112887112887,
+  "degree_matched_null_mean": -2.5092630627085475,
+  "degree_matched_delta": 0.11631172709115045,
+  "degree_matched_p_one_sided": 0.000999000999000999,
+  "connected_synapse_count_spearman": {
+    "rho": -0.0165955724109506,
+    "p": 0.447734302121983
+  },
+  "connected_synapse_size_spearman": {
+    "rho": -0.05563728224809828,
+    "p": 0.010864203882924577
+  },
+  "connected_synapse_count_mean": 1.0821002386634846,
+  "connected_synapse_size_sum_mean": 7971.545584725537,
+  "n_permutations": 1000,
+  "seed": 17,
+  "interpretation": "A positive result requires connected pairs to exceed both random and distance-matched nulls. This pilot tests local structure-function coupling only; it is not a whole-MICrONS model."
+}

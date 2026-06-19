@@ -1,0 +1,40 @@
+{
+  "version": "0.6.0",
+  "git_revision": "3b13df9-dirty",
+  "manifest": "data/microns/expanded/pilot_manifest.json",
+  "manifest_available": true,
+  "manifest_payload": {
+    "dataset": "MICrONS expanded CAVE digital twin coregistration pilot",
+    "datastack": "minnie65_public",
+    "table": "digital_twin_properties_bcm_coreg_v4",
+    "materialization_version": 1507,
+    "n_neurons": 1000,
+    "n_query_rows": 1200,
+    "n_structural_edges": 2267,
+    "n_unique_edge_pairs": 2095,
+    "has_spatial_coordinates": true,
+    "has_functional_responses": true,
+    "has_structural_edges": true,
+    "estimated_download_gb": 0.000731,
+    "units_csv": "data/microns/expanded/dt_coreg_units_v1507_sample1000.csv",
+    "structural_edge_source": "data/microns/expanded/dt_coreg_edges_v1507_sample1000.csv",
+    "cave_query": {
+      "limit_query_rows": 1200,
+      "limit_units": 1000,
+      "limit_edges": 100000
+    },
+    "cell_type_enrichment": {
+      "requested": true,
+      "coarse_coverage": 817,
+      "fine_coverage": 836
+    },
+    "citation_notice": "CAVE table owner notice requests citation of Wang et al. 2025, Ding/Fahey/Papadopoulos et al. 2025, and MICrONS Consortium et al. 2025."
+  },
+  "missing_fields": [],
+  "decision": "approve_bounded_microns_structure_function_pilot",
+  "approved": true,
+  "micro_pilot_approved": true,
+  "q1_pilot_approved": true,
+  "reason": "Manifest supports a Q1-scale bounded structure-function test.",
+  "approved_question": "Does local structural wiring or spatial embedding explain functional similarity beyond matched nulls in a bounded MICrONS subset?"
+}

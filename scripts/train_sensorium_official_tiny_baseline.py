@@ -74,7 +74,13 @@ def _data_key(loaders: dict[str, Any]) -> str:
     return str(keys[0])
 
 
-def _build_official_tiny_model(loaders: dict[str, Any], seed: int):
+def _build_official_tiny_model(
+    loaders: dict[str, Any],
+    seed: int,
+    hidden_channels: list[int],
+    spatial_kernel: int,
+    temporal_kernel: int,
+):
     """Create a minimal Factorized3dCore + factorized readout Sensorium model."""
 
     from sensorium.models.make_model import make_video_model  # noqa: PLC0415
@@ -84,13 +90,13 @@ def _build_official_tiny_model(loaders: dict[str, Any], seed: int):
     # competition configuration.
     core = dict(
         input_channels=1,
-        hidden_channels=[4],
-        spatial_input_kernel=(3, 3),
-        temporal_input_kernel=3,
-        spatial_hidden_kernel=(3, 3),
-        temporal_hidden_kernel=3,
+        hidden_channels=hidden_channels,
+        spatial_input_kernel=(spatial_kernel, spatial_kernel),
+        temporal_input_kernel=temporal_kernel,
+        spatial_hidden_kernel=(spatial_kernel, spatial_kernel),
+        temporal_hidden_kernel=temporal_kernel,
         stride=1,
-        layers=1,
+        layers=len(hidden_channels),
         gamma_input_spatial=0,
         gamma_input_temporal=0,
         bias=True,
@@ -206,6 +212,9 @@ def train_one_mouse(
     learning_rate: float,
     seed: int,
     device_name: str,
+    hidden_channels: list[int],
+    spatial_kernel: int,
+    temporal_kernel: int,
 ) -> dict[str, Any]:
     """Train and evaluate one bounded official-architecture Sensorium baseline."""
 
@@ -228,7 +237,13 @@ def train_one_mouse(
         cuda=False,
     )
     data_key = _data_key(loaders)
-    model = _build_official_tiny_model(loaders, seed=seed)
+    model = _build_official_tiny_model(
+        loaders,
+        seed=seed,
+        hidden_channels=hidden_channels,
+        spatial_kernel=spatial_kernel,
+        temporal_kernel=temporal_kernel,
+    )
     model.to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
     loss_fn = torch.nn.MSELoss()
@@ -272,6 +287,9 @@ def train_one_mouse(
             else None
         ),
         "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+        "hidden_channels": hidden_channels,
+        "spatial_kernel": spatial_kernel,
+        "temporal_kernel": temporal_kernel,
         "device": str(device),
     }
 
@@ -288,6 +306,9 @@ def run(
     seed: int,
     q1_min_mice: int,
     device_name: str,
+    hidden_channels: list[int],
+    spatial_kernel: int,
+    temporal_kernel: int,
 ) -> dict[str, Any]:
     """Run the bounded official baseline over the selected local mice."""
 
@@ -301,6 +322,9 @@ def run(
             learning_rate=learning_rate,
             seed=seed + index,
             device_name=device_name,
+            hidden_channels=hidden_channels,
+            spatial_kernel=spatial_kernel,
+            temporal_kernel=temporal_kernel,
         )
         for index, root in enumerate(roots)
     ]
@@ -337,6 +361,9 @@ def run(
         "learning_rate": learning_rate,
         "seed": seed,
         "device_requested": device_name,
+        "hidden_channels": hidden_channels,
+        "spatial_kernel": spatial_kernel,
+        "temporal_kernel": temporal_kernel,
         "rows": rows,
         "interpretation": (
             "This artifact proves that official Sensorium code can be trained and "
@@ -361,7 +388,11 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=13)
     parser.add_argument("--q1-min-mice", type=int, default=5)
     parser.add_argument("--device", choices=("auto", "cpu", "mps"), default="auto")
+    parser.add_argument("--hidden-channels", default="4")
+    parser.add_argument("--spatial-kernel", type=int, default=3)
+    parser.add_argument("--temporal-kernel", type=int, default=3)
     args = parser.parse_args()
+    hidden_channels = [int(value) for value in args.hidden_channels.split(",") if value]
     payload = run(
         data_root=args.data_root,
         output=args.output,
@@ -373,6 +404,9 @@ def main() -> None:
         seed=args.seed,
         q1_min_mice=args.q1_min_mice,
         device_name=args.device,
+        hidden_channels=hidden_channels,
+        spatial_kernel=args.spatial_kernel,
+        temporal_kernel=args.temporal_kernel,
     )
     print(json.dumps({"output": str(args.output.resolve()), "n_usable_mice": payload["n_usable_mice"]}))
 

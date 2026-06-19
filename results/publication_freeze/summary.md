@@ -10,6 +10,8 @@
 - MICrONS pilot approved: `False`
 - MICrONS micro-pilot approved: `True`
 - MICrONS structure-function positive: `False`
+- MICrONS expanded Q1-scale pilot approved: `True`
+- MICrONS expanded structure-function positive: `False`
 
 ## Claims allowed
 
@@ -19,6 +21,7 @@
 - Sensorium static provides partial positive reliability/topographic evidence.
 - The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts.
 - MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.
+- MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.
 
 ## Claims blocked
 
@@ -26,8 +29,8 @@
 - A SOTA Sensorium predictor.
 - A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.
 - Causal mechanistic identifiability in Dynamic Sensorium.
-- MICrONS Q1 structure-function claims until a larger real-edge pilot and positive distance-controlled result exist.
+- MICrONS Q1 structure-function claims until the expanded real-edge pilot produces a positive distance/degree-controlled result.
 
 ## Next required piece
 
-None for a methodological benchmark paper; for Q1, qualify the official Sensorium baseline with published-scale training/checkpoints or expand MICrONS beyond the current negative micro-pilot.
+None for a methodological benchmark paper; for Q1, qualify the official Sensorium baseline with published-scale training/checkpoints or improve the expanded MICrONS analysis beyond the current negative distance-controlled result.
