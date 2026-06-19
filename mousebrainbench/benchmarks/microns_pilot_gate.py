@@ -57,13 +57,21 @@ def evaluate_manifest(path: Path = DEFAULT_MANIFEST) -> dict[str, Any]:
 
     missing = [field for field in REQUIRED_FIELDS if field not in manifest]
     estimated_download_gb = float(manifest.get("estimated_download_gb", float("inf")))
-    approved = (
+    q1_approved = (
         not missing
         and bool(manifest.get("has_spatial_coordinates"))
         and bool(manifest.get("has_functional_responses"))
         and bool(manifest.get("has_structural_edges"))
         and int(manifest.get("n_neurons", 0)) >= 500
         and estimated_download_gb <= 5.0
+    )
+    micro_approved = (
+        not missing
+        and bool(manifest.get("has_spatial_coordinates"))
+        and bool(manifest.get("has_functional_responses"))
+        and bool(manifest.get("has_structural_edges"))
+        and int(manifest.get("n_neurons", 0)) >= 100
+        and estimated_download_gb <= 1.0
     )
     return {
         "version": __version__,
@@ -74,19 +82,25 @@ def evaluate_manifest(path: Path = DEFAULT_MANIFEST) -> dict[str, Any]:
         "missing_fields": missing,
         "decision": (
             "approve_bounded_microns_structure_function_pilot"
-            if approved
+            if q1_approved
+            else "approve_microns_structure_function_micro_pilot"
+            if micro_approved
             else "defer_microns_pilot_manifest_insufficient"
         ),
-        "approved": approved,
+        "approved": q1_approved,
+        "micro_pilot_approved": micro_approved or q1_approved,
+        "q1_pilot_approved": q1_approved,
         "reason": (
-            "Manifest supports a bounded structure-function test."
-            if approved
+            "Manifest supports a Q1-scale bounded structure-function test."
+            if q1_approved
+            else "Manifest supports a small structure-function micro-pilot, not Q1 scale."
+            if micro_approved
             else "Manifest does not yet satisfy the minimum bounded-pilot criteria."
         ),
         "approved_question": (
             "Does local structural wiring or spatial embedding explain functional "
             "similarity beyond matched nulls in a bounded MICrONS subset?"
-            if approved
+            if q1_approved or micro_approved
             else None
         ),
     }
@@ -100,6 +114,8 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         "",
         f"- Decision: `{payload['decision']}`",
         f"- Approved: `{payload['approved']}`",
+        f"- Micro-pilot approved: `{payload.get('micro_pilot_approved', False)}`",
+        f"- Q1 pilot approved: `{payload.get('q1_pilot_approved', False)}`",
         f"- Manifest available: `{payload['manifest_available']}`",
         f"- Reason: {payload['reason']}",
         "",

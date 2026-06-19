@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "6c3dd74-dirty",
+  "git_revision": "1719999-dirty",
   "manifest": "data/microns/pilot_manifest.json",
   "manifest_available": true,
   "manifest_payload": {
@@ -26,6 +26,8 @@
   "missing_fields": [],
   "decision": "defer_microns_pilot_manifest_insufficient",
   "approved": false,
+  "micro_pilot_approved": false,
+  "q1_pilot_approved": false,
   "reason": "Manifest does not yet satisfy the minimum bounded-pilot criteria.",
   "approved_question": null
 }

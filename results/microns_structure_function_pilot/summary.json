@@ -1,0 +1,7 @@
+{
+  "analysis": "microns_structure_function_pilot",
+  "approved_analysis": false,
+  "reason": "Missing real edge file: data/microns/static_small/cave_synaptic_edges.csv",
+  "matched_units": "data/microns/static_small/matched_function_em_units.csv",
+  "edges": "data/microns/static_small/cave_synaptic_edges.csv"
+}

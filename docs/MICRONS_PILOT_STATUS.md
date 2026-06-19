@@ -27,6 +27,7 @@ Rebuild command:
 scripts/download_microns_static_small.sh
 .venv/bin/python scripts/build_microns_static_pilot_manifest.py
 .venv/bin/python scripts/query_microns_cave_pilot_edges.py
+.venv/bin/python scripts/run_microns_structure_function_pilot.py
 .venv/bin/python -m mousebrainbench.benchmarks.microns_pilot_gate
 ```
 
@@ -75,7 +76,7 @@ AuthException: CAVE token missing for minnie65_public
 
 ## Approval Rule
 
-The MICrONS pilot becomes approved only when the manifest has:
+The MICrONS Q1-scale pilot becomes approved only when the manifest has:
 
 - at least 500 neurons;
 - spatial coordinates;
@@ -83,5 +84,26 @@ The MICrONS pilot becomes approved only when the manifest has:
 - real structural edges;
 - estimated download size no greater than 5 GB.
 
-The current static subset fails on neuron count and structural edges. This is a
+The project also distinguishes a smaller micro-pilot:
+
+- at least 100 neurons;
+- spatial coordinates;
+- functional responses/properties;
+- real structural edges;
+- estimated download size no greater than 1 GB.
+
+The current static subset has enough co-registered units for a micro-pilot, but
+still fails because CAVE has not returned real synaptic edges. This is a
 scientific block, not a software bug.
+
+## Structure-Function Analysis
+
+When `data/microns/static_small/cave_synaptic_edges.csv` exists, the analysis in
+`scripts/run_microns_structure_function_pilot.py` tests whether connected pairs
+have higher functional similarity than:
+
+- random unconnected pairs;
+- distance-matched unconnected pairs.
+
+The distance-matched null is mandatory. Without it, any positive result could be
+explained by local spatial proximity rather than wiring-function coupling.

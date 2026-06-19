@@ -2,6 +2,8 @@
 
 - Decision: `defer_microns_pilot_manifest_insufficient`
 - Approved: `False`
+- Micro-pilot approved: `False`
+- Q1 pilot approved: `False`
 - Manifest available: `True`
 - Reason: Manifest does not yet satisfy the minimum bounded-pilot criteria.
 
