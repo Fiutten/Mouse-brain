@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "7032765-dirty",
+  "git_revision": "6c3dd74-dirty",
   "inputs": {
     "official_audit": "results/sensorium_official_baseline_audit/summary.json",
     "sensitivity": "results/q1_sensitivity/summary.json",
@@ -9,6 +9,8 @@
   },
   "official_sensorium_baseline_viable": false,
   "official_sensorium_stack_forward_ok": true,
+  "official_sensorium_trained_available": true,
+  "official_sensorium_q1_qualified": false,
   "microns_pilot_approved": false,
   "sensitivity_decision": "sensitivity_supports_methodological_claim_not_q1_mechanistic_claim",
   "publication_route": "methodological_benchmark_paper_now_q1_requires_external_piece",
@@ -19,14 +21,14 @@
     "Allen VBN is a real negative case: reproducible but not mechanistically identifiable.",
     "Sensorium/Dynamic Sensorium provide modern predictive cases with local NN control.",
     "Sensorium static provides partial positive reliability/topographic evidence.",
-    "The official Sensorium stack can run a local forward-pass smoke test."
+    "The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts."
   ],
   "claims_blocked": [
     "A complete digital twin of mouse brain.",
     "A SOTA Sensorium predictor.",
-    "An official trained Sensorium baseline until trained/evaluated predictions exist.",
+    "A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.",
     "Causal mechanistic identifiability in Dynamic Sensorium.",
-    "MICrONS structure-function claims without an approved bounded pilot."
+    "MICrONS structure-function claims until CAVE synaptic edges or another bounded real edge source is available."
   ],
-  "next_required_piece": "None for a methodological benchmark paper; for Q1, train/evaluate an official Sensorium baseline or execute an approved bounded MICrONS pilot."
+  "next_required_piece": "None for a methodological benchmark paper; for Q1, qualify the official Sensorium baseline with published-scale training/checkpoints or approve MICrONS by obtaining real bounded synaptic edges."
 }

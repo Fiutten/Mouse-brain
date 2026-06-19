@@ -29,6 +29,9 @@ legacy-cognitive = [
   "stable-baselines3>=2.5,<3",
   "torch>=2.5,<3",
 ]
+microns = [
+  "caveclient>=8,<9",
+]
 
 [project.scripts]
 mousebrainbench-allen-benchmark = "mousebrainbench.benchmarks.allen_vbn:main"

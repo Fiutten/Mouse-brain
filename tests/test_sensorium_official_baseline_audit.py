@@ -33,3 +33,39 @@ def test_official_smoke_does_not_count_as_trained_baseline(tmp_path, monkeypatch
     assert not payload["official_trained_baseline_available"]
     assert not payload["official_baseline_viable"]
     assert payload["decision"] == "official_sensorium_stack_integrated_training_pending"
+
+
+def test_tiny_trained_baseline_available_but_not_q1_qualified(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(official_audit, "OFFICIAL_STACK", (_AvailableProbe(),))
+    official_repo = tmp_path / "sensorium_2023"
+    (official_repo / "sensorium").mkdir(parents=True)
+    (official_repo / "env.yml").write_text("name: sensorium\n")
+    (official_repo / "pyproject.toml").write_text("[project]\nname='sensorium_2023'\n")
+    smoke = tmp_path / "smoke.json"
+    smoke.write_text(json.dumps({"official_stack_forward_ok": True}))
+    trained = tmp_path / "trained.json"
+    trained.write_text(
+        json.dumps(
+            {
+                "trained_baseline": True,
+                "official_loader": True,
+                "official_model_factory": True,
+                "q1_baseline_qualified": False,
+                "n_usable_mice": 5,
+            }
+        )
+    )
+
+    payload = official_audit.audit(
+        official_repo=official_repo,
+        official_smoke=smoke,
+        official_trained_summary=trained,
+        local_mlp_summary=tmp_path / "missing_mlp.json",
+    )
+
+    assert payload["official_trained_baseline_available"]
+    assert not payload["official_q1_baseline_qualified"]
+    assert not payload["official_baseline_viable"]
+    assert payload["decision"] == (
+        "official_sensorium_tiny_trained_baseline_available_not_q1_qualified"
+    )

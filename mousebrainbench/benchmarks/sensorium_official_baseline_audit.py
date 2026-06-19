@@ -61,6 +61,31 @@ def _repo_probe(path: Path) -> dict[str, str | bool]:
     }
 
 
+def _trained_probe(path: Path) -> dict[str, Any]:
+    """Inspect a trained baseline summary without assuming it is Q1-qualified."""
+
+    if not path.exists():
+        return {
+            "path": str(path),
+            "exists": False,
+            "trained_baseline": False,
+            "q1_baseline_qualified": False,
+            "n_usable_mice": 0,
+        }
+    payload = json.loads(path.read_text())
+    return {
+        "path": str(path),
+        "exists": True,
+        "trained_baseline": bool(payload.get("trained_baseline")),
+        "official_loader": bool(payload.get("official_loader")),
+        "official_model_factory": bool(payload.get("official_model_factory")),
+        "q1_baseline_qualified": bool(payload.get("q1_baseline_qualified")),
+        "n_usable_mice": int(payload.get("n_usable_mice", 0)),
+        "sota_claim": bool(payload.get("sota_claim", False)),
+        "benchmark": payload.get("benchmark"),
+    }
+
+
 def audit(
     *,
     official_repo: Path = Path("external/sensorium_2023"),
@@ -84,16 +109,29 @@ def audit(
     official_stack_forward_ok = bool(
         smoke_payload and smoke_payload.get("official_stack_forward_ok")
     )
-    official_stack_viable = not missing and repo_usable and official_stack_forward_ok
-    official_trained_available = official_trained_summary.exists()
-    official_viable = official_stack_viable and official_trained_available
+    # The official stack is intentionally isolated in ``.venv-sensorium-official``.
+    # This audit often runs from the main project environment, so import probes
+    # are diagnostic only. Executed smoke/training artifacts are the reproducible
+    # evidence that the official stack was actually runnable.
+    official_stack_viable = repo_usable and official_stack_forward_ok
+    trained = _trained_probe(official_trained_summary)
+    official_trained_available = bool(trained["exists"] and trained["trained_baseline"])
+    official_q1_qualified = bool(trained["q1_baseline_qualified"])
+    official_viable = official_stack_viable and official_q1_qualified
     local_mlp_available = local_mlp_summary.exists()
 
     if official_viable:
-        decision = "official_sensorium_trained_baseline_locally_viable"
+        decision = "official_sensorium_trained_baseline_q1_qualified"
         action = (
             "Run the trained official baseline through the MouseBrainBench comparator "
             "and update Q1 claims."
+        )
+    elif official_stack_viable and official_trained_available:
+        decision = "official_sensorium_tiny_trained_baseline_available_not_q1_qualified"
+        action = (
+            "Use the bounded trained official-architecture baseline as an internal "
+            "MouseBrainBench control, but do not present it as a Q1-level official "
+            "Sensorium benchmark until the qualification rule is met."
         )
     elif official_stack_viable and local_mlp_available:
         decision = "official_sensorium_stack_integrated_training_pending"
@@ -122,7 +160,9 @@ def audit(
         "official_stack_forward_ok": official_stack_forward_ok,
         "official_stack_viable": official_stack_viable,
         "official_trained_summary": str(official_trained_summary),
+        "official_trained_probe": trained,
         "official_trained_baseline_available": official_trained_available,
+        "official_q1_baseline_qualified": official_q1_qualified,
         "official_baseline_viable": official_viable,
         "local_mlp_summary": str(local_mlp_summary),
         "local_mlp_available": local_mlp_available,
@@ -151,6 +191,8 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
             "- Official trained baseline available: "
             f"`{payload['official_trained_baseline_available']}`"
         ),
+        f"- Official trained usable mice: `{payload['official_trained_probe']['n_usable_mice']}`",
+        f"- Official baseline Q1-qualified: `{payload['official_q1_baseline_qualified']}`",
         f"- Official baseline Q1-viable: `{payload['official_baseline_viable']}`",
         f"- Local MLP available: `{payload['local_mlp_available']}`",
         f"- Recommended action: {payload['recommended_action']}",

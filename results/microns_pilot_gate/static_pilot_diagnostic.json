@@ -1,9 +1,5 @@
 {
-  "version": "0.6.0",
-  "git_revision": "6c3dd74-dirty",
-  "manifest": "data/microns/pilot_manifest.json",
-  "manifest_available": true,
-  "manifest_payload": {
+  "manifest": {
     "dataset": "MICrONS minnie65 public static small pilot",
     "materialization_version": "static_v117_plus_digital_twin_v2",
     "n_neurons": 172,
@@ -23,9 +19,57 @@
       "synapse_graph_large_static": "https://bossdb-open-data.s3.amazonaws.com/iarpa_microns/minnie/minnie65/synapse_graph/synapses_pni_2.csv"
     }
   },
-  "missing_fields": [],
-  "decision": "defer_microns_pilot_manifest_insufficient",
-  "approved": false,
-  "reason": "Manifest does not yet satisfy the minimum bounded-pilot criteria.",
-  "approved_question": null
+  "static_files": {
+    "data/microns/static_small/func_unit_em_match_release.csv": {
+      "exists": true,
+      "size_bytes": 14392
+    },
+    "data/microns/static_small/proofreading_status_public_release.csv": {
+      "exists": true,
+      "size_bytes": 57324
+    },
+    "data/microns/static_small/dt_anatomy_units.csv": {
+      "exists": true,
+      "size_bytes": 3641333
+    },
+    "data/microns/static_small/dt_performance_units.csv": {
+      "exists": true,
+      "size_bytes": 4624530
+    },
+    "data/microns/static_small/dt_ori_dir_tuning_units.csv": {
+      "exists": true,
+      "size_bytes": 10764093
+    }
+  },
+  "columns": [
+    "id",
+    "valid",
+    "pt_position_x",
+    "pt_position_y",
+    "pt_position_z",
+    "session",
+    "scan_idx",
+    "unit_id",
+    "pt_supervoxel_id",
+    "pt_root_id",
+    "unit_x",
+    "unit_y",
+    "unit_z",
+    "brain_area",
+    "field",
+    "cc_abs",
+    "cc_max",
+    "cc_norm",
+    "OSI",
+    "DSI",
+    "gOSI",
+    "gDSI",
+    "pref_ori",
+    "pref_dir"
+  ],
+  "n_with_spatial": 200,
+  "n_with_function": 172,
+  "n_with_root_id": 200,
+  "n_usable_without_edges": 172,
+  "interpretation": "The static small subset is valid as a co-registration/functional properties smoke test, but it is not an approved structure-function pilot until real synaptic edges are available."
 }

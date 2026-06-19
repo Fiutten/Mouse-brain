@@ -24,6 +24,7 @@ MODEL_ORDER = (
     "temporal_svd",
     "random_feature",
     "torch_mlp",
+    "official_sensorium_tiny",
 )
 
 
@@ -167,6 +168,30 @@ def _merge_torch_mlp_summary(
         )
 
 
+def _merge_official_sensorium_summary(
+    rows: dict[str, dict[str, ModelObservation]],
+    path: Path,
+) -> None:
+    """Merge bounded official Sensorium architecture results when available."""
+
+    payload = _load_json(path)
+    for row in payload["rows"]:
+        mouse = str(row["mouse"])
+        key = mouse_key(mouse)
+        if row.get("official_sensorium_correlation") is None:
+            continue
+        rows.setdefault(key, {})
+        rows[key]["official_sensorium_tiny"] = ModelObservation(
+            mouse=mouse,
+            model="official_sensorium_tiny",
+            correlation=float(row["official_sensorium_correlation"]),
+            minus_mean=row.get("official_sensorium_minus_mean"),
+            minus_scrambled=None,
+            reliability_estimable=False,
+            mis_passed=False,
+        )
+
+
 def _pairwise(rows: dict[str, dict[str, ModelObservation]], left: str, right: str) -> dict[str, Any]:
     deltas: list[float] = []
     paired: list[dict[str, Any]] = []
@@ -273,6 +298,7 @@ def compare_sensorium_artifacts(
     svd_summary: Path,
     random_feature_summary: Path | None = None,
     torch_mlp_summary: Path | None = None,
+    official_sensorium_summary: Path | None = None,
     cohort_name: str | None = None,
 ) -> dict[str, Any]:
     """Compare summary/temporal/SVD artifacts for one Sensorium cohort."""
@@ -283,6 +309,8 @@ def compare_sensorium_artifacts(
         _merge_random_feature_summary(rows, random_feature_summary)
     if torch_mlp_summary is not None:
         _merge_torch_mlp_summary(rows, torch_mlp_summary)
+    if official_sensorium_summary is not None and official_sensorium_summary.exists():
+        _merge_official_sensorium_summary(rows, official_sensorium_summary)
     cohort = cohort_name or _cohort_label(svd_summary, svd_summary.stem)
     pairwise = {
         "summary_adapter_vs_temporal_filterbank": _pairwise(
@@ -299,6 +327,12 @@ def compare_sensorium_artifacts(
             rows, "temporal_svd", "random_feature"
         ),
         "temporal_svd_vs_torch_mlp": _pairwise(rows, "temporal_svd", "torch_mlp"),
+        "torch_mlp_vs_official_sensorium_tiny": _pairwise(
+            rows, "torch_mlp", "official_sensorium_tiny"
+        ),
+        "temporal_svd_vs_official_sensorium_tiny": _pairwise(
+            rows, "temporal_svd", "official_sensorium_tiny"
+        ),
     }
     best_rows = _best_models(rows)
     model_win_counts: dict[str, int] = {}
@@ -312,6 +346,9 @@ def compare_sensorium_artifacts(
         "svd_summary": str(svd_summary),
         "random_feature_summary": str(random_feature_summary) if random_feature_summary else None,
         "torch_mlp_summary": str(torch_mlp_summary) if torch_mlp_summary else None,
+        "official_sensorium_summary": (
+            str(official_sensorium_summary) if official_sensorium_summary else None
+        ),
         "models": list(MODEL_ORDER),
         "model_rows": _model_table(rows),
         "best_models": best_rows,
@@ -370,10 +407,10 @@ def _markdown_for_cohort(cohort: dict[str, Any]) -> str:
         [
             "",
             (
-                "| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | "
-                "Random feature | Torch MLP | Best |"
-            ),
-            "|---|---:|---:|---:|---:|---:|---:|---|",
+            "| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | "
+            "Random feature | Torch MLP | Official tiny | Best |"
+        ),
+            "|---|---:|---:|---:|---:|---:|---:|---:|---|",
         ]
     )
     best_by_mouse = {row["mouse"]: row["best_model"] for row in cohort["best_models"]}
@@ -387,6 +424,7 @@ def _markdown_for_cohort(cohort: dict[str, Any]) -> str:
             f"`{_round(row['temporal_svd'])}` | "
             f"`{_round(row['random_feature'])}` | "
             f"`{_round(row['torch_mlp'])}` | "
+            f"`{_round(row.get('official_sensorium_tiny'))}` | "
             f"`{best_by_mouse.get(row['mouse'])}` |"
         )
     return "\n".join(lines)
@@ -434,6 +472,10 @@ def compare_default_dynamic_sensorium(
             torch_mlp_summary=Path(
                 "results/dynamic_sensorium_torch_mlp/"
                 "summary_dynamic_sensorium2023_torch_mlp.json"
+            ),
+            official_sensorium_summary=Path(
+                "results/sensorium_official_baseline_audit/"
+                "official_trained_baseline_summary.json"
             ),
             cohort_name="dynamic_sensorium2023_oracle",
         ),

@@ -1,9 +1,9 @@
 # MICrONS Pilot Gate
 
-- Decision: `defer_microns_until_small_manifest_available`
+- Decision: `defer_microns_pilot_manifest_insufficient`
 - Approved: `False`
-- Manifest available: `False`
-- Reason: No local small manifest is available. Downloading or integrating MICrONS wholesale would violate the bounded-pilot requirement.
+- Manifest available: `True`
+- Reason: Manifest does not yet satisfy the minimum bounded-pilot criteria.
 
 ## Bounded pilot rule
 

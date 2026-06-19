@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "7032765-dirty",
+  "git_revision": "6c3dd74-dirty",
   "official_repo_probe": {
     "path": "external/sensorium_2023",
     "exists": true,
@@ -12,22 +12,22 @@
     {
       "package": "sensorium",
       "purpose": "official Sensorium data/model helper package",
-      "available": true
+      "available": false
     },
     {
       "package": "neuralpredictors",
       "purpose": "standard Ecker/Sinz lab neural predictor models",
-      "available": true
+      "available": false
     },
     {
       "package": "nnfabrik",
       "purpose": "model/dataloader factory used by official examples",
-      "available": true
+      "available": false
     },
     {
       "package": "datajoint",
       "purpose": "metadata/backend dependency used by the ecosystem",
-      "available": true
+      "available": false
     },
     {
       "package": "torch",
@@ -37,19 +37,37 @@
     {
       "package": "torchvision",
       "purpose": "implicit neuralpredictors dependency for convolutional cores",
-      "available": true
+      "available": false
     }
   ],
-  "missing_packages": [],
+  "missing_packages": [
+    "sensorium",
+    "neuralpredictors",
+    "nnfabrik",
+    "datajoint",
+    "torchvision"
+  ],
   "official_smoke": "results/sensorium_official_baseline_audit/official_model_smoke.json",
   "official_stack_forward_ok": true,
   "official_stack_viable": true,
   "official_trained_summary": "results/sensorium_official_baseline_audit/official_trained_baseline_summary.json",
-  "official_trained_baseline_available": false,
+  "official_trained_probe": {
+    "path": "results/sensorium_official_baseline_audit/official_trained_baseline_summary.json",
+    "exists": true,
+    "trained_baseline": true,
+    "official_loader": true,
+    "official_model_factory": true,
+    "q1_baseline_qualified": false,
+    "n_usable_mice": 5,
+    "sota_claim": false,
+    "benchmark": "official_sensorium_tiny_trained_baseline"
+  },
+  "official_trained_baseline_available": true,
+  "official_q1_baseline_qualified": false,
   "official_baseline_viable": false,
   "local_mlp_summary": "results/dynamic_sensorium_torch_mlp/summary_dynamic_sensorium2023_torch_mlp.json",
   "local_mlp_available": true,
-  "decision": "official_sensorium_stack_integrated_training_pending",
-  "recommended_action": "Treat the official stack as integrated at smoke-test level, but keep the tracked compact PyTorch MLP as the evaluated NN control until an official trained baseline summary exists.",
+  "decision": "official_sensorium_tiny_trained_baseline_available_not_q1_qualified",
+  "recommended_action": "Use the bounded trained official-architecture baseline as an internal MouseBrainBench control, but do not present it as a Q1-level official Sensorium benchmark until the qualification rule is met.",
   "interpretation": "Official Sensorium baselines are the preferred external control, but they only count for Q1 when trained/evaluated predictions are available. A forward-pass smoke test proves integration, not leaderboard-level performance."
 }

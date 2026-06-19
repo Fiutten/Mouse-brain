@@ -33,6 +33,8 @@ def build_freeze_payload(
     microns = _load(microns_gate)
     official_ready = bool(official["official_baseline_viable"])
     official_stack_forward_ok = bool(official.get("official_stack_forward_ok", False))
+    official_trained_available = bool(official.get("official_trained_baseline_available", False))
+    official_q1_qualified = bool(official.get("official_q1_baseline_qualified", False))
     microns_ready = bool(microns["approved"])
 
     q1_ready = official_ready or microns_ready
@@ -52,6 +54,8 @@ def build_freeze_payload(
         },
         "official_sensorium_baseline_viable": official_ready,
         "official_sensorium_stack_forward_ok": official_stack_forward_ok,
+        "official_sensorium_trained_available": official_trained_available,
+        "official_sensorium_q1_qualified": official_q1_qualified,
         "microns_pilot_approved": microns_ready,
         "sensitivity_decision": robust["decision"],
         "publication_route": route,
@@ -62,18 +66,19 @@ def build_freeze_payload(
             "Allen VBN is a real negative case: reproducible but not mechanistically identifiable.",
             "Sensorium/Dynamic Sensorium provide modern predictive cases with local NN control.",
             "Sensorium static provides partial positive reliability/topographic evidence.",
-            "The official Sensorium stack can run a local forward-pass smoke test.",
+            "The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts.",
         ],
         "claims_blocked": [
             "A complete digital twin of mouse brain.",
             "A SOTA Sensorium predictor.",
-            "An official trained Sensorium baseline until trained/evaluated predictions exist.",
+            "A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.",
             "Causal mechanistic identifiability in Dynamic Sensorium.",
-            "MICrONS structure-function claims without an approved bounded pilot.",
+            "MICrONS structure-function claims until CAVE synaptic edges or another bounded real edge source is available.",
         ],
         "next_required_piece": (
-            "None for a methodological benchmark paper; for Q1, train/evaluate an "
-            "official Sensorium baseline or execute an approved bounded MICrONS pilot."
+            "None for a methodological benchmark paper; for Q1, qualify the "
+            "official Sensorium baseline with published-scale training/checkpoints "
+            "or approve MICrONS by obtaining real bounded synaptic edges."
         ),
     }
 
@@ -88,6 +93,8 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         f"- Methodological paper ready: `{payload['methodological_paper_ready']}`",
         f"- Q1 ready now: `{payload['q1_ready']}`",
         f"- Official Sensorium stack forward OK: `{payload['official_sensorium_stack_forward_ok']}`",
+        f"- Official Sensorium trained available: `{payload['official_sensorium_trained_available']}`",
+        f"- Official Sensorium Q1-qualified: `{payload['official_sensorium_q1_qualified']}`",
         f"- Official Sensorium baseline viable: `{payload['official_sensorium_baseline_viable']}`",
         f"- MICrONS pilot approved: `{payload['microns_pilot_approved']}`",
         "",

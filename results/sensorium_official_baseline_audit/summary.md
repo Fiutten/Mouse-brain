@@ -1,22 +1,24 @@
 # Sensorium Official Baseline Audit
 
-- Decision: `official_sensorium_stack_integrated_training_pending`
+- Decision: `official_sensorium_tiny_trained_baseline_available_not_q1_qualified`
 - Official stack forward OK: `True`
-- Official trained baseline available: `False`
+- Official trained baseline available: `True`
+- Official trained usable mice: `5`
+- Official baseline Q1-qualified: `False`
 - Official baseline Q1-viable: `False`
 - Local MLP available: `True`
-- Recommended action: Treat the official stack as integrated at smoke-test level, but keep the tracked compact PyTorch MLP as the evaluated NN control until an official trained baseline summary exists.
+- Recommended action: Use the bounded trained official-architecture baseline as an internal MouseBrainBench control, but do not present it as a Q1-level official Sensorium benchmark until the qualification rule is met.
 
 ## Package probes
 
 | Package | Available | Purpose |
 |---|---:|---|
-| `sensorium` | `True` | official Sensorium data/model helper package |
-| `neuralpredictors` | `True` | standard Ecker/Sinz lab neural predictor models |
-| `nnfabrik` | `True` | model/dataloader factory used by official examples |
-| `datajoint` | `True` | metadata/backend dependency used by the ecosystem |
+| `sensorium` | `False` | official Sensorium data/model helper package |
+| `neuralpredictors` | `False` | standard Ecker/Sinz lab neural predictor models |
+| `nnfabrik` | `False` | model/dataloader factory used by official examples |
+| `datajoint` | `False` | metadata/backend dependency used by the ecosystem |
 | `torch` | `True` | PyTorch runtime required by official Sensorium models |
-| `torchvision` | `True` | implicit neuralpredictors dependency for convolutional cores |
+| `torchvision` | `False` | implicit neuralpredictors dependency for convolutional cores |
 
 ## Interpretation
 

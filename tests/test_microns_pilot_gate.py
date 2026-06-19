@@ -28,3 +28,23 @@ def test_microns_gate_approves_bounded_manifest(tmp_path) -> None:
 
     assert payload["approved"]
     assert payload["decision"] == "approve_bounded_microns_structure_function_pilot"
+
+
+def test_microns_gate_blocks_coregistered_units_without_structural_edges(tmp_path) -> None:
+    manifest = tmp_path / "pilot_manifest.json"
+    manifest.write_text(
+        json.dumps(
+            {
+                "n_neurons": 172,
+                "has_spatial_coordinates": True,
+                "has_functional_responses": True,
+                "has_structural_edges": False,
+                "estimated_download_gb": 0.01779,
+            }
+        )
+    )
+
+    payload = evaluate_manifest(manifest)
+
+    assert not payload["approved"]
+    assert payload["decision"] == "defer_microns_pilot_manifest_insufficient"
