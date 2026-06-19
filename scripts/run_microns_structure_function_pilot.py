@@ -178,18 +178,29 @@ def _analyze(records: list[PairRecord], *, n_permutations: int, seed: int) -> di
         matched_samples.append(float(np.mean(sampled)))
     distance_null = np.array(matched_samples, dtype=float)
 
+    random_delta = float(observed - random_null.mean())
+    random_p = _permutation_p_value(observed, random_null)
+    distance_delta = float(observed - distance_null.mean())
+    distance_p = _permutation_p_value(observed, distance_null)
+    positive_result = random_delta > 0.0 and distance_delta > 0.0 and distance_p <= 0.05
     return {
         "approved_analysis": True,
+        "positive_structure_function_result": positive_result,
+        "scientific_decision": (
+            "positive_structure_function_micro_pilot"
+            if positive_result
+            else "negative_or_inconclusive_structure_function_micro_pilot"
+        ),
         "n_pairs": int(len(frame)),
         "n_connected_pairs": int(len(connected)),
         "n_unconnected_pairs": int(len(unconnected)),
         "observed_connected_mean_functional_similarity": observed,
         "random_null_mean": float(random_null.mean()),
-        "random_null_delta": float(observed - random_null.mean()),
-        "random_null_p_one_sided": _permutation_p_value(observed, random_null),
+        "random_null_delta": random_delta,
+        "random_null_p_one_sided": random_p,
         "distance_matched_null_mean": float(distance_null.mean()),
-        "distance_matched_delta": float(observed - distance_null.mean()),
-        "distance_matched_p_one_sided": _permutation_p_value(observed, distance_null),
+        "distance_matched_delta": distance_delta,
+        "distance_matched_p_one_sided": distance_p,
         "n_permutations": n_permutations,
         "seed": seed,
     }
@@ -244,6 +255,7 @@ def run(
             [
                 f"- Units: `{payload['n_units']}`",
                 f"- Connected pairs: `{payload['n_connected_pairs']}`",
+                f"- Scientific decision: `{payload['scientific_decision']}`",
                 f"- Random-null delta: `{payload['random_null_delta']}`",
                 f"- Distance-matched delta: `{payload['distance_matched_delta']}`",
                 f"- Distance-matched p: `{payload['distance_matched_p_one_sided']}`",

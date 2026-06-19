@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "1719999-dirty",
+  "git_revision": "feb3f6e-dirty",
   "manifest": "data/microns/pilot_manifest.json",
   "manifest_available": true,
   "manifest_payload": {
@@ -10,24 +10,30 @@
     "n_coregistered_units": 200,
     "has_spatial_coordinates": true,
     "has_functional_responses": true,
-    "has_structural_edges": false,
+    "has_structural_edges": true,
     "estimated_download_gb": 0.01779,
     "matched_units_csv": "data/microns/static_small/matched_function_em_units.csv",
-    "structural_edge_source": null,
-    "blocked_reason": "Small static files provide EM/function matched units and functional properties, but no synaptic edge list. CAVE synapse_query needs a token, and the static minnie65 synapse graph is ~47.5 GB.",
-    "cave_auth_error": "AuthException: You have not setup a token to access\nhttps://global.daf-apis.com/info/api/v2/datastack/full/minnie65_public\nwith the current auth configuration.\n\nRead the documentation at \nhttps://caveconnectome.github.io/CAVEclient/tutorials/authentication/\nor follow instructions under \nclient.auth.get_new_token() for how to set a valid API token.\nafter initializing a global client with\nclient=CAVEclient(server_address=\"https://global.daf-apis.com\")",
+    "structural_edge_source": "data/microns/static_small/cave_synaptic_edges.csv",
     "sources": {
       "functional_coregistration": "https://bossdb-open-data.s3.amazonaws.com/iarpa_microns/minnie/functional_coregistration/func_unit_em_match_release.csv",
       "proofreading_status": "https://bossdb-open-data.s3.amazonaws.com/iarpa_microns/minnie/proofreading_status/proofreading_status_public_release.csv",
       "digital_twin_properties_v2": "https://bossdb-open-data.s3.amazonaws.com/iarpa_microns/minnie/functional_data/digital_twin_properties/v2/README.md",
       "synapse_graph_large_static": "https://bossdb-open-data.s3.amazonaws.com/iarpa_microns/minnie/minnie65/synapse_graph/synapses_pni_2.csv"
+    },
+    "n_structural_edges": 82,
+    "cave_datastack": "minnie65_public",
+    "cave_query": {
+      "limit_neurons": 172,
+      "limit_edges": 10000,
+      "materialization_version": 117,
+      "method": "client.materialize.synapse_query(pre_ids=roots, post_ids=roots)"
     }
   },
   "missing_fields": [],
-  "decision": "defer_microns_pilot_manifest_insufficient",
+  "decision": "approve_microns_structure_function_micro_pilot",
   "approved": false,
-  "micro_pilot_approved": false,
+  "micro_pilot_approved": true,
   "q1_pilot_approved": false,
-  "reason": "Manifest does not yet satisfy the minimum bounded-pilot criteria.",
-  "approved_question": null
+  "reason": "Manifest supports a small structure-function micro-pilot, not Q1 scale.",
+  "approved_question": "Does local structural wiring or spatial embedding explain functional similarity beyond matched nulls in a bounded MICrONS subset?"
 }

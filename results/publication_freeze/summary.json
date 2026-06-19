@@ -1,10 +1,11 @@
 {
   "version": "0.6.0",
-  "git_revision": "1719999-dirty",
+  "git_revision": "feb3f6e-dirty",
   "inputs": {
     "official_audit": "results/sensorium_official_baseline_audit/summary.json",
     "sensitivity": "results/q1_sensitivity/summary.json",
     "microns_gate": "results/microns_pilot_gate/summary.json",
+    "microns_analysis": "results/microns_structure_function_pilot/summary.json",
     "proposal_status": "docs/PROPOSAL_STATUS.md"
   },
   "official_sensorium_baseline_viable": false,
@@ -12,6 +13,9 @@
   "official_sensorium_trained_available": true,
   "official_sensorium_q1_qualified": false,
   "microns_pilot_approved": false,
+  "microns_micro_pilot_approved": true,
+  "microns_structure_function_positive": false,
+  "microns_structure_function_decision": "negative_or_inconclusive_structure_function_micro_pilot",
   "sensitivity_decision": "sensitivity_supports_methodological_claim_not_q1_mechanistic_claim",
   "publication_route": "methodological_benchmark_paper_now_q1_requires_external_piece",
   "q1_ready": false,
@@ -21,14 +25,15 @@
     "Allen VBN is a real negative case: reproducible but not mechanistically identifiable.",
     "Sensorium/Dynamic Sensorium provide modern predictive cases with local NN control.",
     "Sensorium static provides partial positive reliability/topographic evidence.",
-    "The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts."
+    "The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts.",
+    "MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive."
   ],
   "claims_blocked": [
     "A complete digital twin of mouse brain.",
     "A SOTA Sensorium predictor.",
     "A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.",
     "Causal mechanistic identifiability in Dynamic Sensorium.",
-    "MICrONS structure-function claims until CAVE synaptic edges or another bounded real edge source is available."
+    "MICrONS Q1 structure-function claims until a larger real-edge pilot and positive distance-controlled result exist."
   ],
-  "next_required_piece": "None for a methodological benchmark paper; for Q1, qualify the official Sensorium baseline with published-scale training/checkpoints or approve MICrONS by obtaining real bounded synaptic edges."
+  "next_required_piece": "None for a methodological benchmark paper; for Q1, qualify the official Sensorium baseline with published-scale training/checkpoints or expand MICrONS beyond the current negative micro-pilot."
 }

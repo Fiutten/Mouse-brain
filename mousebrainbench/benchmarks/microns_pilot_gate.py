@@ -57,12 +57,14 @@ def evaluate_manifest(path: Path = DEFAULT_MANIFEST) -> dict[str, Any]:
 
     missing = [field for field in REQUIRED_FIELDS if field not in manifest]
     estimated_download_gb = float(manifest.get("estimated_download_gb", float("inf")))
+    n_structural_edges = int(manifest.get("n_structural_edges", 0))
     q1_approved = (
         not missing
         and bool(manifest.get("has_spatial_coordinates"))
         and bool(manifest.get("has_functional_responses"))
         and bool(manifest.get("has_structural_edges"))
         and int(manifest.get("n_neurons", 0)) >= 500
+        and n_structural_edges >= 500
         and estimated_download_gb <= 5.0
     )
     micro_approved = (
@@ -71,6 +73,7 @@ def evaluate_manifest(path: Path = DEFAULT_MANIFEST) -> dict[str, Any]:
         and bool(manifest.get("has_functional_responses"))
         and bool(manifest.get("has_structural_edges"))
         and int(manifest.get("n_neurons", 0)) >= 100
+        and n_structural_edges >= 20
         and estimated_download_gb <= 1.0
     )
     return {

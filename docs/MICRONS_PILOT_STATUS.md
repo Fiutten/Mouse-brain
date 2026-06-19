@@ -68,10 +68,10 @@ That script calls:
 client.materialize.synapse_query(pre_ids=roots, post_ids=roots)
 ```
 
-Current environment result:
+Current environment result after accepting CAVE terms:
 
 ```text
-AuthException: CAVE token missing for minnie65_public
+materialization_version=117 returns a real bounded edge set.
 ```
 
 ## Approval Rule
@@ -93,8 +93,9 @@ The project also distinguishes a smaller micro-pilot:
 - estimated download size no greater than 1 GB.
 
 The current static subset has enough co-registered units for a micro-pilot, but
-still fails because CAVE has not returned real synaptic edges. This is a
-scientific block, not a software bug.
+requires CAVE queried at `materialization_version=117`. Newer/default CAVE
+materializations only returned one edge for the static root IDs, while v117
+returned a usable micro-pilot edge set.
 
 ## Structure-Function Analysis
 
@@ -107,3 +108,18 @@ have higher functional similarity than:
 
 The distance-matched null is mandatory. Without it, any positive result could be
 explained by local spatial proximity rather than wiring-function coupling.
+
+## Current Result
+
+With CAVE terms accepted and `materialization_version=117`, the current local
+micro-pilot has:
+
+- 172 functionally usable co-registered units;
+- 82 returned synapses;
+- 41 unique directed connected pairs among usable units;
+- negative/inconclusive structure-function result after random and
+  distance-matched nulls.
+
+This is scientifically useful as a stress test of the MouseBrainBench gate, but
+it is not a Q1-enabling positive MICrONS result. The next MICrONS route must
+expand the candidate set or use a richer functional/structural subset.

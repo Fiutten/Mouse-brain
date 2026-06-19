@@ -24,6 +24,7 @@ def build_freeze_payload(
     official_audit: Path = Path("results/sensorium_official_baseline_audit/summary.json"),
     sensitivity: Path = Path("results/q1_sensitivity/summary.json"),
     microns_gate: Path = Path("results/microns_pilot_gate/summary.json"),
+    microns_analysis: Path = Path("results/microns_structure_function_pilot/summary.json"),
     proposal_status: Path = Path("docs/PROPOSAL_STATUS.md"),
 ) -> dict[str, Any]:
     """Aggregate current evidence into a publication-route decision."""
@@ -31,11 +32,14 @@ def build_freeze_payload(
     official = _load(official_audit)
     robust = _load(sensitivity)
     microns = _load(microns_gate)
+    microns_sf = _load(microns_analysis) if microns_analysis.exists() else {}
     official_ready = bool(official["official_baseline_viable"])
     official_stack_forward_ok = bool(official.get("official_stack_forward_ok", False))
     official_trained_available = bool(official.get("official_trained_baseline_available", False))
     official_q1_qualified = bool(official.get("official_q1_baseline_qualified", False))
     microns_ready = bool(microns["approved"])
+    microns_micro_ready = bool(microns.get("micro_pilot_approved", False))
+    microns_positive = bool(microns_sf.get("positive_structure_function_result", False))
 
     q1_ready = official_ready or microns_ready
     route = (
@@ -50,6 +54,7 @@ def build_freeze_payload(
             "official_audit": str(official_audit),
             "sensitivity": str(sensitivity),
             "microns_gate": str(microns_gate),
+            "microns_analysis": str(microns_analysis),
             "proposal_status": str(proposal_status),
         },
         "official_sensorium_baseline_viable": official_ready,
@@ -57,6 +62,9 @@ def build_freeze_payload(
         "official_sensorium_trained_available": official_trained_available,
         "official_sensorium_q1_qualified": official_q1_qualified,
         "microns_pilot_approved": microns_ready,
+        "microns_micro_pilot_approved": microns_micro_ready,
+        "microns_structure_function_positive": microns_positive,
+        "microns_structure_function_decision": microns_sf.get("scientific_decision"),
         "sensitivity_decision": robust["decision"],
         "publication_route": route,
         "q1_ready": q1_ready,
@@ -67,18 +75,19 @@ def build_freeze_payload(
             "Sensorium/Dynamic Sensorium provide modern predictive cases with local NN control.",
             "Sensorium static provides partial positive reliability/topographic evidence.",
             "The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts.",
+            "MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.",
         ],
         "claims_blocked": [
             "A complete digital twin of mouse brain.",
             "A SOTA Sensorium predictor.",
             "A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.",
             "Causal mechanistic identifiability in Dynamic Sensorium.",
-            "MICrONS structure-function claims until CAVE synaptic edges or another bounded real edge source is available.",
+            "MICrONS Q1 structure-function claims until a larger real-edge pilot and positive distance-controlled result exist.",
         ],
         "next_required_piece": (
             "None for a methodological benchmark paper; for Q1, qualify the "
             "official Sensorium baseline with published-scale training/checkpoints "
-            "or approve MICrONS by obtaining real bounded synaptic edges."
+            "or expand MICrONS beyond the current negative micro-pilot."
         ),
     }
 
@@ -97,6 +106,8 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         f"- Official Sensorium Q1-qualified: `{payload['official_sensorium_q1_qualified']}`",
         f"- Official Sensorium baseline viable: `{payload['official_sensorium_baseline_viable']}`",
         f"- MICrONS pilot approved: `{payload['microns_pilot_approved']}`",
+        f"- MICrONS micro-pilot approved: `{payload['microns_micro_pilot_approved']}`",
+        f"- MICrONS structure-function positive: `{payload['microns_structure_function_positive']}`",
         "",
         "## Claims allowed",
         "",

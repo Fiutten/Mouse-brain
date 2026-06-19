@@ -53,6 +53,7 @@ def query_edges(
     limit_neurons: int,
     limit_edges: int,
     datastack: str,
+    materialization_version: int | None,
 ) -> dict[str, Any]:
     """Query CAVE for synaptic edges and update the local pilot manifest."""
 
@@ -65,6 +66,7 @@ def query_edges(
             pre_ids=roots,
             post_ids=roots,
             limit=limit_edges,
+            materialization_version=materialization_version,
         )
     except Exception as exc:  # noqa: BLE001
         diagnostic = build_manifest(
@@ -86,6 +88,8 @@ def query_edges(
     output_edges.parent.mkdir(parents=True, exist_ok=True)
     edges.to_csv(output_edges, index=False)
     manifest_payload = json.loads(manifest.read_text())
+    manifest_payload.pop("cave_auth_error", None)
+    manifest_payload.pop("blocked_reason", None)
     manifest_payload.update(
         {
             "has_structural_edges": len(edges) > 0,
@@ -95,6 +99,7 @@ def query_edges(
             "cave_query": {
                 "limit_neurons": limit_neurons,
                 "limit_edges": limit_edges,
+                "materialization_version": materialization_version,
                 "method": "client.materialize.synapse_query(pre_ids=roots, post_ids=roots)",
             },
         }
@@ -118,6 +123,7 @@ def main() -> None:
     parser.add_argument("--limit-neurons", type=int, default=172)
     parser.add_argument("--limit-edges", type=int, default=10000)
     parser.add_argument("--datastack", default="minnie65_public")
+    parser.add_argument("--materialization-version", type=int, default=117)
     args = parser.parse_args()
     payload = query_edges(
         matched_units=args.matched_units,
@@ -126,6 +132,7 @@ def main() -> None:
         limit_neurons=args.limit_neurons,
         limit_edges=args.limit_edges,
         datastack=args.datastack,
+        materialization_version=args.materialization_version,
     )
     print(json.dumps(payload))
 

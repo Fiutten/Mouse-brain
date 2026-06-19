@@ -11,7 +11,7 @@
     "matched_units_csv": "data/microns/static_small/matched_function_em_units.csv",
     "structural_edge_source": null,
     "blocked_reason": "Small static files provide EM/function matched units and functional properties, but no synaptic edge list. CAVE synapse_query needs a token, and the static minnie65 synapse graph is ~47.5 GB.",
-    "cave_auth_error": "AuthException: You have not setup a token to access\nhttps://global.daf-apis.com/info/api/v2/datastack/full/minnie65_public\nwith the current auth configuration.\n\nRead the documentation at \nhttps://caveconnectome.github.io/CAVEclient/tutorials/authentication/\nor follow instructions under \nclient.auth.get_new_token() for how to set a valid API token.\nafter initializing a global client with\nclient=CAVEclient(server_address=\"https://global.daf-apis.com\")",
+    "cave_auth_error": null,
     "sources": {
       "functional_coregistration": "https://bossdb-open-data.s3.amazonaws.com/iarpa_microns/minnie/functional_coregistration/func_unit_em_match_release.csv",
       "proofreading_status": "https://bossdb-open-data.s3.amazonaws.com/iarpa_microns/minnie/proofreading_status/proofreading_status_public_release.csv",
