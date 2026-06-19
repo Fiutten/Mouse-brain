@@ -53,6 +53,18 @@ def _safe_corr(prediction, target) -> float:
     return float(np.corrcoef(pred, true)[0, 1])
 
 
+def _select_device(requested: str):
+    """Select CPU or Apple Metal/MPS for local official Sensorium training."""
+
+    import torch  # noqa: PLC0415
+
+    if requested == "auto":
+        return torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    if requested == "mps" and not torch.backends.mps.is_available():
+        raise RuntimeError("Requested MPS device, but torch.backends.mps.is_available() is False")
+    return torch.device(requested)
+
+
 def _data_key(loaders: dict[str, Any]) -> str:
     """Extract the single data key created by the official mouse loader."""
 
@@ -134,7 +146,7 @@ def _limited_batches(loader: Iterable[Any], max_batches: int):
         yield batch
 
 
-def _mean_baseline(train_loader, data_key: str, model, max_batches: int):
+def _mean_baseline(train_loader, data_key: str, model, max_batches: int, device):
     """Estimate a per-neuron mean response baseline on the same aligned frames."""
 
     import torch  # noqa: PLC0415
@@ -143,15 +155,15 @@ def _mean_baseline(train_loader, data_key: str, model, max_batches: int):
     model.eval()
     with torch.no_grad():
         for batch in _limited_batches(train_loader, max_batches):
-            output = model(batch.videos.float(), data_key=data_key)
-            target = _aligned_target(batch.responses.float(), output.shape[1])
+            output = model(batch.videos.float().to(device), data_key=data_key)
+            target = _aligned_target(batch.responses.float().to(device), output.shape[1])
             chunks.append(target.reshape(-1, target.shape[-1]).cpu())
     if not chunks:
         raise RuntimeError("No batches available for mean baseline estimation")
     return torch.cat(chunks, dim=0).mean(dim=0)
 
 
-def _evaluate(loader, data_key: str, model, mean_response, max_batches: int) -> dict[str, Any]:
+def _evaluate(loader, data_key: str, model, mean_response, max_batches: int, device) -> dict[str, Any]:
     """Evaluate model and matched mean baseline on held-out/oracle batches."""
 
     import numpy as np  # noqa: PLC0415
@@ -163,9 +175,9 @@ def _evaluate(loader, data_key: str, model, mean_response, max_batches: int) -> 
     model.eval()
     with torch.no_grad():
         for batch in _limited_batches(loader, max_batches):
-            output = model(batch.videos.float(), data_key=data_key)
-            target = _aligned_target(batch.responses.float(), output.shape[1])
-            expanded_mean = mean_response.view(1, 1, -1).expand_as(target)
+            output = model(batch.videos.float().to(device), data_key=data_key)
+            target = _aligned_target(batch.responses.float().to(device), output.shape[1])
+            expanded_mean = mean_response.to(device).view(1, 1, -1).expand_as(target)
             model_predictions.append(output.cpu().numpy())
             mean_predictions.append(expanded_mean.cpu().numpy())
             targets.append(target.cpu().numpy())
@@ -193,6 +205,7 @@ def train_one_mouse(
     mean_batches: int,
     learning_rate: float,
     seed: int,
+    device_name: str,
 ) -> dict[str, Any]:
     """Train and evaluate one bounded official-architecture Sensorium baseline."""
 
@@ -202,6 +215,7 @@ def train_one_mouse(
     from sensorium.datasets.mouse_video_loaders import mouse_video_loader  # noqa: PLC0415
 
     torch.manual_seed(seed)
+    device = _select_device(device_name)
     loaders = mouse_video_loader(
         # The trailing slash preserves the mouse directory as official data key.
         [str(mouse_root) + "/"],
@@ -215,6 +229,7 @@ def train_one_mouse(
     )
     data_key = _data_key(loaders)
     model = _build_official_tiny_model(loaders, seed=seed)
+    model.to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
     loss_fn = torch.nn.MSELoss()
 
@@ -222,14 +237,14 @@ def train_one_mouse(
     model.train()
     for batch in _limited_batches(loaders["train"][data_key], max_train_batches):
         optimizer.zero_grad(set_to_none=True)
-        output = model(batch.videos.float(), data_key=data_key)
-        target = _aligned_target(batch.responses.float(), output.shape[1])
+        output = model(batch.videos.float().to(device), data_key=data_key)
+        target = _aligned_target(batch.responses.float().to(device), output.shape[1])
         loss = loss_fn(output, target)
         loss.backward()
         optimizer.step()
         losses.append(float(loss.detach().cpu()))
 
-    mean_response = _mean_baseline(loaders["train"][data_key], data_key, model, mean_batches)
+    mean_response = _mean_baseline(loaders["train"][data_key], data_key, model, mean_batches, device)
     tier = "oracle" if "oracle" in loaders else "validation"
     eval_result = _evaluate(
         loaders[tier][data_key],
@@ -237,6 +252,7 @@ def train_one_mouse(
         model,
         mean_response,
         max_eval_batches,
+        device,
     )
     official_corr = eval_result["official_sensorium_correlation"]
     mean_corr = eval_result["mean_response_correlation"]
@@ -256,6 +272,7 @@ def train_one_mouse(
             else None
         ),
         "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+        "device": str(device),
     }
 
 
@@ -270,6 +287,7 @@ def run(
     learning_rate: float,
     seed: int,
     q1_min_mice: int,
+    device_name: str,
 ) -> dict[str, Any]:
     """Run the bounded official baseline over the selected local mice."""
 
@@ -282,6 +300,7 @@ def run(
             mean_batches=mean_batches,
             learning_rate=learning_rate,
             seed=seed + index,
+            device_name=device_name,
         )
         for index, root in enumerate(roots)
     ]
@@ -317,6 +336,7 @@ def run(
         "mean_batches": mean_batches,
         "learning_rate": learning_rate,
         "seed": seed,
+        "device_requested": device_name,
         "rows": rows,
         "interpretation": (
             "This artifact proves that official Sensorium code can be trained and "
@@ -340,6 +360,7 @@ def main() -> None:
     parser.add_argument("--learning-rate", type=float, default=1e-3)
     parser.add_argument("--seed", type=int, default=13)
     parser.add_argument("--q1-min-mice", type=int, default=5)
+    parser.add_argument("--device", choices=("auto", "cpu", "mps"), default="auto")
     args = parser.parse_args()
     payload = run(
         data_root=args.data_root,
@@ -351,6 +372,7 @@ def main() -> None:
         learning_rate=args.learning_rate,
         seed=args.seed,
         q1_min_mice=args.q1_min_mice,
+        device_name=args.device,
     )
     print(json.dumps({"output": str(args.output.resolve()), "n_usable_mice": payload["n_usable_mice"]}))
 

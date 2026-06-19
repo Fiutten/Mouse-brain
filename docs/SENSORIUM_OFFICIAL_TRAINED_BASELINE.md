@@ -17,7 +17,15 @@ The executable artifact is:
 MPLBACKEND=Agg MPLCONFIGDIR=.cache/matplotlib XDG_CACHE_HOME=.cache/xdg \
 PYTHONPATH=external/neuralpredictors_43fa:external/sensorium_2023 \
 .venv-sensorium-official/bin/python \
-  scripts/train_sensorium_official_tiny_baseline.py
+  scripts/train_sensorium_official_tiny_baseline.py --device auto
+```
+
+On Apple Silicon, `--device auto` selects `mps` when PyTorch can see the Metal
+backend. In restricted execution sandboxes, MPS can be hidden even when the same
+environment works from a normal terminal. The diagnostic command is:
+
+```bash
+.venv-sensorium-official/bin/python scripts/check_apple_mps.py
 ```
 
 ## Current Result
@@ -33,6 +41,7 @@ Current run:
 - usable mice: 5;
 - training budget: 24 train batches, 16 oracle/eval batches per mouse;
 - model: official architecture family, tiny local configuration;
+- device: Apple Metal/MPS on the Mac M5;
 - claim: reproducible integration and local control;
 - blocked claim: official/SOTA Sensorium baseline.
 
@@ -40,6 +49,11 @@ The tiny official model loses against the tracked local MLP on all 5 paired
 Dynamic Sensorium mice in the current comparator. This is useful negative
 evidence: the official stack is integrated, but this bounded run is not the
 differential Q1 piece.
+
+The MPS run confirms that the local Mac GPU can execute the official Sensorium
+path. It does not by itself solve the publication-level baseline problem,
+because the limiting factor is now model/training scale, not mere device
+availability.
 
 ## Scientific Interpretation
 

@@ -27,7 +27,7 @@
           "temporal_svd": 0.41452834204433525,
           "random_feature": 0.4171319145917034,
           "torch_mlp": 0.42690156550278685,
-          "official_sensorium_tiny": 0.02798350960891844
+          "official_sensorium_tiny": 0.027983510284331898
         },
         {
           "mouse": "dynamic29623",
@@ -37,7 +37,7 @@
           "temporal_svd": 0.4271261955135371,
           "random_feature": 0.3545328150076228,
           "torch_mlp": 0.41799367650239105,
-          "official_sensorium_tiny": 0.013995557511676731
+          "official_sensorium_tiny": 0.013995553425919465
         },
         {
           "mouse": "dynamic29647",
@@ -47,7 +47,7 @@
           "temporal_svd": 0.4861605114221228,
           "random_feature": 0.45168821251034363,
           "torch_mlp": 0.4900163140958758,
-          "official_sensorium_tiny": -0.008915378603337253
+          "official_sensorium_tiny": -0.008915376460049558
         },
         {
           "mouse": "dynamic29712",
@@ -57,7 +57,7 @@
           "temporal_svd": 0.49187043002797176,
           "random_feature": 0.45211232078642394,
           "torch_mlp": 0.4903576512095004,
-          "official_sensorium_tiny": 0.015712938021801435
+          "official_sensorium_tiny": 0.015712933323844634
         },
         {
           "mouse": "dynamic29755",
@@ -67,7 +67,7 @@
           "temporal_svd": 0.5169175866877092,
           "random_feature": 0.49958408149901756,
           "torch_mlp": 0.5263933370463001,
-          "official_sensorium_tiny": 0.015191452305602406
+          "official_sensorium_tiny": 0.01519146313114195
         }
       ],
       "best_models": [
@@ -467,48 +467,48 @@
           "right_wins": 0,
           "left_wins": 5,
           "ties": 0,
-          "median_delta": -0.47464471318769896,
-          "mean_delta": -0.4575388931024385,
+          "median_delta": -0.47464471788565576,
+          "mean_delta": -0.45753889213033316,
           "rows": [
             {
               "mouse": "dynamic29515",
               "left": "torch_mlp",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.42690156550278685,
-              "right_correlation": 0.02798350960891844,
-              "delta": -0.3989180558938684
+              "right_correlation": 0.027983510284331898,
+              "delta": -0.39891805521845497
             },
             {
               "mouse": "dynamic29623",
               "left": "torch_mlp",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.41799367650239105,
-              "right_correlation": 0.013995557511676731,
-              "delta": -0.4039981189907143
+              "right_correlation": 0.013995553425919465,
+              "delta": -0.4039981230764716
             },
             {
               "mouse": "dynamic29647",
               "left": "torch_mlp",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.4900163140958758,
-              "right_correlation": -0.008915378603337253,
-              "delta": -0.49893169269921306
+              "right_correlation": -0.008915376460049558,
+              "delta": -0.4989316905559254
             },
             {
               "mouse": "dynamic29712",
               "left": "torch_mlp",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.4903576512095004,
-              "right_correlation": 0.015712938021801435,
-              "delta": -0.47464471318769896
+              "right_correlation": 0.015712933323844634,
+              "delta": -0.47464471788565576
             },
             {
               "mouse": "dynamic29755",
               "left": "torch_mlp",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.5263933370463001,
-              "right_correlation": 0.015191452305602406,
-              "delta": -0.5112018847406977
+              "right_correlation": 0.01519146313114195,
+              "delta": -0.5112018739151581
             }
           ]
         },
@@ -519,48 +519,48 @@
           "right_wins": 0,
           "left_wins": 5,
           "ties": 0,
-          "median_delta": -0.4761574920061703,
-          "mean_delta": -0.45452699737020286,
+          "median_delta": -0.4761574967041271,
+          "mean_delta": -0.4545269963980975,
           "rows": [
             {
               "mouse": "dynamic29515",
               "left": "temporal_svd",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.41452834204433525,
-              "right_correlation": 0.02798350960891844,
-              "delta": -0.3865448324354168
+              "right_correlation": 0.027983510284331898,
+              "delta": -0.38654483176000337
             },
             {
               "mouse": "dynamic29623",
               "left": "temporal_svd",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.4271261955135371,
-              "right_correlation": 0.013995557511676731,
-              "delta": -0.41313063800186034
+              "right_correlation": 0.013995553425919465,
+              "delta": -0.4131306420876176
             },
             {
               "mouse": "dynamic29647",
               "left": "temporal_svd",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.4861605114221228,
-              "right_correlation": -0.008915378603337253,
-              "delta": -0.49507589002546004
+              "right_correlation": -0.008915376460049558,
+              "delta": -0.4950758878821724
             },
             {
               "mouse": "dynamic29712",
               "left": "temporal_svd",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.49187043002797176,
-              "right_correlation": 0.015712938021801435,
-              "delta": -0.4761574920061703
+              "right_correlation": 0.015712933323844634,
+              "delta": -0.4761574967041271
             },
             {
               "mouse": "dynamic29755",
               "left": "temporal_svd",
               "right": "official_sensorium_tiny",
               "left_correlation": 0.5169175866877092,
-              "right_correlation": 0.015191452305602406,
-              "delta": -0.5017261343821068
+              "right_correlation": 0.01519146313114195,
+              "delta": -0.5017261235565672
             }
           ]
         }

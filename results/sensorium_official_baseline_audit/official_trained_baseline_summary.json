@@ -16,6 +16,7 @@
   "mean_batches": 24,
   "learning_rate": 0.001,
   "seed": 13,
+  "device_requested": "mps",
   "rows": [
     {
       "mouse": "dynamic29515-10-12-Video-9b4f6a1a067fe51e15306b9628efea20",
@@ -23,12 +24,13 @@
       "evaluation_tier": "oracle",
       "n_train_batches": 24,
       "n_eval_batches": 16,
-      "final_train_loss": 1.9201571941375732,
+      "final_train_loss": 1.9201574325561523,
       "median_train_loss": 1.6618859767913818,
-      "official_sensorium_correlation": 0.02798350960891844,
+      "official_sensorium_correlation": 0.027983510284331898,
       "mean_response_correlation": 0.010988691029769923,
-      "official_sensorium_minus_mean": 0.016994818579148516,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny"
+      "official_sensorium_minus_mean": 0.016994819254561977,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "device": "mps"
     },
     {
       "mouse": "dynamic29623-4-9-Video-9b4f6a1a067fe51e15306b9628efea20",
@@ -36,12 +38,13 @@
       "evaluation_tier": "oracle",
       "n_train_batches": 24,
       "n_eval_batches": 16,
-      "final_train_loss": 2.09621262550354,
-      "median_train_loss": 1.587296485900879,
-      "official_sensorium_correlation": 0.013995557511676731,
+      "final_train_loss": 2.096212863922119,
+      "median_train_loss": 1.5872963666915894,
+      "official_sensorium_correlation": 0.013995553425919465,
       "mean_response_correlation": 0.011609399800474656,
-      "official_sensorium_minus_mean": 0.0023861577112020745,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny"
+      "official_sensorium_minus_mean": 0.002386153625444809,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "device": "mps"
     },
     {
       "mouse": "dynamic29647-19-8-Video-9b4f6a1a067fe51e15306b9628efea20",
@@ -49,12 +52,13 @@
       "evaluation_tier": "oracle",
       "n_train_batches": 24,
       "n_eval_batches": 16,
-      "final_train_loss": 1.0962872505187988,
-      "median_train_loss": 1.623689889907837,
-      "official_sensorium_correlation": -0.008915378603337253,
+      "final_train_loss": 1.0962871313095093,
+      "median_train_loss": 1.6236896514892578,
+      "official_sensorium_correlation": -0.008915376460049558,
       "mean_response_correlation": -0.002622823037796971,
-      "official_sensorium_minus_mean": -0.006292555565540282,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny"
+      "official_sensorium_minus_mean": -0.006292553422252587,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "device": "mps"
     },
     {
       "mouse": "dynamic29712-5-9-Video-9b4f6a1a067fe51e15306b9628efea20",
@@ -62,12 +66,13 @@
       "evaluation_tier": "oracle",
       "n_train_batches": 24,
       "n_eval_batches": 16,
-      "final_train_loss": 1.5216124057769775,
-      "median_train_loss": 1.6531167030334473,
-      "official_sensorium_correlation": 0.015712938021801435,
+      "final_train_loss": 1.521612524986267,
+      "median_train_loss": 1.6531165838241577,
+      "official_sensorium_correlation": 0.015712933323844634,
       "mean_response_correlation": 0.009779398558415498,
-      "official_sensorium_minus_mean": 0.005933539463385937,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny"
+      "official_sensorium_minus_mean": 0.005933534765429136,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "device": "mps"
     },
     {
       "mouse": "dynamic29755-2-8-Video-9b4f6a1a067fe51e15306b9628efea20",
@@ -75,12 +80,13 @@
       "evaluation_tier": "oracle",
       "n_train_batches": 24,
       "n_eval_batches": 16,
-      "final_train_loss": 1.2992383241653442,
+      "final_train_loss": 1.2992380857467651,
       "median_train_loss": 1.4203636646270752,
-      "official_sensorium_correlation": 0.015191452305602406,
+      "official_sensorium_correlation": 0.01519146313114195,
       "mean_response_correlation": 0.020928703676747602,
-      "official_sensorium_minus_mean": -0.005737251371145197,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny"
+      "official_sensorium_minus_mean": -0.005737240545605652,
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "device": "mps"
     }
   ],
   "interpretation": "This artifact proves that official Sensorium code can be trained and evaluated inside MouseBrainBench. It is a bounded local control, not a SOTA Sensorium benchmark result."

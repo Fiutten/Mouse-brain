@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "6c3dd74-dirty",
+  "git_revision": "474b436-dirty",
   "inputs": {
     "official_audit": "results/sensorium_official_baseline_audit/summary.json",
     "sensitivity": "results/q1_sensitivity/summary.json",
