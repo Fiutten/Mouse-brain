@@ -998,3 +998,39 @@ la señal MICRONS estratificada en un subconjunto CAVE mayor o hold-out.
 Se añadió además `mousebrainbench.benchmarks.digital_twin_claim_audit` para
 bloquear formalmente claims tipo MouseDTB cuando solo hay correlación,
 predicción o señal estructura-función local.
+
+## 2026-06-25 — MICRONS hold-out estratificado
+
+### Diseño
+
+Se extendió `scripts/query_microns_expanded_pilot.py` con `--offset-units` para
+crear un subconjunto hold-out sin sobrescribir el piloto original. Se consultó
+CAVE con:
+
+- `limit_query_rows = 2400`;
+- `offset_units = 1000`;
+- `limit_units = 1000`;
+- `materialization_version = 1507`;
+- tabla `digital_twin_properties_bcm_coreg_v4`.
+
+El hold-out resultante contiene `992` unidades, `2161` sinapsis y `1926` pares
+dirigidos conectados únicos. Se ejecutó la misma estratificación con `1000`
+permutaciones y `min_connected_pairs = 50`.
+
+### Resultados
+
+| Resultado | Valor |
+|---|---:|
+| Pruebas confirmadas tras FDR | `30` |
+| Señal dominante | `readout_location` |
+| `all_pairs/readout_location` distance delta | `0.021034` |
+| `all_pairs/readout_location` distance q | `0.007036` |
+| `all_pairs/readout_location` degree delta | `0.038002` |
+| `all_pairs/readout_location` degree q | `0.006225` |
+
+### Decisión
+
+La señal principal replica en hold-out. MouseBrainBench ya tiene una pieza
+empírica positiva candidata para Q1, siempre que el manuscrito la formule como
+benchmark estructura-función local con controles, no como causalidad, whole-brain
+digital twin ni modelo SOTA Sensorium.

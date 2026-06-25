@@ -2,8 +2,9 @@
 
 ## Current Bottom Line
 
-MouseBrainBench now has Q1-candidate evidence, but it is not submission-ready:
-the positive MICRONS signal is stratified, local, and still needs replication.
+MouseBrainBench now has a Q1-candidate empirical package: the positive MICRONS
+stratified signal replicated on a second CAVE subset. It is still not a
+whole-brain or causal-mechanism claim.
 
 The most important result is now the expanded MICrONS pilot plus its
 stratified follow-up:
@@ -14,17 +15,18 @@ stratified follow-up:
 - Q1-scale pilot gate: passed;
 - global positive structure-function result: failed;
 - stratified structure-function result: positive after distance/degree/FDR
-  controls, dominated by `readout_location`.
+  controls, dominated by `readout_location`;
+- hold-out stratified result: positive after distance/degree/FDR controls on
+  `992` additional units and `2161` synapses.
 
 In the global aggregate test, connected pairs are more functionally similar than a random null, and more
 similar than a degree-matched null, but the effect does not survive the
 distance-matched null. Therefore, the aggregate result remains a stress test,
 while the stratified result provides the current Q1-candidate signal.
 
-The stratified result changes the Q1 situation from "blocked by evidence" to
-"candidate evidence requiring replication". It is not yet submission-ready Q1
-evidence because the strongest effect is local and correlational rather than
-causal or interventional.
+The hold-out result changes the Q1 situation from "candidate requiring
+replication" to "candidate ready for manuscript planning". The strongest effect
+remains local and correlational rather than causal or interventional.
 
 ## Step Status
 
@@ -34,7 +36,7 @@ causal or interventional.
 | Add structure-function model | Done | Synapse count/size, random, distance, degree controls |
 | Add stronger nulls | Done | Distance and degree matched permutation tests |
 | Scale Sensorium on Mac GPU | Done | MPS works; small official model improves over tiny but remains far below MLP |
-| Publication decision table | Done | Q1 candidate requires MICRONS replication; methodological paper remains viable |
+| Publication decision table | Done | Q1 candidate supported by replicated MICRONS stratification; causal claims remain blocked |
 
 ## Key Results
 
@@ -43,14 +45,15 @@ causal or interventional.
 | MICrONS static micro-pilot | 172 units, 82 synapses | Negative/inconclusive | Stress test only |
 | MICrONS expanded pilot | 1000 units, 2267 synapses | Positive vs random/degree, not distance | Not enough for positive Q1 claim |
 | MICrONS stratified expanded pilot | 1000 units, 2267 synapses | 28 tests positive after FDR, mostly readout-location | Q1 candidate only after replication |
+| MICrONS stratified hold-out | 992 units, 2161 synapses | 30 tests positive after FDR, readout-location replicated | Q1 candidate evidence |
 | Sensorium official tiny | 5 mice | Runs on MPS, weak correlation | Integration evidence |
 | Sensorium official small | 5 mice | Improves over tiny, far below MLP | Still not official/SOTA |
 | Dynamic Sensorium MLP | 5 mice | Stronger prediction | Predictive baseline, not mechanistic |
 
 ## Next Q1-Capable Moves
 
-1. Replicate the MICrONS stratified readout-location signal on a larger or
-   held-out CAVE subset.
+1. Convert the replicated MICRONS result into a manuscript-grade benchmark
+   section with claims limited to local structure-function association.
 2. Keep the global MICrONS result negative unless the all-pairs distance-matched
    effect turns positive.
 3. Treat non-readout functional positives as exploratory unless they replicate.
@@ -64,9 +67,9 @@ causal or interventional.
 
 The project is not failing; it is doing what a serious benchmark should do. It
 has already rejected weak mechanistic claims that would be tempting to overstate.
-For Q1, however, we still need:
+For Q1, the remaining technical work is no longer to find a positive signal,
+but to harden the positive signal:
 
-- replication of the positive MICRONS stratified signal on held-out/larger data;
-  or
-- an official/SOTA Sensorium result whose predictive success is analyzed through
-  MIS and robustness gates.
+- report exact hold-out protocol and CAVE provenance;
+- add effect-size confidence intervals or bootstrap stability;
+- keep causal, whole-brain, and Sensorium-SOTA claims explicitly blocked.

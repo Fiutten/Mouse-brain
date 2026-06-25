@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "2e0ea64-dirty",
+  "git_revision": "fffbbcf-dirty",
   "analysis": "digital_twin_claim_audit",
   "passed_claims": [
     "single_neuron_resolution_connectivity"

@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "2e0ea64-dirty",
+  "git_revision": "fffbbcf-dirty",
   "inputs": {
     "official_audit": "results/sensorium_official_baseline_audit/summary.json",
     "sensitivity": "results/q1_sensitivity/summary.json",
@@ -9,6 +9,7 @@
     "microns_expanded_gate": "results/microns_pilot_gate/expanded_summary.json",
     "microns_expanded_analysis": "results/microns_structure_function_pilot/expanded_summary.json",
     "microns_stratified_analysis": "results/microns_structure_function_pilot/stratified_summary.json",
+    "microns_stratified_holdout_analysis": "results/microns_structure_function_pilot/stratified_holdout_offset1000_summary.json",
     "proposal_status": "docs/PROPOSAL_STATUS.md"
   },
   "official_sensorium_baseline_viable": false,
@@ -25,10 +26,14 @@
   "microns_stratified_structure_function_positive": true,
   "microns_stratified_structure_function_decision": "positive_stratified_structure_function_signal",
   "microns_stratified_confirmed_tests": 28,
-  "q1_candidate_evidence_requires_replication": true,
+  "microns_stratified_holdout_structure_function_positive": true,
+  "microns_stratified_holdout_structure_function_decision": "positive_stratified_structure_function_signal",
+  "microns_stratified_holdout_confirmed_tests": 30,
+  "q1_candidate_evidence_requires_replication": false,
+  "q1_candidate_evidence_replicated": true,
   "sensitivity_decision": "sensitivity_supports_methodological_claim_not_q1_mechanistic_claim",
-  "publication_route": "q1_candidate_requires_microns_stratified_replication",
-  "q1_ready": false,
+  "publication_route": "q1_candidate_after_replicated_microns_stratified_signal",
+  "q1_ready": true,
   "methodological_paper_ready": true,
   "claims_allowed": [
     "MouseBrainBench separates prediction, OOD, reliability, and mechanistic gates.",
@@ -38,7 +43,8 @@
     "The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts.",
     "MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.",
     "MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.",
-    "MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity."
+    "MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.",
+    "MICrONS hold-out stratified analysis replicates the readout-location signal on a second CAVE subset."
   ],
   "claims_blocked": [
     "A complete digital twin of mouse brain.",
@@ -46,7 +52,7 @@
     "A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.",
     "Causal mechanistic identifiability in Dynamic Sensorium.",
     "MICrONS causal mechanism claims: the stratified signal is correlational and local, not interventional.",
-    "Q1 submission-ready MICrONS claims until the stratified signal is replicated on a larger or held-out subset."
+    "Whole-brain or causal MICrONS claims: the replicated signal remains local and observational."
   ],
-  "next_required_piece": "For a Q1 candidate, replicate the MICrONS stratified readout-location signal on a larger or held-out CAVE subset and keep Sensorium framed as predictive evidence unless a published-scale official checkpoint is evaluated."
+  "next_required_piece": "Begin Q1 manuscript planning around the replicated MICrONS structure-function benchmark claim, while keeping causal, whole-brain, and Sensorium-SOTA claims blocked."
 }

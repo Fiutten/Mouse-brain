@@ -51,12 +51,14 @@ Y puede usar estas frases si los artefactos actuales se mantienen:
 ## Estado tras la estratificación MICRONS
 
 La estratificación expandida encuentra señal positiva tras controles de
-distancia, grado y FDR, dominada por similitud de `readout_location`.
+distancia, grado y FDR, dominada por similitud de `readout_location`. Esta señal
+se replicó en un segundo subconjunto CAVE hold-out con `992` unidades,
+`2161` sinapsis y `30` pruebas positivas tras FDR.
 
 Interpretación estricta:
 
 - positivo: pares conectados localmente tienden a tener ubicaciones funcionales
   de readout más cercanas que nulls emparejados;
 - no probado: causalidad, mecanismo completo, comportamiento, whole-brain twin;
-- requisito Q1: replicar en un subconjunto CAVE mayor o hold-out antes de tratar
-  esta señal como eje principal de un paper Q1.
+- uso Q1: puede ser eje empírico candidato si se formula como benchmark
+  estructura-función local, no como mecanismo causal ni cerebro completo.

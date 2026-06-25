@@ -22,14 +22,14 @@ DEFAULT_MANIFEST = Path("data/microns/expanded/pilot_manifest.json")
 FUNCTION_COLUMNS = ("cc_abs", "cc_max", "cc_norm", "OSI", "DSI", "gOSI", "gDSI", "pref_ori", "pref_dir")
 
 
-def _usable_units(frame: pd.DataFrame, limit_units: int) -> pd.DataFrame:
+def _usable_units(frame: pd.DataFrame, limit_units: int, offset_units: int = 0) -> pd.DataFrame:
     """Return valid, unique-root units with functional and spatial properties."""
 
     required = ["pt_root_id", "pt_position", *FUNCTION_COLUMNS]
     usable = frame.dropna(subset=required).copy()
     usable["pt_root_id"] = usable["pt_root_id"].astype("int64")
     usable = usable.drop_duplicates(subset=["pt_root_id"], keep="first")
-    return usable.head(limit_units)
+    return usable.iloc[offset_units : offset_units + limit_units].copy()
 
 
 def _try_enrich_cell_types(client: Any, units: pd.DataFrame, version: int) -> pd.DataFrame:
@@ -67,6 +67,7 @@ def query_expanded_pilot(
     materialization_version: int,
     limit_query_rows: int,
     limit_units: int,
+    offset_units: int,
     limit_edges: int,
     datastack: str,
     enrich_cell_types: bool,
@@ -81,7 +82,7 @@ def query_expanded_pilot(
         limit=limit_query_rows,
         materialization_version=materialization_version,
     )
-    units = _usable_units(raw, limit_units)
+    units = _usable_units(raw, limit_units, offset_units)
     if enrich_cell_types:
         units = _try_enrich_cell_types(client, units, materialization_version)
     roots = units["pt_root_id"].astype("int64").tolist()
@@ -119,6 +120,7 @@ def query_expanded_pilot(
         "cave_query": {
             "limit_query_rows": limit_query_rows,
             "limit_units": limit_units,
+            "offset_units": offset_units,
             "limit_edges": limit_edges,
         },
         "cell_type_enrichment": {
@@ -144,6 +146,7 @@ def main() -> None:
     parser.add_argument("--materialization-version", type=int, default=1507)
     parser.add_argument("--limit-query-rows", type=int, default=1200)
     parser.add_argument("--limit-units", type=int, default=1000)
+    parser.add_argument("--offset-units", type=int, default=0)
     parser.add_argument("--limit-edges", type=int, default=100000)
     parser.add_argument("--datastack", default="minnie65_public")
     parser.add_argument("--no-cell-types", action="store_true")
@@ -156,6 +159,7 @@ def main() -> None:
         materialization_version=args.materialization_version,
         limit_query_rows=args.limit_query_rows,
         limit_units=args.limit_units,
+        offset_units=args.offset_units,
         limit_edges=args.limit_edges,
         datastack=args.datastack,
         enrich_cell_types=not args.no_cell_types,

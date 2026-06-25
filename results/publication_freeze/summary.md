@@ -1,9 +1,10 @@
 # Publication Freeze
 
-- Publication route: `q1_candidate_requires_microns_stratified_replication`
+- Publication route: `q1_candidate_after_replicated_microns_stratified_signal`
 - Methodological paper ready: `True`
-- Q1 ready now: `False`
-- Q1 candidate evidence requires replication: `True`
+- Q1 ready now: `True`
+- Q1 candidate evidence requires replication: `False`
+- Q1 candidate evidence replicated: `True`
 - Official Sensorium stack forward OK: `True`
 - Official Sensorium trained available: `True`
 - Official Sensorium Q1-qualified: `False`
@@ -15,6 +16,8 @@
 - MICrONS expanded structure-function positive: `False`
 - MICrONS stratified structure-function positive: `True`
 - MICrONS stratified confirmed tests: `28`
+- MICrONS hold-out stratified positive: `True`
+- MICrONS hold-out confirmed tests: `30`
 
 ## Claims allowed
 
@@ -26,6 +29,7 @@
 - MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.
 - MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.
 - MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.
+- MICrONS hold-out stratified analysis replicates the readout-location signal on a second CAVE subset.
 
 ## Claims blocked
 
@@ -34,8 +38,8 @@
 - A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.
 - Causal mechanistic identifiability in Dynamic Sensorium.
 - MICrONS causal mechanism claims: the stratified signal is correlational and local, not interventional.
-- Q1 submission-ready MICrONS claims until the stratified signal is replicated on a larger or held-out subset.
+- Whole-brain or causal MICrONS claims: the replicated signal remains local and observational.
 
 ## Next required piece
 
-For a Q1 candidate, replicate the MICrONS stratified readout-location signal on a larger or held-out CAVE subset and keep Sensorium framed as predictive evidence unless a published-scale official checkpoint is evaluated.
+Begin Q1 manuscript planning around the replicated MICrONS structure-function benchmark claim, while keeping causal, whole-brain, and Sensorium-SOTA claims blocked.

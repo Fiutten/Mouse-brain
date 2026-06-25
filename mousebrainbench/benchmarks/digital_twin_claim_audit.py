@@ -167,6 +167,10 @@ def mousebrainbench_current_evidence() -> dict[str, Any]:
 
     stratified_path = Path("results/microns_structure_function_pilot/stratified_summary.json")
     stratified = json.loads(stratified_path.read_text()) if stratified_path.exists() else {}
+    holdout_path = Path(
+        "results/microns_structure_function_pilot/stratified_holdout_offset1000_summary.json"
+    )
+    holdout = json.loads(holdout_path.read_text()) if holdout_path.exists() else {}
     publication_path = Path("results/publication_freeze/summary.json")
     publication = json.loads(publication_path.read_text()) if publication_path.exists() else {}
     return {
@@ -181,6 +185,7 @@ def mousebrainbench_current_evidence() -> dict[str, Any]:
         "predictive_or_reproducible": bool(publication.get("methodological_paper_ready", False)),
         "matched_nulls_passed": bool(
             stratified.get("positive_stratified_structure_function_result", False)
+            and holdout.get("positive_stratified_structure_function_result", False)
         ),
         "causal_or_interventional_evidence": False,
         "behavior_above_chance": False,
