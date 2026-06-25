@@ -1,0 +1,103 @@
+{
+  "version": "0.6.0",
+  "git_revision": "2e0ea64-dirty",
+  "analysis": "digital_twin_claim_audit",
+  "passed_claims": [
+    "single_neuron_resolution_connectivity"
+  ],
+  "blocked_claims": [
+    "whole_brain_digital_twin",
+    "mechanistic_identifiability",
+    "behavioral_digital_twin"
+  ],
+  "audits": [
+    {
+      "claim": "whole_brain_digital_twin",
+      "passed": false,
+      "gates": [
+        {
+          "name": "whole_brain_coverage",
+          "passed": false,
+          "reason": "Model covers the relevant whole-brain anatomical space."
+        },
+        {
+          "name": "independent_whole_brain_validation",
+          "passed": false,
+          "reason": "Validation is not restricted to fitted or assimilated regions."
+        },
+        {
+          "name": "reproducible_compute_budget",
+          "passed": true,
+          "reason": "Compute and artifacts are reproducible by external groups."
+        }
+      ],
+      "allowed_wording": null,
+      "blocked_wording": "partial mouse-brain model or benchmark; not a complete whole-brain twin"
+    },
+    {
+      "claim": "single_neuron_resolution_connectivity",
+      "passed": true,
+      "gates": [
+        {
+          "name": "single_neuron_units",
+          "passed": true,
+          "reason": "The model represents individual neuron-like units."
+        },
+        {
+          "name": "measured_synaptic_connectivity",
+          "passed": true,
+          "reason": "Neuron-to-neuron edges are measured or independently validated, not only inferred."
+        }
+      ],
+      "allowed_wording": "single-neuron connectivity model",
+      "blocked_wording": null
+    },
+    {
+      "claim": "mechanistic_identifiability",
+      "passed": false,
+      "gates": [
+        {
+          "name": "predictive_or_reproducible",
+          "passed": true,
+          "reason": "The model predicts or reproduces held-out neural observations."
+        },
+        {
+          "name": "matched_nulls_passed",
+          "passed": true,
+          "reason": "The effect survives relevant spatial, degree, topology, or leakage controls."
+        },
+        {
+          "name": "causal_or_interventional_evidence",
+          "passed": false,
+          "reason": "Perturbation, lesion, causal, or held-out structural evidence supports mechanism."
+        }
+      ],
+      "allowed_wording": null,
+      "blocked_wording": "predictive or structure-associated result, not causal mechanism"
+    },
+    {
+      "claim": "behavioral_digital_twin",
+      "passed": false,
+      "gates": [
+        {
+          "name": "behavior_above_chance",
+          "passed": false,
+          "reason": "Behavioral decoding or control is above chance."
+        },
+        {
+          "name": "behavior_competitive_with_empirical_or_baseline",
+          "passed": false,
+          "reason": "Behavioral performance is competitive with empirical decoding or strong baselines."
+        },
+        {
+          "name": "held_out_behavior_protocol",
+          "passed": false,
+          "reason": "Behavior is evaluated on held-out sessions, animals, or conditions."
+        }
+      ],
+      "allowed_wording": null,
+      "blocked_wording": "task-related neural dynamics with limited behavioral decoding"
+    }
+  ],
+  "interpretation": "Digital-twin wording is accepted only when the corresponding evidence gates pass. Prediction, BOLD correlation, and scale do not substitute for independent structure, causal, or reproducibility evidence."
+}

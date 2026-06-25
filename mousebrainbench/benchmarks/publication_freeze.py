@@ -29,6 +29,9 @@ def build_freeze_payload(
     microns_expanded_analysis: Path = Path(
         "results/microns_structure_function_pilot/expanded_summary.json"
     ),
+    microns_stratified_analysis: Path = Path(
+        "results/microns_structure_function_pilot/stratified_summary.json"
+    ),
     proposal_status: Path = Path("docs/PROPOSAL_STATUS.md"),
 ) -> dict[str, Any]:
     """Aggregate current evidence into a publication-route decision."""
@@ -41,6 +44,9 @@ def build_freeze_payload(
     microns_expanded_sf = (
         _load(microns_expanded_analysis) if microns_expanded_analysis.exists() else {}
     )
+    microns_stratified_sf = (
+        _load(microns_stratified_analysis) if microns_stratified_analysis.exists() else {}
+    )
     official_ready = bool(official["official_baseline_viable"])
     official_stack_forward_ok = bool(official.get("official_stack_forward_ok", False))
     official_trained_available = bool(official.get("official_trained_baseline_available", False))
@@ -52,13 +58,18 @@ def build_freeze_payload(
     microns_expanded_positive = bool(
         microns_expanded_sf.get("positive_structure_function_result", False)
     )
-
-    q1_ready = official_ready or (microns_expanded_q1_ready and microns_expanded_positive)
-    route = (
-        "q1_candidate_after_external_baseline_or_microns_pilot"
-        if q1_ready
-        else "methodological_benchmark_paper_now_q1_requires_external_piece"
+    microns_stratified_positive = bool(
+        microns_stratified_sf.get("positive_stratified_structure_function_result", False)
     )
+
+    q1_candidate_evidence = bool(microns_expanded_q1_ready and microns_stratified_positive)
+    q1_ready = official_ready or (microns_expanded_q1_ready and microns_expanded_positive)
+    if q1_ready:
+        route = "q1_candidate_after_external_baseline_or_global_microns_pilot"
+    elif q1_candidate_evidence:
+        route = "q1_candidate_requires_microns_stratified_replication"
+    else:
+        route = "methodological_benchmark_paper_now_q1_requires_external_piece"
     return {
         "version": __version__,
         "git_revision": code_revision(),
@@ -69,6 +80,7 @@ def build_freeze_payload(
             "microns_analysis": str(microns_analysis),
             "microns_expanded_gate": str(microns_expanded_gate),
             "microns_expanded_analysis": str(microns_expanded_analysis),
+            "microns_stratified_analysis": str(microns_stratified_analysis),
             "proposal_status": str(proposal_status),
         },
         "official_sensorium_baseline_viable": official_ready,
@@ -84,6 +96,14 @@ def build_freeze_payload(
         "microns_expanded_structure_function_decision": microns_expanded_sf.get(
             "scientific_decision"
         ),
+        "microns_stratified_structure_function_positive": microns_stratified_positive,
+        "microns_stratified_structure_function_decision": microns_stratified_sf.get(
+            "scientific_decision"
+        ),
+        "microns_stratified_confirmed_tests": int(
+            microns_stratified_sf.get("n_confirmed_positive_after_fdr", 0)
+        ),
+        "q1_candidate_evidence_requires_replication": q1_candidate_evidence,
         "sensitivity_decision": robust["decision"],
         "publication_route": route,
         "q1_ready": q1_ready,
@@ -96,19 +116,21 @@ def build_freeze_payload(
             "The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts.",
             "MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.",
             "MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.",
+            "MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.",
         ],
         "claims_blocked": [
             "A complete digital twin of mouse brain.",
             "A SOTA Sensorium predictor.",
             "A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.",
             "Causal mechanistic identifiability in Dynamic Sensorium.",
-            "MICrONS Q1 structure-function claims until the expanded real-edge pilot produces a positive distance/degree-controlled result.",
+            "MICrONS causal mechanism claims: the stratified signal is correlational and local, not interventional.",
+            "Q1 submission-ready MICrONS claims until the stratified signal is replicated on a larger or held-out subset.",
         ],
         "next_required_piece": (
-            "None for a methodological benchmark paper; for Q1, qualify the "
-            "official Sensorium baseline with published-scale training/checkpoints "
-            "or improve the expanded MICrONS analysis beyond the current negative "
-            "distance-controlled result."
+            "For a Q1 candidate, replicate the MICrONS stratified readout-location "
+            "signal on a larger or held-out CAVE subset and keep Sensorium framed "
+            "as predictive evidence unless a published-scale official checkpoint "
+            "is evaluated."
         ),
     }
 
@@ -122,6 +144,10 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         f"- Publication route: `{payload['publication_route']}`",
         f"- Methodological paper ready: `{payload['methodological_paper_ready']}`",
         f"- Q1 ready now: `{payload['q1_ready']}`",
+        (
+            "- Q1 candidate evidence requires replication: "
+            f"`{payload['q1_candidate_evidence_requires_replication']}`"
+        ),
         f"- Official Sensorium stack forward OK: `{payload['official_sensorium_stack_forward_ok']}`",
         f"- Official Sensorium trained available: `{payload['official_sensorium_trained_available']}`",
         f"- Official Sensorium Q1-qualified: `{payload['official_sensorium_q1_qualified']}`",
@@ -131,6 +157,14 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         f"- MICrONS structure-function positive: `{payload['microns_structure_function_positive']}`",
         f"- MICrONS expanded Q1-scale pilot approved: `{payload['microns_expanded_q1_pilot_approved']}`",
         f"- MICrONS expanded structure-function positive: `{payload['microns_expanded_structure_function_positive']}`",
+        (
+            "- MICrONS stratified structure-function positive: "
+            f"`{payload['microns_stratified_structure_function_positive']}`"
+        ),
+        (
+            "- MICrONS stratified confirmed tests: "
+            f"`{payload['microns_stratified_confirmed_tests']}`"
+        ),
         "",
         "## Claims allowed",
         "",

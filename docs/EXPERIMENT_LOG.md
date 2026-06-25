@@ -949,3 +949,52 @@ Para un Q1 fuerte todavía falta una de dos piezas: reproducir un baseline
 externo oficial del ecosistema Sensorium o añadir una restricción causal /
 intervencional verificable. No se recomienda seguir iterando con ajustes menores
 del MLP como vía principal.
+
+## 2026-06-25 — MICRONS estratificado y auditoría de claims
+
+### Diseño
+
+Se ejecutó `scripts/run_microns_stratified_structure_function.py` sobre el
+piloto expandido CAVE:
+
+- `1000` unidades co-registradas función/EM;
+- `2267` sinapsis cargadas;
+- `2095` pares dirigidos conectados únicos;
+- `999000` pares candidatos no-self;
+- `1000` permutaciones;
+- `min_connected_pairs = 50`;
+- `174` pruebas estrato × métrica;
+- FDR Benjamini-Hochberg sobre los p-valores emparejados.
+
+Los estratos predefinidos incluyen tipo celular coarse/fine, cuadrante de
+readout, terciles de distancia anatómica y fiabilidad alta por `cc_norm`. Las
+métricas funcionales separan perfil de respuesta, orientación, dirección,
+`cc_norm`, ubicación de readout y agregado funcional.
+
+### Resultados
+
+| Resultado | Valor |
+|---|---:|
+| Pruebas confirmadas tras FDR | `28` |
+| Señal dominante | `readout_location` |
+| Global aggregate MICRONS | negativo tras distancia |
+| Estratificado MICRONS | positivo tras distancia/grado/FDR |
+| `q1_ready` | `False` |
+| `q1_candidate_evidence_requires_replication` | `True` |
+
+La señal más robusta indica que pares conectados sinápticamente tienden a tener
+ubicaciones funcionales de readout más cercanas que nulls emparejados por
+distancia anatómica y grado. También aparecen señales exploratorias en algunos
+estratos de orientación/perfil funcional, pero no deben convertirse todavía en
+claim principal.
+
+### Decisión
+
+MouseBrainBench pasa de "sin pieza empírica positiva Q1" a "pieza candidata que
+requiere replicación". La evidencia actual no permite afirmar mecanismo causal,
+whole-brain digital twin ni comportamiento. La siguiente puerta Q1 debe replicar
+la señal MICRONS estratificada en un subconjunto CAVE mayor o hold-out.
+
+Se añadió además `mousebrainbench.benchmarks.digital_twin_claim_audit` para
+bloquear formalmente claims tipo MouseDTB cuando solo hay correlación,
+predicción o señal estructura-función local.

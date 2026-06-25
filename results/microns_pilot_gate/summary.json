@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "feb3f6e-dirty",
+  "git_revision": "2e0ea64-dirty",
   "manifest": "data/microns/pilot_manifest.json",
   "manifest_available": true,
   "manifest_payload": {
