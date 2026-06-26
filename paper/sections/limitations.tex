@@ -1,18 +1,26 @@
-\section{Limitations}
+\section{Limitations and future guidelines}
 
-The current MICRONS result is observational. It does not establish causality,
-synaptic necessity, or behavioral function. The analysis is also local to the
-available MICRONS cortical volume and cannot be generalized to the whole mouse
-brain without additional evidence.
+The proposal presents several limitations that must be considered before any
+submission. First, the MICRONS result is observational. It does not establish
+causality, synaptic necessity, or behavioural function. The analysis is also
+local to the available cortical volume and cannot be generalized to the whole
+mouse brain without additional evidence.
 
-The Allen VBN analysis is used as a negative-control layer and currently
-analyzes a preselected subset rather than every available session in the full
-public resource. Expanding Allen is possible, but it is not required for the
-current MICRONS-centered claim.
+Second, the Allen Visual Behavior Neuropixels analysis is used as a
+negative-control layer and currently focuses on a controlled subset rather than
+on every available public session. This decision is acceptable for the current
+claim because Allen is not the main positive result, but a future version should
+expand this layer to increase coverage.
 
-The Sensorium official baseline is a bounded local training/evaluation artifact.
-It proves that the official ecosystem can be executed inside MouseBrainBench,
-but it is not a leaderboard-equivalent or state-of-the-art Sensorium result.
+Third, the Sensorium official baseline is a bounded local
+training/evaluation artifact. It proves that the official ecosystem can be
+executed inside MouseBrainBench, but it is not equivalent to a leaderboard or
+state-of-the-art Sensorium result. Therefore, no Sensorium SOTA claim is made.
 
-The framework does not simulate consciousness, behavior, or a complete mouse
-brain. It audits partial digital models and their claims.
+Finally, MouseBrainBench does not simulate consciousness, behaviour, or a
+complete mouse brain. The framework audits partial digital models and the claims
+associated with them. Future research will focus on extending the number of
+validated datasets, adding perturbation-based evidence when public data allow
+it, connecting external simulators through stable adapters, and improving the
+formal definition of mechanistic identifiability under different biological
+scales.

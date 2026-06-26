@@ -1,0 +1,39 @@
+\section{Research contributions}
+
+The contributions of the proposal are summarised in the next points:
+
+\begin{itemize}
+  \item The main innovation of MouseBrainBench lies in its claim-audit
+  formulation. The framework does not evaluate a digital mouse-brain model using
+  a unique predictive score, but separates reproducibility, prediction,
+  anatomical control, directionality, structure-function association, and
+  computational cost into different evidence blocks. This prevents a predictive
+  result from being interpreted as mechanistic evidence without the corresponding
+  controls.
+
+  \item A Mechanistic Identifiability Score is proposed as a conservative
+  decision layer. This score is not designed to reward complexity, but to decide
+  whether a model has enough evidence to support a specific mechanistic claim.
+  Thus, a model can be useful and predictive while being rejected as a causal or
+  mechanistically identifiable explanation.
+
+  \item The proposed architecture integrates heterogeneous public resources in a
+  reproducible manner. Allen Visual Behavior Neuropixels, Sensorium static,
+  Dynamic Sensorium, and MICRONS CAVE are not mixed as equivalent evidence, but
+  used with specific roles according to the type of scientific question that
+  each resource can support.
+
+  \item The framework includes negative, predictive, and positive empirical
+  cases. Allen is used to show that reproducible neural signals are not
+  sufficient to infer mechanism; Sensorium is used to evaluate predictive models
+  without upgrading them to causal explanations; and MICRONS is used as a local
+  structure-function case with anatomical and functional data from the same
+  cortical resource.
+
+  \item A replicated MICRONS endpoint is provided. Synaptically connected
+  directed pairs show closer readout-location similarity than distance- and
+  degree-matched non-connected controls across a discovery cohort and two
+  independent hold-out cohorts. This result supports a local observational
+  structure-function association, while explicitly blocking whole-brain,
+  behavioural, and causal digital-twin claims.
+\end{itemize}

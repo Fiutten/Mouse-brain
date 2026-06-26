@@ -1,63 +1,87 @@
-\section{Results}
+\section{Experiments and results}
 
-\subsection{Synthetic known-truth cases validate the gate logic}
+This section presents the experiments carried out to evaluate MouseBrainBench.
+The objective is not to show that all datasets support a positive claim, but to
+verify that the framework is able to distinguish between different levels of
+evidence. For this reason, the experiments include method validation, negative
+controls, predictive benchmarks, and a local positive structure-function case.
 
-The synthetic benchmark tests whether the Mechanistic Identifiability Score
-accepts only the designed directed-truth case. Common-drive, structure-only, and
-timing-only controls isolate failure modes that can otherwise be mistaken for
-mechanistic evidence. These experiments are methods validation rather than
-empirical evidence about mouse brain data.
+\subsection{Synthetic experiments}
 
-\subsection{Allen VBN is reproducible but not mechanistically identifiable}
+The first experiment evaluates the Mechanistic Identifiability Score using
+synthetic known-truth cases. The score must accept the directed-truth case and
+reject common-drive, structure-only, and timing-only alternatives. This process
+is necessary because a claim-audit framework should be validated before it is
+applied to biological data. The achieved behaviour confirms that the score does
+not accept partial evidence as a complete mechanism.
 
-The Allen VBN analysis passes reproducibility criteria but fails topology
-specificity and directed-identifiability criteria. Median cross-mouse
-correlation is 0.891 and median split-half correlation is 0.990, but anatomical
-specificity does not pass: Allen connectivity underperforms the median
-permutation by -0.0054 and the paired bootstrap lower bound is negative. The
-final decision is therefore \emph{reproducible target without mechanistic
+\subsection{Allen Visual Behavior Neuropixels}
+
+The second experiment uses Allen Visual Behavior Neuropixels as a real negative
+control. The obtained results show that the dataset contains reproducible
+signals. Median cross-mouse correlation is 0.891 and median split-half
+correlation is 0.990. However, the anatomical and directed-identifiability gates
+do not pass. Allen connectivity underperforms the median permutation by
+-0.0054, and the paired bootstrap lower bound is negative. Therefore, the final
+decision for this layer is \emph{reproducible target without mechanistic
 identifiability}.
 
-\subsection{Sensorium supports predictive benchmarking but not causal claims}
+This result is important for the proposal because it shows that MouseBrainBench
+does not transform reproducibility into mechanism. A less restrictive benchmark
+could interpret the high correlations as positive evidence. In contrast, the
+proposed framework accepts the reproducibility result and rejects the
+mechanistic claim.
 
-Sensorium static provides a positive predictive and reliability layer: in the
-five repeated-test mice, median reliability is 0.642 and median best predictive
-correlation is 0.341. Dynamic Sensorium provides a temporal stress test. Local
-temporal and neural-network baselines improve prediction in several comparisons,
-but reliability remains non-estimable in the public dynamic artifacts and the
-bounded official Sensorium baseline is not Q1-qualified. MouseBrainBench
-therefore treats Sensorium as predictive evidence, not as mechanistic or causal
-evidence.
+\subsection{Sensorium and Dynamic Sensorium}
 
-\subsection{The global MICRONS aggregate test blocks an overclaim}
+The third group of experiments evaluates predictive layers. Sensorium static
+provides a positive predictive and reliability case. In the five repeated-test
+mice, median reliability is 0.642 and median best predictive correlation is
+0.341. Thus, this resource is useful to compare predictive models under
+repeated observations.
 
-The first MICRONS expanded aggregate test did not survive distance matching,
-despite positive random and degree-matched comparisons. This is an important
-failure mode: a global positive result can be driven by spatial proximity or
-degree structure. The manuscript therefore does not use the aggregate test as
-the main positive claim.
+Dynamic Sensorium provides a more demanding temporal scenario. Local temporal
+and neural-network baselines improve prediction in several paired comparisons.
+In the current public mice, the best transparent models reach correlations
+between 0.431 and 0.526 depending on the mouse. In the legacy
+out-of-distribution mice, the best models reach correlations between 0.360 and
+0.449. Nevertheless, reliability remains non-estimable in the current public
+dynamic artifacts, and the bounded official Sensorium baseline is not
+leaderboard-equivalent. Therefore, Dynamic Sensorium is considered predictive
+evidence, but not mechanistic or causal evidence.
 
-\subsection{MICRONS stratified structure-function association replicates}
+\subsection{MICRONS aggregate control}
 
-The primary endpoint is fixed as \texttt{all\_pairs/readout\_location}.
-Synaptically connected directed pairs are compared against non-connected pairs
-under random, distance-matched, and degree-matched controls. The endpoint is
-accepted only if it is positive after matched controls, FDR correction, and
-unit-cluster bootstrap stability in discovery and both hold-out cohorts.
+The fourth experiment evaluates an expanded MICRONS aggregate structure-function
+test. This first global approach did not survive distance matching, although it
+showed positive random and degree-matched comparisons. This result is treated as
+a relevant warning. A global positive association can be produced by spatial
+proximity or degree structure, and therefore it cannot be used as the main
+empirical claim of the manuscript.
+
+\subsection{MICRONS stratified structure-function experiment}
+
+The fifth experiment defines the primary endpoint as
+\texttt{all\_pairs/readout\_location}. Synaptically connected directed pairs are
+compared with non-connected pairs under random, distance-matched, and
+degree-matched controls. The endpoint is accepted only if it remains positive
+after matched controls, false discovery rate correction, and unit-cluster
+bootstrap stability in the discovery cohort and in both hold-out cohorts.
 
 \input{tables/microns_primary}
 \input{tables/microns_bootstrap}
 
-Across all three cohorts, connected pairs show closer readout-location
+Across the three cohorts, connected pairs show closer readout-location
 similarity than matched non-connected pairs. The distance-matched delta is
-0.0215 in discovery, 0.0210 in the first hold-out, and 0.0179 in the second
-hold-out. Unit-cluster bootstrap intervals remain positive in every cohort and
-for both distance- and degree-matched controls.
+0.0215 in the discovery cohort, 0.0210 in the first hold-out, and 0.0179 in the
+second hold-out. The degree-matched delta is 0.0403, 0.0380, and 0.0286,
+respectively. Unit-cluster bootstrap intervals remain positive in every cohort
+and for both distance- and degree-matched controls.
 
-\subsection{Claim audit freezes allowed and blocked interpretations}
+\subsection{Claim audit}
 
 The publication freeze marks the replicated local MICRONS structure-function
-claim as Q1-candidate evidence. It also blocks unsupported claims: causal
-mechanism, complete mouse-brain digital twin, behavioral digital twin, and
-Sensorium SOTA predictor. The resulting paper is therefore a benchmark and
-claim-audit contribution, not a whole-brain simulation paper.
+claim as Q1-candidate evidence. At the same time, it blocks unsupported claims:
+causal mechanism, complete mouse-brain digital twin, behavioural digital twin,
+and Sensorium state-of-the-art predictor. Therefore, the final result is a
+benchmark and claim-audit contribution, not a whole-brain simulation paper.

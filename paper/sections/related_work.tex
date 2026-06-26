@@ -1,39 +1,78 @@
-\section{Related work}
+\section{Background}
 
-\paragraph{Mouse-brain resources.}
-The Allen Brain Observatory and Allen Visual Behavior Neuropixels resources
-have made standardized large-scale mouse visual-system recordings widely
-available for computational reuse \citep{deVries2022AllenSharing}. These
-datasets are well suited to evaluating reproducibility and predictive
-generalization, but they do not by themselves establish whether a particular
-connectivity model is mechanistically identifiable.
+This section introduces the foundations of the MouseBrainBench framework. First,
+public mouse-brain resources are addressed as the empirical basis of the
+proposal. Second, visual prediction benchmarks are reviewed because they
+represent one of the most active bridges between neuroscience and Artificial
+Intelligence. Third, connectomic resources are considered, paying special
+attention to the difference between local high-resolution evidence and
+whole-brain claims. Finally, existing simulation tools and the notion of
+mechanistic identifiability are discussed.
 
-\paragraph{Predictive visual benchmarks.}
-Sensorium and Dynamic Sensorium provide modern benchmarks for predicting
-responses in mouse visual cortex from static images or video stimuli
-\citep{sensorium2022,sensorium2023}. They are valuable because they encourage
-standardized evaluation and model comparison. In MouseBrainBench, these
-datasets are used as predictive and reliability layers, not as evidence of
-causal circuit mechanisms.
+\subsection{Public mouse-brain resources}
 
-\paragraph{Connectomics and MICRONS.}
-The MICRONS program produced a high-resolution resource linking functional
-responses and electron-microscopy structure in mouse visual cortex
-\citep{microns2025resource}. This resource is large, but still local rather than
-whole brain. MouseBrainBench uses MICRONS as the principal empirical
-structure-function benchmark and explicitly blocks extrapolation to whole-brain
-digital-twin claims.
+The Allen Brain Observatory and Allen Visual Behavior Neuropixels have promoted
+the reuse of large-scale recordings from the mouse visual system
+\citep{deVries2022AllenSharing,siegle2021survey}. These resources are relevant
+because they provide standardized data that can be processed by different
+research groups and algorithms. Therefore, they are especially useful for
+evaluating reproducibility, population responses, and predictive models.
 
-\paragraph{Existing simulation and modeling tools.}
-Toolkits such as BMTK/SONATA and The Virtual Brain address important simulation
-and model-building problems \citep{gratiy2018bmtk,senk2022sonata,tvb2013}.
-MouseBrainBench is complementary: it does not replace simulators or define a new
-biophysical network format. Instead, it audits what claims are justified by
-outputs from data adapters, models, and benchmark analyses.
+However, these recordings do not automatically solve the mechanistic
+identifiability problem. A model can reproduce a response pattern observed in
+these data without proving that its internal structure corresponds to the
+biological circuit that produced the activity. For this reason,
+MouseBrainBench uses Allen data as a negative and conservative control. If the
+framework is well designed, it must be able to detect reproducible information
+while rejecting unsupported anatomical or causal interpretations.
 
-\paragraph{Mechanistic identifiability.}
-Many computational neuroscience workflows emphasize predictive accuracy. The
-central premise of MouseBrainBench is that prediction is necessary but not
-sufficient for mechanistic interpretation. The benchmark therefore treats
-prediction, reproducibility, anatomical specificity, directionality, and
-structure-function evidence as separable gates.
+\subsection{Visual prediction benchmarks}
+
+Predictive models of the mouse visual system have gained attention because they
+allow computational approaches from Artificial Intelligence to be tested against
+neural responses. Sensorium introduced a standardized benchmark for static
+visual input using large-scale recordings from mouse primary visual cortex
+\citep{willeke2022sensorium}. Dynamic Sensorium extended this idea to video
+stimuli and out-of-distribution evaluation \citep{turishcheva2023dynamic,
+turishcheva2024retrospective}.
+
+These benchmarks are important because they provide common data, baselines, and
+evaluation protocols. Nevertheless, predictive quality should not be confused
+with mechanistic explanation. A model that predicts well may be useful as a
+functional surrogate, but it does not necessarily identify the anatomical
+structure or causal process behind the response. MouseBrainBench therefore
+treats Sensorium as a predictive layer and not as direct evidence of a digital
+twin.
+
+\subsection{Connectomics and structure-function resources}
+
+Connectomics provides anatomical information about neural circuits, but its
+interpretation depends strongly on scale. Local electron-microscopy resources
+can provide synaptic-level information in restricted volumes, whereas whole-brain
+resources usually operate at coarser spatial resolution. MICRONS is a key
+resource because it links functional recordings and electron-microscopy
+reconstruction in mouse visual cortex \citep{bae2025microns}. This makes it
+suitable for evaluating local structure-function relationships.
+
+Even in this case, the resource must be interpreted carefully. MICRONS is large
+and biologically rich, but it is not a complete synaptic reconstruction of the
+whole mouse brain. Thus, MouseBrainBench uses MICRONS as the main positive
+empirical case for local structure-function analysis, while blocking
+extrapolations to a complete mouse-brain digital twin.
+
+\subsection{Simulation tools and mechanistic interpretation}
+
+Several tools already exist for building and simulating biological neural
+systems. BMTK and SONATA provide infrastructure for large-scale network models
+\citep{gratiy2018bmtk,dai2020bmtk}, while The Virtual Brain provides a general
+framework for connectome-based brain dynamics \citep{tvb2013}. These
+systems are not replaced by MouseBrainBench. On the contrary, the proposal is
+designed as an audit layer that can evaluate claims produced by models, data
+adapters, and external simulation tools.
+
+The central problem addressed in this paper is mechanistic identifiability. In
+this context, a model is not considered mechanistically identifiable only because
+it predicts well. It must also satisfy the evidence required by the claim:
+reproducibility, anatomical specificity, directionality, structure-function
+agreement, perturbation support when available, and controlled computational
+cost. This distinction is the foundation of the proposed framework.

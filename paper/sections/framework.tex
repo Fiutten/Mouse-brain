@@ -1,29 +1,57 @@
-\section{MouseBrainBench framework}
+\section{Proposed framework}
 
-MouseBrainBench is organized around evidence gates. Each dataset contributes a
-specific type of evidence, and each possible claim is allowed only if the
-required gates pass. The framework has four design principles.
+MouseBrainBench is a modular framework for auditing partial digital models of
+the mouse brain. It is organised around evidence gates. Each dataset contributes
+a specific type of evidence and each possible claim is accepted only when the
+required gates are satisfied. This design follows a conservative principle: the
+framework must be able to produce positive results, but it must also be able to
+reject claims when the evidence is incomplete.
 
-\paragraph{First, reuse public resources rather than replacing them.}
-The platform integrates established datasets and tools through lightweight
-adapters. It does not implement a new neuronal simulator, a new file format for
-large biological networks, or a complete anatomical atlas.
+The architecture is composed of five main modules. The first module is focused
+on data integration. It stores provenance information and builds reproducible
+adapters for public resources. The second module represents anatomical and
+functional entities using explicit schemas. The third module builds the
+benchmark tasks and baselines. The fourth module evaluates evidence through
+metrics and the Mechanistic Identifiability Score. Finally, the fifth module
+freezes the claims that can be defended from the generated artifacts.
 
-\paragraph{Second, separate evidence types.}
-Predictive performance, repeat reliability, anatomical plausibility,
-directionality, local structure-function association, and perturbation behavior
-are represented as distinct evidence blocks. This prevents a high predictive
-correlation from being silently interpreted as a mechanistic result.
+\subsection{Design principles}
 
-\paragraph{Third, make negative evidence explicit.}
-Benchmark layers are allowed to fail. A negative result is not treated as a
-failed project if it blocks an unsupported claim. In the current package, Allen
-VBN is a reproducible but mechanistically negative case, and Dynamic Sensorium
-is a predictive stress test without mechanistic identifiability.
+The first principle is to reuse existing resources instead of replacing them.
+MouseBrainBench does not implement a new neuronal simulator, a new atlas, or a
+new biological network format. Allen, Sensorium, Dynamic Sensorium, MICRONS, and
+external simulators are treated as resources that can be connected to the
+framework.
 
-\paragraph{Fourth, freeze claims from tracked artifacts.}
-MouseBrainBench writes machine-readable result artifacts and a publication
-freeze. The freeze records which claims are allowed and which remain blocked.
-This makes the manuscript auditable from the repository state.
+The second principle is to separate evidence types. Predictive performance,
+reliability, anatomical plausibility, directed identifiability,
+structure-function association, perturbation behaviour, and computational cost
+are independent evidence blocks. This is relevant because a positive result in
+one block does not necessarily validate the others.
+
+The third principle is to make negative evidence explicit. In many benchmarks,
+negative results are discarded because they do not improve the final score. In
+MouseBrainBench, a negative result is informative when it prevents a wrong
+interpretation. Therefore, Allen Visual Behavior Neuropixels is intentionally
+included as a reproducible but non-identifiable case.
+
+The fourth principle is reproducibility. The framework writes machine-readable
+artifacts, keeps configuration files, and generates a publication freeze. This
+freeze records the claims that are allowed and the claims that remain blocked at
+the time of manuscript preparation.
+
+\subsection{Mechanistic Identifiability Score}
+
+The Mechanistic Identifiability Score is the decision mechanism of the
+framework. It is conjunctive by design, meaning that a strong result in one
+dimension cannot compensate for the absence of essential evidence in another
+dimension. The score evaluates whether the model or analysis satisfies the
+minimum conditions required for a specific claim.
+
+This mechanism has an important practical consequence. Predictive models can be
+accepted as useful predictors even when they are rejected as mechanistic
+explanations. Similarly, local structure-function results can be accepted as
+local observational evidence while being rejected as causal or whole-brain
+claims. This distinction is the main safeguard of the proposal.
 
 \input{tables/dataset_roles}

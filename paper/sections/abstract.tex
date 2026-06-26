@@ -1,23 +1,25 @@
 \begin{abstract}
-Public mouse-brain resources now span complementary levels of organization,
-from large-scale electrophysiology and visual prediction benchmarks to local
-electron-microscopy and functional coregistration. These resources make partial
-digital models of mouse brain increasingly feasible, but they also make it easy
-to over-interpret predictive or correlational performance as mechanistic
-identifiability. We introduce MouseBrainBench, a reproducible claim-audit
-benchmark that separates prediction, reliability, anatomical controls,
-structure-function association, and mechanistic identifiability for partial
-mouse-brain digital models. The framework integrates synthetic known-truth
-cases, Allen Visual Behavior Neuropixels, Sensorium static and dynamic visual
-benchmarks, and MICRONS CAVE structure-function data. Across these layers,
-MouseBrainBench blocks unsupported claims: Allen provides a reproducible but
-mechanistically negative case, Sensorium provides predictive but non-causal
-evidence, and Dynamic Sensorium remains a predictive stress test rather than a
-mechanistic result. The main positive empirical finding is a replicated MICRONS
-local structure-function association: synaptically connected directed pairs show
-closer readout-location similarity than distance- and degree-matched
-non-connected controls across a discovery cohort and two offset hold-out
-cohorts. MouseBrainBench is therefore not a complete mouse-brain simulation; it
-is a reproducible audit layer for deciding which claims partial digital models
-can and cannot support.
+Computational models of the mouse brain have become a relevant issue for
+neuroscience and Artificial Intelligence due to the availability of open
+resources at several biological scales. These resources include large-scale
+electrophysiology, visual prediction benchmarks, mesoscale anatomical
+information, and local electron-microscopy reconstructions coupled with
+functional recordings. However, this situation also introduces an important
+methodological problem. Predictive performance, reproducibility, anatomical
+plausibility, and mechanistic identifiability are often discussed together even
+when they correspond to different forms of evidence. In this paper, a
+reproducible framework called MouseBrainBench is presented to address this
+problem. It is designed to audit partial digital models of the mouse brain
+without claiming the existence of a complete mouse-brain digital twin. The
+framework combines synthetic known-truth experiments, Allen Visual Behavior
+Neuropixels, Sensorium static and Dynamic Sensorium benchmarks, and MICRONS
+CAVE data. Several experiments have been carried out to evaluate the viability
+of the proposal. The obtained results show that Allen provides reproducible but
+non-identifiable evidence, Sensorium provides predictive but non-causal
+evidence, and MICRONS provides the main positive empirical case. Specifically,
+synaptically connected directed pairs show closer readout-location similarity
+than distance- and degree-matched non-connected controls in a discovery cohort
+and two independent hold-out cohorts. These results support MouseBrainBench as a
+critical and reproducible audit layer for deciding which claims can be defended
+by partial digital models of the mouse brain.
 \end{abstract}

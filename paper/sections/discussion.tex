@@ -1,26 +1,36 @@
 \section{Discussion}
 
-MouseBrainBench is useful because it is willing to reject claims. The framework
-does not convert every positive correlation into a mechanistic statement.
-Instead, it asks what form of evidence is available and what level of
-interpretation that evidence supports.
+MouseBrainBench has been designed to be useful in a strict scientific sense. It
+does not only search for positive results, but also identifies the claims that
+must be rejected. This behaviour is essential in the current context, where
+digital-brain terminology can easily lead to interpretations that are stronger
+than the evidence available.
 
-The main positive result is local and specific. In MICRONS CAVE data,
-synaptically connected directed pairs are more similar in readout location than
-distance- and degree-matched non-connected controls, and this result replicates
-across a discovery cohort and two offset hold-outs. This supports a local
-structure-function association, not a causal mechanism.
+The most relevant positive result of the proposal is local and specific. In
+MICRONS CAVE data, synaptically connected directed pairs are more similar in
+readout location than distance- and degree-matched non-connected pairs. This
+result is replicated in a discovery cohort and two independent hold-out cohorts.
+Therefore, it supports a local observational structure-function association in
+mouse visual cortex.
 
-The negative and partial-positive layers are equally important. Allen VBN shows
-that reproducibility alone is not sufficient for mechanistic identifiability.
-Sensorium static shows that predictive and reliability evidence can be useful
-without being causal. Dynamic Sensorium shows that temporal predictive modeling
-can improve over simpler baselines while still failing the reliability and
-mechanistic gates. Together, these cases demonstrate the value of a claim-audit
-framework over a single-score benchmark.
+However, the result does not support a causal claim. The analysis is based on
+observational anatomical and functional data, and there is no perturbation
+experiment proving that the detected synaptic connections are necessary or
+sufficient for the functional similarity. This point is not a weakness of the
+paper if it is stated correctly. On the contrary, it is one of the reasons for
+using a claim-audit framework.
 
-The broader implication is that partial digital models of mouse brain can be
-scientifically productive if their claims are bounded. A framework such as
-MouseBrainBench can support future integration with larger anatomical,
-functional, and simulation resources without implying that any one partial
-dataset constitutes a complete digital twin.
+The negative and predictive layers also provide relevant information. Allen
+Visual Behavior Neuropixels shows that reproducibility alone is insufficient for
+mechanistic identifiability. Sensorium static shows that prediction and
+reliability can be evaluated in a modern benchmark without converting these
+metrics into causal evidence. Dynamic Sensorium shows that temporal predictive
+models can improve over simpler baselines while still failing the reliability
+and mechanistic gates.
+
+Taken together, these results suggest that partial digital models of the mouse
+brain can be scientifically useful if their claims are correctly bounded. The
+contribution of MouseBrainBench is precisely this critical boundary: it provides
+a reproducible way to decide whether a result is predictive, reproducible,
+structurally controlled, locally structure-function positive, or
+mechanistically identifiable.
