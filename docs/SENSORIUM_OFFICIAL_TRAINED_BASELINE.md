@@ -39,16 +39,18 @@ Output:
 Current run:
 
 - usable mice: 5;
-- training budget: 24 train batches, 16 oracle/eval batches per mouse;
-- model: official architecture family, tiny local configuration;
+- training budget: 64 train batches, 24 oracle/eval batches per mouse;
+- model: official architecture family, bounded local configuration
+  (`hidden_channels=[8, 8]`, spatial kernel `5`, temporal kernel `5`);
 - device: Apple Metal/MPS on the Mac M5;
 - claim: reproducible integration and local control;
 - blocked claim: official/SOTA Sensorium baseline.
 
-The tiny official model loses against the tracked local MLP on all 5 paired
-Dynamic Sensorium mice in the current comparator. This is useful negative
-evidence: the official stack is integrated, but this bounded run is not the
-differential Q1 piece.
+The bounded official model improves over its matched mean-response baseline in
+4/5 Dynamic Sensorium mice, with median delta `0.013391`. However, it remains
+far below the tracked transparent temporal/SVD/MLP baselines in the current
+comparator. This is useful negative evidence: the official stack is integrated,
+but this bounded run is not the differential Q1 piece.
 
 The MPS run confirms that the local Mac GPU can execute the official Sensorium
 path. It does not by itself solve the publication-level baseline problem,
@@ -59,8 +61,8 @@ availability.
 
 This artifact proves that MouseBrainBench can execute an official Sensorium
 model family end to end. It does not prove that we have matched the official
-competition baseline, because the run deliberately uses a small training budget
-and a small model configuration.
+competition baseline, because the run deliberately uses a bounded local training
+budget and a bounded model configuration.
 
 For a Q1 claim, one of these is still required:
 

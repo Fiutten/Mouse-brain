@@ -1,6 +1,6 @@
 # Sensorium Official Baseline Audit
 
-- Decision: `official_sensorium_tiny_trained_baseline_available_not_q1_qualified`
+- Decision: `official_sensorium_bounded_trained_baseline_available_not_q1_qualified`
 - Official stack forward OK: `True`
 - Official trained baseline available: `True`
 - Official trained usable mice: `5`

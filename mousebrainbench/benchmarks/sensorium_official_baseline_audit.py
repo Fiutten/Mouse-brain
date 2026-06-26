@@ -127,7 +127,7 @@ def audit(
             "and update Q1 claims."
         )
     elif official_stack_viable and official_trained_available:
-        decision = "official_sensorium_tiny_trained_baseline_available_not_q1_qualified"
+        decision = "official_sensorium_bounded_trained_baseline_available_not_q1_qualified"
         action = (
             "Use the bounded trained official-architecture baseline as an internal "
             "MouseBrainBench control, but do not present it as a Q1-level official "

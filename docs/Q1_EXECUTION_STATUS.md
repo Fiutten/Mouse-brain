@@ -38,7 +38,7 @@ remains local and correlational rather than causal or interventional.
 | Expand MICrONS with CAVE | Done | `digital_twin_properties_bcm_coreg_v4`, v1507, 1000 units |
 | Add structure-function model | Done | Synapse count/size, random, distance, degree controls |
 | Add stronger nulls | Done | Distance and degree matched permutation tests |
-| Scale Sensorium on Mac GPU | Done | MPS works; small official model improves over tiny but remains far below MLP |
+| Scale Sensorium on Mac GPU | Done | MPS works; bounded official model improves over mean in 4/5 mice but remains far below local temporal/MLP baselines |
 | Publication decision table | Done | Q1 candidate supported by replicated MICRONS stratification; causal claims remain blocked |
 
 ## Key Results
@@ -50,8 +50,7 @@ remains local and correlational rather than causal or interventional.
 | MICrONS stratified expanded pilot | 1000 units, 2267 synapses | 28 tests positive after FDR, mostly readout-location | Discovery cohort |
 | MICrONS stratified hold-out offset1000 | 992 units, 2161 synapses | 30 tests positive after FDR, readout-location replicated | Q1 candidate evidence |
 | MICrONS stratified hold-out offset2000 | 999 units, 2147 synapses | 25 tests positive after FDR, readout-location replicated | Q1 candidate evidence strengthened |
-| Sensorium official tiny | 5 mice | Runs on MPS, weak correlation | Integration evidence |
-| Sensorium official small | 5 mice | Improves over tiny, far below MLP | Still not official/SOTA |
+| Sensorium official bounded | 5 mice | Runs on MPS, positive vs mean in 4/5, weak absolute correlation | Integration evidence, not Q1/SOTA |
 | Dynamic Sensorium MLP | 5 mice | Stronger prediction | Predictive baseline, not mechanistic |
 
 ## Next Q1-Capable Moves

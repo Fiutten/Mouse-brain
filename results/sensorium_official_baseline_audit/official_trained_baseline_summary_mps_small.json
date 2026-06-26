@@ -1,5 +1,5 @@
 {
-  "benchmark": "official_sensorium_tiny_trained_baseline",
+  "benchmark": "official_sensorium_bounded_trained_baseline",
   "data_root": "data/dynamic_sensorium/extracted",
   "trained_baseline": true,
   "official_loader": true,
@@ -8,7 +8,7 @@
   "bounded_training": true,
   "sota_claim": false,
   "q1_baseline_qualified": false,
-  "q1_qualification_rule": "This artifact has 5 usable mice. It intentionally does not qualify as a Q1-level official baseline because it uses a tiny bounded training budget. Q1 qualification requires the published official budget/configuration or a documented external leaderboard checkpoint evaluated through MouseBrainBench.",
+  "q1_qualification_rule": "This artifact has 5 usable mice. It intentionally does not qualify as a Q1-level official baseline because it uses a bounded local training budget. Q1 qualification requires the published official budget/configuration or a documented external leaderboard checkpoint evaluated through MouseBrainBench.",
   "n_mice": 5,
   "n_usable_mice": 5,
   "max_train_batches": 64,
@@ -35,7 +35,7 @@
       "official_sensorium_correlation": 0.027006154792659293,
       "mean_response_correlation": 0.0136147779298663,
       "official_sensorium_minus_mean": 0.013391376862792993,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_bounded",
       "hidden_channels": [
         8,
         8
@@ -55,7 +55,7 @@
       "official_sensorium_correlation": 0.03499293789864238,
       "mean_response_correlation": 0.03490266720208549,
       "official_sensorium_minus_mean": 9.027069655688502e-05,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_bounded",
       "hidden_channels": [
         8,
         8
@@ -75,7 +75,7 @@
       "official_sensorium_correlation": 0.014152610094590515,
       "mean_response_correlation": -0.0028699673928480503,
       "official_sensorium_minus_mean": 0.017022577487438566,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_bounded",
       "hidden_channels": [
         8,
         8
@@ -95,7 +95,7 @@
       "official_sensorium_correlation": 0.010642550300572096,
       "mean_response_correlation": 0.012068763742146334,
       "official_sensorium_minus_mean": -0.001426213441574238,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_bounded",
       "hidden_channels": [
         8,
         8
@@ -115,7 +115,7 @@
       "official_sensorium_correlation": 0.027590366184038817,
       "mean_response_correlation": 0.006415701583042496,
       "official_sensorium_minus_mean": 0.02117466460099632,
-      "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+      "model_family": "official_sensorium_factorized3d_core_factorized_readout_bounded",
       "hidden_channels": [
         8,
         8

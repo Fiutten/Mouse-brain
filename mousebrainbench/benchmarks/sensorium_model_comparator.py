@@ -24,7 +24,7 @@ MODEL_ORDER = (
     "temporal_svd",
     "random_feature",
     "torch_mlp",
-    "official_sensorium_tiny",
+    "official_sensorium_bounded",
 )
 
 
@@ -181,9 +181,9 @@ def _merge_official_sensorium_summary(
         if row.get("official_sensorium_correlation") is None:
             continue
         rows.setdefault(key, {})
-        rows[key]["official_sensorium_tiny"] = ModelObservation(
+        rows[key]["official_sensorium_bounded"] = ModelObservation(
             mouse=mouse,
-            model="official_sensorium_tiny",
+            model="official_sensorium_bounded",
             correlation=float(row["official_sensorium_correlation"]),
             minus_mean=row.get("official_sensorium_minus_mean"),
             minus_scrambled=None,
@@ -327,11 +327,11 @@ def compare_sensorium_artifacts(
             rows, "temporal_svd", "random_feature"
         ),
         "temporal_svd_vs_torch_mlp": _pairwise(rows, "temporal_svd", "torch_mlp"),
-        "torch_mlp_vs_official_sensorium_tiny": _pairwise(
-            rows, "torch_mlp", "official_sensorium_tiny"
+        "torch_mlp_vs_official_sensorium_bounded": _pairwise(
+            rows, "torch_mlp", "official_sensorium_bounded"
         ),
-        "temporal_svd_vs_official_sensorium_tiny": _pairwise(
-            rows, "temporal_svd", "official_sensorium_tiny"
+        "temporal_svd_vs_official_sensorium_bounded": _pairwise(
+            rows, "temporal_svd", "official_sensorium_bounded"
         ),
     }
     best_rows = _best_models(rows)
@@ -408,7 +408,7 @@ def _markdown_for_cohort(cohort: dict[str, Any]) -> str:
             "",
             (
             "| Mouse | Mean | Summary | Temporal filterbank | Temporal SVD | "
-            "Random feature | Torch MLP | Official tiny | Best |"
+            "Random feature | Torch MLP | Official bounded | Best |"
         ),
             "|---|---:|---:|---:|---:|---:|---:|---:|---|",
         ]
@@ -424,7 +424,7 @@ def _markdown_for_cohort(cohort: dict[str, Any]) -> str:
             f"`{_round(row['temporal_svd'])}` | "
             f"`{_round(row['random_feature'])}` | "
             f"`{_round(row['torch_mlp'])}` | "
-            f"`{_round(row.get('official_sensorium_tiny'))}` | "
+            f"`{_round(row.get('official_sensorium_bounded'))}` | "
             f"`{best_by_mouse.get(row['mouse'])}` |"
         )
     return "\n".join(lines)

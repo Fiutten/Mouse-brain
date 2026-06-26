@@ -35,7 +35,9 @@ def test_official_smoke_does_not_count_as_trained_baseline(tmp_path, monkeypatch
     assert payload["decision"] == "official_sensorium_stack_integrated_training_pending"
 
 
-def test_tiny_trained_baseline_available_but_not_q1_qualified(tmp_path, monkeypatch) -> None:
+def test_bounded_trained_baseline_available_but_not_q1_qualified(
+    tmp_path, monkeypatch
+) -> None:
     monkeypatch.setattr(official_audit, "OFFICIAL_STACK", (_AvailableProbe(),))
     official_repo = tmp_path / "sensorium_2023"
     (official_repo / "sensorium").mkdir(parents=True)
@@ -67,5 +69,5 @@ def test_tiny_trained_baseline_available_but_not_q1_qualified(tmp_path, monkeypa
     assert not payload["official_q1_baseline_qualified"]
     assert not payload["official_baseline_viable"]
     assert payload["decision"] == (
-        "official_sensorium_tiny_trained_baseline_available_not_q1_qualified"
+        "official_sensorium_bounded_trained_baseline_available_not_q1_qualified"
     )

@@ -286,7 +286,7 @@ def train_one_mouse(
             if math.isfinite(float(official_corr)) and math.isfinite(float(mean_corr))
             else None
         ),
-        "model_family": "official_sensorium_factorized3d_core_factorized_readout_tiny",
+        "model_family": "official_sensorium_factorized3d_core_factorized_readout_bounded",
         "hidden_channels": hidden_channels,
         "spatial_kernel": spatial_kernel,
         "temporal_kernel": temporal_kernel,
@@ -337,7 +337,7 @@ def run(
     ]
     q1_baseline_qualified = False
     payload = {
-        "benchmark": "official_sensorium_tiny_trained_baseline",
+        "benchmark": "official_sensorium_bounded_trained_baseline",
         "data_root": str(data_root),
         "trained_baseline": True,
         "official_loader": True,
@@ -349,7 +349,7 @@ def run(
         "q1_qualification_rule": (
             f"This artifact has {len(usable_rows)} usable mice. It intentionally "
             "does not qualify as a Q1-level official baseline because it uses a "
-            "tiny bounded training budget. Q1 qualification requires the published "
+            "bounded local training budget. Q1 qualification requires the published "
             "official budget/configuration or a documented external leaderboard "
             "checkpoint evaluated through MouseBrainBench."
         ),

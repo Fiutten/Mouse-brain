@@ -16,7 +16,7 @@
         "temporal_svd",
         "random_feature",
         "torch_mlp",
-        "official_sensorium_tiny"
+        "official_sensorium_bounded"
       ],
       "model_rows": [
         {
@@ -27,7 +27,7 @@
           "temporal_svd": 0.41452834204433525,
           "random_feature": 0.4171319145917034,
           "torch_mlp": 0.42690156550278685,
-          "official_sensorium_tiny": 0.027983510284331898
+          "official_sensorium_bounded": 0.027006154792659293
         },
         {
           "mouse": "dynamic29623",
@@ -37,7 +37,7 @@
           "temporal_svd": 0.4271261955135371,
           "random_feature": 0.3545328150076228,
           "torch_mlp": 0.41799367650239105,
-          "official_sensorium_tiny": 0.013995553425919465
+          "official_sensorium_bounded": 0.03499293789864238
         },
         {
           "mouse": "dynamic29647",
@@ -47,7 +47,7 @@
           "temporal_svd": 0.4861605114221228,
           "random_feature": 0.45168821251034363,
           "torch_mlp": 0.4900163140958758,
-          "official_sensorium_tiny": -0.008915376460049558
+          "official_sensorium_bounded": 0.014152610094590515
         },
         {
           "mouse": "dynamic29712",
@@ -57,7 +57,7 @@
           "temporal_svd": 0.49187043002797176,
           "random_feature": 0.45211232078642394,
           "torch_mlp": 0.4903576512095004,
-          "official_sensorium_tiny": 0.015712933323844634
+          "official_sensorium_bounded": 0.010642550300572096
         },
         {
           "mouse": "dynamic29755",
@@ -67,7 +67,7 @@
           "temporal_svd": 0.5169175866877092,
           "random_feature": 0.49958408149901756,
           "torch_mlp": 0.5263933370463001,
-          "official_sensorium_tiny": 0.01519146313114195
+          "official_sensorium_bounded": 0.027590366184038817
         }
       ],
       "best_models": [
@@ -82,7 +82,7 @@
             "temporal_svd",
             "random_feature",
             "torch_mlp",
-            "official_sensorium_tiny"
+            "official_sensorium_bounded"
           ]
         },
         {
@@ -96,7 +96,7 @@
             "temporal_svd",
             "random_feature",
             "torch_mlp",
-            "official_sensorium_tiny"
+            "official_sensorium_bounded"
           ]
         },
         {
@@ -110,7 +110,7 @@
             "temporal_svd",
             "random_feature",
             "torch_mlp",
-            "official_sensorium_tiny"
+            "official_sensorium_bounded"
           ]
         },
         {
@@ -124,7 +124,7 @@
             "temporal_svd",
             "random_feature",
             "torch_mlp",
-            "official_sensorium_tiny"
+            "official_sensorium_bounded"
           ]
         },
         {
@@ -138,7 +138,7 @@
             "temporal_svd",
             "random_feature",
             "torch_mlp",
-            "official_sensorium_tiny"
+            "official_sensorium_bounded"
           ]
         }
       ],
@@ -460,107 +460,107 @@
             }
           ]
         },
-        "torch_mlp_vs_official_sensorium_tiny": {
+        "torch_mlp_vs_official_sensorium_bounded": {
           "left": "torch_mlp",
-          "right": "official_sensorium_tiny",
+          "right": "official_sensorium_bounded",
           "n_paired": 5,
           "right_wins": 0,
           "left_wins": 5,
           "ties": 0,
-          "median_delta": -0.47464471788565576,
-          "mean_delta": -0.45753889213033316,
+          "median_delta": -0.4758637040012853,
+          "mean_delta": -0.44745558501727023,
           "rows": [
             {
               "mouse": "dynamic29515",
               "left": "torch_mlp",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.42690156550278685,
-              "right_correlation": 0.027983510284331898,
-              "delta": -0.39891805521845497
+              "right_correlation": 0.027006154792659293,
+              "delta": -0.3998954107101276
             },
             {
               "mouse": "dynamic29623",
               "left": "torch_mlp",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.41799367650239105,
-              "right_correlation": 0.013995553425919465,
-              "delta": -0.4039981230764716
+              "right_correlation": 0.03499293789864238,
+              "delta": -0.38300073860374867
             },
             {
               "mouse": "dynamic29647",
               "left": "torch_mlp",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.4900163140958758,
-              "right_correlation": -0.008915376460049558,
-              "delta": -0.4989316905559254
+              "right_correlation": 0.014152610094590515,
+              "delta": -0.4758637040012853
             },
             {
               "mouse": "dynamic29712",
               "left": "torch_mlp",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.4903576512095004,
-              "right_correlation": 0.015712933323844634,
-              "delta": -0.47464471788565576
+              "right_correlation": 0.010642550300572096,
+              "delta": -0.4797151009089283
             },
             {
               "mouse": "dynamic29755",
               "left": "torch_mlp",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.5263933370463001,
-              "right_correlation": 0.01519146313114195,
-              "delta": -0.5112018739151581
+              "right_correlation": 0.027590366184038817,
+              "delta": -0.4988029708622613
             }
           ]
         },
-        "temporal_svd_vs_official_sensorium_tiny": {
+        "temporal_svd_vs_official_sensorium_bounded": {
           "left": "temporal_svd",
-          "right": "official_sensorium_tiny",
+          "right": "official_sensorium_bounded",
           "n_paired": 5,
           "right_wins": 0,
           "left_wins": 5,
           "ties": 0,
-          "median_delta": -0.4761574967041271,
-          "mean_delta": -0.4545269963980975,
+          "median_delta": -0.4720079013275323,
+          "mean_delta": -0.44444368928503464,
           "rows": [
             {
               "mouse": "dynamic29515",
               "left": "temporal_svd",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.41452834204433525,
-              "right_correlation": 0.027983510284331898,
-              "delta": -0.38654483176000337
+              "right_correlation": 0.027006154792659293,
+              "delta": -0.387522187251676
             },
             {
               "mouse": "dynamic29623",
               "left": "temporal_svd",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.4271261955135371,
-              "right_correlation": 0.013995553425919465,
-              "delta": -0.4131306420876176
+              "right_correlation": 0.03499293789864238,
+              "delta": -0.3921332576148947
             },
             {
               "mouse": "dynamic29647",
               "left": "temporal_svd",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.4861605114221228,
-              "right_correlation": -0.008915376460049558,
-              "delta": -0.4950758878821724
+              "right_correlation": 0.014152610094590515,
+              "delta": -0.4720079013275323
             },
             {
               "mouse": "dynamic29712",
               "left": "temporal_svd",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.49187043002797176,
-              "right_correlation": 0.015712933323844634,
-              "delta": -0.4761574967041271
+              "right_correlation": 0.010642550300572096,
+              "delta": -0.48122787972739967
             },
             {
               "mouse": "dynamic29755",
               "left": "temporal_svd",
-              "right": "official_sensorium_tiny",
+              "right": "official_sensorium_bounded",
               "left_correlation": 0.5169175866877092,
-              "right_correlation": 0.01519146313114195,
-              "delta": -0.5017261235565672
+              "right_correlation": 0.027590366184038817,
+              "delta": -0.48932722050367033
             }
           ]
         }
@@ -585,7 +585,7 @@
         "temporal_svd",
         "random_feature",
         "torch_mlp",
-        "official_sensorium_tiny"
+        "official_sensorium_bounded"
       ],
       "model_rows": [
         {
@@ -596,7 +596,7 @@
           "temporal_svd": 0.3988372201491509,
           "random_feature": 0.3863637243358102,
           "torch_mlp": 0.401032012006441,
-          "official_sensorium_tiny": null
+          "official_sensorium_bounded": null
         },
         {
           "mouse": "dynamic29228",
@@ -606,7 +606,7 @@
           "temporal_svd": 0.434712342706658,
           "random_feature": 0.43718459294365525,
           "torch_mlp": 0.4486740193073883,
-          "official_sensorium_tiny": null
+          "official_sensorium_bounded": null
         },
         {
           "mouse": "dynamic29234",
@@ -616,7 +616,7 @@
           "temporal_svd": 0.3602982743004778,
           "random_feature": 0.3561994057514263,
           "torch_mlp": 0.3433384432919462,
-          "official_sensorium_tiny": null
+          "official_sensorium_bounded": null
         },
         {
           "mouse": "dynamic29513",
@@ -626,7 +626,7 @@
           "temporal_svd": 0.42657398177945427,
           "random_feature": 0.3692382147473705,
           "torch_mlp": 0.3619902204355194,
-          "official_sensorium_tiny": null
+          "official_sensorium_bounded": null
         },
         {
           "mouse": "dynamic29514",
@@ -636,7 +636,7 @@
           "temporal_svd": 0.43318704379711154,
           "random_feature": 0.4029242894553018,
           "torch_mlp": 0.44034558910294047,
-          "official_sensorium_tiny": null
+          "official_sensorium_bounded": null
         }
       ],
       "best_models": [
@@ -1023,9 +1023,9 @@
             }
           ]
         },
-        "torch_mlp_vs_official_sensorium_tiny": {
+        "torch_mlp_vs_official_sensorium_bounded": {
           "left": "torch_mlp",
-          "right": "official_sensorium_tiny",
+          "right": "official_sensorium_bounded",
           "n_paired": 0,
           "right_wins": 0,
           "left_wins": 0,
@@ -1034,9 +1034,9 @@
           "mean_delta": null,
           "rows": []
         },
-        "temporal_svd_vs_official_sensorium_tiny": {
+        "temporal_svd_vs_official_sensorium_bounded": {
           "left": "temporal_svd",
-          "right": "official_sensorium_tiny",
+          "right": "official_sensorium_bounded",
           "n_paired": 0,
           "right_wins": 0,
           "left_wins": 0,

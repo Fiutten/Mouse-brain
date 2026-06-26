@@ -121,14 +121,17 @@ def test_compare_sensorium_artifacts_reports_paired_svd_gain(tmp_path) -> None:
 
     svd_vs_temporal = payload["pairwise"]["temporal_filterbank_vs_temporal_svd"]
     svd_vs_torch_mlp = payload["pairwise"]["temporal_svd_vs_torch_mlp"]
-    mlp_vs_official = payload["pairwise"]["torch_mlp_vs_official_sensorium_tiny"]
+    mlp_vs_official = payload["pairwise"]["torch_mlp_vs_official_sensorium_bounded"]
     assert payload["n_mice"] == 2
     assert svd_vs_temporal["right_wins"] == 2
     assert svd_vs_temporal["median_delta"] == pytest.approx(0.05)
     assert svd_vs_torch_mlp["right_wins"] == 1
     assert svd_vs_torch_mlp["left_wins"] == 1
     assert mlp_vs_official["n_paired"] == 2
-    assert payload["model_win_counts"] == {"torch_mlp": 1, "official_sensorium_tiny": 1}
+    assert payload["model_win_counts"] == {
+        "torch_mlp": 1,
+        "official_sensorium_bounded": 1,
+    }
     assert payload["evidence_label"] == (
         "positive_ood_prediction_without_mechanistic_identifiability"
     )

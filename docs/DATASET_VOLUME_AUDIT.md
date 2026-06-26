@@ -98,12 +98,14 @@ Current volume:
 - 5 legacy OOD mice;
 - several transparent local baselines: mean response, summary adapter,
   temporal filterbank, temporal SVD, random feature, Torch MLP, and bounded
-  official Sensorium tiny baseline.
+  official Sensorium baseline.
 
 Key result:
 
 - current temporal filterbank improves over summary descriptors in 4/5 mice;
 - current Torch MLP improves over mean in 5/5 mice;
+- bounded official Sensorium improves over mean in 4/5 mice, but remains far
+  below local temporal/SVD/MLP baselines;
 - legacy OOD temporal filterbank improves over summary in 5/5 mice;
 - reliability is not estimable in the available dynamic artifacts;
 - MIS passed count remains 0.
