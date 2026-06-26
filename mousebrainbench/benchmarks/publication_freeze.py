@@ -35,6 +35,7 @@ def build_freeze_payload(
     microns_stratified_holdout_analysis: Path = Path(
         "results/microns_structure_function_pilot/stratified_holdout_offset1000_summary.json"
     ),
+    microns_q1_package: Path = Path("results/microns_q1_package/summary.json"),
     proposal_status: Path = Path("docs/PROPOSAL_STATUS.md"),
 ) -> dict[str, Any]:
     """Aggregate current evidence into a publication-route decision."""
@@ -55,6 +56,7 @@ def build_freeze_payload(
         if microns_stratified_holdout_analysis.exists()
         else {}
     )
+    microns_q1 = _load(microns_q1_package) if microns_q1_package.exists() else {}
     official_ready = bool(official["official_baseline_viable"])
     official_stack_forward_ok = bool(official.get("official_stack_forward_ok", False))
     official_trained_available = bool(official.get("official_trained_baseline_available", False))
@@ -79,10 +81,11 @@ def build_freeze_payload(
     q1_candidate_evidence_replicated = bool(
         q1_candidate_evidence and microns_stratified_holdout_positive
     )
+    q1_package_ready = bool(microns_q1.get("q1_package_ready", False))
     q1_ready = (
         official_ready
         or (microns_expanded_q1_ready and microns_expanded_positive)
-        or q1_candidate_evidence_replicated
+        or q1_package_ready
     )
     if q1_ready:
         route = "q1_candidate_after_replicated_microns_stratified_signal"
@@ -102,6 +105,7 @@ def build_freeze_payload(
             "microns_expanded_analysis": str(microns_expanded_analysis),
             "microns_stratified_analysis": str(microns_stratified_analysis),
             "microns_stratified_holdout_analysis": str(microns_stratified_holdout_analysis),
+            "microns_q1_package": str(microns_q1_package),
             "proposal_status": str(proposal_status),
         },
         "official_sensorium_baseline_viable": official_ready,
@@ -137,6 +141,8 @@ def build_freeze_payload(
             q1_candidate_evidence and not q1_candidate_evidence_replicated
         ),
         "q1_candidate_evidence_replicated": q1_candidate_evidence_replicated,
+        "microns_q1_package_ready": q1_package_ready,
+        "microns_q1_primary_endpoint": microns_q1.get("primary_endpoint"),
         "sensitivity_decision": robust["decision"],
         "publication_route": route,
         "q1_ready": q1_ready,
@@ -185,6 +191,8 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
             "- Q1 candidate evidence replicated: "
             f"`{payload['q1_candidate_evidence_replicated']}`"
         ),
+        f"- MICrONS Q1 package ready: `{payload['microns_q1_package_ready']}`",
+        f"- MICrONS Q1 primary endpoint: `{payload['microns_q1_primary_endpoint']}`",
         f"- Official Sensorium stack forward OK: `{payload['official_sensorium_stack_forward_ok']}`",
         f"- Official Sensorium trained available: `{payload['official_sensorium_trained_available']}`",
         f"- Official Sensorium Q1-qualified: `{payload['official_sensorium_q1_qualified']}`",

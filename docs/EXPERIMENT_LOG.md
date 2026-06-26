@@ -1034,3 +1034,32 @@ La señal principal replica en hold-out. MouseBrainBench ya tiene una pieza
 empírica positiva candidata para Q1, siempre que el manuscrito la formule como
 benchmark estructura-función local con controles, no como causalidad, whole-brain
 digital twin ni modelo SOTA Sensorium.
+
+## 2026-06-26 — Paquete Q1 MICRONS con bootstrap por unidades
+
+### Diseño
+
+Se ejecutó `scripts/build_microns_q1_package.py` para generar tablas definitivas
+de manuscrito y estabilidad bootstrap agrupada por unidades. El endpoint primario
+se fija como:
+
+```text
+all_pairs / readout_location
+```
+
+El bootstrap remuestrea unidades, no pares individuales, para evitar inflar la
+precisión por dependencia entre pares dirigidos.
+
+### Resultados
+
+| Cohorte | Distance delta CI95 | Degree delta CI95 |
+|---|---:|---:|
+| Discovery | `[0.0166454, 0.0262839]` | `[0.0348647, 0.0454170]` |
+| Hold-out offset1000 | `[0.0142179, 0.0262773]` | `[0.0321422, 0.0430936]` |
+
+### Decisión
+
+El paquete Q1 queda técnicamente listo como resultado estructura-función local
+replicado. La fase siguiente es escritura/figuras/revisión de literatura, no
+búsqueda exploratoria de señal. Se mantienen bloqueados los claims de mecanismo
+causal, cerebro completo, comportamiento y SOTA Sensorium.

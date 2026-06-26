@@ -70,6 +70,8 @@ has already rejected weak mechanistic claims that would be tempting to overstate
 For Q1, the remaining technical work is no longer to find a positive signal,
 but to harden the positive signal:
 
-- report exact hold-out protocol and CAVE provenance;
-- add effect-size confidence intervals or bootstrap stability;
-- keep causal, whole-brain, and Sensorium-SOTA claims explicitly blocked.
+- report exact hold-out protocol and CAVE provenance: done;
+- add effect-size confidence intervals or bootstrap stability: done;
+- keep causal, whole-brain, and Sensorium-SOTA claims explicitly blocked: done.
+
+The current next step is manuscript production, not exploratory engineering.

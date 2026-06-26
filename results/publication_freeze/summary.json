@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "326f5f7-dirty",
+  "git_revision": "edc6d06-dirty",
   "inputs": {
     "official_audit": "results/sensorium_official_baseline_audit/summary.json",
     "sensitivity": "results/q1_sensitivity/summary.json",
@@ -10,6 +10,7 @@
     "microns_expanded_analysis": "results/microns_structure_function_pilot/expanded_summary.json",
     "microns_stratified_analysis": "results/microns_structure_function_pilot/stratified_summary.json",
     "microns_stratified_holdout_analysis": "results/microns_structure_function_pilot/stratified_holdout_offset1000_summary.json",
+    "microns_q1_package": "results/microns_q1_package/summary.json",
     "proposal_status": "docs/PROPOSAL_STATUS.md"
   },
   "official_sensorium_baseline_viable": false,
@@ -31,6 +32,8 @@
   "microns_stratified_holdout_confirmed_tests": 30,
   "q1_candidate_evidence_requires_replication": false,
   "q1_candidate_evidence_replicated": true,
+  "microns_q1_package_ready": true,
+  "microns_q1_primary_endpoint": "all_pairs/readout_location",
   "sensitivity_decision": "sensitivity_supports_methodological_claim_not_q1_mechanistic_claim",
   "publication_route": "q1_candidate_after_replicated_microns_stratified_signal",
   "q1_ready": true,

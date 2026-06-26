@@ -5,6 +5,8 @@
 - Q1 ready now: `True`
 - Q1 candidate evidence requires replication: `False`
 - Q1 candidate evidence replicated: `True`
+- MICrONS Q1 package ready: `True`
+- MICrONS Q1 primary endpoint: `all_pairs/readout_location`
 - Official Sensorium stack forward OK: `True`
 - Official Sensorium trained available: `True`
 - Official Sensorium Q1-qualified: `False`
