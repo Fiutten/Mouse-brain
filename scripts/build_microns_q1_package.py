@@ -58,6 +58,14 @@ DEFAULT_COHORTS = (
             "results/microns_structure_function_pilot/stratified_holdout_offset1000_summary.json"
         ),
     ),
+    CohortSpec(
+        name="holdout_offset2000",
+        units=Path("data/microns/expanded/dt_coreg_units_v1507_holdout_offset2000.csv"),
+        edges=Path("data/microns/expanded/dt_coreg_edges_v1507_holdout_offset2000.csv"),
+        stratified_result=Path(
+            "results/microns_structure_function_pilot/stratified_holdout_offset2000_summary.json"
+        ),
+    ),
 )
 
 

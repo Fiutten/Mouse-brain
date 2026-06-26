@@ -6,7 +6,7 @@ MouseBrainBench provides a reproducible benchmark for auditing local
 structure-function claims in partial mouse-brain digital models. In MICRONS
 co-registered functional/EM data, synaptically connected directed pairs show
 closer functional readout-location similarity than matched non-connected pairs.
-The result replicates across a discovery cohort and an offset hold-out cohort.
+The result replicates across a discovery cohort and two offset hold-out cohorts.
 
 ## What is being tested
 
@@ -25,7 +25,7 @@ three controls:
 - degree-matched null.
 
 The reported manuscript endpoint is only accepted if it is positive after
-distance/degree matching and FDR correction in both discovery and hold-out
+distance/degree matching and FDR correction in discovery and both hold-out
 cohorts.
 
 ## Definitive result
@@ -34,6 +34,7 @@ cohorts.
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Discovery | 1000 | 2267 | 2095 | 28 | 0.0215146 | 0.00755766 | 0.040264 | 0.00526746 |
 | Hold-out offset1000 | 992 | 2161 | 1926 | 30 | 0.0210337 | 0.00703644 | 0.0380016 | 0.00622454 |
+| Hold-out offset2000 | 999 | 2147 | 1922 | 25 | 0.0178845 | 0.00869131 | 0.0286419 | 0.00827744 |
 
 ## Bootstrap stability
 
@@ -43,8 +44,9 @@ Unit-cluster bootstrap with 300 resamples:
 |---|---:|---:|---:|---:|
 | Discovery | 0.0218114 | [0.0166454, 0.0262839] | 0.0405107 | [0.0348647, 0.0454170] |
 | Hold-out offset1000 | 0.0209440 | [0.0142179, 0.0262773] | 0.0377419 | [0.0321422, 0.0430936] |
+| Hold-out offset2000 | 0.0181306 | [0.0115043, 0.0237966] | 0.0287003 | [0.0228738, 0.0353670] |
 
-The lower bound is positive in both cohorts and both matched-control families.
+The lower bound is positive in all three cohorts and both matched-control families.
 This supports a replicated local structure-function association.
 
 ## Allowed interpretation

@@ -83,6 +83,44 @@
           "ci95_high": 0.04309364267864572
         }
       }
+    },
+    {
+      "cohort": "holdout_offset2000",
+      "units": "data/microns/expanded/dt_coreg_units_v1507_holdout_offset2000.csv",
+      "edges": "data/microns/expanded/dt_coreg_edges_v1507_holdout_offset2000.csv",
+      "stratified_result": "results/microns_structure_function_pilot/stratified_holdout_offset2000_summary.json",
+      "n_units": 999,
+      "n_synapses_loaded": 2147,
+      "n_connected_edge_pairs": 1922,
+      "n_candidate_pairs": 997002,
+      "n_statistical_tests": 174,
+      "n_confirmed_positive_after_fdr": 25,
+      "primary_test": {
+        "stratum": "all_pairs",
+        "metric": "readout_location",
+        "n_connected_pairs": 1922,
+        "distance_matched_delta": 0.017884535143457933,
+        "distance_matched_q_one_sided": 0.008691308691308691,
+        "degree_matched_delta": 0.028641871321893483,
+        "degree_matched_q_one_sided": 0.00827743684886542,
+        "confirmed_positive_after_fdr": true
+      },
+      "unit_bootstrap": {
+        "samples_requested": 300,
+        "samples_usable": 300,
+        "distance_matched_delta": {
+          "n": 300,
+          "median": 0.018130617014715467,
+          "ci95_low": 0.011504298671558841,
+          "ci95_high": 0.023796608417984554
+        },
+        "degree_matched_delta": {
+          "n": 300,
+          "median": 0.028700317801537104,
+          "ci95_low": 0.022873768722809218,
+          "ci95_high": 0.03536698554630101
+        }
+      }
     }
   ],
   "claims_allowed": [

@@ -35,6 +35,9 @@ def build_freeze_payload(
     microns_stratified_holdout_analysis: Path = Path(
         "results/microns_structure_function_pilot/stratified_holdout_offset1000_summary.json"
     ),
+    microns_stratified_holdout2_analysis: Path = Path(
+        "results/microns_structure_function_pilot/stratified_holdout_offset2000_summary.json"
+    ),
     microns_q1_package: Path = Path("results/microns_q1_package/summary.json"),
     proposal_status: Path = Path("docs/PROPOSAL_STATUS.md"),
 ) -> dict[str, Any]:
@@ -54,6 +57,11 @@ def build_freeze_payload(
     microns_stratified_holdout_sf = (
         _load(microns_stratified_holdout_analysis)
         if microns_stratified_holdout_analysis.exists()
+        else {}
+    )
+    microns_stratified_holdout2_sf = (
+        _load(microns_stratified_holdout2_analysis)
+        if microns_stratified_holdout2_analysis.exists()
         else {}
     )
     microns_q1 = _load(microns_q1_package) if microns_q1_package.exists() else {}
@@ -76,10 +84,17 @@ def build_freeze_payload(
             "positive_stratified_structure_function_result", False
         )
     )
+    microns_stratified_holdout2_positive = bool(
+        microns_stratified_holdout2_sf.get(
+            "positive_stratified_structure_function_result", False
+        )
+    )
 
     q1_candidate_evidence = bool(microns_expanded_q1_ready and microns_stratified_positive)
     q1_candidate_evidence_replicated = bool(
-        q1_candidate_evidence and microns_stratified_holdout_positive
+        q1_candidate_evidence
+        and microns_stratified_holdout_positive
+        and microns_stratified_holdout2_positive
     )
     q1_package_ready = bool(microns_q1.get("q1_package_ready", False))
     q1_ready = (
@@ -105,6 +120,7 @@ def build_freeze_payload(
             "microns_expanded_analysis": str(microns_expanded_analysis),
             "microns_stratified_analysis": str(microns_stratified_analysis),
             "microns_stratified_holdout_analysis": str(microns_stratified_holdout_analysis),
+            "microns_stratified_holdout2_analysis": str(microns_stratified_holdout2_analysis),
             "microns_q1_package": str(microns_q1_package),
             "proposal_status": str(proposal_status),
         },
@@ -137,6 +153,15 @@ def build_freeze_payload(
         "microns_stratified_holdout_confirmed_tests": int(
             microns_stratified_holdout_sf.get("n_confirmed_positive_after_fdr", 0)
         ),
+        "microns_stratified_holdout2_structure_function_positive": (
+            microns_stratified_holdout2_positive
+        ),
+        "microns_stratified_holdout2_structure_function_decision": (
+            microns_stratified_holdout2_sf.get("scientific_decision")
+        ),
+        "microns_stratified_holdout2_confirmed_tests": int(
+            microns_stratified_holdout2_sf.get("n_confirmed_positive_after_fdr", 0)
+        ),
         "q1_candidate_evidence_requires_replication": (
             q1_candidate_evidence and not q1_candidate_evidence_replicated
         ),
@@ -156,7 +181,7 @@ def build_freeze_payload(
             "MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.",
             "MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.",
             "MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.",
-            "MICrONS hold-out stratified analysis replicates the readout-location signal on a second CAVE subset.",
+            "MICrONS hold-out stratified analyses replicate the readout-location signal on two additional CAVE subsets.",
         ],
         "claims_blocked": [
             "A complete digital twin of mouse brain.",
@@ -217,6 +242,14 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         (
             "- MICrONS hold-out confirmed tests: "
             f"`{payload['microns_stratified_holdout_confirmed_tests']}`"
+        ),
+        (
+            "- MICrONS second hold-out stratified positive: "
+            f"`{payload['microns_stratified_holdout2_structure_function_positive']}`"
+        ),
+        (
+            "- MICrONS second hold-out confirmed tests: "
+            f"`{payload['microns_stratified_holdout2_confirmed_tests']}`"
         ),
         "",
         "## Claims allowed",

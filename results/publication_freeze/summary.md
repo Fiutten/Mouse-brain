@@ -20,6 +20,8 @@
 - MICrONS stratified confirmed tests: `28`
 - MICrONS hold-out stratified positive: `True`
 - MICrONS hold-out confirmed tests: `30`
+- MICrONS second hold-out stratified positive: `True`
+- MICrONS second hold-out confirmed tests: `25`
 
 ## Claims allowed
 
@@ -31,7 +33,7 @@
 - MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.
 - MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.
 - MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.
-- MICrONS hold-out stratified analysis replicates the readout-location signal on a second CAVE subset.
+- MICrONS hold-out stratified analyses replicate the readout-location signal on two additional CAVE subsets.
 
 ## Claims blocked
 

@@ -1063,3 +1063,47 @@ El paquete Q1 queda técnicamente listo como resultado estructura-función local
 replicado. La fase siguiente es escritura/figuras/revisión de literatura, no
 búsqueda exploratoria de señal. Se mantienen bloqueados los claims de mecanismo
 causal, cerebro completo, comportamiento y SOTA Sensorium.
+
+## 2026-06-26 — Tercera cohorte MICRONS y suficiencia de volumen
+
+### Diseño
+
+Se descargó una tercera ventana CAVE no solapada usando
+`scripts/query_microns_expanded_pilot.py` con:
+
+- `limit_query_rows = 3600`;
+- `offset_units = 2000`;
+- `limit_units = 1000`;
+- `materialization_version = 1507`;
+- tabla `digital_twin_properties_bcm_coreg_v4`.
+
+La tercera cohorte contiene `999` unidades, `2147` sinapsis y `1922` pares
+dirigidos conectados únicos. Se ejecutó la misma prueba estratificada con `1000`
+permutaciones. Después se reconstruyó `results/microns_q1_package/summary.json`
+incluyendo discovery, hold-out offset1000 y hold-out offset2000, manteniendo el
+endpoint primario `all_pairs/readout_location`.
+
+### Resultados
+
+| Cohorte | Unidades | Sinapsis | Pares conectados | Distance delta | Distance q | Degree delta | Degree q |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Discovery | `1000` | `2267` | `2095` | `0.021515` | `0.007558` | `0.040264` | `0.005267` |
+| Hold-out offset1000 | `992` | `2161` | `1926` | `0.021034` | `0.007036` | `0.038002` | `0.006225` |
+| Hold-out offset2000 | `999` | `2147` | `1922` | `0.017885` | `0.008691` | `0.028642` | `0.008277` |
+
+Bootstrap por unidades con `300` remuestreos:
+
+| Cohorte | Distance CI95 | Degree CI95 |
+|---|---:|---:|
+| Discovery | `[0.016645, 0.026284]` | `[0.034865, 0.045417]` |
+| Hold-out offset1000 | `[0.014218, 0.026277]` | `[0.032142, 0.043094]` |
+| Hold-out offset2000 | `[0.011504, 0.023797]` | `[0.022874, 0.035367]` |
+
+### Decisión
+
+El volumen actual queda fijado como suficiente para un manuscrito Q1-candidato:
+`2991` unidades co-registradas, `6575` sinapsis y `5943` pares conectados en
+tres cohortes CAVE no solapadas. Se añade `docs/Q1_VOLUME_ADEQUACY.md` como
+criterio de parada: no se deben seguir descargando cohortes para redefinir el
+endpoint o buscar una señal mejor. Cualquier descarga adicional debe etiquetarse
+como robustez confirmatoria o respuesta a revisores.

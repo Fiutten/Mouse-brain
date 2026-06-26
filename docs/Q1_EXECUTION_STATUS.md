@@ -3,28 +3,31 @@
 ## Current Bottom Line
 
 MouseBrainBench now has a Q1-candidate empirical package: the positive MICRONS
-stratified signal replicated on a second CAVE subset. It is still not a
-whole-brain or causal-mechanism claim.
+stratified signal replicated across a discovery cohort and two independent CAVE
+hold-out subsets. It is still not a whole-brain or causal-mechanism claim.
 
 The most important result is now the expanded MICrONS pilot plus its
 stratified follow-up:
 
-- 1000 co-registered digital-twin/EM units;
-- 2267 CAVE synapses;
-- 2095 unique directed connected pairs;
+- 2991 total co-registered digital-twin/EM units across three non-overlapping
+  CAVE windows;
+- 6575 total CAVE synapses;
+- 5943 total unique directed connected pairs;
 - Q1-scale pilot gate: passed;
 - global positive structure-function result: failed;
 - stratified structure-function result: positive after distance/degree/FDR
   controls, dominated by `readout_location`;
-- hold-out stratified result: positive after distance/degree/FDR controls on
-  `992` additional units and `2161` synapses.
+- first hold-out stratified result: positive after distance/degree/FDR controls
+  on `992` additional units and `2161` synapses;
+- second hold-out stratified result: positive after distance/degree/FDR controls
+  on `999` additional units and `2147` synapses.
 
 In the global aggregate test, connected pairs are more functionally similar than a random null, and more
 similar than a degree-matched null, but the effect does not survive the
 distance-matched null. Therefore, the aggregate result remains a stress test,
 while the stratified result provides the current Q1-candidate signal.
 
-The hold-out result changes the Q1 situation from "candidate requiring
+The two hold-out results change the Q1 situation from "candidate requiring
 replication" to "candidate ready for manuscript planning". The strongest effect
 remains local and correlational rather than causal or interventional.
 
@@ -44,8 +47,9 @@ remains local and correlational rather than causal or interventional.
 |---|---:|---|---|
 | MICrONS static micro-pilot | 172 units, 82 synapses | Negative/inconclusive | Stress test only |
 | MICrONS expanded pilot | 1000 units, 2267 synapses | Positive vs random/degree, not distance | Not enough for positive Q1 claim |
-| MICrONS stratified expanded pilot | 1000 units, 2267 synapses | 28 tests positive after FDR, mostly readout-location | Q1 candidate only after replication |
-| MICrONS stratified hold-out | 992 units, 2161 synapses | 30 tests positive after FDR, readout-location replicated | Q1 candidate evidence |
+| MICrONS stratified expanded pilot | 1000 units, 2267 synapses | 28 tests positive after FDR, mostly readout-location | Discovery cohort |
+| MICrONS stratified hold-out offset1000 | 992 units, 2161 synapses | 30 tests positive after FDR, readout-location replicated | Q1 candidate evidence |
+| MICrONS stratified hold-out offset2000 | 999 units, 2147 synapses | 25 tests positive after FDR, readout-location replicated | Q1 candidate evidence strengthened |
 | Sensorium official tiny | 5 mice | Runs on MPS, weak correlation | Integration evidence |
 | Sensorium official small | 5 mice | Improves over tiny, far below MLP | Still not official/SOTA |
 | Dynamic Sensorium MLP | 5 mice | Stronger prediction | Predictive baseline, not mechanistic |
@@ -74,4 +78,6 @@ but to harden the positive signal:
 - add effect-size confidence intervals or bootstrap stability: done;
 - keep causal, whole-brain, and Sensorium-SOTA claims explicitly blocked: done.
 
-The current next step is manuscript production, not exploratory engineering.
+The current next step is manuscript production plus one external-facing
+replication/benchmark comparison if time permits, not open-ended exploratory
+signal search.

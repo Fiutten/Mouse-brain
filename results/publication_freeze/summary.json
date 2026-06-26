@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "edc6d06-dirty",
+  "git_revision": "225a84d-dirty",
   "inputs": {
     "official_audit": "results/sensorium_official_baseline_audit/summary.json",
     "sensitivity": "results/q1_sensitivity/summary.json",
@@ -10,6 +10,7 @@
     "microns_expanded_analysis": "results/microns_structure_function_pilot/expanded_summary.json",
     "microns_stratified_analysis": "results/microns_structure_function_pilot/stratified_summary.json",
     "microns_stratified_holdout_analysis": "results/microns_structure_function_pilot/stratified_holdout_offset1000_summary.json",
+    "microns_stratified_holdout2_analysis": "results/microns_structure_function_pilot/stratified_holdout_offset2000_summary.json",
     "microns_q1_package": "results/microns_q1_package/summary.json",
     "proposal_status": "docs/PROPOSAL_STATUS.md"
   },
@@ -30,6 +31,9 @@
   "microns_stratified_holdout_structure_function_positive": true,
   "microns_stratified_holdout_structure_function_decision": "positive_stratified_structure_function_signal",
   "microns_stratified_holdout_confirmed_tests": 30,
+  "microns_stratified_holdout2_structure_function_positive": true,
+  "microns_stratified_holdout2_structure_function_decision": "positive_stratified_structure_function_signal",
+  "microns_stratified_holdout2_confirmed_tests": 25,
   "q1_candidate_evidence_requires_replication": false,
   "q1_candidate_evidence_replicated": true,
   "microns_q1_package_ready": true,
@@ -47,7 +51,7 @@
     "MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.",
     "MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.",
     "MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.",
-    "MICrONS hold-out stratified analysis replicates the readout-location signal on a second CAVE subset."
+    "MICrONS hold-out stratified analyses replicate the readout-location signal on two additional CAVE subsets."
   ],
   "claims_blocked": [
     "A complete digital twin of mouse brain.",
