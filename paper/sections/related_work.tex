@@ -1,0 +1,39 @@
+\section{Related work}
+
+\paragraph{Mouse-brain resources.}
+The Allen Brain Observatory and Allen Visual Behavior Neuropixels resources
+have made standardized large-scale mouse visual-system recordings widely
+available for computational reuse \citep{deVries2022AllenSharing}. These
+datasets are well suited to evaluating reproducibility and predictive
+generalization, but they do not by themselves establish whether a particular
+connectivity model is mechanistically identifiable.
+
+\paragraph{Predictive visual benchmarks.}
+Sensorium and Dynamic Sensorium provide modern benchmarks for predicting
+responses in mouse visual cortex from static images or video stimuli
+\citep{sensorium2022,sensorium2023}. They are valuable because they encourage
+standardized evaluation and model comparison. In MouseBrainBench, these
+datasets are used as predictive and reliability layers, not as evidence of
+causal circuit mechanisms.
+
+\paragraph{Connectomics and MICRONS.}
+The MICRONS program produced a high-resolution resource linking functional
+responses and electron-microscopy structure in mouse visual cortex
+\citep{microns2025resource}. This resource is large, but still local rather than
+whole brain. MouseBrainBench uses MICRONS as the principal empirical
+structure-function benchmark and explicitly blocks extrapolation to whole-brain
+digital-twin claims.
+
+\paragraph{Existing simulation and modeling tools.}
+Toolkits such as BMTK/SONATA and The Virtual Brain address important simulation
+and model-building problems \citep{gratiy2018bmtk,senk2022sonata,tvb2013}.
+MouseBrainBench is complementary: it does not replace simulators or define a new
+biophysical network format. Instead, it audits what claims are justified by
+outputs from data adapters, models, and benchmark analyses.
+
+\paragraph{Mechanistic identifiability.}
+Many computational neuroscience workflows emphasize predictive accuracy. The
+central premise of MouseBrainBench is that prediction is necessary but not
+sufficient for mechanistic interpretation. The benchmark therefore treats
+prediction, reproducibility, anatomical specificity, directionality, and
+structure-function evidence as separable gates.

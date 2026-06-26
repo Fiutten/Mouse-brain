@@ -1,0 +1,36 @@
+\section{Introduction}
+
+Digital-brain and digital-twin language is becoming increasingly common in
+computational neuroscience. At the same time, public mouse-brain resources have
+become rich enough to support multi-scale computational modeling: anatomical
+atlases, large-scale Neuropixels recordings, visual prediction benchmarks,
+mesoscale connectivity resources, and local high-resolution connectomic
+datasets are all now available to researchers. This creates an opportunity, but
+also a methodological risk. A model can predict a neural response without being
+mechanistically identifiable; a dataset can be reproducible without supporting a
+specific anatomical mechanism; and a local structure-function result cannot be
+expanded into a whole-brain digital-twin claim.
+
+MouseBrainBench addresses this gap. Rather than attempting to reimplement
+established simulators or to claim a complete mouse-brain model, it provides a
+reproducible benchmark for auditing claims made by partial mouse-brain digital
+models. The core idea is deliberately conservative: every model or analysis is
+mapped to explicit evidence gates, and only claims supported by the relevant
+gates are allowed. Prediction, reliability, topology, directionality,
+structure-function association, perturbation behavior, and computational cost
+are treated as distinct forms of evidence rather than interchangeable metrics.
+
+The framework is evaluated across several data regimes. Synthetic known-truth
+cases test the logic of the Mechanistic Identifiability Score. Allen Visual
+Behavior Neuropixels provides a negative mechanistic control: reproducible
+signals are detected, but the anatomical and directed-identifiability gates do
+not pass. Sensorium static and Dynamic Sensorium provide modern visual
+prediction cases, showing that predictive improvements can be useful while still
+falling short of causal or mechanistic claims. MICRONS provides the central
+positive empirical case: a local structure-function benchmark based on
+co-registered functional and electron-microscopy data.
+
+The contribution of this paper is therefore not a mouse-brain digital twin. It
+is a reproducible claim-audit framework for partial digital models, together
+with a replicated MICRONS structure-function case demonstrating how positive
+local evidence can be separated from causal, behavioral, or whole-brain claims.

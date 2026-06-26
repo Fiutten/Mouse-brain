@@ -1,0 +1,53 @@
+\section{Methods}
+
+\subsection{Software and reproducibility}
+
+MouseBrainBench is implemented as a Python package with tracked benchmark
+scripts, JSON/Markdown result artifacts, and a publication-freeze audit. The
+repository records generated results and blocks claims that are not supported by
+the corresponding evidence gates.
+
+\subsection{Mechanistic Identifiability Score}
+
+The Mechanistic Identifiability Score is a conjunctive audit score. It evaluates
+separate evidence blocks for reproducibility, topology specificity, directed
+identifiability, and, when available, structure-function or perturbation
+constraints. A model can have predictive value while failing the mechanistic
+score.
+
+\subsection{Allen VBN analysis}
+
+Allen VBN analyses evaluate whether reproducible neural signatures align with
+anatomical and directed-identifiability constraints. The final Allen decision is
+negative because topology specificity and directionality fail despite strong
+reproducibility.
+
+\subsection{Sensorium analysis}
+
+Sensorium static analyses quantify reliability and predictive improvement over
+mean and scrambled controls. Dynamic Sensorium analyses compare temporal
+filterbank, temporal SVD, random-feature, compact neural-network, and bounded
+official Sensorium baselines. The official bounded baseline uses the official
+Sensorium loader and model factory but a local bounded training budget; it is
+therefore treated as an integration control rather than a Q1-qualified baseline.
+
+\subsection{MICRONS CAVE cohorts}
+
+MICRONS cohorts are queried from the CAVE \texttt{minnie65\_public} stack using
+the \texttt{digital\_twin\_properties\_bcm\_coreg\_v4} table at
+materialization version 1507. Three non-overlapping windows are used: discovery
+offset 0, hold-out offset 1000, and hold-out offset 2000.
+
+\subsection{MICRONS structure-function tests}
+
+For each cohort, all directed non-self pairs are constructed. Connected pairs
+are compared to non-connected pairs under random, distance-matched, and
+degree-matched nulls. The primary metric is readout-location similarity. Tests
+are corrected by FDR, and the manuscript endpoint is accepted only if it passes
+in discovery and both hold-out cohorts.
+
+\subsection{Unit-cluster bootstrap}
+
+Bootstrap intervals resample units rather than directed pairs. This prevents
+the uncertainty estimate from treating many dependent pairs as independent
+observations.

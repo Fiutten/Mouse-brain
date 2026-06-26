@@ -1,0 +1,29 @@
+\section{MouseBrainBench framework}
+
+MouseBrainBench is organized around evidence gates. Each dataset contributes a
+specific type of evidence, and each possible claim is allowed only if the
+required gates pass. The framework has four design principles.
+
+\paragraph{First, reuse public resources rather than replacing them.}
+The platform integrates established datasets and tools through lightweight
+adapters. It does not implement a new neuronal simulator, a new file format for
+large biological networks, or a complete anatomical atlas.
+
+\paragraph{Second, separate evidence types.}
+Predictive performance, repeat reliability, anatomical plausibility,
+directionality, local structure-function association, and perturbation behavior
+are represented as distinct evidence blocks. This prevents a high predictive
+correlation from being silently interpreted as a mechanistic result.
+
+\paragraph{Third, make negative evidence explicit.}
+Benchmark layers are allowed to fail. A negative result is not treated as a
+failed project if it blocks an unsupported claim. In the current package, Allen
+VBN is a reproducible but mechanistically negative case, and Dynamic Sensorium
+is a predictive stress test without mechanistic identifiability.
+
+\paragraph{Fourth, freeze claims from tracked artifacts.}
+MouseBrainBench writes machine-readable result artifacts and a publication
+freeze. The freeze records which claims are allowed and which remain blocked.
+This makes the manuscript auditable from the repository state.
+
+\input{tables/dataset_roles}
