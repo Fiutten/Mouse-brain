@@ -1,57 +1,115 @@
 \section{Proposed framework}
 
-MouseBrainBench is a modular framework for auditing partial digital models of
-the mouse brain. It is organised around evidence gates. Each dataset contributes
-a specific type of evidence and each possible claim is accepted only when the
-required gates are satisfied. This design follows a conservative principle: the
-framework must be able to produce positive results, but it must also be able to
-reject claims when the evidence is incomplete.
+MouseBrainBench is organized as a claim-audit pipeline. A benchmark instance is
+defined by a target claim, a set of observable quantities, the evidence blocks
+required by that claim, fixed comparison rules, and provenance for every input
+and output. Models and datasets enter the system through adapters, but they are
+not assumed to be equivalent. Their role is determined by the scientific claim
+that their measurements can test.
 
-The architecture is composed of five main modules. The first module is focused
-on data integration. It stores provenance information and builds reproducible
-adapters for public resources. The second module represents anatomical and
-functional entities using explicit schemas. The third module builds the
-benchmark tasks and baselines. The fourth module evaluates evidence through
-metrics and the Mechanistic Identifiability Score. Finally, the fifth module
-freezes the claims that can be defended from the generated artifacts.
+\subsection{Claim-first evidence model}
 
-\subsection{Design principles}
+Let (C) denote a bounded scientific claim, for example that a specified
+directed topology is identifiable from an observed response, or that synaptic
+connection is associated with a functional descriptor after spatial control.
+The framework maps (C) to required evidence blocks
+(B(C)=\{B_1,\ldots,B_m\}). A block contains criteria that address one type of
+evidence, such as reproducibility or topology specificity. Criteria belonging to
+different blocks are not interchangeable because they answer different
+questions.
 
-The first principle is to reuse existing resources instead of replacing them.
-MouseBrainBench does not implement a new neuronal simulator, a new atlas, or a
-new biological network format. Allen, Sensorium, Dynamic Sensorium, MICRONS, and
-external simulators are treated as resources that can be connected to the
-framework.
+This formulation reverses the common workflow in which a positive metric is
+obtained first and interpreted afterwards. In MouseBrainBench, a predictive
+correlation can support a prediction claim only under its declared test
+distribution. It cannot satisfy a missing anatomical control. Similarly, an
+anatomical association cannot establish directed dynamics or causal necessity.
+The admissible interpretation is the intersection of the blocks that pass.
 
-The second principle is to separate evidence types. Predictive performance,
-reliability, anatomical plausibility, directed identifiability,
-structure-function association, perturbation behaviour, and computational cost
-are independent evidence blocks. This is relevant because a positive result in
-one block does not necessarily validate the others.
-
-The third principle is to make negative evidence explicit. In many benchmarks,
-negative results are discarded because they do not improve the final score. In
-MouseBrainBench, a negative result is informative when it prevents a wrong
-interpretation. Therefore, Allen Visual Behavior Neuropixels is intentionally
-included as a reproducible but non-identifiable case.
-
-The fourth principle is reproducibility. The framework writes machine-readable
-artifacts, keeps configuration files, and generates a publication freeze. This
-freeze records the claims that are allowed and the claims that remain blocked at
-the time of manuscript preparation.
+The current implementation also records computational cost and data provenance.
+Cost is descriptive rather than mechanistic, but it is required for a fair
+comparison between model classes. Provenance includes source identifiers,
+cohort selectors, preprocessing parameters, random seeds, software revision,
+and generated artifact paths. These records permit a result to be recomputed and
+prevent a later manuscript from silently referring to a different cohort.
 
 \subsection{Mechanistic Identifiability Score}
 
-The Mechanistic Identifiability Score is the decision mechanism of the
-framework. It is conjunctive by design, meaning that a strong result in one
-dimension cannot compensate for the absence of essential evidence in another
-dimension. The score evaluates whether the model or analysis satisfies the
-minimum conditions required for a specific claim.
+For criterion (j) in block (i), let (x_{ij}) be the observed value,
+(t_{ij}) the preregistered threshold, and (d_{ij}) the comparison direction.
+The binary decision is
+\[
+ p_{ij}=\mathbb{I}\!\left[x_{ij}\;d_{ij}\;t_{ij}\right].
+\]
+A normalized descriptive score (s_{ij}\in[0,1]) expresses progress towards
+the threshold. For a criterion requiring a larger value,
+(s_{ij}=\min(1,\max(0,x_{ij}/t_{ij}))); the inverse ratio is used when a
+smaller value is required. The score of a block is the mean
+\[
+ S_i=\frac{1}{n_i}\sum_{j=1}^{n_i}s_{ij},
+\]
+but block passage is conjunctive:
+(P_i=\bigwedge_j p_{ij}). The reported MIS score is
+(M=m^{-1}\sum_i S_i), whereas the mechanistic decision is
+\[
+ P_{\mathrm{MIS}}=\bigwedge_{i=1}^{m}P_i .
+\]
 
-This mechanism has an important practical consequence. Predictive models can be
-accepted as useful predictors even when they are rejected as mechanistic
-explanations. Similarly, local structure-function results can be accepted as
-local observational evidence while being rejected as causal or whole-brain
-claims. This distinction is the main safeguard of the proposal.
+The distinction between (M) and (P_{\mathrm{MIS}}) is essential. (M) is
+useful for diagnostics and sensitivity analysis, but it is not an additive
+currency with which one form of evidence can purchase another. A perfectly
+reproducible response and an identifiable temporal direction still fail the
+mechanistic decision if the proposed topology does not outperform matched
+alternatives. The implementation enforces this rule directly rather than
+leaving it to narrative interpretation.
+
+For the experiments in this paper, the canonical MIS contains reproducibility,
+topology-specificity, and directed-identifiability blocks. Reproducibility uses
+cross-session or cross-animal agreement, split-half reliability, and comparison
+with within-target nulls. Topology specificity asks whether the proposed graph
+outperforms permuted, disconnected, or otherwise matched graphs. Directed
+identifiability evaluates resolvable latencies, lead-lag structure, or an
+equivalent directional signature. Dataset-specific audits may add a
+structure-function block, but they do not relabel observational association as
+causal directionality.
+
+\subsection{Software architecture and execution}
+
+The implementation separates data loaders, schemas, atlas utilities,
+connectivity builders, dynamics, simulation, validation, baselines, and
+visualization. Public resources are accessed through explicit adapters, while
+the core validation API operates on stable tabular and graph representations.
+This organization allows an Allen session, a Sensorium model, or a MICRONS CAVE
+query to be audited without embedding source-specific assumptions throughout
+the codebase.
+
+Every benchmark command writes a machine-readable JSON artifact and a
+human-readable summary. The artifact contains the software revision, input
+paths, sample counts, metric definitions, thresholds, and decision. Tests cover
+criterion direction, conjunctive passage, known-truth cases, adapter contracts,
+and publication-gate behavior. Fixed seeds are used for permutations,
+initialization, and bootstrap resampling where applicable.
+
+The final stage is a publication freeze. It reads the sealed artifacts rather
+than recomputing or manually transcribing headline values. It reports allowed
+claims, blocked claims, incomplete external baselines, and the evidence route
+for the manuscript. This stage does not make a result true; it ensures that the
+written conclusion cannot be stronger than the current artifacts without an
+explicitly visible change.
+
+\subsection{Evidential roles of the datasets}
+
+The framework requires complementary regimes because no available dataset
+contains all necessary evidence. Synthetic data test whether the decision rule
+behaves correctly when truth is known. Allen provides broad, reproducible
+activity but lacks the individual synaptic topology needed for a positive
+mechanistic claim. Sensorium provides modern prediction tasks and standardized
+test sets. MICRONS supplies co-registered local structure and function, making
+it the only dataset used for the principal positive empirical endpoint.
+
+Table~\ref{tab:dataset-roles} summarizes these roles. The table should not be
+read as a comparison of dataset quality. It is a map from available observations
+to the claims that can be tested. In particular, a negative MIS outcome for
+Allen or Sensorium does not invalidate those resources; it shows that their
+current use in this study cannot identify the stronger mechanism.
 
 \input{tables/dataset_roles}

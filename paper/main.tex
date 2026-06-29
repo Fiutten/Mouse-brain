@@ -7,6 +7,7 @@
 \usepackage{microtype}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
@@ -39,14 +40,20 @@
 \input{sections/contributions}
 \input{sections/related_work}
 \input{sections/framework}
-\input{sections/datasets}
+\input{sections/experimental_design}
 \input{sections/results}
-\input{sections/discussion}
-\input{sections/limitations}
-\input{sections/methods}
-\input{sections/data_code_availability}
+\input{sections/conclusions}
 
-\section*{Acknowledgments}
+\section*{Data and code availability}
+The source code, fixed configurations, acquisition scripts, and machine-readable
+results are maintained in the MouseBrainBench repository. Raw public data are
+not redistributed. The final archived release, repository URL, and DOI will be
+inserted after acceptance of the experimental freeze used for submission.
+MICRONS queries require acceptance of the CAVE terms and a personal access
+token; the queried materialization, tables, offsets, and output checksums are
+recorded by the acquisition scripts.
+
+\section*{Acknowledgements}
 The author acknowledges the public data resources and infrastructures that make
 the experiments reproducible, including Allen Institute, Sensorium/Dynamic
 Sensorium, and MICRONS/CAVE. Final funding and institutional acknowledgments

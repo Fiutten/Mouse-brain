@@ -1,87 +1,149 @@
-\section{Experiments and results}
+\section{Results and discussion}
 
-This section presents the experiments carried out to evaluate MouseBrainBench.
-The objective is not to show that all datasets support a positive claim, but to
-verify that the framework is able to distinguish between different levels of
-evidence. For this reason, the experiments include method validation, negative
-controls, predictive benchmarks, and a local positive structure-function case.
+The results are presented in the order of the audit. The first two experiments
+test whether the method rejects known or plausible non-identifiable systems.
+Sensorium then establishes that predictive utility can coexist with a negative
+mechanistic decision. MICRONS finally tests whether a positive local
+structure-function result survives matched controls and independent cohorts.
 
-\subsection{Synthetic experiments}
+\subsection{MIS recovers synthetic truth and rejects the Allen mechanism}
 
-The first experiment evaluates the Mechanistic Identifiability Score using
-synthetic known-truth cases. The score must accept the directed-truth case and
-reject common-drive, structure-only, and timing-only alternatives. This process
-is necessary because a claim-audit framework should be validated before it is
-applied to biological data. The achieved behaviour confirms that the score does
-not accept partial evidence as a complete mechanism.
+The known-truth experiment behaved as specified. The directed system passed all
+three evidence blocks and obtained (M=1.0). The common-drive system passed
+reproducibility but failed topology specificity and directionality, yielding
+(M=0.333). The topology-only system passed reproducibility and topology but
+failed directionality ((M=0.667)). The direction-only system failed topology
+specificity despite temporal information ((M=0.719)). Thus, only the case with
+the complete designed mechanism passed the conjunctive decision.
 
-\subsection{Allen Visual Behavior Neuropixels}
+These cases illustrate why the binary decision cannot be replaced by the
+descriptive score. The direction-only system has a larger (M) than the
+topology-only system, but neither supports the complete claim. Their scores
+describe different patterns of partial evidence; they do not provide a ranking
+of mechanistic truth. The experiment also confirms that high reproducibility
+does not rescue a common-drive explanation.
 
-The second experiment uses Allen Visual Behavior Neuropixels as a real negative
-control. The obtained results show that the dataset contains reproducible
-signals. Median cross-mouse correlation is 0.891 and median split-half
-correlation is 0.990. However, the anatomical and directed-identifiability gates
-do not pass. Allen connectivity underperforms the median permutation by
--0.0054, and the paired bootstrap lower bound is negative. Therefore, the final
-decision for this layer is \emph{reproducible target without mechanistic
-identifiability}.
+Allen produced the intended real negative control. Median cross-mouse
+correlation was 0.891, median split-half correlation was 0.990, and 75\% of
+instances exceeded their own 95th-percentile null. The reproducibility block
+therefore passed. In contrast, the Allen-informed topology performed 0.0054
+worse than the median permutation, outperformed only 21\% of permutations, and
+had a paired bootstrap lower bound of (-0.0075). Its advantage over a
+disconnected model was only 0.0035, below the fixed 0.05 threshold.
 
-This result is important for the proposal because it shows that MouseBrainBench
-does not transform reproducibility into mechanism. A less restrictive benchmark
-could interpret the high correlations as positive evidence. In contrast, the
-proposed framework accepts the reproducibility result and rejects the
-mechanistic claim.
+Directed identifiability also failed: the evaluated latency and lead-lag
+fractions were zero under the operational criteria. The final MIS was 0.358 and
+the decision was \texttt{reproducible\_target\_without\_mechanistic\_
+identifiability}. This does not imply that Allen responses lack biological
+structure. It means that the current target and model comparison do not identify
+the proposed directed anatomical mechanism. That distinction is the primary
+purpose of the negative control.
 
-\subsection{Sensorium and Dynamic Sensorium}
+\subsection{Sensorium supports prediction but not mechanistic identification}
 
-The third group of experiments evaluates predictive layers. Sensorium static
-provides a positive predictive and reliability case. In the five repeated-test
-mice, median reliability is 0.642 and median best predictive correlation is
-0.341. Thus, this resource is useful to compare predictive models under
-repeated observations.
+Static Sensorium showed consistent predictive utility. Across seven validation
+mice, the median best correlation was 0.328, the median improvement over mean
+response was 0.102, and the improvement over scrambled stimulus was 0.077.
+Reliability cannot be estimated from non-repeated validation stimuli and is
+therefore not assigned a favorable value. In the five repeated-test mice, median
+reliability was 0.642 and median best correlation was 0.341. Improvements over
+mean response and scrambling were 0.095 and 0.068, respectively.
 
-Dynamic Sensorium provides a more demanding temporal scenario. Local temporal
-and neural-network baselines improve prediction in several paired comparisons.
-In the current public mice, the best transparent models reach correlations
-between 0.431 and 0.526 depending on the mouse. In the legacy
-out-of-distribution mice, the best models reach correlations between 0.360 and
-0.449. Nevertheless, reliability remains non-estimable in the current public
-dynamic artifacts, and the bounded official Sensorium baseline is not
-leaderboard-equivalent. Therefore, Dynamic Sensorium is considered predictive
-evidence, but not mechanistic or causal evidence.
+The separate topographic constraint passed in all five repeated-test datasets,
+with median Spearman association 0.177 and median effect over its null 0.178.
+This is partial structural evidence, but it does not identify synaptic direction
+or a causal circuit. Consequently, no static Sensorium mouse passed the complete
+MIS. The scientifically appropriate conclusion is that stimulus and context
+contain repeatable predictive information and a modest topographic signal, not
+that the fitted predictors recover the generating mechanism.
 
-\subsection{MICRONS aggregate control}
+Dynamic Sensorium produced best per-mouse correlations from 0.427 to 0.526 in
+the current public cohort. The temporal filterbank won one mouse, temporal SVD
+two, and the compact multilayer perceptron two. Relative to mean response, the
+temporal filterbank improved all five mice with a median gain of 0.031. These
+comparisons show that temporal modelling adds predictive information, but the
+small number of mice and modest model differences do not justify a broad model
+superiority claim.
 
-The fourth experiment evaluates an expanded MICRONS aggregate structure-function
-test. This first global approach did not survive distance matching, although it
-showed positive random and degree-matched comparisons. This result is treated as
-a relevant warning. A global positive association can be produced by spatial
-proximity or degree structure, and therefore it cannot be used as the main
-empirical claim of the manuscript.
+The bounded official-architecture run completed through the official loader and
+model factory for five mice, but correlations remained between 0.011 and 0.035
+under the deliberately restricted training budget. It is therefore reported as
+an integration check only. Presenting this artifact as an official Sensorium
+baseline or a state-of-the-art comparison would be misleading. The audit keeps
+it visible while blocking that interpretation.
 
-\subsection{MICRONS stratified structure-function experiment}
+\subsection{MICRONS yields a replicated local structure-function association}
 
-The fifth experiment defines the primary endpoint as
-\texttt{all\_pairs/readout\_location}. Synaptically connected directed pairs are
-compared with non-connected pairs under random, distance-matched, and
-degree-matched controls. The endpoint is accepted only if it remains positive
-after matched controls, false discovery rate correction, and unit-cluster
-bootstrap stability in the discovery cohort and in both hold-out cohorts.
+The three MICRONS cohorts jointly contain 2991 units, 6575 loaded synapses, and
+5943 unique connected directed pairs. The discovery, first hold-out, and second
+hold-out contain 2095, 1926, and 1922 connected pairs among 999000, 983072, and
+997002 candidate directed non-self pairs. The primary endpoint passed the fixed
+distance- and degree-matched tests in every cohort.
 
 \input{tables/microns_primary}
+
+For distance-matched controls, the connected-pair advantages in readout-location
+similarity were 0.0215, 0.0210, and 0.0179, with one-sided false-discovery-rate
+adjusted (q)-values of 0.0076, 0.0070, and 0.0087. Degree-matched effects were
+larger: 0.0403, 0.0380, and 0.0286, with adjusted (q)-values of 0.0053, 0.0062,
+and 0.0083. The effect therefore retained its sign and approximate magnitude
+outside the discovery window.
+
 \input{tables/microns_bootstrap}
 
-Across the three cohorts, connected pairs show closer readout-location
-similarity than matched non-connected pairs. The distance-matched delta is
-0.0215 in the discovery cohort, 0.0210 in the first hold-out, and 0.0179 in the
-second hold-out. The degree-matched delta is 0.0403, 0.0380, and 0.0286,
-respectively. Unit-cluster bootstrap intervals remain positive in every cohort
-and for both distance- and degree-matched controls.
+Unit-cluster bootstrap intervals remained strictly positive. The
+distance-matched lower bounds were 0.0166, 0.0142, and 0.0115; the
+degree-matched lower bounds were 0.0349, 0.0321, and 0.0229. Resampling units
+rather than pairs reduces the false precision that would result from treating
+all pairwise observations as independent. Together with matched controls and
+hold-out replication, these intervals support a robust local association.
 
-\subsection{Claim audit}
+The result is narrower than a causal mechanism. Readout-location similarity is
+a functional descriptor associated with connectivity after two important
+controls, but unmeasured cell type, laminar organization, or other local
+variables may contribute. The analysis does not perturb edges, establish
+necessity, or predict behaviour. Its value is that the admitted claim is both
+positive and specific: within the evaluated MICRONS volume, connected directed
+pairs are more similar in readout location than comparable non-connected pairs.
 
-The publication freeze marks the replicated local MICRONS structure-function
-claim as Q1-candidate evidence. At the same time, it blocks unsupported claims:
-causal mechanism, complete mouse-brain digital twin, behavioural digital twin,
-and Sensorium state-of-the-art predictor. Therefore, the final result is a
-benchmark and claim-audit contribution, not a whole-brain simulation paper.
+This result is also not a new biological wiring rule. Ding et al. have already
+reported a substantially more detailed MICRONS analysis of like-to-like
+connectivity using receptive-field, feature, and axon--dendrite geometry
+controls \citep{ding2025wiring}. Agreement with that work provides an
+external-validity check for the MouseBrainBench pipeline. The potential novelty
+here is the same claim-control protocol operating across synthetic, Allen,
+Sensorium, and MICRONS regimes, not priority over the underlying
+structure-function phenomenon.
+
+\subsection{Cross-regime interpretation and limitations}
+
+The experiments demonstrate three distinct outcomes that a correlation-only
+evaluation would blur. Allen supplies reliable neural targets without
+identifiable topology. Sensorium supplies useful in-distribution and temporal
+prediction without anatomical or causal identification. MICRONS supplies a
+replicated local structure-function association after matched anatomical
+controls. MouseBrainBench does not force these outcomes onto a single scale; it
+assigns each one the strongest interpretation that its evidence permits.
+
+Sensitivity analyses preserve the main qualitative decisions under reasonable
+threshold changes: Allen remains a negative mechanistic case, Sensorium remains
+predictive evidence, and MICRONS retains the preregistered local endpoint across
+two hold-outs. This supports the methodological claim that the conclusions are
+not consequences of one arbitrary threshold. It does not establish that the
+current thresholds are universal; new targets require domain-specific criteria
+declared before evaluation.
+
+Several limitations remain material. The positive MICRONS result is local,
+observational, and dominated by one functional descriptor. The Allen analysis
+uses a controlled subset rather than every available session. Dynamic Sensorium
+contains only five current and five legacy mice in the present local benchmark,
+and the official architecture was not trained with a leaderboard-equivalent
+budget. Finally, MIS currently encodes necessary conditions selected for these
+claims; it is not a proven complete theory of mechanistic explanation.
+
+These limits determine the publication claim. The framework and experiments
+support a reproducible audit of partial mouse-brain models and a replicated
+local MICRONS association. They do not support a complete mouse-brain digital
+twin, consciousness, behavioural equivalence, causal synaptic mechanisms, or a
+state-of-the-art Sensorium predictor. Keeping those statements blocked is part
+of the reported result rather than an omission.

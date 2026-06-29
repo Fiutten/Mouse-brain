@@ -1,56 +1,71 @@
 \section{Introduction}
 
-Intelligent systems have been developed for years to model, predict, and
-simulate complex processes. Neuroscience is one of the most demanding domains
-for these systems because the information is heterogeneous, dynamic, and
-distributed across several biological scales. In the particular case of the
-mouse brain, researchers can currently access public resources that include
-large-scale electrophysiological recordings, anatomical atlases, visual
-prediction benchmarks, and local connectomic reconstructions. This fact opens
-the possibility of building digital models that are more realistic than previous
-simplified simulations.
+The construction of computational representations of biological systems has
+become an important meeting point between Artificial Intelligence and
+neuroscience. In the mouse, standardized electrophysiology, visual-response
+benchmarks, anatomical atlases, and electron-microscopy reconstructions are now
+available through public infrastructures. These resources make it possible to
+study the same biological system at markedly different scales, from population
+responses recorded across brain regions to synaptic connectivity within a
+restricted cortical volume. They also make it technically possible to build
+models that reproduce selected observations with increasing accuracy.
 
-Nevertheless, this new scenario introduces a relevant problem. The availability
-of more data does not automatically imply that a model can be interpreted as a
-mechanistic explanation of the brain. A model may predict neural responses with
-good performance and, at the same time, fail to identify the anatomical
-structure producing those responses. Similarly, a reproducible experimental
-signal can be scientifically useful without validating a specific connectivity
-mechanism. This issue becomes more critical when the expression ``digital twin''
-is used, since it can suggest a complete and causally faithful replica when the
-available data usually cover only partial aspects of the biological system.
+This progress creates a problem of interpretation. A model that predicts neural
+responses is not necessarily a model that identifies the circuit producing
+them. A response can be stable across animals while remaining compatible with
+many alternative topologies. Likewise, a network can preserve an anatomical
+graph without establishing that its directed dynamics are identifiable from the
+chosen observations. Predictive performance, empirical reliability, anatomical
+plausibility, and causal explanation therefore answer different questions. A
+single correlation coefficient cannot adjudicate among them.
 
-In this paper, the MouseBrainBench framework is proposed. It is a reproducible
-software and experimental architecture designed to audit partial digital models
-of the mouse brain. The aim is not to build a complete digital mouse brain, nor
-to replace consolidated simulators and public resources. The objective is to
-provide a critical layer able to integrate these resources, evaluate the
-evidence produced by models, and determine which scientific claims are actually
-supported.
+The distinction is particularly important for digital-twin terminology. A
+digital twin normally implies correspondence with a particular physical entity,
+continuous or repeated calibration, and the capacity to reproduce relevant
+states under intervention. Current mouse-brain resources do not jointly provide
+complete synaptic connectivity, full-brain dynamics, behaviour, and
+interventional validation for an individual animal. MICRONS offers exceptional
+synaptic and functional detail, but only for a local visual-cortical volume
+\citep{bae2025microns}. Allen datasets provide broad and standardized neural
+recordings, but not the individual synaptic graph that generated each response
+\citep{siegle2021survey,deVries2022AllenSharing}. Consequently, referring to
+either resource as a complete mouse-brain twin would exceed the evidence.
 
-The proposal is based on the separation of evidence. Predictive accuracy,
-repeat reliability, anatomical specificity, directed identifiability,
-structure-function association, perturbation behaviour, and computational cost
-are represented as different blocks. Thus, the framework avoids promoting a
-single positive metric to a broad mechanistic statement. This conservative
-design is especially important in the context of high-impact Artificial
-Intelligence and neuroscience research, where methodological transparency and
-claim control are essential.
+Existing tools solve other essential parts of the problem. BMTK provides
+infrastructure for constructing and simulating multiscale neural networks
+\citep{dai2020bmtk}; The Virtual Brain supports connectome-based population
+dynamics \citep{tvb2013}; and Sensorium provides common predictive tasks for
+mouse visual cortex \citep{willeke2022sensorium,turishcheva2023dynamic}. Their
+existence means that another simulator or another visual prediction benchmark
+would have limited novelty. What remains insufficiently formalized is the audit
+between a reported metric and the biological claim attached to it: what must be
+observed before reproducible prediction becomes evidence for a particular
+mechanism?
 
-Several experiments have been designed to validate the proposal. Synthetic
-known-truth cases are used to test the logic of the Mechanistic Identifiability
-Score. Allen Visual Behavior Neuropixels is used as a negative mechanistic
-control, since reproducible responses are detected but anatomical and directed
-identifiability gates do not pass. Sensorium static and Dynamic Sensorium are
-used as predictive benchmarks, showing the difference between prediction and
-mechanistic interpretation. Finally, MICRONS CAVE data are used as the main
-empirical positive case, where local structure-function associations can be
-evaluated under anatomical controls.
+MouseBrainBench addresses this question. It is not a new full-brain simulator
+and it does not claim to instantiate a complete digital twin. It is a software
+and experimental framework that assigns different public datasets to explicit
+evidential roles, applies matched null models and hold-out replication, and
+records which interpretations pass or fail. Its Mechanistic Identifiability
+Score (MIS) is a conjunctive decision rule over non-interchangeable evidence
+blocks. The numerical component summarizes support within a block, whereas the
+final decision requires every block relevant to the proposed mechanism to pass.
 
-The rest of the article is structured as follows. Section~2 details the
-contributions of the proposal. Section~3 introduces the foundations and related
-work. Section~4 presents the MouseBrainBench framework and its components.
-Section~5 describes the datasets and their specific role in the proposal.
-Section~6 focuses on the experiments carried out to validate the system.
-Finally, Sections~7--10 discuss the results, limitations, methodological
-details, and reproducibility information.
+The evaluation deliberately combines positive and negative outcomes. Four
+synthetic systems test whether MIS recovers known truth and rejects common-drive
+or incomplete mechanisms. Allen Visual Behavior Neuropixels tests whether the
+framework can retain a strongly reproducible target while rejecting unsupported
+topological and directional claims. Static and Dynamic Sensorium test modern
+predictive models without promoting correlation to causation. Finally, MICRONS
+tests a preregistered local structure-function endpoint against distance- and
+degree-matched nulls in a discovery cohort and two non-overlapping hold-outs.
+This sequence is intended to test the audit itself, not to assemble unrelated
+dataset demonstrations.
+
+The remainder of the paper follows this argument. Section~2 states the research
+contributions. Section~3 analyses the relevant predictive, simulation, and
+connectomic literature. Section~4 defines the framework and the MIS decision
+rule. Section~5 describes the experimental protocol and evidential role of each
+dataset. Section~6 presents and discusses the results, including negative
+evidence and sensitivity limits. Section~7 concludes the work and delimits the
+claims that remain outside the present study.

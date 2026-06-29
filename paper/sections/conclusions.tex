@@ -1,0 +1,33 @@
+\section{Conclusions}
+
+This paper introduced MouseBrainBench, a framework for evaluating the evidence
+behind partial digital models of the mouse brain. The proposal was motivated by
+a precise methodological problem: predictive correlation, reproducibility,
+anatomical specificity, and mechanistic identifiability are frequently treated
+as if they were interchangeable. MouseBrainBench represents them as separate
+evidence blocks and makes the final mechanistic decision conjunctive.
+
+The framework was evaluated under synthetic truth, a real negative control,
+modern predictive benchmarks, and local functional connectomics. The synthetic
+systems confirmed that reproducibility, topology, or direction alone cannot
+pass the complete MIS. Allen Visual Behavior Neuropixels showed strong
+reproducibility while failing topology-specific and directed-identifiability
+requirements. Static and Dynamic Sensorium showed useful predictive signals but
+did not provide the missing mechanistic evidence.
+
+MICRONS supplied the main positive empirical result. Across 2991 co-registered
+units in a discovery cohort and two non-overlapping hold-outs, connected pairs
+showed greater readout-location similarity than distance- and degree-matched
+non-connected pairs. Unit-cluster bootstrap intervals remained positive in all
+cohorts. This reproduces a local observational structure-function association
+compatible with stronger previously published MICRONS analyses; it is an
+external-validity case for the audit, not a claim of biological priority.
+
+The contribution is consequently narrower, and more defensible, than a digital
+mouse brain. MouseBrainBench provides a reproducible mechanism for deciding
+which interpretations survive the available controls. Future work should add
+interventional datasets, test the framework in other circuits, formalize
+claim-specific evidence blocks with external preregistration, and evaluate
+external simulators under the same audit. A complete digital-twin claim should
+remain outside scope until entity-specific, multiscale, and perturbational
+evidence can be demonstrated together.
