@@ -1,44 +1,50 @@
 # MouseBrainBench manuscript
 
-This directory contains the manuscript targeting **PLOS Computational
-Biology** as a Research Article.
+The manuscript targets **Engineering Applications of Artificial Intelligence
+(EAAI)** as an original research article.
 
-## Journal template
+## Official template
 
-The submission source uses the official PLOS LaTeX template:
+The working manuscript uses Elsevier's official Complex Article Service
+single-column template:
 
-- template version 3.8, April 2026;
-- bibliography style plos2025.bst;
-- continuous line numbering;
-- double-spaced, single-column manuscript;
-- Vancouver citation order;
-- one self-contained LaTeX manuscript, as required by PLOS.
+- document class: cas-sc;
+- template bundle: els-cas-templates 2.4;
+- bibliography style: cas-model2-names;
+- author--year citations;
+- single-column A4 layout, as required by EAAI.
 
-The unmodified upstream template is retained at
-paper/template/plos_latex_template_v3.8.tex for provenance. It was downloaded
-from the official PLOS LaTeX distribution linked by the journal guidelines.
+The upstream template is retained at paper/template/cas-sc-template-v2.4.tex.
+The class, common style, and bibliography files are included in paper/ so that
+the Overleaf project does not depend on an implicit template version.
 
-## Building the manuscript source
+## Generated manuscripts
 
-Scientific sections remain modular during development. Generate the
-self-contained PLOS source with:
+Generate all editorial artifacts with:
 
-    .venv/bin/python scripts/build_plos_manuscript.py
+    .venv/bin/python scripts/build_eaai_manuscript.py
 
-The command expands every section and table into paper/main.tex. The generated
-file contains no LaTeX input statements and is the file compiled by Overleaf and
-submitted to PLOS.
+The command creates:
 
-To compile in an operational TeX environment:
+- paper/main.tex: complete working manuscript with author information;
+- paper/main_anonymous.tex: manuscript for double-anonymized review;
+- paper/title-page.tex: separate author and affiliation page.
+
+All tables are expanded into the generated manuscripts. Scientific sections
+remain modular under paper/sections/ to support review and maintenance.
+
+## Compilation
+
+In a functional TeX environment:
 
     cd paper
     latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 
 ## Claim boundary
 
-The manuscript reports MouseBrainBench as a reproducible claim-audit framework
-for partial mouse-brain models. MICRONS is an external-validity case compatible
-with previously published structure--function findings. The manuscript does not
-claim biological priority for the MICRONS wiring rule, a complete mouse-brain
-digital twin, causal mechanism, consciousness, behavioural equivalence, or a
-state-of-the-art Sensorium predictor.
+The AI contribution is a claim-aware verification and validation framework for
+scientific models. MICRONS is an external-validity case compatible with
+published structure--function findings. The paper does not claim biological
+priority for that wiring rule, a complete mouse-brain digital twin, causal
+mechanism, consciousness, behavioural equivalence, or a state-of-the-art
+Sensorium predictor.

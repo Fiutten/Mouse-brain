@@ -21,84 +21,81 @@ supporting audit layers, not competing main claims.
 
 ## Recommended Journal Strategy
 
-### Primary Realistic Target: PLOS Computational Biology
+### Primary Target: Engineering Applications of Artificial Intelligence
 
 Fit:
 
-- computational methods applied to biological systems;
-- explicit neuroscience section;
-- accepts Research, Methods, and Software articles;
-- emphasizes reproducibility, data, code, and software availability;
-- welcomes methods/software that provide biological insight.
+- JCR category aligned with Computer Science, Artificial Intelligence;
+- practical verification and validation of AI-based software is in scope;
+- public datasets and reproducible benchmarking are explicitly valued;
+- complex networks, neural models, and engineering case studies are supported.
 
 Why it fits this manuscript:
 
-- MouseBrainBench is not just software; it provides a methodological framework
-  and real-data validation across MICRONS, Allen, and Sensorium;
-- the strongest biological insight is local MICRONS structure-function
-  association under matched controls;
-- the framework blocks overclaiming from prediction alone, which is a
-  meaningful computational-biology contribution.
+- the AI contribution is a claim-aware validation architecture with
+  non-interchangeable evidence blocks and executable claim gates;
+- the engineering application is verification of partial neural digital models;
+- validation spans synthetic truth, Allen, Sensorium, Dynamic Sensorium, and
+  MICRONS;
+- the software and result artifacts provide traceability and reproducibility.
 
 Risk:
 
-- the biological novelty must be explicit. A pure engineering paper will be too
-  weak. The manuscript must foreground the MICRONS replicated result and the
-  claim-audit logic.
+- the manuscript will be desk-rejected if MIS appears to be only an ad hoc set
+  of thresholds or if the AI contribution is not explicit;
+- computational neuroscience must be framed as the engineering application,
+  while the reusable contribution is verification and validation of AI models;
+- the abstract must state both contributions separately.
 
 Recommended article type:
 
-- Methods, if the journal allows this route for benchmark frameworks;
-- otherwise Research, with MouseBrainBench as the method and MICRONS as the
-  central biological case.
+- Original Research Article using Elsevier CAS single-column format;
+- double-anonymized manuscript plus a separate title page.
 
-### Ambitious Stretch Target: Nature Computational Science
+### Ambitious Alternative: Information Sciences
 
 Fit:
 
-- multidisciplinary computational science;
-- computational neuroscience explicitly in scope;
-- interested in algorithms, tools, frameworks, mathematical models, and
-  computational methods that advance scientific research.
+- JCR categories aligned with Artificial Intelligence and Information Systems;
+- intelligent systems, software tools, computational biology, and brain mapping
+  are explicitly in scope;
+- balanced theoretical and practical contributions are expected.
 
 Why it could fit:
 
-- MouseBrainBench can be framed as a general computational framework for
-  auditing partial digital-twin claims in neuroscience;
-- the paper addresses a broader problem: predictive models, digital-twin
-  language, and mechanistic claims are often conflated;
-- the MICRONS result gives a concrete real-data demonstration.
+- the non-compensatory evidence model can be generalized beyond neuroscience;
+- the formal claim contract and provenance architecture fit intelligent
+  information systems;
+- the multi-resource experiments provide a substantive validation case.
 
 Risk:
 
-- current novelty may be judged too domain-specific or insufficiently broad
-  unless we sharpen the general framework, package usability, and claim-audit
-  contribution;
-- the Sensorium official baseline remains non-Q1-qualified, so the paper should
-  not be framed as a predictive-model benchmark competition.
+- current validation remains domain-specific;
+- a submission would require additional non-neuroscience evidence or stronger
+  theory to justify general information-science significance.
 
-Use this target only if the final manuscript clearly reads as a computational
-science framework paper, not as a local analysis package.
+Use this target only after demonstrating that the framework transfers beyond
+mouse-brain datasets.
 
-### Safe Specialized Target: Neuroinformatics
+### Thematic Alternative: Neurocomputing
 
 Fit:
 
-- data structures, software tools, modeling, integration, sharing, and
-  independent evaluations of neuroscience databases/software;
-- extremely aligned with MouseBrainBench as a neuroinformatics benchmark.
+- explicitly covers neural computation, biological neural network modelling,
+  neurobiology, AI, and software environments;
+- the domain fit is stronger than EAAI, while the professional category remains
+  Computer Science, Artificial Intelligence.
 
 Why it fits:
 
-- MouseBrainBench integrates public resources and evaluates claims across
-  datasets;
-- reproducibility, software, data provenance, and tool evaluation are central.
+- the benchmark evaluates neural predictive and digital models;
+- model comparison, software, and mechanistic interpretation fit the journal.
 
 Risk:
 
-- likely less strategic if the goal is a high-impact Q1-style venue;
-- use as fallback if PLOS Computational Biology rejects on significance rather
-  than correctness.
+- reviewers may expect a new neural model or learning algorithm rather than a
+  validation framework;
+- use as the second submission route if EAAI rejects the engineering framing.
 
 ## Proposed Manuscript Structure
 
@@ -271,8 +268,8 @@ State:
 ## Immediate Writing Plan
 
 1. Create an Overleaf project named `MouseBrainBench`.
-2. Use a neutral journal template first; avoid overfitting to one journal until
-   the first full draft exists.
+2. Use the official Elsevier CAS single-column template required for the EAAI
+   submission route.
 3. Draft in this order:
    - Methods;
    - Results;

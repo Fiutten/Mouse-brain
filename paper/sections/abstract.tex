@@ -1,29 +1,33 @@
 \begin{abstract}
-Public mouse-brain resources now permit models to be evaluated against neural
-activity, predictive benchmarks, and local synaptic reconstructions. However,
-high predictive accuracy is frequently discussed together with biological
-fidelity even though prediction, reproducibility, anatomical specificity, and
-mechanistic identifiability are different properties. This paper presents
-MouseBrainBench, a reproducible framework for auditing the evidence behind
-partial digital models of the mouse brain. Its central component is a
-Mechanistic Identifiability Score (MIS) that uses non-interchangeable evidence
-blocks: reproducibility, topology specificity, and directed identifiability. A
-mechanistic claim is admitted only when every required block passes; a high
-score in one block cannot compensate for failure in another. The framework is
-evaluated through four complementary regimes. Synthetic systems with known
-ground truth test the decision rule. Allen Visual Behavior Neuropixels provides
-a real negative control, with median cross-mouse and split-half correlations of
-0.891 and 0.990 but no topology-specific advantage. Sensorium and Dynamic
-Sensorium provide predictive controls in which useful response prediction does
-not establish mechanism. MICRONS provides the main structure-function test.
-Across a discovery cohort and two non-overlapping hold-outs containing 2991
-co-registered units and 5943 connected directed pairs, connected pairs exhibit
-greater readout-location similarity than distance- and degree-matched
-non-connected pairs. The distance-matched effects are 0.0215, 0.0210, and
-0.0179, with positive unit-cluster bootstrap intervals in all cohorts. This
-association is compatible with stronger previously published MICRONS findings
-and is used as external validation, not as a new biological wiring rule. The
-results do not establish causality or a whole-brain digital twin. They show that
-MouseBrainBench can distinguish reproducible prediction from a replicated,
-local, and anatomically controlled structure-function claim.
+Artificial intelligence is increasingly used to construct predictive and
+simulation-based models of complex scientific systems. However, model
+evaluation is commonly reduced to predictive accuracy, even when the intended
+claim concerns reproducibility, structural fidelity, or mechanism. This paper
+introduces MouseBrainBench, an engineering framework for verification and
+validation of partial digital models of the mouse brain. Its contribution to
+artificial intelligence is a claim-aware benchmark architecture that represents
+prediction, reproducibility, topology specificity, directed identifiability,
+structure--function agreement, and computational cost as non-interchangeable
+evidence blocks. A Mechanistic Identifiability Score provides descriptive
+diagnostics, while a conjunctive decision rule prevents high performance in one
+block from compensating for missing evidence in another.
+
+The framework is evaluated with controlled simulations and three families of
+public data. Synthetic systems confirm that the decision rule rejects common
+drive, topology without temporal direction, and direction without
+topology-specific prediction. Allen Visual Behavior Neuropixels provides a real
+negative control: median cross-mouse and split-half correlations reach 0.891 and
+0.990, but topology-specific and directed-identifiability criteria fail. Static
+and Dynamic Sensorium demonstrate predictive gains without corresponding
+mechanistic evidence. MICRONS provides an external structure--function
+validation case. Across a discovery cohort and two non-overlapping hold-outs
+containing 2991 co-registered units and 5943 connected directed pairs,
+connected pairs exhibit greater readout-location similarity than distance- and
+degree-matched controls. Distance-matched effects are 0.0215, 0.0210, and
+0.0179, with positive unit-cluster bootstrap intervals in all cohorts.
+
+MouseBrainBench does not claim a complete or causal digital brain. It provides
+a reproducible engineering layer for deciding which claims about AI-based
+scientific models are supported, partially supported, or blocked by the
+available evidence.
 \end{abstract}
