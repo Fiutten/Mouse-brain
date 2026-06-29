@@ -1,30 +1,44 @@
 # MouseBrainBench manuscript
 
-This directory contains the working LaTeX manuscript for the MouseBrainBench
-paper. It is intentionally journal-neutral so it can be synchronized to
-Overleaf first and adapted later to PLOS Computational Biology, Nature
-Computational Science, or another target journal.
+This directory contains the manuscript targeting **PLOS Computational
+Biology** as a Research Article.
 
-## Build
+## Journal template
 
-```bash
-cd paper
-latexmk -pdf main.tex
-```
+The submission source uses the official PLOS LaTeX template:
 
-## Current target strategy
+- template version 3.8, April 2026;
+- bibliography style plos2025.bst;
+- continuous line numbering;
+- double-spaced, single-column manuscript;
+- Vancouver citation order;
+- one self-contained LaTeX manuscript, as required by PLOS.
 
-Primary realistic target: PLOS Computational Biology.
+The unmodified upstream template is retained at
+paper/template/plos_latex_template_v3.8.tex for provenance. It was downloaded
+from the official PLOS LaTeX distribution linked by the journal guidelines.
 
-Stretch target: Nature Computational Science, only if the framing is elevated
-as a broad computational-science framework for auditing partial digital-twin
-claims.
+## Building the manuscript source
 
-Specialized fallback: Neuroinformatics.
+Scientific sections remain modular during development. Generate the
+self-contained PLOS source with:
 
-## Important claim boundary
+    .venv/bin/python scripts/build_plos_manuscript.py
 
-The manuscript must not claim a complete mouse-brain digital twin. The current
-defensible contribution is a reproducible claim-audit benchmark for partial
-mouse-brain digital models, with MICRONS as the main replicated empirical
-structure-function case.
+The command expands every section and table into paper/main.tex. The generated
+file contains no LaTeX input statements and is the file compiled by Overleaf and
+submitted to PLOS.
+
+To compile in an operational TeX environment:
+
+    cd paper
+    latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+
+## Claim boundary
+
+The manuscript reports MouseBrainBench as a reproducible claim-audit framework
+for partial mouse-brain models. MICRONS is an external-validity case compatible
+with previously published structure--function findings. The manuscript does not
+claim biological priority for the MICRONS wiring rule, a complete mouse-brain
+digital twin, causal mechanism, consciousness, behavioural equivalence, or a
+state-of-the-art Sensorium predictor.

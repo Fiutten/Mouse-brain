@@ -1,0 +1,109 @@
+\section{Discussion}
+
+MouseBrainBench addresses a narrow but consequential problem: computational
+neuroscience increasingly produces models that predict neural measurements,
+while the language used to describe those models often extends to biological
+mechanism or digital-twin fidelity. The experiments show that these
+interpretations can be separated operationally. Known-truth systems expose
+which evidential component is absent, Allen preserves a strong reproducibility
+result while rejecting topology and direction, Sensorium preserves predictive
+utility while rejecting causal interpretation, and MICRONS admits a local
+structure--function association after matched controls and replication.
+
+The negative Allen result is scientifically useful. A less restrictive
+benchmark might report cross-mouse correlation of 0.891 and split-half
+correlation of 0.990 as validation of a model. MouseBrainBench instead asks
+whether the Allen-informed topology performs better than alternatives and
+whether a directed signature can be recovered. It does not. This outcome does
+not contradict the biological organization of the visual system. It identifies
+an observational limitation: repeatable population dynamics do not uniquely
+determine the graph that generated them.
+
+Sensorium illustrates a related distinction in modern Artificial Intelligence.
+Static stimulus and context models improve prediction over mean and scrambled
+controls, while temporal models and a compact neural network improve predictions
+for Dynamic Sensorium. These are valid functional results. They are not evidence
+that the architecture's internal variables correspond to synapses, cell types,
+or causal operations in the animal. Treating predictive and mechanistic scores
+as separate outputs allows the same model to be accepted for one purpose and
+rejected for another without contradiction.
+
+The bounded official Sensorium experiment also clarifies what software
+integration demonstrates. Executing an official loader and architecture verifies
+interoperability, but a restricted local training budget is not comparable with
+a published competition result. The very low bounded correlations are therefore
+neither evidence against the official architecture nor a competitive baseline.
+They document that the integration path works and that a full-budget comparison
+remains absent. This prevents an engineering smoke test from becoming an
+inflated empirical claim.
+
+The MICRONS result is the strongest positive outcome, but its novelty must be
+stated precisely. Ding et al. already demonstrated like-to-like connectivity
+with a more extensive biological analysis, including feature, receptive-field,
+and axon--dendrite geometry controls. MouseBrainBench does not improve that
+biological finding. Instead, the MICRONS experiment tests whether a compact,
+predefined audit can recover a compatible local association and preserve its
+proper scope. Replication across two non-overlapping windows and positive
+unit-cluster bootstrap intervals provide external validity for the audit
+pipeline.
+
+The effect is not causal. Readout-location similarity can covary with cortical
+area, layer, cell class, developmental organization, or unmeasured morphology.
+Distance and degree matching address two major confounds but do not exhaust the
+causal graph. In particular, the analysis does not compare axon--dendrite
+opportunity at the resolution used by Ding et al., manipulate individual
+connections, or demonstrate that the observed edges are necessary for the
+functional descriptor. The permitted interpretation is therefore a replicated
+local observational association.
+
+The current MIS should also not be treated as a universal scalar definition of
+mechanistic explanation. Its principal contribution is structural: evidence
+blocks are non-interchangeable and passage criteria are explicit. The particular
+criteria and thresholds remain claim-dependent. A molecular mechanism, a
+neural-mass model, and an individual-level behavioural twin would require
+different blocks. External preregistration and application by independent groups
+are needed before MIS can be regarded as a community standard.
+
+Conjunctive rules have an intentional cost. They reduce false promotion of
+partial evidence but can reject scientifically interesting models when one
+required measurement is unavailable. MouseBrainBench handles this by retaining
+block scores and partial-positive labels. Failure of the global decision means
+that the target claim is unsupported under the declared evidence; it does not
+mean that the model, data, or partial result is useless. This semantic discipline
+is important if the framework is to encourage stronger experiments rather than
+merely produce negative labels.
+
+The sensitivity analysis indicates that the main qualitative conclusions are
+not artifacts of one exact threshold. Allen remains negative under 25\%
+relaxation and tightening. Static Sensorium retains partial reliability and
+topographic evidence for six of nine threshold combinations, failing when the
+reliability threshold reaches 0.70. Dynamic Sensorium gains over mean response
+are more stable than gains over temporal SVD, supporting predictive utility but
+not superiority of a specific neural architecture. These patterns make the
+limitations visible instead of hiding them in a single aggregate score.
+
+Several aspects constrain generalization. MICRONS data originate from one mouse
+and a restricted visual-cortical volume. Its three cohorts are independent
+windows of units, not independent animals. Allen analyses use a controlled
+subset of available sessions. Dynamic Sensorium contains five current and five
+legacy mice in the local package. The study contains no intervention, no
+behavioural closed loop, and no longitudinal calibration of an individual
+animal. Consequently, it cannot support whole-brain, behavioural, causal, or
+consciousness claims.
+
+For PLOS Computational Biology, the value of the work depends on the framework
+being useful beyond this exact collection of analyses. The software interfaces
+are therefore organized around claims, evidence blocks, graphs, predictions,
+perturbations, and provenance rather than around hard-coded dataset names.
+External BMTK, SONATA, or The Virtual Brain simulations can be added as candidate
+models without reimplementing their numerical engines. New datasets can add
+evidence blocks while retaining the same publication-freeze contract.
+
+The next scientific step is not to increase model complexity indiscriminately.
+It is to add evidence unavailable here: independent-animal structure--function
+replication, perturbations that distinguish competing mechanisms, and
+full-budget predictive baselines. Those additions would test whether the audit
+can move from observational association towards intervention-supported
+mechanism. Until then, MouseBrainBench should be understood as a reproducible
+claim-control framework for partial mouse-brain models, not as the mouse-brain
+model itself.

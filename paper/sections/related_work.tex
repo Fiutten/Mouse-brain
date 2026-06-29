@@ -26,6 +26,15 @@ but a reference atlas is not an individual connectome. MouseBrainBench therefore
 uses atlas identity as provenance and anatomical context rather than as evidence
 that subject-specific wiring has been observed.
 
+Whole-brain axonal tracing supplies a complementary mesoscale view. The Allen
+Mouse Brain Connectivity Atlas established a brain-wide projection map
+\citep{oh2014mesoscale}, and subsequent modelling inferred connectivity at
+100-$\mu$m voxel resolution under spatial smoothness assumptions
+\citep{knox2019connectome}. These resources are indispensable for regional and
+voxel-scale models, but inferred projection strength is not a measured
+single-neuron connectome. The distinction between measured and inferred
+structure is therefore part of the provenance recorded by MouseBrainBench.
+
 Sensorium introduced a complementary evaluation regime: predicting large-scale
 neural responses to static natural images in mouse primary visual cortex
 \citep{willeke2022sensorium}. Dynamic Sensorium extended the task to videos,
@@ -66,6 +75,15 @@ network behaviour \citep{tvb2013}. These systems demonstrate that simulation
 engines, model formats, and numerical integration are already mature research
 infrastructures.
 
+Mouse-specific models further reduce the space in which a new simulator would
+be novel. The Virtual Mouse Brain extends connectome-based population dynamics
+to tracer- and imaging-derived mouse connectomes
+\citep{melozzi2017virtualmouse}. At circuit scale, the Allen V1 model integrates
+cellular, structural, and functional measurements into biophysically detailed
+and point-neuron networks \citep{billeh2020v1}. MouseBrainBench does not compete
+with either contribution; it evaluates whether outputs from such models support
+the claim attached to them.
+
 Their presence changes the novelty criterion for the present work. Rebuilding a
 spiking engine or a connectome-based neural-mass simulator would duplicate
 established technology without resolving whether the resulting output justifies
@@ -98,6 +116,13 @@ physiology can be co-registered at smaller scale \citep{bock2011network}.
 MICRONS changes the coverage of the analysis, but it does not remove the need to
 distinguish exploratory pairwise associations from independently validated
 connectivity rules.
+
+Access to a changing reconstruction introduces an additional reproducibility
+problem: cell identities and annotations can change as proofreading progresses.
+CAVE addresses this issue through versioned segmentation, materialized
+annotation snapshots, and reproducible queries \citep{dorkenwald2025cave}. For
+this reason, MouseBrainBench records the MICRONS datastack, table, and
+materialization version rather than citing a live query alone.
 
 This general biological question is not new. Ding et al. used the MICRONS
 resource to demonstrate like-to-like connectivity within and across cortical

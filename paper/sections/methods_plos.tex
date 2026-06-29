@@ -1,0 +1,257 @@
+\section{Materials and methods}
+
+\subsection{Study design and claim hierarchy}
+
+The study was designed as a methodological validation rather than as a
+competition between datasets or model architectures. Each dataset was assigned
+a role before analysis according to the observations it contains. Synthetic
+systems provide known truth; Allen Visual Behavior Neuropixels provides repeated
+population activity without individual synaptic connectivity; Sensorium
+provides standardized predictive targets; and MICRONS provides co-registered
+local anatomy and functional descriptors. These resources are therefore not
+treated as interchangeable samples from one population.
+
+A benchmark instance contains five elements: a bounded claim, observable
+quantities, required evidence blocks, decision criteria, and provenance. The
+claim is formulated before metric selection. For example, the claim that a
+specific directed topology is identifiable requires reproducibility, superiority
+over plausible alternative topologies, and a resolvable directional signature.
+By contrast, the claim that connectivity is locally associated with a functional
+descriptor requires co-registered structure and function, controls for major
+anatomical confounds, multiplicity correction, and independent replication. It
+does not require temporal direction because it is explicitly observational.
+
+The analysis follows a sequence of increasingly realistic tests. First, the
+decision rule is evaluated under known truth. Second, a real negative control
+tests whether reproducibility is incorrectly promoted to mechanism. Third,
+predictive benchmarks test whether model accuracy is kept separate from
+anatomical evidence. Finally, the MICRONS analysis tests whether the framework
+can admit a positive but bounded structure--function claim. The publication
+freeze is generated only after all component artifacts are available.
+
+\subsection{Mechanistic Identifiability Score}
+
+Let (C) be a scientific claim and let (B(C)=\{B_1,\ldots,B_m\}) be its
+required evidence blocks. Each block (B_i) contains criteria
+(c_{ij}=(x_{ij},t_{ij},d_{ij})), where (x_{ij}) is an observed statistic,
+(t_{ij}) is a fixed threshold, and (d_{ij}) specifies whether the statistic
+must be greater than, greater than or equal to, less than, or less than or equal
+to that threshold. Criterion passage is
+\[
+p_{ij}=\mathbb{I}\left[x_{ij}\ d_{ij}\ t_{ij}\right].
+\]
+For criteria requiring a larger value, the descriptive normalized score is
+(s_{ij}=\min(1,\max(0,x_{ij}/t_{ij}))). For criteria requiring a smaller
+value, the inverse ratio is used. Zero-threshold criteria receive one when they
+pass and zero otherwise.
+
+The score of block (i) is the arithmetic mean
+\[
+S_i=\frac{1}{n_i}\sum_{j=1}^{n_i}s_{ij},
+\]
+and the displayed MIS value is (M=m^{-1}\sum_i S_i). However, a block passes
+only when all of its criteria pass, (P_i=\bigwedge_j p_{ij}), and the
+mechanistic decision is
+\[
+P_{\mathrm{MIS}}=\bigwedge_{i=1}^{m}P_i.
+\]
+The continuous value (M) is diagnostic; it does not override the conjunctive
+decision. This prevents strong reproducibility from compensating for absent
+topology specificity, or strong prediction from compensating for missing
+directional evidence.
+
+The canonical implementation contains three blocks. Reproducibility assesses
+whether the empirical target is stable across animals, sessions, or independent
+partitions. Topology specificity assesses whether the proposed structure
+outperforms disconnected, permuted, transposed, or otherwise matched
+alternatives. Directed identifiability assesses whether latency, lead--lag
+organization, or an equivalent directional signature is resolved reliably. A
+dataset-specific audit can add observational structure--function criteria, but
+those criteria are not relabelled as causal directionality.
+
+\subsection{Synthetic known-truth systems}
+
+Each synthetic case contains 24 sessions, six regions, and 24 time samples. A
+regional template is generated from Gaussian temporal profiles. Directed
+latency is introduced by shifting the profile centre by 0.08 time units per
+region. Region-specific structure is introduced through systematic changes in
+amplitude and width. Session noise has standard deviation 0.08; independent
+odd/even perturbations used for split-half evaluation have standard deviation
+0.04. Fixed random seeds 11, 23, 31, and 43 identify the four cases.
+
+Reproducibility is measured as the median correlation between individual
+sessions and their mean template, median odd--even correlation, and the fraction
+of sessions exceeding the 95th percentile of 200 within-session region
+permutations. Topology specificity compares the candidate prediction with 100
+region-permuted predictions and a disconnected template. Directionality is
+measured as the fraction of regional pairs with distinct peak latencies and the
+equivalent nonzero lead--lag fraction.
+
+The four systems isolate complementary conditions. The directed-truth case
+contains all required information. The common-drive case is reproducible but has
+neither region-specific topology nor direction. The topology-without-direction
+case contains structured regional amplitudes but simultaneous temporal peaks.
+The direction-without-topology case contains staggered peaks while its candidate
+prediction is intentionally no more topology-specific than the disconnected
+alternative. Before execution, the expected decision was that only the
+directed-truth case should pass.
+
+\subsection{Allen Visual Behavior Neuropixels negative control}
+
+Allen analyses use exported population-response artifacts from Visual Behavior
+Neuropixels sessions. The reproducibility phase contains 20 successful sessions.
+The anatomical test contains 20 sessions from 20 unique mice, while the
+directional test contains 21 sessions from 19 mice. Session inclusion, regional
+aggregation, time windows, and preprocessing are fixed in the corresponding
+configuration and exported with the result artifacts.
+
+The reproducibility block requires median cross-mouse correlation greater than
+0.50, median split-half correlation greater than 0.70, and at least half of
+sessions above their own 95th-percentile null. The topology block requires an
+Allen-informed advantage greater than 0.05 over both the median permutation and
+the disconnected model, at least 95\% of permutations outperformed, and a
+positive lower bound for the paired bootstrap interval. These thresholds ask
+whether anatomical organization contributes information beyond generic regional
+dynamics.
+
+The directional block uses six criteria. Median cross-mouse latency Kendall
+correlation must exceed 0.30, median split-half latency correlation must exceed
+0.50, and at least half the sessions must exceed their own latency null. At least
+half the regional pairs must have resolvable latency, at least half the sessions
+must exceed the lead--lag null, and the median nonzero lead--lag pair fraction
+must be at least 0.25. Failure of this block does not imply absence of biological
+directionality; it means that the selected target does not resolve it under the
+specified procedure.
+
+\subsection{Static Sensorium evaluation}
+
+Static Sensorium evaluation uses seven validation mice and five mice with
+repeated test stimuli. The response of each neuron is compared with transparent
+predictors: a stimulus-independent mean response, ridge regression over stimulus
+features, and ridge regression over stimulus and behavioural context. A
+scrambled-stimulus control preserves response statistics while breaking the
+stimulus--response assignment. Pearson correlation is computed on held-out
+responses and summarized at the mouse level.
+
+Repeated stimuli provide an empirical reliability estimate. Reliability is not
+imputed for tiers without repetitions; those tiers remain informative for
+prediction but cannot pass a repeat-reliability gate. The topographic constraint
+tests whether similarity in response descriptors varies systematically with
+recorded spatial organization. Its Spearman statistic and effect over a matched
+null are reported separately from prediction because a topographic association
+does not establish synaptic connectivity or causal direction.
+
+The static benchmark is deliberately not scored as a binary model competition.
+It asks whether stimulus-aware models beat mean and scrambled controls, whether
+the response is repeatable where repetitions exist, and whether partial
+topographic evidence is present. Mechanistic passage additionally requires
+evidence unavailable in this configuration and is therefore expected to remain
+negative.
+
+\subsection{Dynamic Sensorium predictive stress test}
+
+Dynamic Sensorium uses five current public mice and five legacy
+out-of-distribution mice. Seven model families are represented in the comparator:
+mean response, summary features, temporal filterbank, temporal singular-value
+decomposition, random features, a compact PyTorch multilayer perceptron, and a
+bounded model instantiated through the official Sensorium loader and model
+factory. Predictions are paired by mouse to avoid interpreting between-animal
+differences as model effects.
+
+The transparent temporal models provide intermediate complexity between a mean
+response and a neural network. The filterbank represents finite temporal
+kernels. Temporal singular-value decomposition represents a low-rank temporal
+subspace. The random-feature model tests whether nonlinear expansion alone
+explains gains, and the multilayer perceptron tests a compact learned nonlinear
+mapping. For each mouse, the comparator reports correlation, the winning model,
+and paired differences between model families.
+
+The official architecture was trained under a bounded local budget on Apple
+Metal Performance Shaders. It verifies that the official software stack,
+dataloader, model factory, training, and evaluation can execute in the
+MouseBrainBench environment. It does not reproduce the published training
+budget or leaderboard protocol and is therefore excluded from state-of-the-art
+claims. This distinction is encoded in the audit rather than left as a narrative
+qualification.
+
+\subsection{MICRONS data acquisition and cohort construction}
+
+MICRONS data are queried from the public \texttt{minnie65\_public} CAVE stack.
+Functional descriptors come from
+\texttt{digital\_twin\_properties\_bcm\_coreg\_v4}; structural edges are
+queried at materialization version 1507. The acquisition artifact stores the
+datastack, table, materialization, query limits, offsets, source paths, and
+result counts. CAVE materializations provide a time-locked annotation state
+despite continued proofreading \citep{dorkenwald2025cave}. A CAVE token and
+acceptance of the service terms are required to reproduce remote queries.
+
+Three non-overlapping ordered windows define discovery and replication. Offset
+0 provides 1000 usable units, offset 1000 provides 992, and offset 2000 provides
+999. The windows were not pooled before evaluation. Structural queries yielded
+2267, 2161, and 2147 synapses, corresponding to 2095, 1926, and 1922 unique
+connected directed pairs. All possible directed non-self pairs form the
+candidate universe in each cohort.
+
+The primary endpoint is the similarity of the digital-twin readout-location
+descriptor for connected pairs. This endpoint was selected after the expanded
+aggregate analysis failed its distance-matched gate and was then fixed for the
+replication package. The discovery and hold-out artifacts are retained
+separately. Additional functional descriptors and anatomical strata are treated
+as secondary analyses and are not promoted to the manuscript's primary claim.
+
+\subsection{Matched controls and statistical inference}
+
+For each connected directed pair, three comparator families are constructed.
+Random non-connected pairs estimate the unconditioned contrast. Distance-matched
+non-connected pairs control for spatial separation because connection
+probability and functional organization both vary with distance. Degree-matched
+non-connected pairs control for unequal representation of neurons with many
+incoming or outgoing edges. The reported effect, (\Delta), is the connected
+pair similarity minus the corresponding control similarity.
+
+Tests are one-sided for the preregistered hypothesis that connected pairs are
+more similar than non-connected controls. The Benjamini--Hochberg procedure
+controls the false discovery rate over the family of tests within each
+stratified analysis. The primary endpoint is considered confirmed only if both
+distance- and degree-matched effects are positive after correction in discovery
+and in each hold-out cohort.
+
+Pairwise observations are dependent because one neuron contributes to many
+pairs. Confidence intervals therefore use a unit-cluster bootstrap rather than
+a naive pair bootstrap. Each of 300 samples resamples units with replacement,
+reconstructs the eligible pair set, and recomputes matched effects. Seed 71 is
+fixed in the Q1 package. The 2.5th and 97.5th percentiles of usable replicates
+form the 95\% interval.
+
+\subsection{Sensitivity, provenance, and publication freeze}
+
+Threshold sensitivity is evaluated without reselecting outcomes. Allen MIS
+criteria are multiplied by 0.75, 1.00, and 1.25. Static Sensorium reliability
+thresholds of 0.50, 0.60, and 0.70 are crossed with topographic thresholds of
+0.05, 0.10, and 0.15. Dynamic Sensorium paired gains are examined at minimum
+effects of 0, 0.002, 0.005, and 0.01. These checks determine whether the
+qualitative interpretation depends on a single boundary.
+
+The Python package separates loaders, typed schemas, connectivity, dynamics,
+simulation, validation, baseline adapters, and visualization. Benchmark commands
+write JSON and Markdown summaries containing software version, Git revision,
+inputs, sample counts, criteria, and decisions. Automated tests cover criterion
+direction, normalization, conjunctive block semantics, known-truth cases,
+dataset adapters, and publication gates.
+
+The publication-freeze command reads sealed artifacts and emits two explicit
+lists: claims supported by the current evidence and claims that remain blocked.
+It does not recalculate primary statistics or permit manual substitution of
+headline values. This design keeps manuscript language synchronized with the
+reproducible evidence package and makes any future change in claim status
+auditable.
+
+\subsection{Ethics and use of public animal data}
+
+This study performs secondary computational analyses of publicly released data
+and introduces no new animal procedures. Animal acquisition, experimental
+protocols, welfare oversight, and institutional approvals are described in the
+original Allen, Sensorium, Dynamic Sensorium, and MICRONS publications cited in
+this manuscript. MouseBrainBench operates on released recordings, metadata, and
+derived structural resources under their applicable access conditions. No
+personally identifiable human data are used.
