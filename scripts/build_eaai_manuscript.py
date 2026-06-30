@@ -111,7 +111,6 @@ def manuscript_body(*, anonymous: bool) -> str:
         read("sections/related_work.tex"),
         read("sections/framework.tex"),
         read("sections/experimental_methodology.tex"),
-        read("sections/results.tex"),
         read("sections/discussion_eaai.tex"),
         read("sections/conclusions.tex"),
     ]
@@ -145,7 +144,7 @@ def build_manuscript(*, anonymous: bool, output: Path) -> None:
     source = rf"""\documentclass[a4paper,fleqn]{{cas-sc}}
 
 \usepackage[authoryear]{{natbib}}
-\usepackage{{amsmath,amssymb,booktabs,tabularx}}
+\usepackage{{amsmath,amssymb,booktabs,tabularx,graphicx}}
 \usepackage{{url}}
 
 \journal{{Engineering Applications of Artificial Intelligence}}

@@ -1,187 +1,193 @@
-\section{Proposed framework}
+\section{MouseBrainBench framework}
+\label{sec:framework}
 
-MouseBrainBench is a claim-aware verification and validation framework for
-partial digital models of the mouse brain. It is not a neuronal simulator and
-does not replace domain infrastructures such as BMTK, SONATA, The Virtual
-Brain, Sensorium, or CAVE. These systems supply models, predictions, or data.
-MouseBrainBench supplies the engineering contract that links their outputs to a
-bounded scientific claim.
+MouseBrainBench was conceived as an engineering layer between an artificial
+intelligence model and the scientific interpretation assigned to its output. It
+does not provide another neuronal simulator, replace the data models used by
+BMTK or SONATA, or reproduce the predictive infrastructure of Sensorium.
+Instead, it formalizes the evidence contract that must be satisfied before a
+model output can support a particular claim. This distinction determines both
+the software architecture and the evaluation protocol. Models and public
+resources remain responsible for producing observations or predictions;
+MouseBrainBench records what those quantities represent, evaluates them against
+explicit alternatives, and limits the final interpretation to the evidence that
+has actually passed.
 
-\subsection{Problem formulation}
+The framework was developed from three requirements. First, heterogeneous
+resources must retain their original evidential meaning. Repeated neural
+responses, inferred mesoscale connectivity, synaptic edges, and held-out model
+predictions cannot be treated as equivalent samples merely because each can be
+represented numerically. Second, validation criteria must be
+non-compensatory. Strong predictive accuracy cannot repair the absence of
+subject-specific anatomy, and reproducibility cannot establish temporal
+direction. Third, every decision must remain traceable to the configuration,
+software version, input artifact, control model, and threshold that produced
+it. These requirements lead to the workflow summarized in
+Fig.~\ref{fig:framework-workflow}.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/framework_workflow.pdf}
+  \caption{MouseBrainBench workflow. A bounded claim is declared before model
+  evaluation. Observability determines which evidence blocks can be tested;
+  adapters then expose predictions and observations through a common audit
+  interface. The claim gate accepts an interpretation only when every required
+  block passes. Failed and unobservable blocks remain part of the result rather
+  than being hidden by an aggregate score.}
+  \label{fig:framework-workflow}
+\end{figure}
+
+\subsection{Claim representation and evidence contract}
 
 Let $\mathcal{M}$ denote a computational model, $\mathcal{D}$ an evaluation
-dataset, and $C$ a claim made about their relationship. Conventional
-benchmarking usually estimates a predictive utility
-$U(\mathcal{M},\mathcal{D})$ and ranks models using that scalar. This is
-appropriate when $C$ is limited to held-out prediction under the same
-evaluation protocol. It is insufficient when $C$ states that $\mathcal{M}$
-recovers anatomical organization, directed dynamics, or a biological mechanism.
-Several models may be predictively equivalent while encoding incompatible
-internal structures.
+dataset, and $C$ the scientific claim made about their relationship.
+Conventional benchmarking estimates a predictive utility
+$U(\mathcal{M},\mathcal{D})$ and ranks models using that scalar. This operation
+is appropriate when $C$ is restricted to held-out prediction under a fixed
+protocol. It is insufficient when the interpretation states that
+$\mathcal{M}$ reproduces anatomical organization, identifies directed
+dynamics, or represents a biological mechanism. Several models can provide
+similar predictions while encoding incompatible structures or relying on a
+common unobserved driver.
 
-MouseBrainBench represents a benchmark task as
+MouseBrainBench therefore represents an evaluation task as
 \[
-\mathcal{T} =
-\left(C,\mathcal{O},\mathcal{B},\mathcal{N},\mathcal{R},\mathcal{P}\right),
+\mathcal{T}=\left(C,\mathcal{O},\mathcal{B},\mathcal{N},\mathcal{R},\mathcal{P}\right),
 \]
-where $\mathcal{O}$ is the set of observable quantities, $\mathcal{B}$ contains
-the evidence blocks required by the claim, $\mathcal{N}$ defines null and
-alternative models, $\mathcal{R}$ contains decision rules, and $\mathcal{P}$
-records provenance. The task is valid only when every quantity needed by
-$\mathcal{B}$ is observable in $\mathcal{D}$. Missing evidence is not imputed
-from predictive performance.
+where $\mathcal{O}$ contains the observable quantities, $\mathcal{B}$ is the
+set of evidence blocks required by the claim, $\mathcal{N}$ defines the null
+and alternative models, $\mathcal{R}$ contains the decision rules, and
+$\mathcal{P}$ records provenance. A task is evaluable only when the quantities
+needed by its evidence blocks are observable in $\mathcal{D}$. The framework
+does not infer missing anatomical or interventional evidence from predictive
+performance. An unevaluable block is reported as missing evidence and the
+corresponding claim remains blocked.
 
-This formulation makes the claim an input to evaluation rather than a
-post-hoc interpretation. A Sensorium predictor can be accepted as a functional
-surrogate while being rejected as an anatomical explanation. A local MICRONS
-association can pass structure--function controls while remaining insufficient
-for a causal or whole-brain claim. The same numerical result can therefore have
-different admissible interpretations depending on $C$.
+Four claim classes are used in the present study. A \emph{predictive claim}
+states that a model improves held-out neural-response prediction over declared
+baselines. A \emph{reproducibility claim} states that an empirical target is
+stable across repeated stimuli, partitions, sessions, or animals. A
+\emph{structure--function claim} states that a structural relation remains
+associated with a functional descriptor after relevant anatomical controls. A
+\emph{mechanistic-identifiability claim} additionally requires the proposed
+topology and direction to be distinguishable from plausible alternatives.
+These classes form a partial order rather than a universal quality scale. A
+useful predictor need not recover a circuit, while a reproducible local
+structure--function association can remain weaker than intervention-supported
+causality.
 
-\subsection{Evidence blocks and non-compensatory decision}
+The scope of digital-twin terminology follows the same rule. An individual
+whole-brain twin would require entity-specific calibration, sufficiently broad
+structure and dynamics, repeated state estimation, and validation under
+perturbations. None of the datasets used here jointly provides those
+observations. Consequently, the current framework can audit partial digital
+representations, but it cannot promote them to a complete or behavioural mouse
+brain twin.
 
-An evidence block contains criteria that answer one validation question. The
-canonical configuration uses reproducibility, topology specificity, and
-directed identifiability. Predictive tasks additionally report held-out
-accuracy, out-of-distribution performance, and empirical reliability.
-Structure--function tasks introduce matched anatomical controls and independent
-replication. Computational cost is recorded as an engineering property but does
-not substitute for biological evidence.
+\subsection{Non-compensatory decision model}
 
-For criterion $j$ in block $i$, let $x_{ij}$ be the observed value,
-$t_{ij}$ its fixed threshold, and $d_{ij}$ the comparison direction. Criterion
-passage is
+Each evidence block answers one validation question. The canonical mechanistic
+configuration contains reproducibility, topology specificity, and directed
+identifiability. Predictive evaluations add held-out performance, empirical
+reliability, and out-of-distribution behaviour. Local structure--function
+evaluations use matched anatomical controls, multiplicity correction, and
+independent replication. Computational cost is recorded as an engineering
+property but cannot substitute for biological evidence.
+
+For criterion $j$ in block $i$, let $x_{ij}$ be the observed value, $t_{ij}$
+its fixed threshold, and $d_{ij}$ the comparison direction. Criterion passage
+is
 \[
 p_{ij}=\mathbb{I}\!\left[x_{ij}\ d_{ij}\ t_{ij}\right].
 \]
-For a criterion requiring a value larger than its threshold, the normalized
+For a criterion that requires a value larger than its threshold, the normalized
 diagnostic score is
 \[
 s_{ij}=\min\!\left(1,\max\!\left(0,\frac{x_{ij}}{t_{ij}}\right)\right).
 \]
-The inverse ratio is used when smaller values provide stronger evidence.
-Zero-threshold criteria receive one when they pass and zero otherwise.
-
-The descriptive score of evidence block $i$ is
+The inverse ratio is used when smaller values provide stronger evidence, while
+zero-threshold criteria receive one when they pass and zero otherwise. The
+descriptive score of block $i$ is
 \[
 S_i=\frac{1}{n_i}\sum_{j=1}^{n_i}s_{ij},
 \]
-whereas block passage is $P_i=\bigwedge_j p_{ij}$. For $m$ blocks, the reported
-Mechanistic Identifiability Score (MIS) is
+whereas block passage is $P_i=\bigwedge_j p_{ij}$. For $m$ required blocks,
+the Mechanistic Identifiability Score (MIS) and final decision are
 \[
 M=\frac{1}{m}\sum_{i=1}^{m}S_i,
-\]
-and the claim decision is
-\[
+\qquad
 P_{\mathrm{MIS}}=\bigwedge_{i=1}^{m}P_i.
 \]
 
-The separation between $M$ and $P_{\mathrm{MIS}}$ is intentional. $M$ helps
-locate weak blocks and compare sensitivity scenarios, but it is not an additive
-currency. Reproducibility cannot compensate for a topology that performs like a
-permuted graph. Directed timing cannot compensate for failure to distinguish
-the proposed regional organization. This non-compensatory behavior differentiates
-the framework from a weighted average in which unrelated evidence can cancel
-out.
+The distinction between $M$ and $P_{\mathrm{MIS}}$ is central to the method.
+The continuous value locates weak blocks and supports threshold-sensitivity
+analysis, but it is not evidence that can be exchanged across blocks. A high
+reproducibility score cannot compensate for a topology that performs like a
+permuted graph; similarly, a resolvable lead--lag signature cannot compensate
+for failure to distinguish the proposed regional organization. The categorical
+decision is therefore conjunctive, while the score remains diagnostic. This
+prevents the numerical average from becoming an unsupported ranking of
+mechanistic truth.
 
-\subsection{Claim classes}
+Null models are selected according to the claim. Permuted and disconnected
+graphs test whether organization contributes beyond generic activity.
+Transposed graphs test direction when the observable temporal resolution makes
+that comparison meaningful. Mean-response, scrambled-stimulus, and transparent
+temporal baselines test predictive value. Random, distance-matched, and
+degree-matched non-connected pairs test local structure--function associations.
+A null model is not considered adequate merely because it is computationally
+convenient; it must remove the property under examination while preserving the
+main nuisance structure that could otherwise explain the effect.
 
-MouseBrainBench distinguishes four claim classes used in this study. A
-\emph{predictive claim} states that a model improves held-out neural-response
-prediction over specified baselines. A \emph{reproducibility claim} states that
-the target or effect is stable across repeated stimuli, sessions, animals, or
-partitions. A \emph{structure--function claim} states that a structural relation
-is associated with a functional descriptor after declared anatomical controls.
-A \emph{mechanistic-identifiability claim} additionally requires that the
-proposed topology and direction can be distinguished from plausible
-alternatives.
+\subsection{Software architecture, construction, and execution workflow}
 
-These classes form a partial order rather than a linear quality scale.
-Mechanistic identifiability requires reproducible observations, but useful
-prediction does not automatically imply structural fidelity. A
-structure--function association can be stronger than an uncontrolled
-correlation and still weaker than intervention-supported causality. The audit
-preserves these intermediate outcomes instead of forcing every benchmark into a
-binary useful/useless label.
+The implementation follows the six stages shown in
+Fig.~\ref{fig:framework-workflow}. A configuration first declares the claim,
+target scale, required evidence blocks, thresholds, and permitted conclusions.
+Typed data schemas then describe regions, observations, predictions,
+connectivity, subject identifiers, and provenance. Dataset adapters convert
+Allen, Sensorium, Dynamic Sensorium, and MICRONS artifacts into those schemas
+without erasing source-specific metadata. Model adapters expose outputs from
+transparent baselines or external software through the same evaluation
+interface. The validation layer computes metrics and null comparisons; the
+claim gate evaluates each criterion and produces both a diagnostic report and a
+bounded interpretation.
 
-The framework also defines blocked claim classes. Whole-brain digital-twin
-claims require evidence across brain-wide structure, dynamics, calibration, and
-perturbation that none of the local resources used here jointly provide.
-Behavioural-twin claims require closed-loop or task-level validation.
-Consciousness claims have no operational target in the present system. Blocking
-these statements is a validation result, not a software limitation disguised as
-future functionality.
+This separation was introduced incrementally. The first implementation
+established common schemas, deterministic simulation runners, and basic
+anatomical and predictive metrics. Known-truth systems were then added to test
+the semantics of the decision rule before real data were admitted. Allen and
+Sensorium adapters introduced repeated observations, subject-level partitions,
+and predictive baselines. The MICRONS adapter added versioned CAVE queries,
+pair construction, anatomical matching, false-discovery-rate correction, and
+unit-cluster bootstrap inference. At each stage, a component was retained only
+when its output could be traced to a public resource or a deterministic
+synthetic generator.
 
-\subsection{Software architecture}
+The resulting package separates data loaders, atlas and connectivity utilities,
+dynamics, simulation, perturbations, validation metrics, baseline adapters,
+visualization, and benchmark commands. This modularity is functional rather
+than cosmetic. A new simulator can be connected through an adapter without
+changing the definition of a claim; a new dataset can supply additional
+observables without redefining how existing evidence blocks pass; and a new
+criterion can be introduced without altering archived outcomes. External tools
+therefore remain responsible for simulation or prediction, while
+MouseBrainBench controls evaluation semantics.
 
-The implementation follows a layered architecture. The data layer contains
-source-specific loaders, typed schemas, cache policies, and provenance records.
-The representation layer maps regions, neurons, functional units, directed
-edges, stimuli, and responses into stable Python objects. The model layer
-contains transparent dynamics and adapters for external predictors. The
-validation layer implements reliability, anatomical, functional, perturbation,
-cost, and MIS metrics. The orchestration layer executes benchmark plans and
-freezes their claim status.
+Each benchmark command writes a machine-readable artifact containing the
+software revision, configuration, input identifiers, sample counts, random
+seeds, thresholds, statistics, criterion directions, block decisions, and final
+interpretation. A publication-freeze command reads those sealed artifacts and
+emits two explicit lists: claims supported by the current evidence and claims
+that remain blocked. It does not recalculate primary statistics or permit
+manual replacement of headline values. This design makes the connection between
+reported results and executable evidence auditable and prevents later narrative
+changes from silently modifying the computational conclusion.
 
-Adapters isolate external ecosystems from the benchmark core. Allen exporters
-convert sessions into normalized analysis artifacts. Sensorium adapters expose
-static and dynamic predictors through a common response contract. CAVE adapters
-query materialized MICRONS tables and preserve datastack and materialization
-identifiers. BMTK and TVB adapters are reserved for external simulation outputs;
-the framework does not reimplement their numerical engines.
-
-Each benchmark command writes a machine-readable JSON artifact and a
-human-readable Markdown summary. Artifacts contain the software version, Git
-revision, configuration, source identifiers, cohort size, random seed, metrics,
-thresholds, block decisions, and final interpretation. A result can therefore
-be traced from a manuscript statement to the exact data and code state that
-generated it.
-
-\subsection{Null models and controls}
-
-Null models are part of the task definition. Region permutations test whether a
-candidate organization contributes more than label assignment. Disconnected
-models test whether interactions add information beyond independent regional
-dynamics. Scrambled-stimulus controls break stimulus--response correspondence
-while preserving marginal statistics. Distance-matched MICRONS controls account
-for spatial embedding, and degree-matched controls account for unequal
-representation of highly connected neurons.
-
-Controls are selected according to the confound addressed by the claim. Passing
-a weak random null does not imply passage of a stronger matched null. This
-principle is visible in the MICRONS experiments: an aggregate effect passes
-random and degree controls but fails distance matching, forcing the claim to
-remain negative until a stratified endpoint replicates under both controls.
-
-\subsection{Publication freeze and traceability}
-
-The final engineering component is the publication freeze. It reads sealed
-benchmark artifacts and produces explicit lists of admitted, partially
-supported, and blocked claims. It does not recompute results or permit manual
-replacement of headline metrics. Manuscript assertions are generated from this
-contract, reducing the risk that exploratory findings are promoted during
-writing.
-
-The freeze also reports incomplete baselines and external dependencies. For
-example, successful execution of a bounded official Sensorium model is recorded,
-but the state-of-the-art claim remains blocked because the published training
-budget and leaderboard protocol were not reproduced. This distinction allows
-engineering integration to be documented without treating it as empirical
-equivalence.
-
-\subsection{Evidential role of each dataset}
-
-No available resource contains every observation required for a complete
-digital-twin claim. Synthetic systems test decision logic under known truth.
-Allen provides standardized, multi-animal neural activity and a negative
-mechanistic control. Static and Dynamic Sensorium provide modern predictive
-tasks. MICRONS provides local co-registered structure and function. Their roles
-are complementary rather than interchangeable.
-
-Table~\ref{tab:dataset-roles} summarizes this design. A negative MIS result for
-Allen or Sensorium does not imply low dataset quality. It states that the
-particular observations used here do not identify the stronger mechanism. The
-MICRONS result is positive only for a local observational association and does
-not upgrade the other datasets or the complete system to a digital twin.
-
-\input{tables/dataset_roles}
+The same architecture also explains the role of each dataset. Synthetic systems
+test decision logic under known truth. Allen provides a reproducible real-data
+negative mechanistic control. Static and Dynamic Sensorium test whether modern
+predictive gains remain separated from anatomical and causal claims. MICRONS
+provides co-registered local structure and function for a bounded positive
+association. These resources are complementary observations in one audit, not
+interchangeable evidence for a single brain model.
