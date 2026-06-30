@@ -111,17 +111,20 @@ def manuscript_body(*, anonymous: bool) -> str:
 {body}
 
 \section{{Data and code availability}}
+\label{{sec:data-code-availability}}
 {availability} Raw public datasets are not redistributed. Data acquisition
 commands preserve public source identifiers and application programming
 interface queries where licenses permit. MICRONS CAVE access requires a
 personal token and acceptance of the service terms.
 
 \section{{Declaration of competing interest}}
+\label{{sec:competing-interest}}
 The author declares no known competing financial interests or personal
 relationships that could have appeared to influence the work reported in this
 paper.
 
 \section{{Acknowledgements}}
+\label{{sec:acknowledgements}}
 The author acknowledges the Allen Institute, the Sensorium and Dynamic
 Sensorium teams, the MICRONS Consortium, and the CAVE infrastructure for making
 the resources used in this study accessible.

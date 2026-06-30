@@ -24,6 +24,7 @@ unsupported interpretation. The experiments therefore contain both passage and
 failure by design.
 
 \subsection{RQ1: known-truth recovery and the Allen negative control}
+\label{subsec:rq1-known-truth-allen}
 
 The first part of RQ1 uses four controlled systems containing 24 sessions, six
 regions, and 24 temporal samples per session. Regional activity is generated
@@ -99,6 +100,7 @@ synthetic systems, and resists promoting highly reproducible real observations
 to a mechanism.
 
 \subsection{RQ2: predictive evidence in Static and Dynamic Sensorium}
+\label{subsec:rq2-sensorium}
 
 Static Sensorium was evaluated on seven validation mice and five mice with
 repeated test stimuli. Neural responses were compared with a
@@ -167,7 +169,44 @@ It identifies when a neural model improves a transparent baseline and when that
 gain becomes marginal after a stronger temporal comparison. None of these
 results is allowed to satisfy the missing synaptic or interventional evidence.
 
+The robustness and ablation analyses in Fig.~\ref{fig:sensitivity-ablation}
+examine whether these decisions depend on a single favourable threshold or on a
+weak comparator. For Allen, multiplying every criterion threshold by 0.75,
+1.00, or 1.25 leaves the block pattern unchanged: reproducibility passes while
+topology and direction fail. For Static Sensorium, the topographic criterion
+passes throughout the tested range, whereas the combined partial-positive gate
+fails when required reliability rises from 0.60 to 0.70. The boundary is thus
+attributable to empirical response reliability rather than to re-selection of
+the topographic effect.
+
+\begin{center}
+\begin{minipage}{0.98\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{figures/sensitivity_ablation.pdf}
+  \captionof{figure}{Sensitivity and ablation analysis generated from the
+  sealed benchmark artifacts. (a) Allen block decisions under global criterion
+  multipliers. (b) Static Sensorium partial-positive decisions across
+  reliability and topographic thresholds. (c) Number of Dynamic Sensorium mice
+  for which the MLP exceeds the mean-response or temporal-SVD comparator as the
+  required correlation gain increases. Solid lines denote the current cohort
+  and dashed lines the legacy out-of-distribution cohort.}
+  \label{fig:sensitivity-ablation}
+\end{minipage}
+\end{center}
+
+The Dynamic Sensorium panel provides an ablation over comparator strength and
+minimum effect. At zero or 0.002 required gain, the MLP exceeds temporal SVD in
+three of five mice in each cohort; at 0.005 this falls to two mice, and at 0.010
+to one. By contrast, gains over mean response remain in four or five mice over
+the same range. The apparent neural-network advantage is therefore robust to a
+weak baseline but not to a stronger temporal decomposition. This result is not
+used to reject the MLP. It establishes the narrower conclusion that model
+complexity alone is not the source of the predictive evidence and that claims
+of architectural superiority depend materially on the comparator and minimum
+effect selected.
+
 \subsection{RQ3: MICRONS structure--function validation and cross-regime synthesis}
+\label{subsec:rq3-microns}
 
 MICRONS supplies the local co-registration required for a positive
 structure--function test. Data were queried from the public

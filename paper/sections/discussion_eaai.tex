@@ -1,4 +1,5 @@
 \section{Discussion}
+\label{sec:discussion}
 
 MouseBrainBench addresses a narrow but consequential problem: computational
 neuroscience increasingly produces models that predict neural measurements,
@@ -9,6 +10,58 @@ which evidential component is absent, Allen preserves a strong reproducibility
 result while rejecting topology and direction, Sensorium preserves predictive
 utility while rejecting causal interpretation, and MICRONS admits a local
 structure--function association after matched controls and replication.
+
+\subsection{Comparison with existing benchmark and validation paradigms}
+\label{subsec:benchmark-comparison}
+
+MouseBrainBench differs from predictive neuroscience benchmarks primarily in
+its unit of evaluation. Sensorium evaluates a model on a defined prediction
+task and provides a common basis for comparing architectures. That design is
+appropriate for determining which predictor generalizes better under the
+competition protocol \citep{willeke2022sensorium,turishcheva2023dynamic}.
+MouseBrainBench instead evaluates the relationship between an empirical result
+and the interpretation attached to it. Predictive correlation is retained as
+one observation, but the benchmark instance also records whether repeated
+responses are reliable, whether a proposed topology outperforms plausible
+alternatives, and whether directional or interventional information is
+observable. Consequently, the framework does not replace a leaderboard; it
+determines which conclusions may legitimately be exported from one.
+
+The distinction from simulation infrastructures is equally important. BMTK,
+SONATA-compatible workflows, The Virtual Brain, and The Virtual Mouse Brain
+provide mature mechanisms for constructing networks, executing dynamics, and
+exchanging model descriptions \citep{dai2020bmtk,tvb2013,melozzi2017virtualmouse}.
+Their central engineering object is an executable model. The central object in
+MouseBrainBench is an evidence contract. A simulator can therefore be connected
+as a candidate model without reproducing its numerical engine, but successful
+execution is not itself treated as biological validation. Model outputs must
+still be compared with observables, controls, and independent data appropriate
+to the proposed claim.
+
+This position is consistent with the broader verification, validation, and
+uncertainty-quantification literature, which treats model credibility as
+purpose-dependent rather than absolute \citep{riedmaier2021vvuq}. Digital-twin
+credibility frameworks similarly emphasize intended use, lifecycle evidence,
+data provenance, and uncertainty rather than assuming that the twin label
+guarantees fidelity \citep{shao2022credibility}. MouseBrainBench contributes a
+domain-specific operationalization for AI-based neural models: it maps purpose
+to required evidence blocks, makes those blocks non-interchangeable, and binds
+the reported interpretation to sealed computational artifacts. It does not yet
+provide a complete uncertainty-quantification treatment of parameters and
+model form; instead, threshold sensitivity, matched nulls, clustered intervals,
+and hold-out replication cover the uncertainties directly estimable from the
+present resources.
+
+Four practical properties therefore delimit the methodological contribution.
+First, the benchmark compares claims rather than forcing heterogeneous models
+onto one scalar leaderboard. Second, evidence types retain their semantics:
+prediction, reproducibility, topology, direction, and structure--function
+association cannot compensate for one another. Third, failed criteria remain
+publishable outputs, making negative controls part of validation rather than
+discarded development information. Fourth, the publication freeze joins
+software revision, data identifiers, thresholds, and admissible language. No
+single property is unprecedented in isolation; the contribution lies in their
+executable combination across predictive, simulation, and connectomic regimes.
 
 The negative Allen result is scientifically useful. A less restrictive
 benchmark might report cross-mouse correlation of 0.891 and split-half
@@ -56,6 +109,65 @@ connections, or demonstrate that the observed edges are necessary for the
 functional descriptor. The permitted interpretation is therefore a replicated
 local observational association.
 
+\subsection{Threats to validity and transfer beyond the mouse brain}
+\label{subsec:validity-transfer}
+
+The first threat concerns construct validity. MIS operationalizes mechanistic
+identifiability through evidence blocks selected for the claim, but these blocks
+are not a universal definition of mechanism. Latency and lead--lag information
+are meaningful for the regional temporal systems examined here, whereas a
+molecular pathway, a biophysical cell model, or a behavioural controller would
+require different observables and alternatives. A passing decision means that
+the declared operational criteria have been satisfied; it does not establish
+that every scientifically plausible mechanism has been excluded. This is why
+the continuous MIS value is diagnostic and why the categorical interpretation
+must always be read together with the contract.
+
+Internal validity is limited by the controls that can be constructed from each
+resource. Permutations and disconnected models remove selected organizational
+properties but cannot represent every latent circuit compatible with Allen
+population activity. In MICRONS, distance and degree matching substantially
+improve on random-pair comparison, yet cell class, laminar position, cortical
+area, morphology, developmental lineage, and axon--dendrite opportunity may
+still confound functional similarity. The aggregate analysis demonstrates the
+importance of this issue: a positive random-pair contrast disappeared after
+distance matching. The narrower replicated endpoint reduces the overclaim but
+does not turn an observational association into a causal effect.
+
+Statistical conclusion validity is constrained by the number and independence
+of biological units. Pairwise MICRONS observations share neurons, so the study
+uses unit-cluster rather than naive pair bootstrap intervals. Nevertheless, the
+three cohorts are disjoint windows from one animal, not independent biological
+replicates. Dynamic Sensorium comparisons contain five mice per cohort; win
+counts and medians are consequently more informative than asymptotic claims.
+The sensitivity analysis reduces dependence on one threshold, but its tested
+grid is finite and does not replace external preregistration. Multiple
+descriptor and stratum tests are false-discovery-rate corrected, while the main
+claim is restricted to the fixed endpoint replicated in both hold-outs.
+
+External validity is bounded by species, brain area, task, and measurement
+modality. Allen and Sensorium emphasize the mouse visual system; MICRONS covers
+a restricted visual-cortical volume from one mouse, and the Allen experiments
+use controlled subsets of the available sessions. The framework has not been
+validated on subcortical circuits, longitudinal disease trajectories, freely
+moving behaviour, closed-loop perturbation, or individual calibration across
+modalities. These omissions directly block whole-brain and individual-twin
+claims. They also mean that the current thresholds should not be transferred
+unchanged to a different species or recording technology.
+
+What can transfer is the evaluation grammar. A domain outside mouse neuroscience
+can define a target claim, list the quantities that make it observable, specify
+non-compensatory evidence blocks, construct claim-relevant alternatives, and
+seal the resulting decision with provenance. In human neuroimaging, for
+example, subject-level calibration and test--retest reliability might replace
+session-level criteria, while interventions may remain unavailable. In
+manufacturing, sensor calibration, operating-envelope coverage, and uncertainty
+propagation would become mandatory blocks. In climate or physiological models,
+conservation laws and out-of-regime validation could replace synaptic topology.
+The software interfaces can represent these contracts, but scientific validity
+still requires domain experts to justify the observables, controls, thresholds,
+and consequences of failure.
+
 The current MIS should also not be treated as a universal scalar definition of
 mechanistic explanation. Its principal contribution is structural: evidence
 blocks are non-interchangeable and passage criteria are explicit. The particular
@@ -81,15 +193,6 @@ reliability threshold reaches 0.70. Dynamic Sensorium gains over mean response
 are more stable than gains over temporal SVD, supporting predictive utility but
 not superiority of a specific neural architecture. These patterns make the
 limitations visible instead of hiding them in a single aggregate score.
-
-Several aspects constrain generalization. MICRONS data originate from one mouse
-and a restricted visual-cortical volume. Its three cohorts are independent
-windows of units, not independent animals. Allen analyses use a controlled
-subset of available sessions. Dynamic Sensorium contains five current and five
-legacy mice in the local package. The study contains no intervention, no
-behavioural closed loop, and no longitudinal calibration of an individual
-animal. Consequently, it cannot support whole-brain, behavioural, causal, or
-consciousness claims.
 
 For an engineering contribution in artificial intelligence, the value of the
 work depends on the framework being useful beyond this exact collection of
