@@ -33,44 +33,45 @@ def _arrow(ax, start: tuple[float, float], end: tuple[float, float]) -> None:
 
 def build_framework_workflow() -> None:
     """Render the claim-aware evaluation workflow and its decision boundary."""
-    fig, ax = plt.subplots(figsize=(7.2, 5.3))
+    fig, ax = plt.subplots(figsize=(7.4, 3.35))
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
 
-    _box(ax, 0.04, 0.72, 0.25, 0.17, "1. Define claim",
-         "Class and target entity\nScale and permitted scope", facecolor="#e8f1f8")
-    _box(ax, 0.375, 0.72, 0.25, 0.17, "2. Check observability",
-         "Required quantities\nCoverage and provenance", facecolor="#eef2f7")
-    _box(ax, 0.71, 0.72, 0.25, 0.17, "3. Configure evidence",
-         "Blocks, thresholds and nulls\nHold-outs and cost metrics", facecolor="#eef2f7")
-    _arrow(ax, (0.29, 0.805), (0.375, 0.805))
-    _arrow(ax, (0.625, 0.805), (0.71, 0.805))
+    columns = [0.025, 0.27, 0.515, 0.76]
+    width = 0.205
+    top = 0.47
+    height = 0.36
+    _box(ax, columns[0], top, width, height, "1. CLAIM CONTRACT",
+         "Claim class\nTarget entity and scale\nPermitted interpretation",
+         facecolor="#e8f1f8", edgecolor="#315f7d")
+    _box(ax, columns[1], top, width, height, "2. EVIDENCE DESIGN",
+         "Observable quantities\nBlocks and thresholds\nNulls and hold-outs",
+         facecolor="#eef2f7")
+    _box(ax, columns[2], top, width, height, "3. EXECUTION",
+         "Dataset/model adapters\nMetrics and controls\nConjunctive block gates",
+         facecolor="#e9f5ef", edgecolor="#39705a")
+    _box(ax, columns[3], top, width, height, "4. DECISION ARTIFACT",
+         "Admitted claims\nBlocked claims\nVersioned provenance",
+         facecolor="#f3f0e8", edgecolor="#796b40")
+    for left in columns[:-1]:
+        _arrow(ax, (left + width, top + height / 2),
+               (left + width + 0.04, top + height / 2))
 
-    _box(ax, 0.04, 0.39, 0.25, 0.18, "4. Execute adapters",
-         "Synthetic and public data\nBaselines and external models", facecolor="#eef2f7")
-    _box(ax, 0.375, 0.39, 0.25, 0.18, "5. Evaluate blocks",
-         "Prediction and reliability\nTopology, direction, structure", facecolor="#e9f5ef")
-    _box(ax, 0.71, 0.39, 0.25, 0.18, "6. Apply claim gate",
-         "All required blocks must pass\nMissing data cannot compensate", facecolor="#e9f5ef")
-    _arrow(ax, (0.835, 0.72), (0.835, 0.60))
-    _arrow(ax, (0.71, 0.48), (0.625, 0.48))
-    _arrow(ax, (0.375, 0.48), (0.29, 0.48))
-
-    _box(ax, 0.12, 0.08, 0.31, 0.17, "Admitted interpretation",
-         "Bounded claim supported by\na complete evidence contract",
+    _box(ax, 0.085, 0.06, 0.34, 0.22, "ADMITTED",
+         "Every required evidence block passes\nfor the declared scope",
          facecolor="#e4f3e9", edgecolor="#26734d")
-    _box(ax, 0.57, 0.08, 0.31, 0.17, "Blocked interpretation",
-         "Failed or unobserved blocks\nremain explicit limitations",
+    _box(ax, 0.575, 0.06, 0.34, 0.22, "BLOCKED OR PARTIAL",
+         "Failed or unobserved blocks remain\nexplicit; scores cannot compensate",
          facecolor="#faeceb", edgecolor="#a53b32")
-    _arrow(ax, (0.50, 0.39), (0.275, 0.25))
-    _arrow(ax, (0.50, 0.39), (0.725, 0.25))
+    _arrow(ax, (columns[3] + width / 2, top), (0.745, 0.28))
+    _arrow(ax, (columns[3] + width / 2, top), (0.255, 0.28))
 
-    ax.text(0.5, 0.965, "MouseBrainBench claim-aware verification and validation workflow",
-            ha="center", va="top", fontsize=9.5, fontweight="bold", color="#111827")
-    ax.text(0.5, 0.925,
-            "The claim is configured before evaluation; the final decision preserves failed evidence blocks.",
-            ha="center", va="top", fontsize=7.2, color="#4b5563")
+    ax.text(0.5, 0.985, "Claim-aware evaluation architecture",
+            ha="center", va="top", fontsize=10.5, fontweight="bold", color="#111827")
+    ax.text(0.5, 0.90,
+            "Models and datasets enter through adapters; interpretation is controlled by the declared evidence contract.",
+            ha="center", va="top", fontsize=7.3, color="#4b5563")
 
     OUTPUT.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUTPUT / "framework_workflow.pdf", bbox_inches="tight", pad_inches=0.05)

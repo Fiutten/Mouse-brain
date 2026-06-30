@@ -1,7 +1,7 @@
 \documentclass[a4paper,fleqn]{cas-sc}
 
 \usepackage[authoryear]{natbib}
-\usepackage{amsmath,amssymb,booktabs,tabularx,graphicx}
+\usepackage{amsmath,amssymb,booktabs,tabularx,graphicx,float}
 \usepackage{url}
 
 \journal{Engineering Applications of Artificial Intelligence}
@@ -58,14 +58,6 @@ a reproducible engineering layer for deciding which claims about AI-based
 scientific models are supported, partially supported, or blocked by the
 available evidence.
 \end{abstract}
-
-\begin{highlights}
-\item A claim-aware benchmark separates prediction from mechanistic evidence.
-\item Conjunctive evidence gates prevent compensation across validation criteria.
-\item Allen and Sensorium expose reproducible or predictive non-mechanistic cases.
-\item A MICRONS endpoint replicates across two non-overlapping hold-out cohorts.
-\item Decisions remain linked to versioned artifacts and explicitly blocked claims.
-\end{highlights}
 
 \begin{keywords}
 artificial intelligence validation \sep scientific machine learning \sep
@@ -385,7 +377,7 @@ software version, input artifact, control model, and threshold that produced
 it. These requirements lead to the workflow summarized in
 Fig.~\ref{fig:framework-workflow}.
 
-\begin{figure}[t]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth]{figures/framework_workflow.pdf}
   \caption{MouseBrainBench workflow. A bounded claim is declared before model

@@ -75,14 +75,6 @@ mouse brain}}
 {abstract_body()}
 \end{{abstract}}
 
-\begin{{highlights}}
-\item A claim-aware benchmark separates prediction from mechanistic evidence.
-\item Conjunctive evidence gates prevent compensation across validation criteria.
-\item Allen and Sensorium expose reproducible or predictive non-mechanistic cases.
-\item A MICRONS endpoint replicates across two non-overlapping hold-out cohorts.
-\item Decisions remain linked to versioned artifacts and explicitly blocked claims.
-\end{{highlights}}
-
 \begin{{keywords}}
 artificial intelligence validation \sep scientific machine learning \sep
 digital twins \sep computational neuroscience \sep benchmarking \sep
@@ -144,7 +136,7 @@ def build_manuscript(*, anonymous: bool, output: Path) -> None:
     source = rf"""\documentclass[a4paper,fleqn]{{cas-sc}}
 
 \usepackage[authoryear]{{natbib}}
-\usepackage{{amsmath,amssymb,booktabs,tabularx,graphicx}}
+\usepackage{{amsmath,amssymb,booktabs,tabularx,graphicx,float}}
 \usepackage{{url}}
 
 \journal{{Engineering Applications of Artificial Intelligence}}
@@ -202,13 +194,34 @@ digital twins \sep computational neuroscience \sep benchmarking
     (PAPER / "title-page.tex").write_text(normalize(source), encoding="utf-8")
 
 
+def build_highlights() -> None:
+    """Create the separate highlights file requested by Elsevier submissions."""
+    source = r"""\documentclass[a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\pagestyle{empty}
+\begin{document}
+\section*{Highlights}
+\begin{itemize}
+\item A claim-aware benchmark separates prediction from mechanistic evidence.
+\item Conjunctive evidence gates prevent compensation across validation criteria.
+\item Allen and Sensorium expose reproducible or predictive non-mechanistic cases.
+\item A MICRONS endpoint replicates across two non-overlapping hold-out cohorts.
+\item Decisions remain linked to versioned artifacts and explicitly blocked claims.
+\end{itemize}
+\end{document}
+"""
+    (PAPER / "highlights.tex").write_text(normalize(source), encoding="utf-8")
+
+
 def main() -> None:
     build_manuscript(anonymous=False, output=PAPER / "main.tex")
     build_manuscript(anonymous=True, output=PAPER / "main_anonymous.tex")
     build_title_page()
+    build_highlights()
     print(PAPER / "main.tex")
     print(PAPER / "main_anonymous.tex")
     print(PAPER / "title-page.tex")
+    print(PAPER / "highlights.tex")
 
 
 if __name__ == "__main__":
