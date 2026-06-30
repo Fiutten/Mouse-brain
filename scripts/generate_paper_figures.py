@@ -51,7 +51,7 @@ def build_framework_workflow() -> None:
     _box(ax, columns[2], top, width, height, "3. EXECUTION",
          "Dataset/model adapters\nMetrics and controls\nConjunctive block gates",
          facecolor="#e9f5ef", edgecolor="#39705a")
-    _box(ax, columns[3], top, width, height, "4. DECISION ARTIFACT",
+    _box(ax, columns[3], top, width, height, "4. DECISION",
          "Admitted claims\nBlocked claims\nVersioned provenance",
          facecolor="#f3f0e8", edgecolor="#796b40")
     for left in columns[:-1]:

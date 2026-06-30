@@ -102,16 +102,16 @@
     { 
       \setcounter{page}{0}
       \thispagestyle{empty}
-      \unvbox\casgrabsbox  
+      \unvbox\casgrabsbox
+      \pagebreak
     } { }  
-  \pagebreak  
   \ifbool { usecashlsbox }
     { 
       \setcounter{page}{0}
       \thispagestyle{empty}
       \unvbox\casauhlbox
-    } { }    
-  \pagebreak  
+      \pagebreak
+    } { }
   \thispagestyle{first}
   \ifbool{longmktitle}
   {
@@ -185,5 +185,4 @@
 %
 % End of class 'cas-sc'
 %
-
 
