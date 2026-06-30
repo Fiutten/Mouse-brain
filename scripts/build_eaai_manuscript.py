@@ -38,12 +38,14 @@ def normalize(text: str) -> str:
 
 def frontmatter(*, anonymous: bool) -> str:
     if anonymous:
+        short_author = "Anonymous"
         author = r"""
 \author[1]{Anonymous Author}
 \affiliation[1]{organization={Affiliation withheld for double-anonymized review},
                 country={}}
 """
     else:
+        short_author = r"Fern\'andez-Isabel"
         author = r"""
 \author[1]{Alberto Fern\'andez-Isabel}
 \cormark[1]
@@ -61,7 +63,7 @@ editing, Project administration}
 """
     return rf"""
 \shorttitle{{Claim-aware validation of mouse-brain digital models}}
-\shortauthors{{Fern\'andez-Isabel}}
+\shortauthors{{{short_author}}}
 
 \title[mode=title]{{MouseBrainBench: Claim-aware verification and validation of
 artificial intelligence models for partial digital representations of the
@@ -140,9 +142,9 @@ the resources used in this study accessible.
 
 
 def build_manuscript(*, anonymous: bool, output: Path) -> None:
-    source = rf"""\documentclass[a4paper,fleqn,longmktitle]{{cas-sc}}
+    source = rf"""\documentclass[a4paper,fleqn]{{cas-sc}}
 
-\usepackage[authoryear,longnamesfirst]{{natbib}}
+\usepackage[authoryear]{{natbib}}
 \usepackage{{amsmath,amssymb,booktabs,tabularx}}
 \usepackage{{url}}
 
@@ -166,7 +168,7 @@ def build_manuscript(*, anonymous: bool, output: Path) -> None:
 
 def build_title_page() -> None:
     source = r"""\documentclass[a4paper,fleqn]{cas-sc}
-\usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage[authoryear]{natbib}
 \journal{Engineering Applications of Artificial Intelligence}
 \begin{document}
 \shorttitle{Claim-aware validation of mouse-brain digital models}

@@ -1,6 +1,6 @@
-\documentclass[a4paper,fleqn,longmktitle]{cas-sc}
+\documentclass[a4paper,fleqn]{cas-sc}
 
-\usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage[authoryear]{natbib}
 \usepackage{amsmath,amssymb,booktabs,tabularx}
 \usepackage{url}
 
@@ -13,7 +13,7 @@
 
 
 \shorttitle{Claim-aware validation of mouse-brain digital models}
-\shortauthors{Fern\'andez-Isabel}
+\shortauthors{Anonymous}
 
 \title[mode=title]{MouseBrainBench: Claim-aware verification and validation of
 artificial intelligence models for partial digital representations of the
@@ -137,7 +137,7 @@ or incomplete mechanisms. Allen Visual Behavior Neuropixels tests whether the
 framework can retain a strongly reproducible target while rejecting unsupported
 topological and directional claims. Static and Dynamic Sensorium test modern
 predictive models without promoting correlation to causation. Finally, MICRONS
-tests a preregistered local structure-function endpoint against distance- and
+tests a prespecified local structure-function endpoint against distance- and
 degree-matched nulls in a discovery cohort and two non-overlapping hold-outs.
 This sequence is intended to test the audit itself, not to assemble unrelated
 dataset demonstrations.
@@ -597,31 +597,31 @@ freeze is generated only after all component artifacts are available.
 
 \subsection{Mechanistic Identifiability Score}
 
-Let (C) be a scientific claim and let (B(C)=\{B_1,\ldots,B_m\}) be its
-required evidence blocks. Each block (B_i) contains criteria
-(c_{ij}=(x_{ij},t_{ij},d_{ij})), where (x_{ij}) is an observed statistic,
-(t_{ij}) is a fixed threshold, and (d_{ij}) specifies whether the statistic
+Let $C$ be a scientific claim and let $B(C)=\{B_1,\ldots,B_m\}$ be its
+required evidence blocks. Each block $B_i$ contains criteria
+$c_{ij}=(x_{ij},t_{ij},d_{ij})$, where $x_{ij}$ is an observed statistic,
+$t_{ij}$ is a fixed threshold, and $d_{ij}$ specifies whether the statistic
 must be greater than, greater than or equal to, less than, or less than or equal
 to that threshold. Criterion passage is
 \[
 p_{ij}=\mathbb{I}\left[x_{ij}\ d_{ij}\ t_{ij}\right].
 \]
 For criteria requiring a larger value, the descriptive normalized score is
-(s_{ij}=\min(1,\max(0,x_{ij}/t_{ij}))). For criteria requiring a smaller
+$s_{ij}=\min(1,\max(0,x_{ij}/t_{ij}))$. For criteria requiring a smaller
 value, the inverse ratio is used. Zero-threshold criteria receive one when they
 pass and zero otherwise.
 
-The score of block (i) is the arithmetic mean
+The score of block $i$ is the arithmetic mean
 \[
 S_i=\frac{1}{n_i}\sum_{j=1}^{n_i}s_{ij},
 \]
-and the displayed MIS value is (M=m^{-1}\sum_i S_i). However, a block passes
-only when all of its criteria pass, (P_i=\bigwedge_j p_{ij}), and the
+and the displayed MIS value is $M=m^{-1}\sum_i S_i$. However, a block passes
+only when all of its criteria pass, $P_i=\bigwedge_j p_{ij}$, and the
 mechanistic decision is
 \[
 P_{\mathrm{MIS}}=\bigwedge_{i=1}^{m}P_i.
 \]
-The continuous value (M) is diagnostic; it does not override the conjunctive
+The continuous value $M$ is diagnostic; it does not override the conjunctive
 decision. This prevents strong reproducibility from compensating for absent
 topology specificity, or strong prediction from compensating for missing
 directional evidence.
@@ -772,10 +772,10 @@ Random non-connected pairs estimate the unconditioned contrast. Distance-matched
 non-connected pairs control for spatial separation because connection
 probability and functional organization both vary with distance. Degree-matched
 non-connected pairs control for unequal representation of neurons with many
-incoming or outgoing edges. The reported effect, (\Delta), is the connected
+incoming or outgoing edges. The reported effect, $\Delta$, is the connected
 pair similarity minus the corresponding control similarity.
 
-Tests are one-sided for the preregistered hypothesis that connected pairs are
+Tests are one-sided for the prespecified hypothesis that connected pairs are
 more similar than non-connected controls. The Benjamini--Hochberg procedure
 controls the false discovery rate over the family of tests within each
 stratified analysis. The primary endpoint is considered confirmed only if both
@@ -786,7 +786,7 @@ Pairwise observations are dependent because one neuron contributes to many
 pairs. Confidence intervals therefore use a unit-cluster bootstrap rather than
 a naive pair bootstrap. Each of 300 samples resamples units with replacement,
 reconstructs the eligible pair set, and recomputes matched effects. Seed 71 is
-fixed in the Q1 package. The 2.5th and 97.5th percentiles of usable replicates
+fixed in the reproducibility package. The 2.5th and 97.5th percentiles of usable replicates
 form the 95\% interval.
 
 \subsection{Sensitivity, provenance, and publication freeze}
@@ -1038,8 +1038,8 @@ Sensorium stack; and a replicated local MICRONS readout-location association.
 The same artifact blocked a complete mouse-brain digital twin, a
 state-of-the-art Sensorium predictor, causal identifiability in Dynamic
 Sensorium, a causal interpretation of the MICRONS association, and any
-whole-brain extrapolation from the local volume. Replication made the package a
-Q1 manuscript candidate but did not remove these restrictions.
+whole-brain extrapolation from the local volume. Replication strengthens the
+local observational result but does not remove these restrictions.
 
 The cross-regime result is therefore not that one model achieved the highest
 score. It is that the same audit represented three outcomes without semantic
