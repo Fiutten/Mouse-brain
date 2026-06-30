@@ -1,7 +1,7 @@
 \documentclass[a4paper,fleqn]{cas-sc}
 
 \usepackage[authoryear]{natbib}
-\usepackage{amsmath,amssymb,booktabs,tabularx,graphicx,float}
+\usepackage{amsmath,amssymb,booktabs,tabularx,graphicx,capt-of}
 \usepackage{url}
 
 \journal{Engineering Applications of Artificial Intelligence}
@@ -387,17 +387,19 @@ software version, input artifact, control model, and threshold that produced
 it. These requirements lead to the workflow summarized in
 Fig.~\ref{fig:framework-workflow}.
 
-\begin{figure}[!t]
+\begin{center}
+\begin{minipage}{0.90\linewidth}
   \centering
-  \includegraphics[width=0.84\linewidth]{figures/framework_workflow.pdf}
-  \caption{MouseBrainBench workflow. A bounded claim is declared before model
+  \includegraphics[width=0.94\linewidth]{figures/framework_workflow.pdf}
+  \captionof{figure}{MouseBrainBench workflow. A bounded claim is declared before model
   evaluation. Observability determines which evidence blocks can be tested;
   adapters then expose predictions and observations through a common audit
   interface. The claim gate accepts an interpretation only when every required
   block passes. Failed and unobservable blocks remain part of the result rather
   than being hidden by an aggregate score.}
   \label{fig:framework-workflow}
-\end{figure}
+\end{minipage}
+\end{center}
 
 \subsection{Claim representation and evidence contract}
 

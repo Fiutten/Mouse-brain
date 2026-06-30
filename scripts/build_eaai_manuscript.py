@@ -136,7 +136,7 @@ def build_manuscript(*, anonymous: bool, output: Path) -> None:
     source = rf"""\documentclass[a4paper,fleqn]{{cas-sc}}
 
 \usepackage[authoryear]{{natbib}}
-\usepackage{{amsmath,amssymb,booktabs,tabularx,graphicx,float}}
+\usepackage{{amsmath,amssymb,booktabs,tabularx,graphicx,capt-of}}
 \usepackage{{url}}
 
 \journal{{Engineering Applications of Artificial Intelligence}}
