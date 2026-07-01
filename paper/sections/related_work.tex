@@ -13,7 +13,7 @@ as a single progression towards a complete digital brain.
 The Allen Brain Observatory has made standardized neurophysiological data from
 the mouse visual system available at a scale that supports comparisons across
 sessions, animals, and analysis pipelines \citep{siegle2021survey}. The Visual
-Behavior Neuropixels resource is especially relevant because it combines
+\ac{vbn} resource is especially relevant because it combines
 large-scale extracellular recordings with controlled visual and behavioural
 conditions. Standardization and public access improve reproducibility, but the
 recordings remain observations of activity. They do not provide the complete
@@ -21,7 +21,7 @@ synaptic graph of each recorded animal, and several latent circuits can generate
 similar population responses.
 
 Cross-resource integration also depends on anatomical standardization. The Allen
-Mouse Brain Common Coordinate Framework provides a three-dimensional reference
+Mouse Brain \ac{ccf} provides a three-dimensional reference
 atlas derived from 1675 brains at 10-$\mu$m voxel resolution
 \citep{wang2020ccf}. This makes regional alignment and aggregation possible,
 but a reference atlas is not an individual connectome. MouseBrainBench therefore
@@ -58,7 +58,7 @@ about circuit organization.
 
 The term \emph{digital twin} is also used for neural response models that enable
 experiments in stimulus space. Ustyuzhaninov et al. trained predictive models of
-mouse V1 and used their outputs to characterize combinations of nonlinear
+mouse \ac{v1} and used their outputs to characterize combinations of nonlinear
 response properties \citep{ustyuzhaninov2022digitaltwin}. This approach shows
 that a functional surrogate can support useful in silico experiments even when
 it does not reproduce the underlying synaptic circuit. The distinction is
@@ -85,11 +85,11 @@ or directionality requirements.
 \subsection{Multiscale simulation and digital-brain models}
 \label{subsec:multiscale-simulation}
 
-Biologically grounded simulators address a different problem. BioNet and BMTK
+Biologically grounded simulators address a different problem. BioNet and \ac{bmtk}
 provide interfaces and workflows for constructing networks from cellular and
 connectivity information and executing them at different levels of resolution
 \citep{gratiy2018bmtk,dai2020bmtk}. SONATA-compatible descriptions improve
-portability between tools. At a coarser scale, The Virtual Brain models
+portability between tools. At a coarser scale, \ac{tvb} models
 population dynamics over connectomes and supports the study of large-scale
 network behaviour \citep{tvb2013}. These systems demonstrate that simulation
 engines, model formats, and numerical integration are already mature research
@@ -105,11 +105,11 @@ with either contribution. It evaluates whether outputs from such models support
 the claim attached to them.
 
 Digital Twin Brain proposals broaden this objective towards multiscale models
-that connect biological and artificial intelligence \citep{xiong2023dtb}. The
+that connect biological and \acs{ai} \citep{xiong2023dtb}. The
 MouseDTB submission is the closest whole-brain mouse proposal to the present
 application domain \citep{chen2025mousedtb}. It constructs inferred
 single-neuron connectivity from axonal projections and cell distributions, then
-couples that structure to a large spiking network. Its evaluation includes BOLD
+couples that structure to a large spiking network. Its evaluation includes \ac{bold}
 signals in resting and olfactory-task conditions, parameter assimilation, and
 behavioural responses. The work is currently reported as an ICLR 2026
 submission. It should therefore be treated as an important contemporary system
@@ -120,7 +120,7 @@ asks whether a large inferred network can reproduce selected whole-brain and
 behavioural observations. MouseBrainBench asks which claims are justified by
 the available observations and controls. Inferred single-neuron connectivity
 does not become an observed individual connectome solely because the model
-matches BOLD activity. Likewise, high BOLD correlation does not establish that
+matches \acs{bold} activity. Likewise, high \acs{bold} correlation does not establish that
 the inferred wiring is uniquely identified. This difference prevents direct
 competition while making MouseDTB a relevant candidate for future audit through
 the same claim-aware protocol.
@@ -145,28 +145,28 @@ state-dependent prediction, and suitable interventional validation.
 \label{subsec:connectomics}
 
 Electron-microscopy connectomics offers the most direct local evidence about
-synaptic wiring. MICRONS links a dense reconstruction of mouse visual cortex to
+synaptic wiring. \acs{microns} links a dense reconstruction of mouse visual cortex to
 functional measurements and related cell properties \citep{bae2025microns}.
 It is therefore suitable for asking whether connected neurons share functional
 properties more strongly than comparable non-connected neurons. Unlike a
-response-only dataset, MICRONS permits connectivity and functional descriptors
+response-only dataset, \acs{microns} permits connectivity and functional descriptors
 to be tested within a co-registered local population.
 
 The combination of in vivo functional characterization and electron microscopy
-predates MICRONS. Earlier work demonstrated that network anatomy and visual
+predates \acs{microns}. Earlier work demonstrated that network anatomy and visual
 physiology can be co-registered at smaller scale \citep{bock2011network}.
-MICRONS changes the coverage of the analysis, but it does not remove the need to
+\acs{microns} changes the coverage of the analysis, but it does not remove the need to
 distinguish exploratory pairwise associations from independently validated
 connectivity rules.
 
 Access to a changing reconstruction introduces an additional reproducibility
 problem: cell identities and annotations can change as proofreading progresses.
-CAVE addresses this issue through versioned segmentation, materialized
+\ac{cave} addresses this issue through versioned segmentation, materialized
 annotation snapshots, and reproducible queries \citep{dorkenwald2025cave}. For
-this reason, MouseBrainBench records the MICRONS datastack, table, and
+this reason, MouseBrainBench records the \acs{microns} datastack, table, and
 materialization version rather than citing a live query alone.
 
-This general biological question is not new. Ding et al. used the MICRONS
+This general biological question is not new. Ding et al. used the \acs{microns}
 resource to demonstrate like-to-like connectivity within and across cortical
 layers and visual areas, separating feature and receptive-field components and
 using axon--dendrite proximity controls \citep{ding2025wiring}. Their analysis
@@ -184,9 +184,9 @@ level of biological units rather than treating all derived pairs as independent.
 It must also replicate outside the cohort used to define or discover the
 endpoint.
 
-Previous connectomic work establishes both the value of MICRONS and the broad
+Previous connectomic work establishes both the value of \acs{microns} and the broad
 structure-function phenomenon. The present contribution is not the rediscovery
-that structure and function are related. MICRONS is used as an external-validity
+that structure and function are related. \acs{microns} is used as an external-validity
 case: MouseBrainBench asks whether a simpler declared endpoint recovers a
 compatible association under a fixed, reproducible audit and whether its
 interpretation remains bounded. This is why the manuscript reports a replicated

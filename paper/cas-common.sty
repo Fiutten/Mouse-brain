@@ -424,14 +424,17 @@
 
 \NewDocumentCommand \printorcid { }
 {
-  \group_begin:
-    \tex_let:D \thefootnote \relax \footnotetext
-    {
-      \raggedright
-      \textsc{orcid}(s):\c_space_token 
-      \seq_use:Nn \g_stm_orcid_seq { ;~ }
-    }
-  \group_end:
+  \seq_if_empty:NF \g_stm_orcid_seq
+  {
+    \group_begin:
+      \tex_let:D \thefootnote \relax \footnotetext
+      {
+        \raggedright
+        \textsc{orcid}(s):\c_space_token
+        \seq_use:Nn \g_stm_orcid_seq { ;~ }
+      }
+    \group_end:
+  }
 }
 
 %
@@ -2638,4 +2641,3 @@
 %  {}
 
 \endinput
-

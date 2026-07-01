@@ -60,11 +60,11 @@ disconnected prediction by 0.916. Every regional pair had resolvable
 latency. By contrast, the common-drive system reached cross-session correlation
 0.962 while its candidate prediction was 0.0009 worse than the permutation
 median and 0.0032 worse than the disconnected control. These cases demonstrate
-why the continuous MIS cannot replace the conjunctive decision: partial scores
+why the continuous \acs{mis} cannot replace the conjunctive decision: partial scores
 locate a failure but do not constitute a ranking of mechanistic truth.
 
 The second part of RQ1 examines whether the same rule remains conservative on a
-real and strongly reproducible resource. Allen Visual Behavior Neuropixels
+real and strongly reproducible resource. Allen \ac{vbn}
 artifacts were aggregated into regional population responses using fixed
 windows and preprocessing. The reproducibility analysis contained 20 successful
 sessions. The topology analysis used 20 sessions from 20 unique mice, and the
@@ -87,7 +87,7 @@ permutations, and improved by only 0.0035 over the disconnected model. None of
 the topology criteria passed and the block score was 0.073. Median cross-mouse
 and split-half latency agreement, the fraction above the latency null, the
 resolvable-pair fraction, and the nonzero lead--lag fraction were all zero under
-their operational definitions. The complete MIS was 0.358 and the decision was
+their operational definitions. The complete \acs{mis} was 0.358 and the decision was
 \path{reproducible_target_without_mechanistic_identifiability}.
 
 This outcome was stable when all Allen thresholds were multiplied by 0.75,
@@ -132,23 +132,23 @@ direction remain unobserved.
 Dynamic Sensorium tested whether that distinction survives a more demanding
 temporal task. Five current public mice and five legacy out-of-distribution mice
 were evaluated with seven model families: mean response, summary features,
-temporal filterbank, temporal singular-value decomposition (SVD), random
-features, a compact PyTorch multilayer perceptron (MLP), and a bounded model
+temporal filterbank, temporal \ac{svd}, random features, a compact PyTorch
+\ac{mlp}, and a bounded model
 instantiated through the official Sensorium loader and model factory. Models
 were compared within mouse so that between-animal differences could not be
 mistaken for architectural gains. The transparent temporal baselines provide a
 meaningful intermediate comparison: the filterbank represents finite temporal
-kernels, while temporal SVD estimates a low-rank temporal subspace. Random
+kernels, while temporal \acs{svd} estimates a low-rank temporal subspace. Random
 features test whether nonlinear expansion alone explains an improvement, and
-the MLP tests a compact learned nonlinear mapping.
+the \acs{mlp} tests a compact learned nonlinear mapping.
 
 Best mouse-level correlations ranged from 0.427 to 0.526 in the current cohort.
-The temporal filterbank won one mouse, temporal SVD won two, and the MLP won
+The temporal filterbank won one mouse, temporal \acs{svd} won two, and the \acs{mlp} won
 two. The filterbank improved over mean response in all five mice with median
-gain 0.031. The MLP median gain over mean response was 0.043, but its median
-advantage over temporal SVD was only 0.0039. In the legacy out-of-distribution
+gain 0.031. The \acs{mlp} median gain over mean response was 0.043, but its median
+advantage over temporal \acs{svd} was only 0.0039. In the legacy out-of-distribution
 cohort, the corresponding gains were 0.036 and 0.0022. At a required minimum
-effect of 0.01, the MLP surpassed temporal SVD in only one of five mice in each
+effect of 0.01, the \acs{mlp} surpassed temporal \acs{svd} in only one of five mice in each
 cohort. Increased complexity therefore improved the simple baseline more
 consistently than it improved a serious transparent temporal model.
 
@@ -187,7 +187,7 @@ the topographic effect.
   sealed benchmark artifacts. (a) Allen block decisions under global criterion
   multipliers. (b) Static Sensorium partial-positive decisions across
   reliability and topographic thresholds. (c) Number of Dynamic Sensorium mice
-  for which the MLP exceeds the mean-response or temporal-SVD comparator as the
+  for which the \acs{mlp} exceeds the mean-response or temporal-\acs{svd} comparator as the
   required correlation gain increases. Solid lines denote the current cohort
   and dashed lines the legacy out-of-distribution cohort.}
   \label{fig:sensitivity-ablation}
@@ -195,12 +195,12 @@ the topographic effect.
 \end{center}
 
 The Dynamic Sensorium panel provides an ablation over comparator strength and
-minimum effect. At zero or 0.002 required gain, the MLP exceeds temporal SVD in
+minimum effect. At zero or 0.002 required gain, the \acs{mlp} exceeds temporal \acs{svd} in
 three of five mice in each cohort. At 0.005 this falls to two mice, and at 0.010
 to one. By contrast, gains over mean response remain in four or five mice over
 the same range. The apparent neural-network advantage is therefore robust to a
 weak baseline but not to a stronger temporal decomposition. This result is not
-used to reject the MLP. It establishes the narrower conclusion that model
+used to reject the \acs{mlp}. It establishes the narrower conclusion that model
 complexity alone is not the source of the predictive evidence and that claims
 of architectural superiority depend materially on the comparator and minimum
 effect selected.
@@ -208,9 +208,9 @@ effect selected.
 \subsection{RQ3: MICRONS structure--function validation and cross-regime synthesis}
 \label{subsec:rq3-microns}
 
-MICRONS supplies the local co-registration required for a positive
+\acs{microns} supplies the local co-registration required for a positive
 structure--function test. Data were queried from the public
-\path{minnie65_public} CAVE stack. Functional descriptors were obtained from
+\path{minnie65_public} \ac{cave} stack. Functional descriptors were obtained from
 \path{digital_twin_properties_bcm_coreg_v4}, structural edges were
 queried at materialization version 1507, and acquisition artifacts recorded the
 datastack, table, materialization, offsets, limits, and source identifiers.
@@ -267,7 +267,7 @@ claim rests on the fixed readout-location endpoint and its replication.
 
 \input{tables/microns_bootstrap}
 
-The MICRONS outcome is a replicated local observational association, not a new
+The \acs{microns} outcome is a replicated local observational association, not a new
 wiring rule or a causal mechanism. Readout-location similarity may still covary
 with cell type, layer, cortical area, morphology, or developmental organization.
 Distance and degree matching address two major confounds but do not exhaust the
@@ -282,7 +282,7 @@ Table~\ref{tab:cross-regime-results} brings the complete evaluation together.
 The important outcome is not that one resource attains the highest score. The
 same executable logic represents complete synthetic passage, incomplete
 mechanistic systems, reproducible but non-identifying Allen activity,
-predictive Sensorium models, and a local positive MICRONS association without
+predictive Sensorium models, and a local positive \acs{microns} association without
 semantic promotion. The publication freeze consequently admits those bounded
 interpretations while blocking a complete mouse-brain digital twin,
 state-of-the-art Sensorium prediction, causal identifiability, behavioural

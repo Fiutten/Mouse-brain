@@ -1,10 +1,10 @@
 \section{MouseBrainBench framework}
 \label{sec:framework}
 
-MouseBrainBench was conceived as an engineering layer between an artificial
-intelligence model and the scientific interpretation assigned to its output. It
+MouseBrainBench was conceived as an engineering layer between an \ac{ai} model
+and the scientific interpretation assigned to its output. It
 does not provide another neuronal simulator, replace the data models used by
-BMTK or SONATA, or reproduce the predictive infrastructure of Sensorium.
+\ac{bmtk} or SONATA, or reproduce the predictive infrastructure of Sensorium.
 Instead, it formalizes the evidence contract that must be satisfied before a
 model output can support a particular claim. This distinction determines both
 the software architecture and the evaluation protocol. Models and public
@@ -116,7 +116,7 @@ descriptive score of block $i$ is
 S_i=\frac{1}{n_i}\sum_{j=1}^{n_i}s_{ij},
 \]
 whereas block passage is $P_i=\bigwedge_j p_{ij}$. For $m$ required blocks,
-the Mechanistic Identifiability Score (MIS) and final decision are
+the \ac{mis} and final decision are
 \[
 M=\frac{1}{m}\sum_{i=1}^{m}S_i,
 \qquad
@@ -151,7 +151,7 @@ Fig.~\ref{fig:framework-workflow}. A configuration first declares the claim,
 target scale, required evidence blocks, thresholds, and permitted conclusions.
 Typed data schemas then describe regions, observations, predictions,
 connectivity, subject identifiers, and provenance. Dataset adapters convert
-Allen, Sensorium, Dynamic Sensorium, and MICRONS artifacts into those schemas
+Allen, Sensorium, Dynamic Sensorium, and \acs{microns} artifacts into those schemas
 without erasing source-specific metadata. Model adapters expose outputs from
 transparent baselines or external software through the same evaluation
 interface. The validation layer computes metrics and null comparisons. The
@@ -163,7 +163,7 @@ established common schemas, deterministic simulation runners, and basic
 anatomical and predictive metrics. Known-truth systems were then added to test
 the semantics of the decision rule before real data were admitted. Allen and
 Sensorium adapters introduced repeated observations, subject-level partitions,
-and predictive baselines. The MICRONS adapter added versioned CAVE queries,
+and predictive baselines. The \acs{microns} adapter added versioned \acs{cave} queries,
 pair construction, anatomical matching, false-discovery-rate correction, and
 unit-cluster bootstrap inference. At each stage, a component was retained only
 when its output could be traced to a public resource or a deterministic
@@ -192,7 +192,7 @@ changes from silently modifying the computational conclusion.
 The same architecture also explains the role of each dataset. Synthetic systems
 test decision logic under known truth. Allen provides a reproducible real-data
 negative mechanistic control. Static and Dynamic Sensorium test whether modern
-predictive gains remain separated from anatomical and causal claims. MICRONS
+predictive gains remain separated from anatomical and causal claims. \acs{microns}
 provides co-registered local structure and function for a bounded positive
 association. These resources are complementary observations in one audit, not
 interchangeable evidence for a single brain model.

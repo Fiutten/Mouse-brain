@@ -62,12 +62,11 @@ editing, Project administration}
 \cortext[1]{Corresponding author}
 """
     return rf"""
-\shorttitle{{Claim-aware validation of mouse-brain digital models}}
+\shorttitle{{Claim-aware validation of mouse-brain models}}
 \shortauthors{{{short_author}}}
 
-\title[mode=title]{{MouseBrainBench: Claim-aware verification and validation of
-artificial intelligence models for partial digital representations of the
-mouse brain}}
+\title[mode=title]{{MouseBrainBench: Claim-aware validation of partial
+mouse-brain digital models}}
 
 {author}
 
@@ -76,9 +75,9 @@ mouse brain}}
 \end{{abstract}}
 
 \begin{{keywords}}
-artificial intelligence validation \sep scientific machine learning \sep
-digital twins \sep computational neuroscience \sep benchmarking \sep
-mechanistic identifiability
+Artificial Intelligence Validation \sep Scientific Machine Learning \sep
+Digital Twins \sep Computational Neuroscience \sep Benchmarking \sep
+Mechanistic Identifiability
 \end{{keywords}}
 """
 
@@ -125,9 +124,8 @@ paper.
 
 \section{{Acknowledgements}}
 \label{{sec:acknowledgements}}
-The author acknowledges the Allen Institute, the Sensorium and Dynamic
-Sensorium teams, the MICRONS Consortium, and the CAVE infrastructure for making
-the resources used in this study accessible.
+This work has been funded by the Spanish MICIU under the PDI program in the
+XMIDAS project (PID2021-122640OB-I00).
 
 \printcredits
 \bibliographystyle{{cas-model2-names}}
@@ -141,8 +139,21 @@ def build_manuscript(*, anonymous: bool, output: Path) -> None:
 \usepackage[authoryear]{{natbib}}
 \usepackage{{amsmath,amssymb,booktabs,tabularx,graphicx,capt-of}}
 \usepackage{{url}}
+\usepackage{{acro}}
 
-\journal{{Engineering Applications of Artificial Intelligence}}
+\DeclareAcronym{{ai}}{{short=AI,long=Artificial Intelligence}}
+\DeclareAcronym{{vv}}{{short=V\&V,long=Verification and Validation}}
+\DeclareAcronym{{mis}}{{short=MIS,long=Mechanistic Identifiability Score}}
+\DeclareAcronym{{vbn}}{{short=VBN,long=Visual Behavior Neuropixels}}
+\DeclareAcronym{{ccf}}{{short=CCF,long=Common Coordinate Framework}}
+\DeclareAcronym{{v1}}{{short=V1,long=primary visual cortex}}
+\DeclareAcronym{{bmtk}}{{short=BMTK,long=Brain Modeling ToolKit}}
+\DeclareAcronym{{tvb}}{{short=TVB,long=The Virtual Brain}}
+\DeclareAcronym{{microns}}{{short=MICRONS,long=Machine Intelligence from Cortical Networks}}
+\DeclareAcronym{{cave}}{{short=CAVE,long=Connectome Annotation Versioning Engine}}
+\DeclareAcronym{{svd}}{{short=SVD,long=singular-value decomposition}}
+\DeclareAcronym{{mlp}}{{short=MLP,long=multilayer perceptron}}
+\DeclareAcronym{{bold}}{{short=BOLD,long=blood-oxygen-level-dependent}}
 
 \begin{{document}}
 \let\WriteBookmarks\relax
@@ -152,6 +163,7 @@ def build_manuscript(*, anonymous: bool, output: Path) -> None:
 {frontmatter(anonymous=anonymous)}
 
 \maketitle
+\acresetall
 
 {manuscript_body(anonymous=anonymous)}
 
@@ -163,13 +175,11 @@ def build_manuscript(*, anonymous: bool, output: Path) -> None:
 def build_title_page() -> None:
     source = r"""\documentclass[a4paper,fleqn]{cas-sc}
 \usepackage[authoryear]{natbib}
-\journal{Engineering Applications of Artificial Intelligence}
 \begin{document}
-\shorttitle{Claim-aware validation of mouse-brain digital models}
+\shorttitle{Claim-aware validation of mouse-brain models}
 \shortauthors{Fern\'andez-Isabel}
-\title[mode=title]{MouseBrainBench: Claim-aware verification and validation of
-artificial intelligence models for partial digital representations of the
-mouse brain}
+\title[mode=title]{MouseBrainBench: Claim-aware validation of partial
+mouse-brain digital models}
 \author[1]{Alberto Fern\'andez-Isabel}
 \cormark[1]
 \ead{alberto.fernandez.isabel@urjc.es}
@@ -188,8 +198,8 @@ Title page for double-anonymized review. The abstract is provided in the
 anonymous manuscript.
 \end{abstract}
 \begin{keywords}
-artificial intelligence validation \sep scientific machine learning \sep
-digital twins \sep computational neuroscience \sep benchmarking
+Artificial Intelligence Validation \sep Scientific Machine Learning \sep
+Digital Twins \sep Computational Neuroscience \sep Benchmarking
 \end{keywords}
 \maketitle
 \end{document}

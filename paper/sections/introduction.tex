@@ -2,7 +2,7 @@
 \label{sec:introduction}
 
 The construction of computational representations of biological systems has
-become an important meeting point between Artificial Intelligence and
+become an important meeting point between \ac{ai} and
 neuroscience. In the laboratory mouse (\textit{Mus musculus}), standardized
 electrophysiology, visual-response
 benchmarks, anatomical atlases, and electron-microscopy reconstructions are now
@@ -26,16 +26,16 @@ digital twin normally implies correspondence with a particular physical entity,
 continuous or repeated calibration, and the capacity to reproduce relevant
 states under intervention. Current mouse-brain resources do not jointly provide
 complete synaptic connectivity, full-brain dynamics, behaviour, and
-interventional validation for an individual animal. MICRONS offers exceptional
+interventional validation for an individual animal. \ac{microns} offers exceptional
 synaptic and functional detail, but only for a local visual-cortical volume
 \citep{bae2025microns}. Allen datasets provide broad and standardized neural
 recordings, but not the individual synaptic graph that generated each response
 \citep{siegle2021survey,deVries2022AllenSharing}. Consequently, referring to
 either resource as a complete mouse-brain twin would exceed the evidence.
 
-Existing tools solve other essential parts of the problem. BMTK provides
+Existing tools solve other essential parts of the problem. \ac{bmtk} provides
 infrastructure for constructing and simulating multiscale neural networks
-\citep{dai2020bmtk}. The Virtual Brain supports connectome-based population
+\citep{dai2020bmtk}. \ac{tvb} supports connectome-based population
 dynamics \citep{tvb2013}. Sensorium provides common predictive tasks for
 mouse visual cortex \citep{willeke2022sensorium,turishcheva2023dynamic}. Their
 existence means that another simulator or another visual prediction benchmark
@@ -48,17 +48,17 @@ MouseBrainBench addresses this question. It is not a new full-brain simulator
 and it does not claim to instantiate a complete digital twin. It is a software
 and experimental framework that assigns different public datasets to explicit
 evidential roles, applies matched null models and hold-out replication, and
-records which interpretations pass or fail. Its Mechanistic Identifiability
-Score (MIS) is a conjunctive decision rule over non-interchangeable evidence
+records which interpretations pass or fail. Its \ac{mis} is a conjunctive
+decision rule over non-interchangeable evidence
 blocks. The numerical component summarizes support within a block, whereas the
 final decision requires every block relevant to the proposed mechanism to pass.
 
 The evaluation deliberately combines positive and negative outcomes. Four
-synthetic systems test whether MIS recovers known truth and rejects common-drive
-or incomplete mechanisms. Allen Visual Behavior Neuropixels tests whether the
+synthetic systems test whether acs{mis} recovers known truth and rejects common-drive
+or incomplete mechanisms. Allen acs{vbn} tests whether the
 framework can retain a strongly reproducible target while rejecting unsupported
 topological and directional claims. Static and Dynamic Sensorium test modern
-predictive models without promoting correlation to causation. Finally, MICRONS
+predictive models without promoting correlation to causation. Finally, \acs{microns}
 tests a prespecified local structure-function endpoint against distance- and
 degree-matched nulls in a discovery cohort and two non-overlapping hold-outs.
 This sequence is intended to test the audit itself, not to assemble unrelated

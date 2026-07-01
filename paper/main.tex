@@ -3,8 +3,21 @@
 \usepackage[authoryear]{natbib}
 \usepackage{amsmath,amssymb,booktabs,tabularx,graphicx,capt-of}
 \usepackage{url}
+\usepackage{acro}
 
-\journal{Engineering Applications of Artificial Intelligence}
+\DeclareAcronym{ai}{short=AI,long=Artificial Intelligence}
+\DeclareAcronym{vv}{short=V\&V,long=Verification and Validation}
+\DeclareAcronym{mis}{short=MIS,long=Mechanistic Identifiability Score}
+\DeclareAcronym{vbn}{short=VBN,long=Visual Behavior Neuropixels}
+\DeclareAcronym{ccf}{short=CCF,long=Common Coordinate Framework}
+\DeclareAcronym{v1}{short=V1,long=primary visual cortex}
+\DeclareAcronym{bmtk}{short=BMTK,long=Brain Modeling ToolKit}
+\DeclareAcronym{tvb}{short=TVB,long=The Virtual Brain}
+\DeclareAcronym{microns}{short=MICRONS,long=Machine Intelligence from Cortical Networks}
+\DeclareAcronym{cave}{short=CAVE,long=Connectome Annotation Versioning Engine}
+\DeclareAcronym{svd}{short=SVD,long=singular-value decomposition}
+\DeclareAcronym{mlp}{short=MLP,long=multilayer perceptron}
+\DeclareAcronym{bold}{short=BOLD,long=blood-oxygen-level-dependent}
 
 \begin{document}
 \let\WriteBookmarks\relax
@@ -12,12 +25,11 @@
 \def\textpagefraction{.001}
 
 
-\shorttitle{Claim-aware validation of mouse-brain digital models}
+\shorttitle{Claim-aware validation of mouse-brain models}
 \shortauthors{Fern\'andez-Isabel}
 
-\title[mode=title]{MouseBrainBench: Claim-aware verification and validation of
-artificial intelligence models for partial digital representations of the
-mouse brain}
+\title[mode=title]{MouseBrainBench: Claim-aware validation of partial
+mouse-brain digital models}
 
 
 \author[1]{Alberto Fern\'andez-Isabel}
@@ -36,16 +48,16 @@ editing, Project administration}
 
 
 \begin{abstract}
-Artificial intelligence is increasingly used to construct predictive and
+\ac{ai} is increasingly used to construct predictive and
 simulation-based models of complex scientific systems. However, model
 evaluation is commonly reduced to predictive accuracy, even when the intended
 claim concerns reproducibility, structural fidelity, or mechanism. This paper
-introduces MouseBrainBench, an engineering framework for verification and
-validation of partial digital models of the mouse brain. Its contribution to
-artificial intelligence is a claim-aware benchmark architecture that represents
+introduces MouseBrainBench, an engineering framework for \ac{vv} of partial
+digital models of the mouse brain. Its contribution to \ac{ai} is a claim-aware
+benchmark architecture that represents
 prediction, reproducibility, topology specificity, directed identifiability,
 structure--function agreement, and computational cost as non-interchangeable
-evidence blocks. A Mechanistic Identifiability Score provides descriptive
+evidence blocks. A \ac{mis} provides descriptive
 diagnostics, while a conjunctive decision rule prevents high performance in one
 block from compensating for missing evidence in another.
 
@@ -56,7 +68,7 @@ topology-specific prediction. Allen Visual Behavior Neuropixels provides a real
 negative control: median cross-mouse and split-half correlations reach 0.891 and
 0.990, but topology-specific and directed-identifiability criteria fail. Static
 and Dynamic Sensorium demonstrate predictive gains without corresponding
-mechanistic evidence. MICRONS provides an external structure--function
+mechanistic evidence. \acs{microns} provides an external structure--function
 validation case. Across a discovery cohort and two non-overlapping hold-outs
 containing 2991 co-registered units and 5943 connected directed pairs,
 connected pairs exhibit greater readout-location similarity than distance- and
@@ -64,26 +76,27 @@ degree-matched controls. Distance-matched effects are 0.0215, 0.0210, and
 0.0179, with positive unit-cluster bootstrap intervals in all cohorts.
 
 MouseBrainBench does not claim a complete or causal digital brain. It provides
-a reproducible engineering layer for deciding which claims about AI-based
+a reproducible engineering layer for deciding which claims about \acs{ai}-based
 scientific models are supported, partially supported, or blocked by the
 available evidence.
 \end{abstract}
 
 \begin{keywords}
-artificial intelligence validation \sep scientific machine learning \sep
-digital twins \sep computational neuroscience \sep benchmarking \sep
-mechanistic identifiability
+Artificial Intelligence Validation \sep Scientific Machine Learning \sep
+Digital Twins \sep Computational Neuroscience \sep Benchmarking \sep
+Mechanistic Identifiability
 \end{keywords}
 
 
 \maketitle
+\acresetall
 
 
 \section{Introduction}
 \label{sec:introduction}
 
 The construction of computational representations of biological systems has
-become an important meeting point between Artificial Intelligence and
+become an important meeting point between \ac{ai} and
 neuroscience. In the laboratory mouse (\textit{Mus musculus}), standardized
 electrophysiology, visual-response
 benchmarks, anatomical atlases, and electron-microscopy reconstructions are now
@@ -107,16 +120,16 @@ digital twin normally implies correspondence with a particular physical entity,
 continuous or repeated calibration, and the capacity to reproduce relevant
 states under intervention. Current mouse-brain resources do not jointly provide
 complete synaptic connectivity, full-brain dynamics, behaviour, and
-interventional validation for an individual animal. MICRONS offers exceptional
+interventional validation for an individual animal. \ac{microns} offers exceptional
 synaptic and functional detail, but only for a local visual-cortical volume
 \citep{bae2025microns}. Allen datasets provide broad and standardized neural
 recordings, but not the individual synaptic graph that generated each response
 \citep{siegle2021survey,deVries2022AllenSharing}. Consequently, referring to
 either resource as a complete mouse-brain twin would exceed the evidence.
 
-Existing tools solve other essential parts of the problem. BMTK provides
+Existing tools solve other essential parts of the problem. \ac{bmtk} provides
 infrastructure for constructing and simulating multiscale neural networks
-\citep{dai2020bmtk}. The Virtual Brain supports connectome-based population
+\citep{dai2020bmtk}. \ac{tvb} supports connectome-based population
 dynamics \citep{tvb2013}. Sensorium provides common predictive tasks for
 mouse visual cortex \citep{willeke2022sensorium,turishcheva2023dynamic}. Their
 existence means that another simulator or another visual prediction benchmark
@@ -129,17 +142,17 @@ MouseBrainBench addresses this question. It is not a new full-brain simulator
 and it does not claim to instantiate a complete digital twin. It is a software
 and experimental framework that assigns different public datasets to explicit
 evidential roles, applies matched null models and hold-out replication, and
-records which interpretations pass or fail. Its Mechanistic Identifiability
-Score (MIS) is a conjunctive decision rule over non-interchangeable evidence
+records which interpretations pass or fail. Its \ac{mis} is a conjunctive
+decision rule over non-interchangeable evidence
 blocks. The numerical component summarizes support within a block, whereas the
 final decision requires every block relevant to the proposed mechanism to pass.
 
 The evaluation deliberately combines positive and negative outcomes. Four
-synthetic systems test whether MIS recovers known truth and rejects common-drive
-or incomplete mechanisms. Allen Visual Behavior Neuropixels tests whether the
+synthetic systems test whether acs{mis} recovers known truth and rejects common-drive
+or incomplete mechanisms. Allen acs{vbn} tests whether the
 framework can retain a strongly reproducible target while rejecting unsupported
 topological and directional claims. Static and Dynamic Sensorium test modern
-predictive models without promoting correlation to causation. Finally, MICRONS
+predictive models without promoting correlation to causation. Finally, \acs{microns}
 tests a prespecified local structure-function endpoint against distance- and
 degree-matched nulls in a discovery cohort and two non-overlapping hold-outs.
 This sequence is intended to test the audit itself, not to assemble unrelated
@@ -169,17 +182,17 @@ model. This contribution is developed through the following elements:
   association, and computational cost. The output is not only a ranking: it is
   an explicit set of admitted and rejected interpretations.
 
-  \item A formal MIS composed of non-interchangeable evidence blocks and fixed
+  \item A formal \acs{mis} composed of non-interchangeable evidence blocks and fixed
   directional thresholds. The rule is tested with four known-truth systems that
   isolate common drive, topology without direction, and direction without
   topology specificity.
 
   \item A cross-resource protocol that assigns Allen, Sensorium, Dynamic
-  Sensorium, and MICRONS distinct roles instead of treating heterogeneous data
+  Sensorium, and \acs{microns} distinct roles instead of treating heterogeneous data
   as interchangeable validation. This design provides a real negative control,
   predictive controls, and a local anatomical-functional test.
 
-  \item An external-validity case in MICRONS obtained with a specified primary
+  \item An external-validity case in \acs{microns} obtained with a specified primary
   endpoint, distance- and degree-matched null models, false-discovery-rate
   correction, unit-cluster bootstrap intervals, and two non-overlapping hold-out
   cohorts. It tests reproducible recovery of a published broad phenomenon rather
@@ -193,7 +206,7 @@ model. This contribution is developed through the following elements:
 
 These elements define the scope of the work. MouseBrainBench evaluates the
 relationship between evidence and interpretation. It does not establish that a
-single score is universally sufficient for mechanistic neuroscience. The MIS
+single score is universally sufficient for mechanistic neuroscience. The \acs{mis}
 thresholds and evidence blocks must be specified for the target claim before
 evaluation, and failure means that the particular claim is unsupported, not
 that the dataset or model is devoid of scientific value.
@@ -213,7 +226,7 @@ as a single progression towards a complete digital brain.
 The Allen Brain Observatory has made standardized neurophysiological data from
 the mouse visual system available at a scale that supports comparisons across
 sessions, animals, and analysis pipelines \citep{siegle2021survey}. The Visual
-Behavior Neuropixels resource is especially relevant because it combines
+\ac{vbn} resource is especially relevant because it combines
 large-scale extracellular recordings with controlled visual and behavioural
 conditions. Standardization and public access improve reproducibility, but the
 recordings remain observations of activity. They do not provide the complete
@@ -221,7 +234,7 @@ synaptic graph of each recorded animal, and several latent circuits can generate
 similar population responses.
 
 Cross-resource integration also depends on anatomical standardization. The Allen
-Mouse Brain Common Coordinate Framework provides a three-dimensional reference
+Mouse Brain \ac{ccf} provides a three-dimensional reference
 atlas derived from 1675 brains at 10-$\mu$m voxel resolution
 \citep{wang2020ccf}. This makes regional alignment and aggregation possible,
 but a reference atlas is not an individual connectome. MouseBrainBench therefore
@@ -258,7 +271,7 @@ about circuit organization.
 
 The term \emph{digital twin} is also used for neural response models that enable
 experiments in stimulus space. Ustyuzhaninov et al. trained predictive models of
-mouse V1 and used their outputs to characterize combinations of nonlinear
+mouse \ac{v1} and used their outputs to characterize combinations of nonlinear
 response properties \citep{ustyuzhaninov2022digitaltwin}. This approach shows
 that a functional surrogate can support useful in silico experiments even when
 it does not reproduce the underlying synaptic circuit. The distinction is
@@ -285,11 +298,11 @@ or directionality requirements.
 \subsection{Multiscale simulation and digital-brain models}
 \label{subsec:multiscale-simulation}
 
-Biologically grounded simulators address a different problem. BioNet and BMTK
+Biologically grounded simulators address a different problem. BioNet and \ac{bmtk}
 provide interfaces and workflows for constructing networks from cellular and
 connectivity information and executing them at different levels of resolution
 \citep{gratiy2018bmtk,dai2020bmtk}. SONATA-compatible descriptions improve
-portability between tools. At a coarser scale, The Virtual Brain models
+portability between tools. At a coarser scale, \ac{tvb} models
 population dynamics over connectomes and supports the study of large-scale
 network behaviour \citep{tvb2013}. These systems demonstrate that simulation
 engines, model formats, and numerical integration are already mature research
@@ -305,11 +318,11 @@ with either contribution. It evaluates whether outputs from such models support
 the claim attached to them.
 
 Digital Twin Brain proposals broaden this objective towards multiscale models
-that connect biological and artificial intelligence \citep{xiong2023dtb}. The
+that connect biological and \acs{ai} \citep{xiong2023dtb}. The
 MouseDTB submission is the closest whole-brain mouse proposal to the present
 application domain \citep{chen2025mousedtb}. It constructs inferred
 single-neuron connectivity from axonal projections and cell distributions, then
-couples that structure to a large spiking network. Its evaluation includes BOLD
+couples that structure to a large spiking network. Its evaluation includes \ac{bold}
 signals in resting and olfactory-task conditions, parameter assimilation, and
 behavioural responses. The work is currently reported as an ICLR 2026
 submission. It should therefore be treated as an important contemporary system
@@ -320,7 +333,7 @@ asks whether a large inferred network can reproduce selected whole-brain and
 behavioural observations. MouseBrainBench asks which claims are justified by
 the available observations and controls. Inferred single-neuron connectivity
 does not become an observed individual connectome solely because the model
-matches BOLD activity. Likewise, high BOLD correlation does not establish that
+matches \acs{bold} activity. Likewise, high \acs{bold} correlation does not establish that
 the inferred wiring is uniquely identified. This difference prevents direct
 competition while making MouseDTB a relevant candidate for future audit through
 the same claim-aware protocol.
@@ -345,28 +358,28 @@ state-dependent prediction, and suitable interventional validation.
 \label{subsec:connectomics}
 
 Electron-microscopy connectomics offers the most direct local evidence about
-synaptic wiring. MICRONS links a dense reconstruction of mouse visual cortex to
+synaptic wiring. \acs{microns} links a dense reconstruction of mouse visual cortex to
 functional measurements and related cell properties \citep{bae2025microns}.
 It is therefore suitable for asking whether connected neurons share functional
 properties more strongly than comparable non-connected neurons. Unlike a
-response-only dataset, MICRONS permits connectivity and functional descriptors
+response-only dataset, \acs{microns} permits connectivity and functional descriptors
 to be tested within a co-registered local population.
 
 The combination of in vivo functional characterization and electron microscopy
-predates MICRONS. Earlier work demonstrated that network anatomy and visual
+predates \acs{microns}. Earlier work demonstrated that network anatomy and visual
 physiology can be co-registered at smaller scale \citep{bock2011network}.
-MICRONS changes the coverage of the analysis, but it does not remove the need to
+\acs{microns} changes the coverage of the analysis, but it does not remove the need to
 distinguish exploratory pairwise associations from independently validated
 connectivity rules.
 
 Access to a changing reconstruction introduces an additional reproducibility
 problem: cell identities and annotations can change as proofreading progresses.
-CAVE addresses this issue through versioned segmentation, materialized
+\ac{cave} addresses this issue through versioned segmentation, materialized
 annotation snapshots, and reproducible queries \citep{dorkenwald2025cave}. For
-this reason, MouseBrainBench records the MICRONS datastack, table, and
+this reason, MouseBrainBench records the \acs{microns} datastack, table, and
 materialization version rather than citing a live query alone.
 
-This general biological question is not new. Ding et al. used the MICRONS
+This general biological question is not new. Ding et al. used the \acs{microns}
 resource to demonstrate like-to-like connectivity within and across cortical
 layers and visual areas, separating feature and receptive-field components and
 using axon--dendrite proximity controls \citep{ding2025wiring}. Their analysis
@@ -384,9 +397,9 @@ level of biological units rather than treating all derived pairs as independent.
 It must also replicate outside the cohort used to define or discover the
 endpoint.
 
-Previous connectomic work establishes both the value of MICRONS and the broad
+Previous connectomic work establishes both the value of \acs{microns} and the broad
 structure-function phenomenon. The present contribution is not the rediscovery
-that structure and function are related. MICRONS is used as an external-validity
+that structure and function are related. \acs{microns} is used as an external-validity
 case: MouseBrainBench asks whether a simpler declared endpoint recovers a
 compatible association under a fixed, reproducible audit and whether its
 interpretation remains bounded. This is why the manuscript reports a replicated
@@ -411,10 +424,10 @@ that claim.
 \section{MouseBrainBench framework}
 \label{sec:framework}
 
-MouseBrainBench was conceived as an engineering layer between an artificial
-intelligence model and the scientific interpretation assigned to its output. It
+MouseBrainBench was conceived as an engineering layer between an \ac{ai} model
+and the scientific interpretation assigned to its output. It
 does not provide another neuronal simulator, replace the data models used by
-BMTK or SONATA, or reproduce the predictive infrastructure of Sensorium.
+\ac{bmtk} or SONATA, or reproduce the predictive infrastructure of Sensorium.
 Instead, it formalizes the evidence contract that must be satisfied before a
 model output can support a particular claim. This distinction determines both
 the software architecture and the evaluation protocol. Models and public
@@ -526,7 +539,7 @@ descriptive score of block $i$ is
 S_i=\frac{1}{n_i}\sum_{j=1}^{n_i}s_{ij},
 \]
 whereas block passage is $P_i=\bigwedge_j p_{ij}$. For $m$ required blocks,
-the Mechanistic Identifiability Score (MIS) and final decision are
+the \ac{mis} and final decision are
 \[
 M=\frac{1}{m}\sum_{i=1}^{m}S_i,
 \qquad
@@ -561,7 +574,7 @@ Fig.~\ref{fig:framework-workflow}. A configuration first declares the claim,
 target scale, required evidence blocks, thresholds, and permitted conclusions.
 Typed data schemas then describe regions, observations, predictions,
 connectivity, subject identifiers, and provenance. Dataset adapters convert
-Allen, Sensorium, Dynamic Sensorium, and MICRONS artifacts into those schemas
+Allen, Sensorium, Dynamic Sensorium, and \acs{microns} artifacts into those schemas
 without erasing source-specific metadata. Model adapters expose outputs from
 transparent baselines or external software through the same evaluation
 interface. The validation layer computes metrics and null comparisons. The
@@ -573,7 +586,7 @@ established common schemas, deterministic simulation runners, and basic
 anatomical and predictive metrics. Known-truth systems were then added to test
 the semantics of the decision rule before real data were admitted. Allen and
 Sensorium adapters introduced repeated observations, subject-level partitions,
-and predictive baselines. The MICRONS adapter added versioned CAVE queries,
+and predictive baselines. The \acs{microns} adapter added versioned \acs{cave} queries,
 pair construction, anatomical matching, false-discovery-rate correction, and
 unit-cluster bootstrap inference. At each stage, a component was retained only
 when its output could be traced to a public resource or a deterministic
@@ -602,7 +615,7 @@ changes from silently modifying the computational conclusion.
 The same architecture also explains the role of each dataset. Synthetic systems
 test decision logic under known truth. Allen provides a reproducible real-data
 negative mechanistic control. Static and Dynamic Sensorium test whether modern
-predictive gains remain separated from anatomical and causal claims. MICRONS
+predictive gains remain separated from anatomical and causal claims. \acs{microns}
 provides co-registered local structure and function for a bounded positive
 association. These resources are complementary observations in one audit, not
 interchangeable evidence for a single brain model.
@@ -687,11 +700,11 @@ disconnected prediction by 0.916. Every regional pair had resolvable
 latency. By contrast, the common-drive system reached cross-session correlation
 0.962 while its candidate prediction was 0.0009 worse than the permutation
 median and 0.0032 worse than the disconnected control. These cases demonstrate
-why the continuous MIS cannot replace the conjunctive decision: partial scores
+why the continuous \acs{mis} cannot replace the conjunctive decision: partial scores
 locate a failure but do not constitute a ranking of mechanistic truth.
 
 The second part of RQ1 examines whether the same rule remains conservative on a
-real and strongly reproducible resource. Allen Visual Behavior Neuropixels
+real and strongly reproducible resource. Allen \ac{vbn}
 artifacts were aggregated into regional population responses using fixed
 windows and preprocessing. The reproducibility analysis contained 20 successful
 sessions. The topology analysis used 20 sessions from 20 unique mice, and the
@@ -714,7 +727,7 @@ permutations, and improved by only 0.0035 over the disconnected model. None of
 the topology criteria passed and the block score was 0.073. Median cross-mouse
 and split-half latency agreement, the fraction above the latency null, the
 resolvable-pair fraction, and the nonzero lead--lag fraction were all zero under
-their operational definitions. The complete MIS was 0.358 and the decision was
+their operational definitions. The complete \acs{mis} was 0.358 and the decision was
 \path{reproducible_target_without_mechanistic_identifiability}.
 
 This outcome was stable when all Allen thresholds were multiplied by 0.75,
@@ -759,23 +772,23 @@ direction remain unobserved.
 Dynamic Sensorium tested whether that distinction survives a more demanding
 temporal task. Five current public mice and five legacy out-of-distribution mice
 were evaluated with seven model families: mean response, summary features,
-temporal filterbank, temporal singular-value decomposition (SVD), random
-features, a compact PyTorch multilayer perceptron (MLP), and a bounded model
+temporal filterbank, temporal \ac{svd}, random features, a compact PyTorch
+\ac{mlp}, and a bounded model
 instantiated through the official Sensorium loader and model factory. Models
 were compared within mouse so that between-animal differences could not be
 mistaken for architectural gains. The transparent temporal baselines provide a
 meaningful intermediate comparison: the filterbank represents finite temporal
-kernels, while temporal SVD estimates a low-rank temporal subspace. Random
+kernels, while temporal \acs{svd} estimates a low-rank temporal subspace. Random
 features test whether nonlinear expansion alone explains an improvement, and
-the MLP tests a compact learned nonlinear mapping.
+the \acs{mlp} tests a compact learned nonlinear mapping.
 
 Best mouse-level correlations ranged from 0.427 to 0.526 in the current cohort.
-The temporal filterbank won one mouse, temporal SVD won two, and the MLP won
+The temporal filterbank won one mouse, temporal \acs{svd} won two, and the \acs{mlp} won
 two. The filterbank improved over mean response in all five mice with median
-gain 0.031. The MLP median gain over mean response was 0.043, but its median
-advantage over temporal SVD was only 0.0039. In the legacy out-of-distribution
+gain 0.031. The \acs{mlp} median gain over mean response was 0.043, but its median
+advantage over temporal \acs{svd} was only 0.0039. In the legacy out-of-distribution
 cohort, the corresponding gains were 0.036 and 0.0022. At a required minimum
-effect of 0.01, the MLP surpassed temporal SVD in only one of five mice in each
+effect of 0.01, the \acs{mlp} surpassed temporal \acs{svd} in only one of five mice in each
 cohort. Increased complexity therefore improved the simple baseline more
 consistently than it improved a serious transparent temporal model.
 
@@ -814,7 +827,7 @@ the topographic effect.
   sealed benchmark artifacts. (a) Allen block decisions under global criterion
   multipliers. (b) Static Sensorium partial-positive decisions across
   reliability and topographic thresholds. (c) Number of Dynamic Sensorium mice
-  for which the MLP exceeds the mean-response or temporal-SVD comparator as the
+  for which the \acs{mlp} exceeds the mean-response or temporal-\acs{svd} comparator as the
   required correlation gain increases. Solid lines denote the current cohort
   and dashed lines the legacy out-of-distribution cohort.}
   \label{fig:sensitivity-ablation}
@@ -822,12 +835,12 @@ the topographic effect.
 \end{center}
 
 The Dynamic Sensorium panel provides an ablation over comparator strength and
-minimum effect. At zero or 0.002 required gain, the MLP exceeds temporal SVD in
+minimum effect. At zero or 0.002 required gain, the \acs{mlp} exceeds temporal \acs{svd} in
 three of five mice in each cohort. At 0.005 this falls to two mice, and at 0.010
 to one. By contrast, gains over mean response remain in four or five mice over
 the same range. The apparent neural-network advantage is therefore robust to a
 weak baseline but not to a stronger temporal decomposition. This result is not
-used to reject the MLP. It establishes the narrower conclusion that model
+used to reject the \acs{mlp}. It establishes the narrower conclusion that model
 complexity alone is not the source of the predictive evidence and that claims
 of architectural superiority depend materially on the comparator and minimum
 effect selected.
@@ -835,9 +848,9 @@ effect selected.
 \subsection{RQ3: MICRONS structure--function validation and cross-regime synthesis}
 \label{subsec:rq3-microns}
 
-MICRONS supplies the local co-registration required for a positive
+\acs{microns} supplies the local co-registration required for a positive
 structure--function test. Data were queried from the public
-\path{minnie65_public} CAVE stack. Functional descriptors were obtained from
+\path{minnie65_public} \ac{cave} stack. Functional descriptors were obtained from
 \path{digital_twin_properties_bcm_coreg_v4}, structural edges were
 queried at materialization version 1507, and acquisition artifacts recorded the
 datastack, table, materialization, offsets, limits, and source identifiers.
@@ -922,7 +935,7 @@ Hold-out 2000 & 0.0181 & [0.0115, 0.0238] & 0.0287 & [0.0229, 0.0354] \\
 \end{tabular}
 \end{table}
 
-The MICRONS outcome is a replicated local observational association, not a new
+The \acs{microns} outcome is a replicated local observational association, not a new
 wiring rule or a causal mechanism. Readout-location similarity may still covary
 with cell type, layer, cortical area, morphology, or developmental organization.
 Distance and degree matching address two major confounds but do not exhaust the
@@ -937,7 +950,7 @@ Table~\ref{tab:cross-regime-results} brings the complete evaluation together.
 The important outcome is not that one resource attains the highest score. The
 same executable logic represents complete synthetic passage, incomplete
 mechanistic systems, reproducible but non-identifying Allen activity,
-predictive Sensorium models, and a local positive MICRONS association without
+predictive Sensorium models, and a local positive \acs{microns} association without
 semantic promotion. The publication freeze consequently admits those bounded
 interpretations while blocking a complete mouse-brain digital twin,
 state-of-the-art Sensorium prediction, causal identifiability, behavioural
@@ -973,7 +986,7 @@ mechanism or digital-twin fidelity. The experiments show that these
 interpretations can be separated operationally. Known-truth systems expose
 which evidential component is absent, Allen preserves a strong reproducibility
 result while rejecting topology and direction, Sensorium preserves predictive
-utility while rejecting causal interpretation, and MICRONS admits a local
+utility while rejecting causal interpretation, and \acs{microns} admits a local
 structure--function association after matched controls and replication.
 
 \subsection{Comparison with existing benchmark and validation paradigms}
@@ -992,8 +1005,8 @@ alternatives, and whether directional or interventional information is
 observable. Consequently, the framework does not replace a leaderboard. It
 determines which conclusions may legitimately be exported from one.
 
-The distinction from simulation infrastructures is equally important. BMTK,
-SONATA-compatible workflows, The Virtual Brain, and The Virtual Mouse Brain
+The distinction from simulation infrastructures is equally important. \acs{bmtk},
+SONATA-compatible workflows, \acs{tvb}, and The Virtual Mouse Brain
 provide mature mechanisms for constructing networks, executing dynamics, and
 exchanging model descriptions \citep{dai2020bmtk,tvb2013,melozzi2017virtualmouse}.
 Their central engineering object is an executable model. The central object in
@@ -1037,7 +1050,7 @@ not contradict the biological organization of the visual system. It identifies
 an observational limitation: repeatable population dynamics do not uniquely
 determine the graph that generated them.
 
-Sensorium illustrates a related distinction in modern Artificial Intelligence.
+Sensorium illustrates a related distinction in modern \acs{ai}.
 Static stimulus and context models improve prediction over mean and scrambled
 controls, while temporal models and a compact neural network improve predictions
 for Dynamic Sensorium. These are valid functional results. They are not evidence
@@ -1055,11 +1068,11 @@ They document that the integration path works and that a full-budget comparison
 remains absent. This prevents an engineering smoke test from becoming an
 inflated empirical claim.
 
-The MICRONS result is the strongest positive outcome, but its novelty must be
+The \acs{microns} result is the strongest positive outcome, but its novelty must be
 stated precisely. Ding et al. already demonstrated like-to-like connectivity
 with a more extensive biological analysis, including feature, receptive-field,
 and axon--dendrite geometry controls. MouseBrainBench does not improve that
-biological finding. Instead, the MICRONS experiment tests whether a compact,
+biological finding. Instead, the \acs{microns} experiment tests whether a compact,
 predefined audit can recover a compatible local association and preserve its
 proper scope. Replication across two non-overlapping windows and positive
 unit-cluster bootstrap intervals provide external validity for the audit
@@ -1077,7 +1090,7 @@ local observational association.
 \subsection{Threats to validity and transfer beyond the mouse brain}
 \label{subsec:validity-transfer}
 
-The first threat concerns construct validity. MIS operationalizes mechanistic
+The first threat concerns construct validity. \acs{mis} operationalizes mechanistic
 identifiability through evidence blocks selected for the claim, but these blocks
 are not a universal definition of mechanism. Latency and lead--lag information
 are meaningful for the regional temporal systems examined here, whereas a
@@ -1085,13 +1098,13 @@ molecular pathway, a biophysical cell model, or a behavioural controller would
 require different observables and alternatives. A passing decision means that
 the declared operational criteria have been satisfied. It does not establish
 that every scientifically plausible mechanism has been excluded. This is why
-the continuous MIS value is diagnostic and why the categorical interpretation
+the continuous \acs{mis} value is diagnostic and why the categorical interpretation
 must always be read together with the contract.
 
 Internal validity is limited by the controls that can be constructed from each
 resource. Permutations and disconnected models remove selected organizational
 properties but cannot represent every latent circuit compatible with Allen
-population activity. In MICRONS, distance and degree matching substantially
+population activity. In \acs{microns}, distance and degree matching substantially
 improve on random-pair comparison, yet cell class, laminar position, cortical
 area, morphology, developmental lineage, and axon--dendrite opportunity may
 still confound functional similarity. The aggregate analysis demonstrates the
@@ -1100,7 +1113,7 @@ distance matching. The narrower replicated endpoint reduces the overclaim but
 does not turn an observational association into a causal effect.
 
 Statistical conclusion validity is constrained by the number and independence
-of biological units. Pairwise MICRONS observations share neurons, so the study
+of biological units. Pairwise \acs{microns} observations share neurons, so the study
 uses unit-cluster rather than naive pair bootstrap intervals. Nevertheless, the
 three cohorts are disjoint windows from one animal, not independent biological
 replicates. Dynamic Sensorium comparisons contain five mice per cohort. Win
@@ -1111,7 +1124,7 @@ descriptor and stratum tests are false-discovery-rate corrected, while the main
 claim is restricted to the fixed endpoint replicated in both hold-outs.
 
 External validity is bounded by species, brain area, task, and measurement
-modality. Allen and Sensorium emphasize the mouse visual system. MICRONS covers
+modality. Allen and Sensorium emphasize the mouse visual system. \acs{microns} covers
 a restricted visual-cortical volume from one mouse, and the Allen experiments
 use controlled subsets of the available sessions. The framework has not been
 validated on subcortical circuits, longitudinal disease trajectories, freely
@@ -1133,13 +1146,13 @@ The software interfaces can represent these contracts, but scientific validity
 still requires domain experts to justify the observables, controls, thresholds,
 and consequences of failure.
 
-The current MIS should also not be treated as a universal scalar definition of
+The current \acs{mis} should also not be treated as a universal scalar definition of
 mechanistic explanation. Its principal contribution is structural: evidence
 blocks are non-interchangeable and passage criteria are explicit. The particular
 criteria and thresholds remain claim-dependent. A molecular mechanism, a
 neural-mass model, and an individual-level behavioural twin would require
 different blocks. External preregistration and application by independent groups
-are needed before MIS can be regarded as a community standard.
+are needed before \acs{mis} can be regarded as a community standard.
 
 Conjunctive rules have an intentional cost. They reduce false promotion of
 partial evidence but can reject scientifically interesting models when one
@@ -1155,15 +1168,15 @@ not artifacts of one exact threshold. Allen remains negative under 25\%
 relaxation and tightening. Static Sensorium retains partial reliability and
 topographic evidence for six of nine threshold combinations, failing when the
 reliability threshold reaches 0.70. Dynamic Sensorium gains over mean response
-are more stable than gains over temporal SVD, supporting predictive utility but
+are more stable than gains over temporal \acs{svd}, supporting predictive utility but
 not superiority of a specific neural architecture. These patterns make the
 limitations visible instead of hiding them in a single aggregate score.
 
-For an engineering contribution in artificial intelligence, the value of the
+For an engineering contribution in \acs{ai}, the value of the
 work depends on the framework being useful beyond this exact collection of
 analyses. The software interfaces are therefore organized around claims,
 evidence blocks, graphs, predictions, perturbations, and provenance rather than
-around hard-coded dataset names. External BMTK, SONATA, or The Virtual Brain
+around hard-coded dataset names. External \acs{bmtk}, SONATA, or \acs{tvb}
 simulations can be added as candidate models without reimplementing their
 numerical engines. New datasets can add evidence blocks while retaining the
 same publication-freeze contract.
@@ -1180,15 +1193,15 @@ model itself.
 \section{Conclusions}
 \label{sec:conclusions}
 
-This paper presented MouseBrainBench, a claim-aware verification and validation
-framework for artificial intelligence models used as partial digital
+This paper presented MouseBrainBench, a claim-aware \acs{vv}
+framework for \acs{ai} models used as partial digital
 representations of the mouse brain. The motivating engineering problem is that
 predictive performance, reproducibility, structural fidelity, and mechanistic
 identifiability are often evaluated with metrics that are subsequently treated
 as interchangeable. MouseBrainBench replaces that implicit promotion with
 explicit evidence blocks, matched controls, and non-compensatory claim gates.
 
-The Mechanistic Identifiability Score provides a diagnostic summary but does not
+The \acs{mis} provides a diagnostic summary but does not
 decide the claim by weighted averaging. A claim passes only when all required
 blocks pass. Synthetic systems demonstrated the intended semantics: common
 drive, topology without direction, and direction without topology specificity
@@ -1200,13 +1213,13 @@ The real-data experiments produced three different outcomes. Allen Visual
 Behavior Neuropixels was highly reproducible but did not identify the proposed
 topology or direction. Static and Dynamic Sensorium supported predictive
 improvements, including gains from temporal and neural-network models, without
-providing mechanistic evidence. MICRONS supplied the positive external-validity
+providing mechanistic evidence. \acs{microns} supplied the positive external-validity
 case: connected directed pairs showed greater readout-location similarity than
 distance- and degree-matched non-connected pairs in discovery and two
 non-overlapping hold-outs. Unit-cluster bootstrap intervals remained positive
 in all cohorts.
 
-The MICRONS result is local and observational. It is compatible with more
+The \acs{microns} result is local and observational. It is compatible with more
 comprehensive published analyses and is not claimed as a new biological wiring
 rule. Its role is to show that the framework can admit a positive claim when a
 specific endpoint survives relevant controls and replication. Conversely, the
@@ -1237,9 +1250,8 @@ paper.
 
 \section{Acknowledgements}
 \label{sec:acknowledgements}
-The author acknowledges the Allen Institute, the Sensorium and Dynamic
-Sensorium teams, the MICRONS Consortium, and the CAVE infrastructure for making
-the resources used in this study accessible.
+This work has been funded by the Spanish MICIU under the PDI program in the
+XMIDAS project (PID2021-122640OB-I00).
 
 \printcredits
 \bibliographystyle{cas-model2-names}
