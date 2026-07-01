@@ -25,17 +25,15 @@ software version, input artifact, control model, and threshold that produced
 it. These requirements lead to the workflow summarized in
 Fig.~\ref{fig:framework-workflow}.
 
-\begin{figure}[!t]
+\par\smallskip
+\noindent\begin{minipage}{\linewidth}
   \centering
-  \includegraphics[width=0.85\linewidth]{figures/framework_workflow.pdf}
-  \caption{MouseBrainBench workflow. A bounded claim is declared before model
-  evaluation. Observability determines which evidence blocks can be tested.
-  Adapters then expose predictions and observations through a common audit
-  interface. The claim gate accepts an interpretation only when every required
-  block passes. Failed and unobservable blocks remain part of the result rather
-  than being hidden by an aggregate score.}
+  \includegraphics[width=0.72\linewidth]{figures/framework_workflow.pdf}
+  \captionof{figure}{MouseBrainBench workflow from claim declaration and
+  observability analysis to evidence-block evaluation and the final claim gate.}
   \label{fig:framework-workflow}
-\end{figure}
+\end{minipage}
+\par\smallskip
 
 \subsection{Claim representation and evidence contract}
 \label{subsec:claim-contract}
