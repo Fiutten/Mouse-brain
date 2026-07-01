@@ -44,7 +44,24 @@ def code_revision() -> str:
             raise ValueError(
                 "MOUSEBRAINBENCH_GIT_REVISION must be a 7-40 character hexadecimal Git ID"
             )
-        return override.lower()
+        try:
+            resolved = subprocess.check_output(
+                ["git", "rev-parse", "--verify", f"{override}^{{commit}}"],
+                text=True,
+                stderr=subprocess.DEVNULL,
+            ).strip()
+            head = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL
+            ).strip()
+        except (OSError, subprocess.CalledProcessError) as exc:
+            raise ValueError(
+                "MOUSEBRAINBENCH_GIT_REVISION must resolve to a local Git commit"
+            ) from exc
+        if resolved.lower() != head.lower():
+            raise ValueError(
+                "MOUSEBRAINBENCH_GIT_REVISION must resolve to the checked-out HEAD"
+            )
+        return resolved.lower()
 
     try:
         return subprocess.check_output(
