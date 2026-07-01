@@ -60,7 +60,6 @@ structure--function agreement, and computational cost as non-interchangeable
 evidence blocks. A \ac{mis} provides descriptive
 diagnostics, while a conjunctive decision rule prevents high performance in one
 block from compensating for missing evidence in another.
-
 The framework is evaluated with controlled simulations and three families of
 public data. Synthetic systems confirm that the decision rule rejects common
 drive, topology without temporal direction, and direction without
@@ -74,7 +73,6 @@ containing 2991 co-registered units and 5943 connected directed pairs,
 connected pairs exhibit greater readout-location similarity than distance- and
 degree-matched controls. Distance-matched effects are 0.0215, 0.0210, and
 0.0179, with positive unit-cluster bootstrap intervals in all cohorts.
-
 MouseBrainBench does not claim a complete or causal digital brain. It provides
 a reproducible engineering layer for deciding which claims about \acs{ai}-based
 scientific models are supported, partially supported, or blocked by the
@@ -448,19 +446,17 @@ software version, input artifact, control model, and threshold that produced
 it. These requirements lead to the workflow summarized in
 Fig.~\ref{fig:framework-workflow}.
 
-\begin{center}
-\begin{minipage}{0.90\linewidth}
+\begin{figure}[!t]
   \centering
-  \includegraphics[width=0.94\linewidth]{figures/framework_workflow.pdf}
-  \captionof{figure}{MouseBrainBench workflow. A bounded claim is declared before model
+  \includegraphics[width=0.85\linewidth]{figures/framework_workflow.pdf}
+  \caption{MouseBrainBench workflow. A bounded claim is declared before model
   evaluation. Observability determines which evidence blocks can be tested.
-  adapters then expose predictions and observations through a common audit
+  Adapters then expose predictions and observations through a common audit
   interface. The claim gate accepts an interpretation only when every required
   block passes. Failed and unobservable blocks remain part of the result rather
   than being hidden by an aggregate score.}
   \label{fig:framework-workflow}
-\end{minipage}
-\end{center}
+\end{figure}
 
 \subsection{Claim representation and evidence contract}
 \label{subsec:claim-contract}
@@ -819,20 +815,18 @@ fails when required reliability rises from 0.60 to 0.70. The boundary is thus
 attributable to empirical response reliability rather than to re-selection of
 the topographic effect.
 
-\begin{center}
-\begin{minipage}{0.98\linewidth}
+\begin{figure}[!t]
   \centering
-  \includegraphics[width=\linewidth]{figures/sensitivity_ablation.pdf}
-  \captionof{figure}{Sensitivity and ablation analysis generated from the
-  sealed benchmark artifacts. (a) Allen block decisions under global criterion
-  multipliers. (b) Static Sensorium partial-positive decisions across
+  \includegraphics[width=0.92\linewidth]{figures/sensitivity_ablation.pdf}
+  \caption{Sensitivity and ablation analysis generated from the sealed benchmark
+  artifacts. (a) Allen block decisions under global criterion multipliers.
+  (b) Static Sensorium partial-positive decisions across
   reliability and topographic thresholds. (c) Number of Dynamic Sensorium mice
-  for which the \acs{mlp} exceeds the mean-response or temporal-\acs{svd} comparator as the
-  required correlation gain increases. Solid lines denote the current cohort
-  and dashed lines the legacy out-of-distribution cohort.}
+  for which the \acs{mlp} exceeds the mean-response or temporal-\acs{svd}
+  comparator as the required correlation gain increases. Solid lines denote the
+  current cohort and dashed lines the legacy out-of-distribution cohort.}
   \label{fig:sensitivity-ablation}
-\end{minipage}
-\end{center}
+\end{figure}
 
 The Dynamic Sensorium panel provides an ablation over comparator strength and
 minimum effect. At zero or 0.002 required gain, the \acs{mlp} exceeds temporal \acs{svd} in

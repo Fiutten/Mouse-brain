@@ -179,20 +179,18 @@ fails when required reliability rises from 0.60 to 0.70. The boundary is thus
 attributable to empirical response reliability rather than to re-selection of
 the topographic effect.
 
-\begin{center}
-\begin{minipage}{0.98\linewidth}
+\begin{figure}[!t]
   \centering
-  \includegraphics[width=\linewidth]{figures/sensitivity_ablation.pdf}
-  \captionof{figure}{Sensitivity and ablation analysis generated from the
-  sealed benchmark artifacts. (a) Allen block decisions under global criterion
-  multipliers. (b) Static Sensorium partial-positive decisions across
+  \includegraphics[width=0.92\linewidth]{figures/sensitivity_ablation.pdf}
+  \caption{Sensitivity and ablation analysis generated from the sealed benchmark
+  artifacts. (a) Allen block decisions under global criterion multipliers.
+  (b) Static Sensorium partial-positive decisions across
   reliability and topographic thresholds. (c) Number of Dynamic Sensorium mice
-  for which the \acs{mlp} exceeds the mean-response or temporal-\acs{svd} comparator as the
-  required correlation gain increases. Solid lines denote the current cohort
-  and dashed lines the legacy out-of-distribution cohort.}
+  for which the \acs{mlp} exceeds the mean-response or temporal-\acs{svd}
+  comparator as the required correlation gain increases. Solid lines denote the
+  current cohort and dashed lines the legacy out-of-distribution cohort.}
   \label{fig:sensitivity-ablation}
-\end{minipage}
-\end{center}
+\end{figure}
 
 The Dynamic Sensorium panel provides an ablation over comparator strength and
 minimum effect. At zero or 0.002 required gain, the \acs{mlp} exceeds temporal \acs{svd} in
