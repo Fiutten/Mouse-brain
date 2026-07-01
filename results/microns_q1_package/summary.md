@@ -1,8 +1,9 @@
-# MICRONS Q1 Replicated Structure-Function Package
+# MICRONS Q1 Internally Reproduced Structure-Function Package
 
 - Primary endpoint: `all_pairs/readout_location`
+- Endpoint status: fixed after discovery and evaluated in two non-overlapping hold-outs.
 - Q1 package ready: `True`
-- Bootstrap cluster: `unit`
+- Bootstrap cluster: `unit`; weighted over the directed pair frame.
 - Bootstrap samples: `300`
 
 ## Definitive Cohort Table
@@ -23,7 +24,7 @@
 
 ## Claims Allowed
 
-- Replicated local MICRONS structure-function association.
+- Internally reproduced local MICRONS structure-function association across two non-overlapping hold-out windows from the same resource.
 - Connected pairs show closer readout-location similarity than distance- and degree-matched controls.
 - MouseBrainBench provides a reproducible claim-audit benchmark for partial mouse-brain digital models.
 

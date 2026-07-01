@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "34feb97-dirty",
+  "git_revision": "7f5293613dc84000719f05c0dc340dc7c9d69c2b",
   "cases": [
     {
       "case": "directed_truth",

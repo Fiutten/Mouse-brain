@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "ed4563b-dirty",
+  "git_revision": "7f5293613dc84000719f05c0dc340dc7c9d69c2b",
   "official_repo_probe": {
     "path": "external/sensorium_2023",
     "exists": true,

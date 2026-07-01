@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "ee348f1-dirty",
+  "git_revision": "7f5293613dc84000719f05c0dc340dc7c9d69c2b",
   "interpretation": "sensorium_predictive_case_not_mechanistic_claim",
   "dataset": {
     "root": "data/dynamic_sensorium/extracted/dynamic29712-5-9-Video-9b4f6a1a067fe51e15306b9628efea20",
@@ -47,9 +47,6 @@
     "stimulus_context_ridge_correlation": 0.1940597381282278,
     "stimulus_context_scrambled_correlation": 0.15932759897314602,
     "stimulus_context_ridge_median_neuron_correlation": 0.06165278667041038,
-    "calibrated_residual_ridge_correlation": 0.47594909133200297,
-    "calibrated_residual_ridge_scrambled_correlation": 0.442298180204914,
-    "calibrated_residual_ridge_median_neuron_correlation": 0.1684430199801663,
     "best_model_is_contextual": false,
     "best_model": "calibrated_residual_ridge",
     "best_predictive_correlation": 0.47594909133200297,
@@ -63,6 +60,9 @@
     "ridge_minus_scrambled": 0.09775758944183338,
     "stimulus_context_ridge_minus_mean": -0.25892441494640134,
     "stimulus_context_ridge_minus_scrambled": 0.034732139155081776,
+    "calibrated_residual_ridge_correlation": 0.47594909133200297,
+    "calibrated_residual_ridge_scrambled_correlation": 0.442298180204914,
+    "calibrated_residual_ridge_median_neuron_correlation": 0.1684430199801663,
     "calibrated_residual_ridge_minus_mean": 0.022964938257373835,
     "calibrated_residual_ridge_minus_scrambled": 0.033650911127088956,
     "best_predictive_minus_mean": 0.022964938257373835,

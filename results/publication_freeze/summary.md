@@ -1,10 +1,10 @@
 # Publication Freeze
 
-- Publication route: `q1_candidate_after_replicated_microns_stratified_signal`
+- Publication route: `q1_candidate_after_internally_reproduced_microns_signal`
 - Methodological paper ready: `True`
 - Q1 ready now: `True`
-- Q1 candidate evidence requires replication: `False`
-- Q1 candidate evidence replicated: `True`
+- Q1 candidate evidence requires internal reproduction: `False`
+- Q1 candidate evidence internally reproduced: `True`
 - MICrONS Q1 package ready: `True`
 - MICrONS Q1 primary endpoint: `all_pairs/readout_location`
 - Official Sensorium stack forward OK: `True`
@@ -33,7 +33,7 @@
 - MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.
 - MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.
 - MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.
-- MICrONS hold-out stratified analyses replicate the readout-location signal on two additional CAVE subsets.
+- MICrONS hold-out analyses internally reproduce the readout-location signal in two non-overlapping windows from the same resource.
 
 ## Claims blocked
 
@@ -42,8 +42,8 @@
 - A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.
 - Causal mechanistic identifiability in Dynamic Sensorium.
 - MICrONS causal mechanism claims: the stratified signal is correlational and local, not interventional.
-- Whole-brain or causal MICrONS claims: the replicated signal remains local and observational.
+- Whole-brain or causal MICrONS claims: the internally reproduced signal remains local, observational, and confined to one resource.
 
 ## Next required piece
 
-Begin Q1 manuscript planning around the replicated MICrONS structure-function benchmark claim, while keeping causal, whole-brain, and Sensorium-SOTA claims blocked.
+Proceed with the bounded MICrONS structure-function benchmark claim, while keeping causal, whole-brain, independent-animal, and Sensorium-SOTA claims blocked.

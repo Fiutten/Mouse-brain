@@ -1,5 +1,7 @@
 {
-  "analysis": "microns_q1_replicated_structure_function_package",
+  "version": "0.6.0",
+  "git_revision": "7f5293613dc84000719f05c0dc340dc7c9d69c2b",
+  "analysis": "microns_q1_internally_reproduced_structure_function_package",
   "primary_endpoint": "all_pairs/readout_location",
   "bootstrap": {
     "cluster": "unit",
@@ -124,7 +126,7 @@
     }
   ],
   "claims_allowed": [
-    "Replicated local MICRONS structure-function association.",
+    "Internally reproduced local MICRONS structure-function association across two non-overlapping hold-out windows from the same resource.",
     "Connected pairs show closer readout-location similarity than distance- and degree-matched controls.",
     "MouseBrainBench provides a reproducible claim-audit benchmark for partial mouse-brain digital models."
   ],
