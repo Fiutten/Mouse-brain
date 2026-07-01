@@ -283,15 +283,6 @@ def run_sensorium_benchmark(
         "stimulus_context_ridge_correlation": context_correlation,
         "stimulus_context_scrambled_correlation": scrambled_context_correlation,
         "stimulus_context_ridge_median_neuron_correlation": context_median_neuron,
-        "calibrated_residual_ridge_correlation": adapter_correlation,
-        "calibrated_residual_ridge_scrambled_correlation": adapter_scrambled_correlation,
-        "calibrated_residual_ridge_median_neuron_correlation": adapter_median_neuron,
-        "temporal_svd_residual_ridge_correlation": temporal_svd_correlation,
-        "temporal_svd_residual_ridge_scrambled_correlation": temporal_svd_scrambled_correlation,
-        "temporal_svd_residual_ridge_median_neuron_correlation": temporal_svd_median_neuron,
-        "random_feature_residual_ridge_correlation": random_feature_correlation,
-        "random_feature_residual_ridge_scrambled_correlation": random_feature_scrambled_correlation,
-        "random_feature_residual_ridge_median_neuron_correlation": random_feature_median_neuron,
         "best_model_is_contextual": best_model == "stimulus_context_ridge",
         "best_model": best_model,
         "best_predictive_correlation": best_correlation,
@@ -314,24 +305,30 @@ def run_sensorium_benchmark(
     metrics["stimulus_context_ridge_minus_scrambled"] = float(
         metrics["stimulus_context_ridge_correlation"]
     ) - float(metrics["stimulus_context_scrambled_correlation"])
-    metrics["calibrated_residual_ridge_minus_mean"] = float(
-        metrics["calibrated_residual_ridge_correlation"]
-    ) - float(metrics["mean_correlation"])
-    metrics["calibrated_residual_ridge_minus_scrambled"] = float(
-        metrics["calibrated_residual_ridge_correlation"]
-    ) - float(metrics["calibrated_residual_ridge_scrambled_correlation"])
-    metrics["temporal_svd_residual_ridge_minus_mean"] = float(
-        metrics["temporal_svd_residual_ridge_correlation"]
-    ) - float(metrics["mean_correlation"])
-    metrics["temporal_svd_residual_ridge_minus_scrambled"] = float(
-        metrics["temporal_svd_residual_ridge_correlation"]
-    ) - float(metrics["temporal_svd_residual_ridge_scrambled_correlation"])
-    metrics["random_feature_residual_ridge_minus_mean"] = float(
-        metrics["random_feature_residual_ridge_correlation"]
-    ) - float(metrics["mean_correlation"])
-    metrics["random_feature_residual_ridge_minus_scrambled"] = float(
-        metrics["random_feature_residual_ridge_correlation"]
-    ) - float(metrics["random_feature_residual_ridge_scrambled_correlation"])
+    adapter_metrics = {
+        "calibrated_residual_ridge": (
+            adapter_correlation,
+            adapter_scrambled_correlation,
+            adapter_median_neuron,
+        ),
+        "temporal_svd_residual_ridge": (
+            temporal_svd_correlation,
+            temporal_svd_scrambled_correlation,
+            temporal_svd_median_neuron,
+        ),
+        "random_feature_residual_ridge": (
+            random_feature_correlation,
+            random_feature_scrambled_correlation,
+            random_feature_median_neuron,
+        ),
+    }
+    if adapter in adapter_metrics:
+        correlation, scrambled_correlation, median_neuron_correlation = adapter_metrics[adapter]
+        metrics[f"{adapter}_correlation"] = correlation
+        metrics[f"{adapter}_scrambled_correlation"] = scrambled_correlation
+        metrics[f"{adapter}_median_neuron_correlation"] = median_neuron_correlation
+        metrics[f"{adapter}_minus_mean"] = correlation - float(metrics["mean_correlation"])
+        metrics[f"{adapter}_minus_scrambled"] = correlation - scrambled_correlation
     metrics["best_predictive_minus_mean"] = float(metrics["best_predictive_correlation"]) - float(
         metrics["mean_correlation"]
     )
@@ -339,6 +336,29 @@ def run_sensorium_benchmark(
         metrics["best_predictive_correlation"]
     ) - float(metrics["best_predictive_scrambled_correlation"])
     mis = predictive_mis_from_metrics(metrics)
+    baselines = {
+        "mean_response": "train-set neuron mean",
+        "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
+        "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
+        "scrambled_stimulus_ridge": "same model with permuted train stimuli",
+        "scrambled_stimulus_context_ridge": (
+            "context-preserving control with permuted train stimuli"
+        ),
+    }
+    adapter_descriptions = {
+        "calibrated_residual_ridge": (
+            "train-calibrated mean response plus shrinkage-scaled stimulus residual"
+        ),
+        "temporal_svd_residual_ridge": (
+            "train-only SVD temporal subspace plus calibrated residual ridge"
+        ),
+        "random_feature_residual_ridge": (
+            "train-only random Fourier feature map plus calibrated residual ridge"
+        ),
+    }
+    if adapter in adapter_descriptions:
+        baselines[adapter] = adapter_descriptions[adapter]
+
     payload: dict[str, Any] = {
         "version": __version__,
         "git_revision": git_revision or code_revision(),
@@ -352,24 +372,7 @@ def run_sensorium_benchmark(
             "eval_tiers": list(eval_tiers),
             "tiers": {tier: int(np.sum(table.tiers == tier)) for tier in sorted(set(table.tiers))},
         },
-        "baselines": {
-            "mean_response": "train-set neuron mean",
-            "stimulus_ridge": "ridge regression on deterministic stimulus descriptors",
-            "stimulus_context_ridge": "stimulus ridge plus behavior and pupil covariates when available",
-            "scrambled_stimulus_ridge": "same model with permuted train stimuli",
-            "scrambled_stimulus_context_ridge": (
-                "context-preserving control with permuted train stimuli"
-            ),
-            "calibrated_residual_ridge": (
-                "train-calibrated mean response plus shrinkage-scaled stimulus residual"
-            ),
-            "temporal_svd_residual_ridge": (
-                "train-only SVD temporal subspace plus calibrated residual ridge"
-            ),
-            "random_feature_residual_ridge": (
-                "train-only random Fourier feature map plus calibrated residual ridge"
-            ),
-        },
+        "baselines": baselines,
         "adapter": {"name": adapter, "diagnostics": adapter_diagnostics},
         "metrics": metrics,
         "mis": mis.as_dict(),

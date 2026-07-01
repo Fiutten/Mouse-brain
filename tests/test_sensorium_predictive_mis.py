@@ -74,6 +74,10 @@ def test_calibrated_residual_adapter_can_improve_over_mean(tmp_path) -> None:
 
     assert payload["metrics"]["calibrated_residual_ridge_minus_mean"] > 0.05
     assert payload["adapter"]["diagnostics"]["adapter_beta"] > 0.0
+    assert "temporal_svd_residual_ridge_correlation" not in payload["metrics"]
+    assert "random_feature_residual_ridge_correlation" not in payload["metrics"]
+    assert "temporal_svd_residual_ridge" not in payload["baselines"]
+    assert "random_feature_residual_ridge" not in payload["baselines"]
 
 
 def test_temporal_svd_adapter_can_improve_over_mean(tmp_path) -> None:
