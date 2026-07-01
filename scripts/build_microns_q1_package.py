@@ -1,10 +1,10 @@
 """Build manuscript-grade MICRONS Q1 tables and bootstrap stability checks.
 
 This script summarizes the replicated MICRONS stratified signal without changing
-the underlying tests. The primary endpoint is preregistered from the replicated
-result: ``all_pairs`` with ``readout_location`` similarity. Bootstrap intervals
-are clustered by units, so the interval is not inflated by treating all directed
-pairs as independent observations.
+the underlying tests. The primary endpoint was fixed after the discovery analysis
+and evaluated in two non-overlapping hold-outs: ``all_pairs`` with
+``readout_location`` similarity. Bootstrap intervals use a unit-cluster weighted
+bootstrap over the directed pair frame, avoiding naive pair-level independence.
 """
 
 from __future__ import annotations
@@ -124,7 +124,13 @@ def _unit_bootstrap(
     samples: int,
     seed: int,
 ) -> dict[str, list[float] | int]:
-    """Bootstrap primary effect deltas by resampling units with replacement."""
+    """Compute a weighted unit-cluster bootstrap over the directed pair frame.
+
+    Units are resampled with replacement. Directed pair weights are induced by
+    the multiplicities of their pre- and post-synaptic roots in each unit sample.
+    The implementation therefore reweights the existing pair frame rather than
+    physically rebuilding every eligible pair for each bootstrap sample.
+    """
 
     rng = np.random.default_rng(seed)
     pre_roots = frame["pre_root"].to_numpy(np.int64)
@@ -275,8 +281,9 @@ def _write_markdown(payload: dict[str, Any], markdown: Path) -> None:
         "# MICRONS Q1 Replicated Structure-Function Package",
         "",
         f"- Primary endpoint: `{payload['primary_endpoint']}`",
+        "- Endpoint status: fixed after discovery and evaluated in two non-overlapping hold-outs.",
         f"- Q1 package ready: `{payload['q1_package_ready']}`",
-        f"- Bootstrap cluster: `{payload['bootstrap']['cluster']}`",
+        f"- Bootstrap cluster: `{payload['bootstrap']['cluster']}`; weighted over the directed pair frame.",
         f"- Bootstrap samples: `{payload['bootstrap']['samples']}`",
         "",
         "## Definitive Cohort Table",

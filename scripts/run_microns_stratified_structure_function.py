@@ -2,10 +2,13 @@
 
 The expanded all-pairs MICrONS pilot is negative after distance matching. This
 script asks whether that negative global result hides a narrower effect inside
-predefined anatomical, cell-type, reliability, or readout strata. The analysis is
-explicitly exploratory unless a stratum survives matched nulls and FDR
-correction. It should not be used to promote a mechanistic claim from a single
-uncorrected subgroup.
+deterministically generated anatomical, cell-type, reliability, or readout
+strata. The analysis is exploratory unless an endpoint is fixed after discovery
+and then evaluated in independent hold-outs. Some categorical strata are
+data-dependent because deterministic selection rules use connected-pair category
+frequencies. Broad counts of confirmed strata therefore provide exploratory
+context rather than independent biological discoveries. A single uncorrected or
+post-hoc subgroup must not be promoted to a mechanistic claim.
 """
 
 from __future__ import annotations
@@ -206,7 +209,12 @@ def _add_metric_columns(frame: pd.DataFrame, units: pd.DataFrame) -> list[str]:
 
 
 def _candidate_strata(frame: pd.DataFrame, config: StratifiedConfig) -> dict[str, pd.Series]:
-    """Return preregistered strata masks with enough connected pairs to test."""
+    """Return deterministic candidate masks with enough connected pairs to test.
+
+    Some categorical strata are selected by fixed rules over connected-pair
+    category counts. They are therefore rule-based exploratory strata rather
+    than fully preregistered biological hypotheses.
+    """
 
     candidates: dict[str, pd.Series] = {
         "all_pairs": pd.Series(True, index=frame.index),
