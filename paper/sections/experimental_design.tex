@@ -1,4 +1,5 @@
 \section{Experimental design}
+\label{sec:experimental-design}
 
 The evaluation was designed to answer one methodological question: can the
 framework distinguish useful prediction and reproducibility from evidence that
@@ -8,6 +9,7 @@ pooled into a single performance table. Instead, each regime tests a declared
 failure mode or evidence block.
 
 \subsection{General protocol and reproducibility controls}
+\label{subsec:general-protocol}
 
 Every experiment is executed from a versioned configuration or command and
 writes a structured result artifact. Cohort size, data identifiers, thresholds,
@@ -30,6 +32,7 @@ replication uses non-overlapping query windows that are fixed before inspecting
 the hold-out results.
 
 \subsection{Known-truth validation of MIS}
+\label{subsec:known-truth-mis}
 
 Four synthetic systems isolate the logical components of identifiability. The
 \texttt{directed\_truth} case contains reproducible region-specific signals,
@@ -45,7 +48,7 @@ permuted controls. Reproducibility is measured through cross-session and
 split-half correlations and the fraction of instances exceeding their own null
 distribution. Topology specificity uses prediction advantages over alternative
 graphs. Directed identifiability uses resolvable latency and nonzero lead-lag
-fractions. The prespecified expectation is strict: only
+fractions. The declared known-truth expectation is strict: only
 \texttt{directed\_truth} may pass all MIS blocks.
 
 This experiment is a unit test of the scientific decision rule, not biological
@@ -55,6 +58,7 @@ compensated for absent directionality, the score would be unsuitable for the
 remaining experiments.
 
 \subsection{Allen negative mechanistic control}
+\label{subsec:allen-negative-control}
 
 Allen Visual Behavior Neuropixels is used as a real negative control. The
 confirmation analysis contains 20 successful sessions. The anatomical
@@ -78,6 +82,7 @@ strong reproducibility finding while refusing to infer an anatomical-dynamic
 mechanism that the target cannot identify.
 
 \subsection{Sensorium predictive controls}
+\label{subsec:sensorium-predictive-controls}
 
 Static Sensorium is evaluated on seven validation mice and on five mice with
 repeated test stimuli. Transparent predictors include a mean-response baseline,
@@ -102,7 +107,8 @@ directionality blocks without corresponding anatomical or interventional
 evidence. The framework should therefore report positive predictive evidence
 and a negative mechanistic decision simultaneously.
 
-\subsection{MICRONS structure-function experiment}
+\subsection{MICRONS structure--function experiment}
+\label{subsec:microns-structure-function-experiment}
 
 MICRONS provides the main empirical test because functional properties and
 synaptic edges can be co-registered locally. Data are queried from the
@@ -123,6 +129,6 @@ for high-degree neurons to appear in connected pairs.
 The endpoint is admitted only when the connected-pair advantage remains
 positive after matched controls and false-discovery-rate correction in the
 discovery cohort and both hold-outs. Stability is assessed with 300 unit-cluster
-bootstrap samples per cohort using seed 71. This protocol supports, at most, a
-replicated local observational association. No perturbation establishes synaptic
+bootstrap samples per cohort using seed 71. This protocol supports, at most, an
+internally reproduced local observational association. No perturbation establishes synaptic
 necessity, and the sampled volume cannot support a whole-brain conclusion.

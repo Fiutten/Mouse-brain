@@ -1,41 +1,56 @@
 \section{Research contributions}
 \label{sec:contributions}
 
-The main contribution is not a new mouse-brain simulator. It is a falsifiable
-procedure for determining what kind of claim is supported by a partial digital
-model. This contribution is developed through the following elements:
+The main innovation of MouseBrainBench lies in its explicit separation between
+model performance and the scientific claim derived from that performance. The
+framework does not try to replace existing simulators or predictive benchmarks.
+Instead, it provides a reproducible mechanism to decide whether a partial digital
+model supports a predictive, reproducibility, structure--function, or
+mechanistic-identifiability claim.
+
+The contributions of the proposal are summarised in the following points:
 
 \begin{itemize}
-  \item A claim-audit formulation that separates prediction, reproducibility,
-  topology specificity, directed identifiability, local structure-function
-  association, and computational cost. The output is not only a ranking: it is
-  an explicit set of admitted and rejected interpretations.
+  \item The proposal introduces a claim-aware validation formulation that
+  separates prediction, reproducibility, topology specificity, directed
+  identifiability, local structure--function association, and computational
+  cost. This fact allows the system to return not only a numerical result, but
+  also an explicit set of admitted and rejected interpretations.
 
-  \item A formal \acs{mis} composed of non-interchangeable evidence blocks and fixed
-  directional thresholds. The rule is tested with four known-truth systems that
-  isolate common drive, topology without direction, and direction without
-  topology specificity.
+  \item A formal \acs{mis} is defined through non-interchangeable evidence
+  blocks and fixed directional thresholds. The rule is evaluated with four
+  known-truth systems that isolate common drive, topology without direction, and
+  direction without topology specificity. These experiments validate the
+  operational semantics of the claim gate, rather than providing an exhaustive
+  Monte Carlo characterization of false-positive or false-negative rates.
 
-  \item A cross-resource protocol that assigns Allen, Sensorium, Dynamic
-  Sensorium, and \acs{microns} distinct roles instead of treating heterogeneous data
-  as interchangeable validation. This design provides a real negative control,
-  predictive controls, and a local anatomical-functional test.
+  \item A cross-resource protocol is established by assigning Allen,
+  Sensorium, Dynamic Sensorium, and \acs{microns} different roles in the
+  validation process. Thus, heterogeneous datasets are not mixed as if they were
+  repeated measurements of the same system. Allen acts as a real negative
+  mechanistic control, Sensorium as a predictive control, and \acs{microns} as a
+  local anatomical-functional case.
 
-  \item An external-validity case in \acs{microns} obtained with a specified primary
+  \item A MICRONS validation case is provided using a discovery-fixed primary
   endpoint, distance- and degree-matched null models, false-discovery-rate
-  correction, unit-cluster bootstrap intervals, and two non-overlapping hold-out
-  cohorts. It tests reproducible recovery of a published broad phenomenon rather
-  than claiming a new biological wiring rule.
+  correction, unit-cluster bootstrap stability intervals, and two non-overlapping hold-out
+  windows. The aim is to recover a bounded and previously motivated local
+  structure--function phenomenon, not to claim a new general wiring rule.
 
-  \item A reproducible publication freeze that binds numerical artifacts to
-  allowed and blocked claims. In the current study it admits a replicated local
-  observational structure-function association, while rejecting causal,
-  behavioural, whole-brain, and state-of-the-art predictor claims.
+  \item The work includes a reproducible publication freeze that links numerical
+  artifacts with allowed and blocked claims. In the current study, the framework
+  admits an internally reproduced local observational structure--function association, while
+  rejecting causal, behavioural, whole-brain, and state-of-the-art predictor
+  claims. This produces a direct advantage over a conventional predictive
+  evaluation, because strong reproducibility or prediction in Allen and Sensorium
+  is not allowed to compensate for missing topology, direction, or causal
+  evidence.
 \end{itemize}
 
-These elements define the scope of the work. MouseBrainBench evaluates the
-relationship between evidence and interpretation. It does not establish that a
-single score is universally sufficient for mechanistic neuroscience. The \acs{mis}
-thresholds and evidence blocks must be specified for the target claim before
-evaluation, and failure means that the particular claim is unsupported, not
-that the dataset or model is devoid of scientific value.
+Notice that these contributions define the scope of the paper. MouseBrainBench
+is a framework for evaluating the relationship between evidence and
+interpretation. It does not establish that a single score is universally
+sufficient for mechanistic neuroscience. The MIS thresholds and evidence blocks
+must be specified according to the target claim before evaluation, and a failure
+means that the analysed claim is not supported, not that the dataset or model is
+without scientific interest.

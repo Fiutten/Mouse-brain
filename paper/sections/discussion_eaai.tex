@@ -1,15 +1,15 @@
 \section{Discussion}
 \label{sec:discussion}
 
-MouseBrainBench addresses a narrow but consequential problem: computational
-neuroscience increasingly produces models that predict neural measurements,
-while the language used to describe those models often extends to biological
-mechanism or digital-twin fidelity. The experiments show that these
-interpretations can be separated operationally. Known-truth systems expose
-which evidential component is absent, Allen preserves a strong reproducibility
-result while rejecting topology and direction, Sensorium preserves predictive
-utility while rejecting causal interpretation, and \acs{microns} admits a local
-structure--function association after matched controls and replication.
+The results show that MouseBrainBench addresses a narrow but relevant problem in
+computational neuroscience. Current models can predict neural measurements with
+increasing accuracy, but the language used to describe them can easily move from
+prediction to mechanism or digital-twin fidelity. The proposed framework makes
+this transition explicit and testable. Synthetic systems reveal which evidence
+block is absent, Allen keeps a reproducible target while rejecting topology and
+direction, Sensorium keeps predictive usefulness without causal interpretation,
+and \acs{microns} admits a bounded local structure--function association after
+matched controls and hold-out confirmation.
 
 \subsection{Comparison with existing benchmark and validation paradigms}
 \label{subsec:benchmark-comparison}
@@ -40,16 +40,18 @@ to the proposed claim.
 
 This position is consistent with the broader verification, validation, and
 uncertainty-quantification literature, which treats model credibility as
-purpose-dependent rather than absolute \citep{riedmaier2021vvuq}. Digital-twin
-credibility frameworks similarly emphasize intended use, lifecycle evidence,
-data provenance, and uncertainty rather than assuming that the twin label
-guarantees fidelity \citep{shao2022credibility}. MouseBrainBench contributes a
+purpose-dependent rather than absolute
+\citep{asme2018vv40,oberkampf2010verification,sargent2013verification,riedmaier2021vvuq}.
+Digital-twin credibility frameworks similarly emphasize intended use,
+lifecycle evidence, data provenance, and uncertainty rather than assuming
+that the twin label guarantees fidelity
+\citep{jones2020digitaltwin,rasheed2020digitaltwin,fuller2020digitaltwin,shao2022credibility}. MouseBrainBench contributes a
 domain-specific operationalization for AI-based neural models: it maps purpose
 to required evidence blocks, makes those blocks non-interchangeable, and binds
 the reported interpretation to sealed computational artifacts. It does not yet
 provide a complete uncertainty-quantification treatment of parameters and
 model form. Instead, threshold sensitivity, matched nulls, clustered intervals,
-and hold-out replication cover the uncertainties directly estimable from the
+and hold-out reproduction cover the uncertainties directly estimable from the
 present resources.
 
 Four practical properties therefore delimit the methodological contribution.
@@ -90,14 +92,14 @@ They document that the integration path works and that a full-budget comparison
 remains absent. This prevents an engineering smoke test from becoming an
 inflated empirical claim.
 
-The \acs{microns} result is the strongest positive outcome, but its novelty must be
+The \acs{microns} result is the main positive empirical case, but its novelty must be
 stated precisely. Ding et al. already demonstrated like-to-like connectivity
 with a more extensive biological analysis, including feature, receptive-field,
 and axon--dendrite geometry controls. MouseBrainBench does not improve that
 biological finding. Instead, the \acs{microns} experiment tests whether a compact,
-predefined audit can recover a compatible local association and preserve its
-proper scope. Replication across two non-overlapping windows and positive
-unit-cluster bootstrap intervals provide external validity for the audit
+declared audit can recover a compatible local association and preserve its
+proper scope. Internal reproduction across two non-overlapping windows and positive
+unit-cluster bootstrap stability intervals provide a robustness check for the audit
 pipeline.
 
 The effect is not causal. Readout-location similarity can covary with cortical
@@ -106,7 +108,7 @@ Distance and degree matching address two major confounds but do not exhaust the
 causal graph. In particular, the analysis does not compare axon--dendrite
 opportunity at the resolution used by Ding et al., manipulate individual
 connections, or demonstrate that the observed edges are necessary for the
-functional descriptor. The permitted interpretation is therefore a replicated
+functional descriptor. The permitted interpretation is therefore an internally reproduced
 local observational association.
 
 \subsection{Threats to validity and transfer beyond the mouse brain}
@@ -131,19 +133,24 @@ improve on random-pair comparison, yet cell class, laminar position, cortical
 area, morphology, developmental lineage, and axon--dendrite opportunity may
 still confound functional similarity. The aggregate analysis demonstrates the
 importance of this issue: a positive random-pair contrast disappeared after
-distance matching. The narrower replicated endpoint reduces the overclaim but
+distance matching. The narrower internally reproduced endpoint reduces the overclaim but
 does not turn an observational association into a causal effect.
 
 Statistical conclusion validity is constrained by the number and independence
-of biological units. Pairwise \acs{microns} observations share neurons, so the study
-uses unit-cluster rather than naive pair bootstrap intervals. Nevertheless, the
-three cohorts are disjoint windows from one animal, not independent biological
-replicates. Dynamic Sensorium comparisons contain five mice per cohort. Win
-counts and medians are consequently more informative than asymptotic claims.
-The sensitivity analysis reduces dependence on one threshold, but its tested
-grid is finite and does not replace external preregistration. Multiple
-descriptor and stratum tests are false-discovery-rate corrected, while the main
-claim is restricted to the fixed endpoint replicated in both hold-outs.
+of biological units. Pairwise \acs{microns} observations share neurons and form
+dyadic dependencies, so the study uses a unit-cluster weighted bootstrap rather
+than naive pair resampling. This choice avoids treating all directed pairs as
+independent observations, but it remains a practical robustness analysis rather
+than a complete dyadic-inference treatment. In addition, the three cohorts are
+disjoint windows from one animal, not independent biological replicates. Dynamic
+Sensorium comparisons contain five mice per cohort. Win counts and medians are
+consequently more informative than asymptotic claims. The sensitivity analysis
+reduces dependence on one threshold, but its tested grid is finite and does not
+replace external preregistration. Multiple descriptor and stratum tests are
+false-discovery-rate corrected, while the main claim is restricted to the fixed
+endpoint internally reproduced in both hold-outs. Future releases should
+increase bootstrap samples and compare the current stability analysis against
+robust methods for dyadic or network-dependent data.
 
 External validity is bounded by species, brain area, task, and measurement
 modality. Allen and Sensorium emphasize the mouse visual system. \acs{microns} covers
@@ -167,6 +174,9 @@ conservation laws and out-of-regime validation could replace synaptic topology.
 The software interfaces can represent these contracts, but scientific validity
 still requires domain experts to justify the observables, controls, thresholds,
 and consequences of failure.
+
+
+The synthetic validation should also be interpreted with the appropriate scope. The four systems confirm that the implemented gate behaves as intended under controlled mechanisms, but they do not estimate operating characteristics over a broad generative family. They therefore do not yet provide false-positive or false-negative rates, threshold calibration curves, or robustness surfaces over noise, sample size, and gradual mechanism strength. A larger Monte Carlo benchmark is required before the MIS can be presented as a calibrated statistical test rather than as an executable claim-control rule.
 
 The current \acs{mis} should also not be treated as a universal scalar definition of
 mechanistic explanation. Its principal contribution is structural: evidence

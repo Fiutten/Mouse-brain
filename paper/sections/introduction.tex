@@ -1,76 +1,76 @@
 \section{Introduction}
 \label{sec:introduction}
 
-The construction of computational representations of biological systems has
-become an important meeting point between \ac{ai} and
-neuroscience. In the laboratory mouse (\textit{Mus musculus}), standardized
-electrophysiology, visual-response
-benchmarks, anatomical atlases, and electron-microscopy reconstructions are now
-available through public infrastructures. These resources make it possible to
-study the same biological system at markedly different scales, from population
-responses recorded across brain regions to synaptic connectivity within a
-restricted cortical volume. They also make it technically possible to build
+Computational representations of biological systems have become a key point in
+the interaction between \ac{ai} and neuroscience. In the case of the laboratory
+mouse (\textit{Mus musculus}), several public infrastructures provide standardised
+neurophysiological recordings, visual-response benchmarks, anatomical atlases,
+and electron-microscopy reconstructions. These resources allow researchers to
+analyse the same biological system from different perspectives, ranging from
+population activity recorded across brain regions to synaptic connectivity in a
+restricted cortical volume. Therefore, they also facilitate the development of
 models that reproduce selected observations with increasing accuracy.
 
-This progress creates a problem of interpretation. A model that predicts neural
-responses is not necessarily a model that identifies the circuit producing
-them. A response can be stable across animals while remaining compatible with
-many alternative topologies. Likewise, a network can preserve an anatomical
-graph without establishing that its directed dynamics are identifiable from the
-chosen observations. Predictive performance, empirical reliability, anatomical
-plausibility, and causal explanation therefore answer different questions. A
-single correlation coefficient cannot adjudicate among them.
+However, this progress also generates a relevant validation problem. A model
+that predicts neural responses is not necessarily a model that identifies the
+circuit producing them. A response can be stable across animals while remaining
+compatible with several alternative topologies. Similarly, a model can preserve
+an anatomical graph without demonstrating that its directed dynamics are
+identified by the available observations. Notice that predictive performance,
+empirical reliability, anatomical plausibility, and causal explanation answer
+different scientific questions. Thus, a single correlation coefficient is not
+sufficient to decide whether a model supports a mechanistic claim.
 
-The distinction is particularly important for digital-twin terminology. A
-digital twin normally implies correspondence with a particular physical entity,
-continuous or repeated calibration, and the capacity to reproduce relevant
-states under intervention. Current mouse-brain resources do not jointly provide
+This distinction is especially important when digital-twin terminology is used.
+A digital twin normally implies correspondence with a specific physical entity,
+repeated calibration, and the ability to reproduce relevant states under
+meaningful interventions. Current mouse-brain resources do not jointly provide
 complete synaptic connectivity, full-brain dynamics, behaviour, and
-interventional validation for an individual animal. \ac{microns} offers exceptional
-synaptic and functional detail, but only for a local visual-cortical volume
-\citep{bae2025microns}. Allen datasets provide broad and standardized neural
-recordings, but not the individual synaptic graph that generated each response
-\citep{siegle2021survey,deVries2022AllenSharing}. Consequently, referring to
-either resource as a complete mouse-brain twin would exceed the evidence.
+interventional validation for an individual animal. \ac{microns} offers
+exceptional synaptic and functional detail, but only for a local visual-cortical
+volume \citep{bae2025microns}. Allen datasets provide broad and standardised
+neural recordings, but not the individual synaptic graph that generated each
+response \citep{siegle2021survey}. Consequently,
+treating either resource as a complete mouse-brain twin would exceed the
+available evidence.
 
-Existing tools solve other essential parts of the problem. \ac{bmtk} provides
-infrastructure for constructing and simulating multiscale neural networks
-\citep{dai2020bmtk}. \ac{tvb} supports connectome-based population
-dynamics \citep{tvb2013}. Sensorium provides common predictive tasks for
-mouse visual cortex \citep{willeke2022sensorium,turishcheva2023dynamic}. Their
-existence means that another simulator or another visual prediction benchmark
-would have limited novelty. What remains insufficiently formalized is the audit
-between a reported metric and the biological claim attached to it: what must be
-observed before reproducible prediction becomes evidence for a particular
-mechanism?
+Existing software and benchmark infrastructures already solve relevant parts of
+this problem. \ac{bmtk} provides tools for constructing and simulating multiscale
+neural networks \citep{dai2020bmtk}. \ac{tvb} supports connectome-based
+population dynamics \citep{tvb2013}. Sensorium provides common predictive tasks
+for mouse visual cortex \citep{willeke2022sensorium,turishcheva2023dynamic}.
+For this reason, the main gap is not the absence of another simulator or another
+visual-response leaderboard. The unresolved point is the audit between a metric
+and the biological claim attached to it: what evidence is required before a
+reproducible prediction can be interpreted as support for a specific mechanism?
 
-MouseBrainBench addresses this question. It is not a new full-brain simulator
-and it does not claim to instantiate a complete digital twin. It is a software
-and experimental framework that assigns different public datasets to explicit
-evidential roles, applies matched null models and hold-out replication, and
-records which interpretations pass or fail. Its \ac{mis} is a conjunctive
-decision rule over non-interchangeable evidence
-blocks. The numerical component summarizes support within a block, whereas the
-final decision requires every block relevant to the proposed mechanism to pass.
+In accordance with this objective, this paper presents MouseBrainBench, a
+claim-aware validation framework for partial mouse-brain digital models. It is
+not proposed as a complete brain simulator and it does not claim to instantiate
+a full digital twin. The framework assigns public datasets to explicit
+evidential roles, evaluates them using matched null models and hold-out checks,
+and records which interpretations are admitted or blocked. Its Mechanistic
+Identifiability Score (MIS) is not a conventional weighted ranking. It is a
+conjunctive decision procedure over non-interchangeable evidence blocks.
 
-The evaluation deliberately combines positive and negative outcomes. Four
-synthetic systems test whether acs{mis} recovers known truth and rejects common-drive
-or incomplete mechanisms. Allen acs{vbn} tests whether the
-framework can retain a strongly reproducible target while rejecting unsupported
-topological and directional claims. Static and Dynamic Sensorium test modern
-predictive models without promoting correlation to causation. Finally, \acs{microns}
-tests a prespecified local structure-function endpoint against distance- and
-degree-matched nulls in a discovery cohort and two non-overlapping hold-outs.
-This sequence is intended to test the audit itself, not to assemble unrelated
-dataset demonstrations.
+From the perspective of Engineering Applications of Artificial Intelligence, MouseBrainBench is framed as an AI engineering contribution rather than as a new biological simulator. The AI contribution is the executable claim gate: a non-compensatory validation layer that turns qualitative model claims into auditable decisions. The engineering application is the validation of partial neurocomputational digital models before they are used to support scientific or technical interpretation. This formulation also provides a measurable advantage over conventional predictive evaluation, because it identifies cases in which a high predictive or reproducibility score would incorrectly promote an unsupported mechanistic claim.
 
-The remainder of the paper follows this argument.
-Section~\ref{sec:contributions} states the research contributions, while
-Section~\ref{sec:related-work} analyses the relevant predictive, simulation,
-and connectomic literature. Section~\ref{sec:framework} explains the framework,
-its decision model, software construction, and execution workflow.
-Section~\ref{sec:evaluation} integrates the experimental protocol and results
-around the three research questions. Section~\ref{sec:discussion} discusses
-their implications and limitations, and Section~\ref{sec:conclusions}
-concludes the work by delimiting the claims that remain outside the present
-study.
+The proposal is evaluated through positive and negative cases. Four synthetic
+systems are used to test whether the MIS recovers known truth and rejects
+common-drive or incomplete mechanisms. Allen Visual Behavior Neuropixels is used
+to verify that the framework can keep a highly reproducible empirical target
+while rejecting unsupported topology and direction claims. Static and Dynamic
+Sensorium are used to preserve predictive evidence without promoting it to
+causality. Finally, MICRONS is used to test a discovery-fixed local
+structure--function endpoint against distance- and degree-matched nulls in a
+discovery cohort and two non-overlapping hold-outs. This sequence evaluates the
+audit procedure itself, not a collection of unrelated dataset demonstrations.
+
+The rest of the article is organised as follows. Section~\ref{sec:contributions}
+details the research contributions of the proposal. Section~\ref{sec:related-work}
+reviews the most relevant predictive, simulation, and connectomic approaches.
+Section~\ref{sec:framework} describes the MouseBrainBench framework and its
+main components. Section~\ref{sec:evaluation} presents the experimental
+evaluation and the achieved results. Section~\ref{sec:discussion} discusses the
+scope and limitations of the proposal. Finally, Section~\ref{sec:conclusions}
+concludes the paper and provides future guidelines.

@@ -1,13 +1,15 @@
 \section{Results}
+\label{sec:results}
 
 The results follow the evidential hierarchy of the benchmark. Synthetic systems
 test the decision logic under known truth. Allen tests whether the framework
 rejects a mechanism despite highly reproducible observations. Sensorium tests
 whether predictive gains are retained without being promoted to causal
 evidence. MICRONS first exposes an aggregate failure and then supplies the
-replicated local structure--function endpoint.
+internally reproduced local structure--function endpoint.
 
 \subsection{MIS recovers synthetic truth and rejects incomplete mechanisms}
+\label{subsec:results-mis-synthetic}
 
 The known-truth experiment behaved as specified. The directed system passed all
 three evidence blocks and obtained $M=1.0$. The common-drive system passed
@@ -35,6 +37,7 @@ not a ranking of mechanistic truth.
 
 \subsection{Allen responses are reproducible but do not identify the proposed
 mechanism}
+\label{subsec:results-allen}
 
 Allen produced the intended real negative control. Median cross-mouse
 correlation was 0.891, median split-half correlation was 0.990, and 75\% of
@@ -63,6 +66,7 @@ lacks directed organization. It means that the selected population target and
 model comparison do not identify that organization.
 
 \subsection{Sensorium supports prediction without mechanistic passage}
+\label{subsec:results-sensorium}
 
 Static Sensorium showed consistent predictive utility. Across seven validation
 mice, median best correlation was 0.328, median improvement over mean response
@@ -108,6 +112,7 @@ marks it as a bounded integration control and blocks state-of-the-art or
 leaderboard-equivalent interpretations.
 
 \subsection{The aggregate MICRONS analysis prevents an initial overclaim}
+\label{subsec:results-microns-aggregate}
 
 The first expanded MICRONS analysis compared connected pairs with random,
 distance-matched, and degree-matched non-connected pairs at aggregate level.
@@ -121,7 +126,7 @@ random null was too permissive and that the aggregate association could not be
 separated from spatial embedding. The expanded result was retained as a stress
 test, and subsequent analyses were stratified by functional descriptor and
 anatomical context. Readout-location similarity was fixed as the primary
-endpoint for the replication package after this diagnostic stage.
+endpoint for the reproduction package after this diagnostic stage.
 
 Had only the random or degree-matched contrast been reported, the same data
 could have supported an overstated positive conclusion. Requiring the
@@ -129,7 +134,8 @@ distance-matched gate changed the outcome and forced a narrower hypothesis. This
 is a direct example of the claim-audit logic affecting scientific inference
 rather than merely relabelling a result after analysis.
 
-\subsection{MICRONS yields a replicated local structure--function association}
+\subsection{MICRONS yields an internally reproduced local structure--function association}
+\label{subsec:results-microns-internal-reproduction}
 
 The three MICRONS cohorts jointly contain 2991 units, 6575 loaded synapses, and
 5943 unique connected directed pairs. Discovery and the two hold-outs contain
@@ -151,12 +157,12 @@ descriptors and strata, of which 28 were confirmed positive after
 false-discovery-rate correction. The two hold-outs contained 162 and 174 tests,
 with 30 and 25 confirmed positives. These counts describe the multiplicity
 family and are not presented as independent discoveries. The manuscript claim
-rests on the fixed readout-location endpoint and its replication. Bootstrap
+rests on the fixed readout-location endpoint and its internal reproduction. Bootstrap
 stability is summarized in Table~\ref{tab:microns-bootstrap}.
 
 \input{tables/microns_bootstrap}
 
-Unit-cluster bootstrap intervals remained strictly positive. Distance-matched
+Unit-cluster bootstrap stability intervals remained strictly positive. Distance-matched
 lower bounds were 0.0166, 0.0142, and 0.0115; degree-matched lower bounds were
 0.0349, 0.0321, and 0.0229. Resampling units rather than pairs reduces the false
 precision that would result from treating pairwise observations sharing neurons
@@ -170,27 +176,28 @@ contribute. The analysis does not perturb edges or establish necessity.
 Nor is the association a new biological wiring rule. Ding et al. reported a
 substantially richer MICRONS analysis of like-to-like connectivity using
 receptive-field, feature, and axon--dendrite geometry controls
-\citep{ding2025wiring}. Agreement with that work provides an external-validity
+\citep{ding2025wiring}. Agreement with that work provides a connectomic validation
 case for MouseBrainBench. The potential novelty lies in applying one explicit
 claim-control protocol across synthetic, Allen, Sensorium, and MICRONS regimes,
 not in priority over the underlying biological phenomenon.
 
 \subsection{The publication freeze preserves different evidential outcomes}
+\label{subsec:results-publication-freeze}
 
 The final publication artifact admitted separation of predictive, reliability,
 out-of-distribution, and mechanistic evidence; Allen as a reproducible negative
 mechanistic case; Sensorium as predictive evidence; partial reliability and
 topographic evidence in static Sensorium; bounded execution of the official
-Sensorium stack; and a replicated local MICRONS readout-location association.
+Sensorium stack; and an internally reproduced local MICRONS readout-location association.
 
 The same artifact blocked a complete mouse-brain digital twin, a
 state-of-the-art Sensorium predictor, causal identifiability in Dynamic
 Sensorium, a causal interpretation of the MICRONS association, and any
-whole-brain extrapolation from the local volume. Replication strengthens the
+whole-brain extrapolation from the local volume. Internal reproduction strengthens the
 local observational result but does not remove these restrictions.
 
 The cross-regime result is therefore not that one model achieved the highest
-score. It is that the same audit represented three outcomes without semantic
+score. Compared with a conventional evaluation that mainly reports prediction or reproducibility, the audit prevents predictive or reproducible evidence from being promoted to mechanism. It is that the same audit represented three outcomes without semantic
 promotion: reproducible but non-identifiable, predictive but non-mechanistic,
 and locally structure--function positive but observational. These distinctions
 form the empirical support for the methodological contribution.

@@ -1,11 +1,53 @@
 \section{Related work}
 \label{sec:related-work}
 
-MouseBrainBench lies at the intersection of neural-response prediction,
-multiscale brain modelling, and functional connectomics. These areas share data
-and biological targets, but they validate different propositions. This section
-therefore reviews them according to the evidence they can provide rather than
-as a single progression towards a complete digital brain.
+This section introduces the foundations on which MouseBrainBench is based. The
+proposal is related to neural-response prediction, multiscale brain simulation,
+connectomics, and model-credibility research. These areas share data sources and
+biological targets, but they do not validate the same kind of scientific claim.
+For this reason, the literature is revisited according to the evidence that each
+approach can provide.
+
+First, model credibility and claim documentation are considered, because they
+provide the conceptual basis for separating intended use, validation evidence,
+and final interpretation. Second, standardised recordings and predictive
+benchmarks are reviewed, with special attention to the limits of response
+prediction. Third, multiscale simulation and digital-brain models are discussed,
+including tools that already provide mature simulation infrastructures. Finally,
+connectomic and structure--function studies are addressed, as they are the basis
+for the MICRONS validation case.
+
+\subsection{Model credibility and claim documentation}
+\label{subsec:model-credibility}
+
+The central problem is a model-credibility problem rather than only a neural
+modelling problem. Verification and validation frameworks distinguish whether a
+model is implemented correctly, whether it is adequate for a specified intended
+use, and how uncertainty affects that intended use
+\citep{asme2018vv40,oberkampf2010verification,sargent2013verification,riedmaier2021vvuq}.
+This literature is important for MouseBrainBench because it treats credibility as
+conditional on a declared decision, not as a property that follows automatically
+from a high global score. A model can therefore be credible for prediction and
+not credible for a causal or mechanistic claim.
+
+Machine-learning reporting practices make a similar point from the opposite
+side. Datasheets, model cards, and reproducibility checklists document intended
+uses, evaluation data, limitations, and execution conditions
+\citep{gebru2021datasheets,mitchell2019modelcards,pineau2021reproducibility}.
+MouseBrainBench imports this discipline into computational neuroscience by
+binding every result to a claim contract, a set of controls, and a publication
+freeze. The freeze is not merely archival: it prevents post-hoc expansion of the
+claim after inspecting additional endpoints.
+
+Digital-twin reviews also caution against equating any executable simulation
+with a twin. Mature digital-twin definitions emphasize linkage to a physical
+entity, lifecycle data exchange, uncertainty, and intended use
+\citep{jones2020digitaltwin,rasheed2020digitaltwin,fuller2020digitaltwin,shao2022credibility}.
+This supports the restricted terminology used here: MouseBrainBench audits
+partial digital representations, while complete mouse-brain twin claims remain
+blocked unless entity-specific calibration, broad state coverage, and
+intervention-level validation are available.
+
 
 \subsection{Standardized neural recordings and response prediction}
 \label{subsec:recordings-prediction}
@@ -57,17 +99,11 @@ value measures raw prediction, reliability-normalized performance, or evidence
 about circuit organization.
 
 The term \emph{digital twin} is also used for neural response models that enable
-experiments in stimulus space. Ustyuzhaninov et al. trained predictive models of
-mouse \ac{v1} and used their outputs to characterize combinations of nonlinear
-response properties \citep{ustyuzhaninov2022digitaltwin}. This approach shows
-that a functional surrogate can support useful in silico experiments even when
-it does not reproduce the underlying synaptic circuit. The distinction is
-important because the scientific value of the surrogate does not require a
-stronger mechanistic claim.
-
-Predictive agreement at the level of individual neurons may also hide errors at
-the population level. Liscai et al. found that visual-cortex digital twins can
-match single-neuron responses while failing to reproduce relevant properties of
+experiments in stimulus space. Recent work on visual-cortex digital twins shows
+that functional surrogates can be scientifically useful while still requiring
+careful population-level validation. In particular, Liscai et al. found that
+models can match single-neuron responses while failing to reproduce relevant
+properties of
 population-response geometry \citep{liscai2025population}. Their result provides
 a direct example of metric-dependent validation. It supports the need to match
 the evaluation target to the intended use and to avoid treating one predictive
@@ -85,10 +121,10 @@ or directionality requirements.
 \subsection{Multiscale simulation and digital-brain models}
 \label{subsec:multiscale-simulation}
 
-Biologically grounded simulators address a different problem. BioNet and \ac{bmtk}
-provide interfaces and workflows for constructing networks from cellular and
+Biologically grounded simulators address a different problem. \ac{bmtk}
+provides interfaces and workflows for constructing networks from cellular and
 connectivity information and executing them at different levels of resolution
-\citep{gratiy2018bmtk,dai2020bmtk}. SONATA-compatible descriptions improve
+\citep{dai2020bmtk}. SONATA-compatible descriptions improve
 portability between tools. At a coarser scale, \ac{tvb} models
 population dynamics over connectomes and supports the study of large-scale
 network behaviour \citep{tvb2013}. These systems demonstrate that simulation
@@ -105,27 +141,17 @@ with either contribution. It evaluates whether outputs from such models support
 the claim attached to them.
 
 Digital Twin Brain proposals broaden this objective towards multiscale models
-that connect biological and \acs{ai} \citep{xiong2023dtb}. The
-MouseDTB submission is the closest whole-brain mouse proposal to the present
-application domain \citep{chen2025mousedtb}. It constructs inferred
-single-neuron connectivity from axonal projections and cell distributions, then
-couples that structure to a large spiking network. Its evaluation includes \ac{bold}
-signals in resting and olfactory-task conditions, parameter assimilation, and
-behavioural responses. The work is currently reported as an ICLR 2026
-submission. It should therefore be treated as an important contemporary system
-rather than as an established benchmark.
+that connect biological and \acs{ai} \citep{xiong2023dtb}. These proposals are
+relevant to the present work because they move beyond isolated response
+prediction and consider how anatomical, functional, and computational evidence
+can be combined. However, a multiscale architecture does not by itself determine
+which claim has been validated. Inferred single-neuron connectivity does not
+become an observed individual connectome solely because a model matches a
+macroscopic signal. Likewise, high \acs{bold} correlation does not establish that
+the inferred wiring is uniquely identified. MouseBrainBench therefore treats
+such systems as candidates for audit rather than as direct competitors.
 
-MouseDTB and MouseBrainBench address different engineering questions. MouseDTB
-asks whether a large inferred network can reproduce selected whole-brain and
-behavioural observations. MouseBrainBench asks which claims are justified by
-the available observations and controls. Inferred single-neuron connectivity
-does not become an observed individual connectome solely because the model
-matches \acs{bold} activity. Likewise, high \acs{bold} correlation does not establish that
-the inferred wiring is uniquely identified. This difference prevents direct
-competition while making MouseDTB a relevant candidate for future audit through
-the same claim-aware protocol.
-
-Their presence changes the novelty criterion for the present work. Rebuilding a
+This landscape changes the novelty criterion for the present work. Rebuilding a
 spiking engine or a connectome-based neural-mass simulator would duplicate
 established technology without resolving whether the resulting output justifies
 a biological claim. Conversely, successful numerical execution only establishes
@@ -141,7 +167,7 @@ synonym for any executable brain model. The present framework reserves stronger
 twin claims for systems that can demonstrate entity-specific calibration,
 state-dependent prediction, and suitable interventional validation.
 
-\subsection{Connectomics and structure-function analysis}
+\subsection{Connectomics and structure--function analysis}
 \label{subsec:connectomics}
 
 Electron-microscopy connectomics offers the most direct local evidence about
@@ -178,18 +204,18 @@ This opportunity comes with important confounds. Connection probability and
 functional similarity both vary with spatial separation. Neuronal degree,
 cortical area, cell class, and sampling quality can also influence pairwise
 comparisons. A connected-versus-random contrast is consequently insufficient.
-Any defensible structure-function result must show that the effect survives
+Any defensible structure--function result must show that the effect survives
 appropriate matched controls, multiplicity correction, and resampling at the
 level of biological units rather than treating all derived pairs as independent.
-It must also replicate outside the cohort used to define or discover the
+It must also be reproduced outside the cohort used to define or discover the
 endpoint.
 
 Previous connectomic work establishes both the value of \acs{microns} and the broad
-structure-function phenomenon. The present contribution is not the rediscovery
-that structure and function are related. \acs{microns} is used as an external-validity
-case: MouseBrainBench asks whether a simpler declared endpoint recovers a
+structure--function phenomenon. The present contribution is not the rediscovery
+that structure and function are related. \acs{microns} is used as a connectomic
+validation case: MouseBrainBench asks whether a simpler declared endpoint recovers a
 compatible association under a fixed, reproducible audit and whether its
-interpretation remains bounded. This is why the manuscript reports a replicated
+interpretation remains bounded. This is why the manuscript reports an internally reproduced
 local association, cites the stronger prior result, and explicitly withholds
 biological-priority, causal, behavioural, and whole-brain conclusions.
 
