@@ -91,7 +91,7 @@ def build_freeze_payload(
     )
 
     q1_candidate_evidence = bool(microns_expanded_q1_ready and microns_stratified_positive)
-    q1_candidate_evidence_replicated = bool(
+    q1_candidate_evidence_internally_reproduced = bool(
         q1_candidate_evidence
         and microns_stratified_holdout_positive
         and microns_stratified_holdout2_positive
@@ -103,9 +103,9 @@ def build_freeze_payload(
         or q1_package_ready
     )
     if q1_ready:
-        route = "q1_candidate_after_replicated_microns_stratified_signal"
+        route = "q1_candidate_after_internally_reproduced_microns_signal"
     elif q1_candidate_evidence:
-        route = "q1_candidate_requires_microns_stratified_replication"
+        route = "q1_candidate_requires_microns_internal_holdout_reproduction"
     else:
         route = "methodological_benchmark_paper_now_q1_requires_external_piece"
     return {
@@ -162,10 +162,12 @@ def build_freeze_payload(
         "microns_stratified_holdout2_confirmed_tests": int(
             microns_stratified_holdout2_sf.get("n_confirmed_positive_after_fdr", 0)
         ),
-        "q1_candidate_evidence_requires_replication": (
-            q1_candidate_evidence and not q1_candidate_evidence_replicated
+        "q1_candidate_evidence_requires_internal_reproduction": (
+            q1_candidate_evidence and not q1_candidate_evidence_internally_reproduced
         ),
-        "q1_candidate_evidence_replicated": q1_candidate_evidence_replicated,
+        "q1_candidate_evidence_internally_reproduced": (
+            q1_candidate_evidence_internally_reproduced
+        ),
         "microns_q1_package_ready": q1_package_ready,
         "microns_q1_primary_endpoint": microns_q1.get("primary_endpoint"),
         "sensitivity_decision": robust["decision"],
@@ -181,7 +183,7 @@ def build_freeze_payload(
             "MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.",
             "MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.",
             "MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.",
-            "MICrONS hold-out stratified analyses replicate the readout-location signal on two additional CAVE subsets.",
+            "MICrONS hold-out analyses internally reproduce the readout-location signal in two non-overlapping windows from the same resource.",
         ],
         "claims_blocked": [
             "A complete digital twin of mouse brain.",
@@ -189,12 +191,12 @@ def build_freeze_payload(
             "A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.",
             "Causal mechanistic identifiability in Dynamic Sensorium.",
             "MICrONS causal mechanism claims: the stratified signal is correlational and local, not interventional.",
-            "Whole-brain or causal MICrONS claims: the replicated signal remains local and observational.",
+            "Whole-brain or causal MICrONS claims: the internally reproduced signal remains local, observational, and confined to one resource.",
         ],
         "next_required_piece": (
-            "Begin Q1 manuscript planning around the replicated MICrONS "
-            "structure-function benchmark claim, while keeping causal, "
-            "whole-brain, and Sensorium-SOTA claims blocked."
+            "Proceed with the bounded MICrONS structure-function benchmark claim, "
+            "while keeping causal, "
+            "whole-brain, independent-animal, and Sensorium-SOTA claims blocked."
         ),
     }
 
@@ -209,12 +211,12 @@ def write_outputs(payload: dict[str, Any], output: Path, markdown: Path) -> None
         f"- Methodological paper ready: `{payload['methodological_paper_ready']}`",
         f"- Q1 ready now: `{payload['q1_ready']}`",
         (
-            "- Q1 candidate evidence requires replication: "
-            f"`{payload['q1_candidate_evidence_requires_replication']}`"
+            "- Q1 candidate evidence requires internal reproduction: "
+            f"`{payload['q1_candidate_evidence_requires_internal_reproduction']}`"
         ),
         (
-            "- Q1 candidate evidence replicated: "
-            f"`{payload['q1_candidate_evidence_replicated']}`"
+            "- Q1 candidate evidence internally reproduced: "
+            f"`{payload['q1_candidate_evidence_internally_reproduced']}`"
         ),
         f"- MICrONS Q1 package ready: `{payload['microns_q1_package_ready']}`",
         f"- MICrONS Q1 primary endpoint: `{payload['microns_q1_primary_endpoint']}`",

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import re
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -28,7 +30,21 @@ def _json_safe(value: Any) -> Any:
 
 
 def code_revision() -> str:
-    """Return the Git revision and mark uncommitted source states as dirty."""
+    """Return the source revision used to generate an artifact.
+
+    Publication pipelines may set ``MOUSEBRAINBENCH_GIT_REVISION`` once, before
+    writing a sequence of tracked outputs. This keeps every artifact tied to the
+    same clean source commit even though earlier outputs make the working tree
+    dirty during the run. The override accepts only a hexadecimal Git object ID.
+    """
+
+    override = os.environ.get("MOUSEBRAINBENCH_GIT_REVISION")
+    if override:
+        if not re.fullmatch(r"[0-9a-fA-F]{7,40}", override):
+            raise ValueError(
+                "MOUSEBRAINBENCH_GIT_REVISION must be a 7-40 character hexadecimal Git ID"
+            )
+        return override.lower()
 
     try:
         return subprocess.check_output(

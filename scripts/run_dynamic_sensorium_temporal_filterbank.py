@@ -15,6 +15,7 @@ from pathlib import Path
 
 import numpy as np
 
+from mousebrainbench.artifacts import code_revision
 from mousebrainbench.benchmarks.sensorium_predictive_mis import run
 
 
@@ -39,14 +40,20 @@ def run_temporal_filterbank_comparison(
     eval_tier: str,
     alpha_grid: tuple[float, ...],
     force: bool = False,
+    git_revision: str | None = None,
 ) -> Path:
-    """Execute per-mouse temporal comparisons and write a compact JSON summary."""
+    """Execute per-mouse temporal comparisons and write a compact JSON summary.
+
+    The revision is captured once before any tracked output is written so all
+    per-mouse artifacts describe the same source state.
+    """
 
     roots = sorted(path for path in extracted_root.glob("dynamic*") if path.is_dir())
     if not roots:
         raise FileNotFoundError(f"no Dynamic Sensorium directories found under {extracted_root}")
     output_dir.mkdir(parents=True, exist_ok=True)
     rows: list[dict[str, object]] = []
+    artifact_revision = git_revision or code_revision()
 
     for root in roots:
         mouse = f"dynamic{_mouse_id(root)}"
@@ -62,6 +69,7 @@ def run_temporal_filterbank_comparison(
                 feature_mode="summary",
                 adapter="calibrated_residual_ridge",
                 adapter_alpha_grid=alpha_grid,
+                git_revision=artifact_revision,
             )
         if force or not temporal_path.exists():
             run(
@@ -72,6 +80,7 @@ def run_temporal_filterbank_comparison(
                 feature_mode="temporal_filterbank",
                 adapter="calibrated_residual_ridge",
                 adapter_alpha_grid=alpha_grid,
+                git_revision=artifact_revision,
             )
 
         summary_payload = _load_metrics(summary_path)
@@ -166,6 +175,11 @@ def main() -> None:
         action="store_true",
         help="Regenerate per-mouse artifacts even when output files already exist.",
     )
+    parser.add_argument(
+        "--git-revision",
+        default=None,
+        help="Explicit clean Git revision shared by every generated per-mouse artifact.",
+    )
     args = parser.parse_args()
     alpha_grid = tuple(float(value) for value in args.alpha_grid.split(","))
     output = run_temporal_filterbank_comparison(
@@ -175,6 +189,7 @@ def main() -> None:
         eval_tier=args.eval_tier,
         alpha_grid=alpha_grid,
         force=args.force,
+        git_revision=args.git_revision,
     )
     print(json.dumps({"output": str(output.resolve())}))
 

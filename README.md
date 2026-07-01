@@ -113,6 +113,12 @@ limpio y trazable. Cualquier `git_revision` terminado en `-dirty` indica que el
 artefacto fue generado con cambios locales no confirmados y debe considerarse
 provisional hasta ser regenerado.
 
+Las regeneraciones por lotes deben capturar primero el SHA del commit limpio y
+exportarlo mediante `MOUSEBRAINBENCH_GIT_REVISION`. El valor solo admite un
+identificador hexadecimal de Git. De este modo, todos los artefactos de una
+misma ejecución quedan vinculados a la misma versión de código aunque los
+primeros archivos generados modifiquen posteriormente el árbol de trabajo.
+
 ## Lo que no demuestra
 
 Una simulación sintética que funciona no valida un modelo neurocientífico. Los
