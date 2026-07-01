@@ -42,8 +42,8 @@ permutations. Topology specificity compares the candidate model with 100
 region-permuted predictions and a disconnected template. Direction is evaluated
 using resolvable peak latencies and nonzero lead--lag fractions. These systems
 isolate complementary failure modes: common drive produces stable activity
-without regional organization; topology without direction contains structured
-regional amplitudes with simultaneous peaks; direction without topology
+without regional organization. Topology without direction contains structured
+regional amplitudes with simultaneous peaks. Direction without topology
 contains staggered peaks while the candidate does not outperform the
 disconnected alternative. Only the directed-truth system is expected to pass
 all blocks.
@@ -54,9 +54,9 @@ system was highly reproducible but failed topology and direction
 ($M=0.333$). The topology-only system passed reproducibility and topology but
 failed direction ($M=0.667$). The direction-only system contained temporal
 information but failed topology specificity ($M=0.719$). In the directed case,
-median cross-session and split-half correlations were 0.988 and 0.994; candidate
+median cross-session and split-half correlations were 0.988 and 0.994. Candidate
 prediction exceeded the median permuted prediction by 0.783 and the
-disconnected prediction by 0.916; and every regional pair had resolvable
+disconnected prediction by 0.916. Every regional pair had resolvable
 latency. By contrast, the common-drive system reached cross-session correlation
 0.962 while its candidate prediction was 0.0009 worse than the permutation
 median and 0.0032 worse than the disconnected control. These cases demonstrate
@@ -80,7 +80,7 @@ nulls.
 
 Allen produced the intended real negative control. Median cross-mouse
 correlation was 0.891, median split-half correlation was 0.990, and 75\% of
-sessions exceeded their own null; all reproducibility criteria passed. The
+sessions exceeded their own null. All reproducibility criteria passed. The
 topological conclusion was the opposite. The Allen-informed candidate performed
 0.0054 worse than the median permutation, outperformed only 21\% of
 permutations, and improved by only 0.0035 over the disconnected model. None of
@@ -93,7 +93,7 @@ their operational definitions. The complete MIS was 0.358 and the decision was
 This outcome was stable when all Allen thresholds were multiplied by 0.75,
 1.00, and 1.25. Reproducibility passed and both mechanistic blocks failed in
 every condition. The experiment does not establish that the visual system lacks
-directed organization; it establishes that the selected population target and
+directed organization. It establishes that the selected population target and
 model comparison do not identify that organization. RQ1 is therefore answered
 positively: the audit recovers complete synthetic truth, diagnoses incomplete
 synthetic systems, and resists promoting highly reproducible real observations
@@ -109,7 +109,7 @@ ridge regression over image and behavioural covariates. A scrambled-stimulus
 control preserved response distributions while breaking stimulus--response
 assignment. Pearson correlation was computed on held-out observations and
 summarized at mouse level. Repeated stimuli supplied an empirical reliability
-estimate; tiers without repetitions were not assigned an inferred reliability
+estimate. Tiers without repetitions were not assigned an inferred reliability
 value. A separate topographic analysis tested whether similarity in response
 descriptors varied systematically with recorded spatial organization. Its
 Spearman association and effect over a matched null were retained as partial
@@ -118,7 +118,7 @@ structural evidence, not interpreted as synaptic connectivity.
 Across the seven validation mice, median best correlation was 0.328, median
 improvement over mean response was 0.102, and median improvement over the
 scrambled-stimulus control was 0.077. In the five repeated-test mice, median
-reliability was 0.642 and median best predictive correlation was 0.341;
+reliability was 0.642 and median best predictive correlation was 0.341.
 improvements over mean response and scrambled stimulus were 0.095 and 0.068.
 The topographic constraint passed in all five datasets, with median Spearman
 association 0.177 and median effect over its null 0.178. Reliability and
@@ -196,7 +196,7 @@ the topographic effect.
 
 The Dynamic Sensorium panel provides an ablation over comparator strength and
 minimum effect. At zero or 0.002 required gain, the MLP exceeds temporal SVD in
-three of five mice in each cohort; at 0.005 this falls to two mice, and at 0.010
+three of five mice in each cohort. At 0.005 this falls to two mice, and at 0.010
 to one. By contrast, gains over mean response remain in four or five mice over
 the same range. The apparent neural-network advantage is therefore robust to a
 weak baseline but not to a stronger temporal decomposition. This result is not
@@ -257,12 +257,12 @@ used to establish the endpoint.
 
 Unit-cluster bootstrap intervals remained strictly positive in every cohort
 (Table~\ref{tab:microns-bootstrap}). Distance-matched lower bounds were 0.0166,
-0.0142, and 0.0115; degree-matched lower bounds were 0.0349, 0.0321, and 0.0229.
+0.0142, and 0.0115. Degree-matched lower bounds were 0.0349, 0.0321, and 0.0229.
 All 300 requested replicates were usable. The discovery family contained 174
 tests across descriptors and strata, of which 28 were confirmed after
 false-discovery-rate correction. The hold-outs contained 162 and 174 tests,
 with 30 and 25 confirmed positives. These counts describe the multiplicity
-families and are not presented as independent biological discoveries; the main
+families and are not presented as independent biological discoveries. The main
 claim rests on the fixed readout-location endpoint and its replication.
 
 \input{tables/microns_bootstrap}

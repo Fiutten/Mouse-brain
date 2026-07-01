@@ -56,6 +56,23 @@ experimental tools, while making it more important to state whether a reported
 value measures raw prediction, reliability-normalized performance, or evidence
 about circuit organization.
 
+The term \emph{digital twin} is also used for neural response models that enable
+experiments in stimulus space. Ustyuzhaninov et al. trained predictive models of
+mouse V1 and used their outputs to characterize combinations of nonlinear
+response properties \citep{ustyuzhaninov2022digitaltwin}. This approach shows
+that a functional surrogate can support useful in silico experiments even when
+it does not reproduce the underlying synaptic circuit. The distinction is
+important because the scientific value of the surrogate does not require a
+stronger mechanistic claim.
+
+Predictive agreement at the level of individual neurons may also hide errors at
+the population level. Liscai et al. found that visual-cortex digital twins can
+match single-neuron responses while failing to reproduce relevant properties of
+population-response geometry \citep{liscai2025population}. Their result provides
+a direct example of metric-dependent validation. It supports the need to match
+the evaluation target to the intended use and to avoid treating one predictive
+score as evidence for every level of neural organization.
+
 Nevertheless, predictive equivalence does not imply mechanistic equivalence.
 Two architectures can generate similar held-out predictions while relying on
 different internal representations. High response correlation therefore
@@ -84,8 +101,29 @@ to tracer- and imaging-derived mouse connectomes
 \citep{melozzi2017virtualmouse}. At circuit scale, the Allen V1 model integrates
 cellular, structural, and functional measurements into biophysically detailed
 and point-neuron networks \citep{billeh2020v1}. MouseBrainBench does not compete
-with either contribution; it evaluates whether outputs from such models support
+with either contribution. It evaluates whether outputs from such models support
 the claim attached to them.
+
+Digital Twin Brain proposals broaden this objective towards multiscale models
+that connect biological and artificial intelligence \citep{xiong2023dtb}. The
+MouseDTB submission is the closest whole-brain mouse proposal to the present
+application domain \citep{chen2025mousedtb}. It constructs inferred
+single-neuron connectivity from axonal projections and cell distributions, then
+couples that structure to a large spiking network. Its evaluation includes BOLD
+signals in resting and olfactory-task conditions, parameter assimilation, and
+behavioural responses. The work is currently reported as an ICLR 2026
+submission. It should therefore be treated as an important contemporary system
+rather than as an established benchmark.
+
+MouseDTB and MouseBrainBench address different engineering questions. MouseDTB
+asks whether a large inferred network can reproduce selected whole-brain and
+behavioural observations. MouseBrainBench asks which claims are justified by
+the available observations and controls. Inferred single-neuron connectivity
+does not become an observed individual connectome solely because the model
+matches BOLD activity. Likewise, high BOLD correlation does not establish that
+the inferred wiring is uniquely identified. This difference prevents direct
+competition while making MouseDTB a relevant candidate for future audit through
+the same claim-aware protocol.
 
 Their presence changes the novelty criterion for the present work. Rebuilding a
 spiking engine or a connectome-based neural-mass simulator would duplicate
@@ -96,7 +134,7 @@ validity still depends on parameter provenance, target observability, null-model
 comparisons, and evaluation under perturbations or independent data.
 
 MouseBrainBench is therefore positioned above, rather than instead of, these
-tools. An external simulator may produce candidate dynamics; the benchmark
+tools. An external simulator may produce candidate dynamics. The benchmark
 records the target, controls, and evidence required to interpret them. This
 separation also prevents the phrase \emph{digital twin} from being used as a
 synonym for any executable brain model. The present framework reserves stronger
@@ -137,7 +175,7 @@ the connected-pair result reported here must not be interpreted as the first
 evidence for functional specificity of cortical connectivity.
 
 This opportunity comes with important confounds. Connection probability and
-functional similarity both vary with spatial separation; neuronal degree,
+functional similarity both vary with spatial separation. Neuronal degree,
 cortical area, cell class, and sampling quality can also influence pairwise
 comparisons. A connected-versus-random contrast is consequently insufficient.
 Any defensible structure-function result must show that the effect survives
@@ -158,8 +196,8 @@ biological-priority, causal, behavioural, and whole-brain conclusions.
 The reviewed infrastructures provide data, simulators, or predictive
 benchmarks, but they do not share a common decision layer for controlling the
 scope of claims across these evidential regimes. Leaderboards prioritize
-predictive performance; simulators prioritize executable biological models; and
-connectomic studies test local anatomical hypotheses. Comparing their headline
+predictive performance. Simulators prioritize executable biological models.
+Connectomic studies test local anatomical hypotheses. Comparing their headline
 metrics directly would be scientifically incoherent.
 
 MouseBrainBench fills this narrower gap by defining the claim before selecting

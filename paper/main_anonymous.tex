@@ -106,8 +106,8 @@ either resource as a complete mouse-brain twin would exceed the evidence.
 
 Existing tools solve other essential parts of the problem. BMTK provides
 infrastructure for constructing and simulating multiscale neural networks
-\citep{dai2020bmtk}; The Virtual Brain supports connectome-based population
-dynamics \citep{tvb2013}; and Sensorium provides common predictive tasks for
+\citep{dai2020bmtk}. The Virtual Brain supports connectome-based population
+dynamics \citep{tvb2013}. Sensorium provides common predictive tasks for
 mouse visual cortex \citep{willeke2022sensorium,turishcheva2023dynamic}. Their
 existence means that another simulator or another visual prediction benchmark
 would have limited novelty. What remains insufficiently formalized is the audit
@@ -182,7 +182,7 @@ model. This contribution is developed through the following elements:
 \end{itemize}
 
 These elements define the scope of the work. MouseBrainBench evaluates the
-relationship between evidence and interpretation; it does not establish that a
+relationship between evidence and interpretation. It does not establish that a
 single score is universally sufficient for mechanistic neuroscience. The MIS
 thresholds and evidence blocks must be specified for the target claim before
 evaluation, and failure means that the particular claim is unsupported, not
@@ -246,6 +246,23 @@ experimental tools, while making it more important to state whether a reported
 value measures raw prediction, reliability-normalized performance, or evidence
 about circuit organization.
 
+The term \emph{digital twin} is also used for neural response models that enable
+experiments in stimulus space. Ustyuzhaninov et al. trained predictive models of
+mouse V1 and used their outputs to characterize combinations of nonlinear
+response properties \citep{ustyuzhaninov2022digitaltwin}. This approach shows
+that a functional surrogate can support useful in silico experiments even when
+it does not reproduce the underlying synaptic circuit. The distinction is
+important because the scientific value of the surrogate does not require a
+stronger mechanistic claim.
+
+Predictive agreement at the level of individual neurons may also hide errors at
+the population level. Liscai et al. found that visual-cortex digital twins can
+match single-neuron responses while failing to reproduce relevant properties of
+population-response geometry \citep{liscai2025population}. Their result provides
+a direct example of metric-dependent validation. It supports the need to match
+the evaluation target to the intended use and to avoid treating one predictive
+score as evidence for every level of neural organization.
+
 Nevertheless, predictive equivalence does not imply mechanistic equivalence.
 Two architectures can generate similar held-out predictions while relying on
 different internal representations. High response correlation therefore
@@ -274,8 +291,29 @@ to tracer- and imaging-derived mouse connectomes
 \citep{melozzi2017virtualmouse}. At circuit scale, the Allen V1 model integrates
 cellular, structural, and functional measurements into biophysically detailed
 and point-neuron networks \citep{billeh2020v1}. MouseBrainBench does not compete
-with either contribution; it evaluates whether outputs from such models support
+with either contribution. It evaluates whether outputs from such models support
 the claim attached to them.
+
+Digital Twin Brain proposals broaden this objective towards multiscale models
+that connect biological and artificial intelligence \citep{xiong2023dtb}. The
+MouseDTB submission is the closest whole-brain mouse proposal to the present
+application domain \citep{chen2025mousedtb}. It constructs inferred
+single-neuron connectivity from axonal projections and cell distributions, then
+couples that structure to a large spiking network. Its evaluation includes BOLD
+signals in resting and olfactory-task conditions, parameter assimilation, and
+behavioural responses. The work is currently reported as an ICLR 2026
+submission. It should therefore be treated as an important contemporary system
+rather than as an established benchmark.
+
+MouseDTB and MouseBrainBench address different engineering questions. MouseDTB
+asks whether a large inferred network can reproduce selected whole-brain and
+behavioural observations. MouseBrainBench asks which claims are justified by
+the available observations and controls. Inferred single-neuron connectivity
+does not become an observed individual connectome solely because the model
+matches BOLD activity. Likewise, high BOLD correlation does not establish that
+the inferred wiring is uniquely identified. This difference prevents direct
+competition while making MouseDTB a relevant candidate for future audit through
+the same claim-aware protocol.
 
 Their presence changes the novelty criterion for the present work. Rebuilding a
 spiking engine or a connectome-based neural-mass simulator would duplicate
@@ -286,7 +324,7 @@ validity still depends on parameter provenance, target observability, null-model
 comparisons, and evaluation under perturbations or independent data.
 
 MouseBrainBench is therefore positioned above, rather than instead of, these
-tools. An external simulator may produce candidate dynamics; the benchmark
+tools. An external simulator may produce candidate dynamics. The benchmark
 records the target, controls, and evidence required to interpret them. This
 separation also prevents the phrase \emph{digital twin} from being used as a
 synonym for any executable brain model. The present framework reserves stronger
@@ -327,7 +365,7 @@ the connected-pair result reported here must not be interpreted as the first
 evidence for functional specificity of cortical connectivity.
 
 This opportunity comes with important confounds. Connection probability and
-functional similarity both vary with spatial separation; neuronal degree,
+functional similarity both vary with spatial separation. Neuronal degree,
 cortical area, cell class, and sampling quality can also influence pairwise
 comparisons. A connected-versus-random contrast is consequently insufficient.
 Any defensible structure-function result must show that the effect survives
@@ -348,8 +386,8 @@ biological-priority, causal, behavioural, and whole-brain conclusions.
 The reviewed infrastructures provide data, simulators, or predictive
 benchmarks, but they do not share a common decision layer for controlling the
 scope of claims across these evidential regimes. Leaderboards prioritize
-predictive performance; simulators prioritize executable biological models; and
-connectomic studies test local anatomical hypotheses. Comparing their headline
+predictive performance. Simulators prioritize executable biological models.
+Connectomic studies test local anatomical hypotheses. Comparing their headline
 metrics directly would be scientifically incoherent.
 
 MouseBrainBench fills this narrower gap by defining the claim before selecting
@@ -370,7 +408,7 @@ BMTK or SONATA, or reproduce the predictive infrastructure of Sensorium.
 Instead, it formalizes the evidence contract that must be satisfied before a
 model output can support a particular claim. This distinction determines both
 the software architecture and the evaluation protocol. Models and public
-resources remain responsible for producing observations or predictions;
+resources remain responsible for producing observations or predictions.
 MouseBrainBench records what those quantities represent, evaluates them against
 explicit alternatives, and limits the final interpretation to the evidence that
 has actually passed.
@@ -392,7 +430,7 @@ Fig.~\ref{fig:framework-workflow}.
   \centering
   \includegraphics[width=0.94\linewidth]{figures/framework_workflow.pdf}
   \captionof{figure}{MouseBrainBench workflow. A bounded claim is declared before model
-  evaluation. Observability determines which evidence blocks can be tested;
+  evaluation. Observability determines which evidence blocks can be tested.
   adapters then expose predictions and observations through a common audit
   interface. The claim gate accepts an interpretation only when every required
   block passes. Failed and unobservable blocks remain part of the result rather
@@ -489,7 +527,7 @@ The distinction between $M$ and $P_{\mathrm{MIS}}$ is central to the method.
 The continuous value locates weak blocks and supports threshold-sensitivity
 analysis, but it is not evidence that can be exchanged across blocks. A high
 reproducibility score cannot compensate for a topology that performs like a
-permuted graph; similarly, a resolvable lead--lag signature cannot compensate
+permuted graph. Similarly, a resolvable lead--lag signature cannot compensate
 for failure to distinguish the proposed regional organization. The categorical
 decision is therefore conjunctive, while the score remains diagnostic. This
 prevents the numerical average from becoming an unsupported ranking of
@@ -502,7 +540,7 @@ that comparison meaningful. Mean-response, scrambled-stimulus, and transparent
 temporal baselines test predictive value. Random, distance-matched, and
 degree-matched non-connected pairs test local structure--function associations.
 A null model is not considered adequate merely because it is computationally
-convenient; it must remove the property under examination while preserving the
+convenient. It must remove the property under examination while preserving the
 main nuisance structure that could otherwise explain the effect.
 
 \subsection{Software architecture, construction, and execution workflow}
@@ -516,7 +554,7 @@ connectivity, subject identifiers, and provenance. Dataset adapters convert
 Allen, Sensorium, Dynamic Sensorium, and MICRONS artifacts into those schemas
 without erasing source-specific metadata. Model adapters expose outputs from
 transparent baselines or external software through the same evaluation
-interface. The validation layer computes metrics and null comparisons; the
+interface. The validation layer computes metrics and null comparisons. The
 claim gate evaluates each criterion and produces both a diagnostic report and a
 bounded interpretation.
 
@@ -535,8 +573,8 @@ The resulting package separates data loaders, atlas and connectivity utilities,
 dynamics, simulation, perturbations, validation metrics, baseline adapters,
 visualization, and benchmark commands. This modularity is functional rather
 than cosmetic. A new simulator can be connected through an adapter without
-changing the definition of a claim; a new dataset can supply additional
-observables without redefining how existing evidence blocks pass; and a new
+changing the definition of a claim. A new dataset can supply additional
+observables without redefining how existing evidence blocks pass. A new
 criterion can be introduced without altering archived outcomes. External tools
 therefore remain responsible for simulation or prediction, while
 MouseBrainBench controls evaluation semantics.
@@ -586,10 +624,10 @@ were repeated measurements of one system.}
 RQ & Resource and scale & Experimental units & Main comparisons & Decision target \\
 \midrule
 RQ1 & Four synthetic systems & 24 sessions, 6 regions per system & Directed truth, common drive, topology without direction, and direction without topology specificity & Recovery of known truth and rejection of incomplete mechanisms \\
-RQ1 & Allen Visual Behavior Neuropixels & 20 sessions for reproducibility and topology; 21 sessions for direction & Cross-mouse and split-half stability; permuted and disconnected topology; latency and lead--lag nulls & Reproducible target without unsupported topology or direction \\
-RQ2 & Static Sensorium & 7 validation mice; 5 repeated-test mice & Mean response, ridge predictors, scrambled stimulus, empirical reliability, and topographic null & Predictive and partial structural evidence kept separate from mechanism \\
+RQ1 & Allen Visual Behavior Neuropixels & 20 sessions for reproducibility and topology, plus 21 sessions for direction & Cross-mouse and split-half stability, permuted and disconnected topology, latency and lead--lag nulls & Reproducible target without unsupported topology or direction \\
+RQ2 & Static Sensorium & 7 validation mice and 5 repeated-test mice & Mean response, ridge predictors, scrambled stimulus, empirical reliability, and topographic null & Predictive and partial structural evidence kept separate from mechanism \\
 RQ2 & Dynamic Sensorium & 5 current and 5 legacy out-of-distribution mice & Mean response, temporal filterbank, temporal SVD, random features, MLP, and bounded official-stack run & Paired predictive gain and software interoperability without leaderboard claims \\
-RQ3 & MICRONS CAVE & 2991 units, 6575 synapses, 5943 unique connected directed pairs & Random, distance-matched, and degree-matched non-connected pairs; discovery plus two hold-outs & Replicated local observational structure--function association \\
+RQ3 & MICRONS CAVE & 2991 units, 6575 synapses, 5943 unique connected directed pairs & Random, distance-matched, and degree-matched non-connected pairs, with discovery plus two hold-outs & Replicated local observational structure--function association \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -621,8 +659,8 @@ permutations. Topology specificity compares the candidate model with 100
 region-permuted predictions and a disconnected template. Direction is evaluated
 using resolvable peak latencies and nonzero lead--lag fractions. These systems
 isolate complementary failure modes: common drive produces stable activity
-without regional organization; topology without direction contains structured
-regional amplitudes with simultaneous peaks; direction without topology
+without regional organization. Topology without direction contains structured
+regional amplitudes with simultaneous peaks. Direction without topology
 contains staggered peaks while the candidate does not outperform the
 disconnected alternative. Only the directed-truth system is expected to pass
 all blocks.
@@ -633,9 +671,9 @@ system was highly reproducible but failed topology and direction
 ($M=0.333$). The topology-only system passed reproducibility and topology but
 failed direction ($M=0.667$). The direction-only system contained temporal
 information but failed topology specificity ($M=0.719$). In the directed case,
-median cross-session and split-half correlations were 0.988 and 0.994; candidate
+median cross-session and split-half correlations were 0.988 and 0.994. Candidate
 prediction exceeded the median permuted prediction by 0.783 and the
-disconnected prediction by 0.916; and every regional pair had resolvable
+disconnected prediction by 0.916. Every regional pair had resolvable
 latency. By contrast, the common-drive system reached cross-session correlation
 0.962 while its candidate prediction was 0.0009 worse than the permutation
 median and 0.0032 worse than the disconnected control. These cases demonstrate
@@ -659,7 +697,7 @@ nulls.
 
 Allen produced the intended real negative control. Median cross-mouse
 correlation was 0.891, median split-half correlation was 0.990, and 75\% of
-sessions exceeded their own null; all reproducibility criteria passed. The
+sessions exceeded their own null. All reproducibility criteria passed. The
 topological conclusion was the opposite. The Allen-informed candidate performed
 0.0054 worse than the median permutation, outperformed only 21\% of
 permutations, and improved by only 0.0035 over the disconnected model. None of
@@ -672,7 +710,7 @@ their operational definitions. The complete MIS was 0.358 and the decision was
 This outcome was stable when all Allen thresholds were multiplied by 0.75,
 1.00, and 1.25. Reproducibility passed and both mechanistic blocks failed in
 every condition. The experiment does not establish that the visual system lacks
-directed organization; it establishes that the selected population target and
+directed organization. It establishes that the selected population target and
 model comparison do not identify that organization. RQ1 is therefore answered
 positively: the audit recovers complete synthetic truth, diagnoses incomplete
 synthetic systems, and resists promoting highly reproducible real observations
@@ -688,7 +726,7 @@ ridge regression over image and behavioural covariates. A scrambled-stimulus
 control preserved response distributions while breaking stimulus--response
 assignment. Pearson correlation was computed on held-out observations and
 summarized at mouse level. Repeated stimuli supplied an empirical reliability
-estimate; tiers without repetitions were not assigned an inferred reliability
+estimate. Tiers without repetitions were not assigned an inferred reliability
 value. A separate topographic analysis tested whether similarity in response
 descriptors varied systematically with recorded spatial organization. Its
 Spearman association and effect over a matched null were retained as partial
@@ -697,7 +735,7 @@ structural evidence, not interpreted as synaptic connectivity.
 Across the seven validation mice, median best correlation was 0.328, median
 improvement over mean response was 0.102, and median improvement over the
 scrambled-stimulus control was 0.077. In the five repeated-test mice, median
-reliability was 0.642 and median best predictive correlation was 0.341;
+reliability was 0.642 and median best predictive correlation was 0.341.
 improvements over mean response and scrambled stimulus were 0.095 and 0.068.
 The topographic constraint passed in all five datasets, with median Spearman
 association 0.177 and median effect over its null 0.178. Reliability and
@@ -775,7 +813,7 @@ the topographic effect.
 
 The Dynamic Sensorium panel provides an ablation over comparator strength and
 minimum effect. At zero or 0.002 required gain, the MLP exceeds temporal SVD in
-three of five mice in each cohort; at 0.005 this falls to two mice, and at 0.010
+three of five mice in each cohort. At 0.005 this falls to two mice, and at 0.010
 to one. By contrast, gains over mean response remain in four or five mice over
 the same range. The apparent neural-network advantage is therefore robust to a
 weak baseline but not to a stronger temporal decomposition. This result is not
@@ -850,12 +888,12 @@ Hold-out 2000 & 999 & 1922 & 0.0179 & 0.0087 & 0.0286 & 0.0083 \\
 
 Unit-cluster bootstrap intervals remained strictly positive in every cohort
 (Table~\ref{tab:microns-bootstrap}). Distance-matched lower bounds were 0.0166,
-0.0142, and 0.0115; degree-matched lower bounds were 0.0349, 0.0321, and 0.0229.
+0.0142, and 0.0115. Degree-matched lower bounds were 0.0349, 0.0321, and 0.0229.
 All 300 requested replicates were usable. The discovery family contained 174
 tests across descriptors and strata, of which 28 were confirmed after
 false-discovery-rate correction. The hold-outs contained 162 and 174 tests,
 with 30 and 25 confirmed positives. These counts describe the multiplicity
-families and are not presented as independent biological discoveries; the main
+families and are not presented as independent biological discoveries. The main
 claim rests on the fixed readout-location endpoint and its replication.
 
 \begin{table}[t]
@@ -905,12 +943,12 @@ evidence is retained without promoting it to a stronger interpretation.}
 \toprule
 Case & Positive evidence & Failed or unavailable evidence & Admissible interpretation \\
 \midrule
-Synthetic directed truth & All reproducibility, topology, and direction blocks pass; $M=1.000$ & None under the designed mechanism & Complete recovery of the synthetic mechanism \\
-Synthetic incomplete cases & Strong partial scores ($M=0.333$--$0.719$) & At least one required topology or direction block fails & Diagnostic partial evidence; mechanistic passage rejected \\
-Allen VBN & Cross-mouse correlation 0.891; split-half correlation 0.990 & Topology block 0.073; direction criteria fail; complete MIS 0.358 & Reproducible population target without identified organization \\
-Static Sensorium & Median best correlation 0.328; repeated-test reliability 0.642; topographic association 0.177 & Reliability unavailable for non-repeated tiers; no synaptic graph or causal direction & Predictive utility with partial reliability and topographic evidence \\
-Dynamic Sensorium & Best mouse-level correlations 0.427--0.526; MLP median gain 0.043 over mean response & Small gain over temporal SVD (0.0039); bounded official run is not competitive & Temporal predictive evidence and verified software integration \\
-MICRONS & Distance-matched effects 0.0215, 0.0210, 0.0179; positive clustered intervals in all cohorts & No intervention; residual cell-type, layer, area, and morphology confounding & Replicated local observational structure--function association \\
+Synthetic directed truth & All reproducibility, topology, and direction blocks pass with $M=1.000$ & None under the designed mechanism & Complete recovery of the synthetic mechanism \\
+Synthetic incomplete cases & Strong partial scores ($M=0.333$--$0.719$) & At least one required topology or direction block fails & Diagnostic partial evidence with mechanistic passage rejected \\
+Allen VBN & Cross-mouse correlation 0.891 and split-half correlation 0.990 & Topology block 0.073, failed direction criteria, and complete MIS 0.358 & Reproducible population target without identified organization \\
+Static Sensorium & Median best correlation 0.328, repeated-test reliability 0.642, and topographic association 0.177 & Reliability unavailable for non-repeated tiers, with no synaptic graph or causal direction & Predictive utility with partial reliability and topographic evidence \\
+Dynamic Sensorium & Best mouse-level correlations 0.427--0.526 and MLP median gain 0.043 over mean response & Small gain over temporal SVD (0.0039), while the bounded official run is not competitive & Temporal predictive evidence and verified software integration \\
+MICRONS & Distance-matched effects 0.0215, 0.0210, 0.0179 and positive clustered intervals in all cohorts & No intervention, with residual cell-type, layer, area, and morphology confounding & Replicated local observational structure--function association \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -941,7 +979,7 @@ and the interpretation attached to it. Predictive correlation is retained as
 one observation, but the benchmark instance also records whether repeated
 responses are reliable, whether a proposed topology outperforms plausible
 alternatives, and whether directional or interventional information is
-observable. Consequently, the framework does not replace a leaderboard; it
+observable. Consequently, the framework does not replace a leaderboard. It
 determines which conclusions may legitimately be exported from one.
 
 The distinction from simulation infrastructures is equally important. BMTK,
@@ -965,7 +1003,7 @@ domain-specific operationalization for AI-based neural models: it maps purpose
 to required evidence blocks, makes those blocks non-interchangeable, and binds
 the reported interpretation to sealed computational artifacts. It does not yet
 provide a complete uncertainty-quantification treatment of parameters and
-model form; instead, threshold sensitivity, matched nulls, clustered intervals,
+model form. Instead, threshold sensitivity, matched nulls, clustered intervals,
 and hold-out replication cover the uncertainties directly estimable from the
 present resources.
 
@@ -977,7 +1015,7 @@ association cannot compensate for one another. Third, failed criteria remain
 publishable outputs, making negative controls part of validation rather than
 discarded development information. Fourth, the publication freeze joins
 software revision, data identifiers, thresholds, and admissible language. No
-single property is unprecedented in isolation; the contribution lies in their
+single property is unprecedented in isolation. The contribution lies in their
 executable combination across predictive, simulation, and connectomic regimes.
 
 The negative Allen result is scientifically useful. A less restrictive
@@ -1035,7 +1073,7 @@ are not a universal definition of mechanism. Latency and lead--lag information
 are meaningful for the regional temporal systems examined here, whereas a
 molecular pathway, a biophysical cell model, or a behavioural controller would
 require different observables and alternatives. A passing decision means that
-the declared operational criteria have been satisfied; it does not establish
+the declared operational criteria have been satisfied. It does not establish
 that every scientifically plausible mechanism has been excluded. This is why
 the continuous MIS value is diagnostic and why the categorical interpretation
 must always be read together with the contract.
@@ -1055,7 +1093,7 @@ Statistical conclusion validity is constrained by the number and independence
 of biological units. Pairwise MICRONS observations share neurons, so the study
 uses unit-cluster rather than naive pair bootstrap intervals. Nevertheless, the
 three cohorts are disjoint windows from one animal, not independent biological
-replicates. Dynamic Sensorium comparisons contain five mice per cohort; win
+replicates. Dynamic Sensorium comparisons contain five mice per cohort. Win
 counts and medians are consequently more informative than asymptotic claims.
 The sensitivity analysis reduces dependence on one threshold, but its tested
 grid is finite and does not replace external preregistration. Multiple
@@ -1063,7 +1101,7 @@ descriptor and stratum tests are false-discovery-rate corrected, while the main
 claim is restricted to the fixed endpoint replicated in both hold-outs.
 
 External validity is bounded by species, brain area, task, and measurement
-modality. Allen and Sensorium emphasize the mouse visual system; MICRONS covers
+modality. Allen and Sensorium emphasize the mouse visual system. MICRONS covers
 a restricted visual-cortical volume from one mouse, and the Allen experiments
 use controlled subsets of the available sessions. The framework has not been
 validated on subcortical circuits, longitudinal disease trajectories, freely
@@ -1097,7 +1135,7 @@ Conjunctive rules have an intentional cost. They reduce false promotion of
 partial evidence but can reject scientifically interesting models when one
 required measurement is unavailable. MouseBrainBench handles this by retaining
 block scores and partial-positive labels. Failure of the global decision means
-that the target claim is unsupported under the declared evidence; it does not
+that the target claim is unsupported under the declared evidence. It does not
 mean that the model, data, or partial result is useless. This semantic discipline
 is important if the framework is to encourage stronger experiments rather than
 merely produce negative labels.

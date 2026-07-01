@@ -8,7 +8,7 @@ BMTK or SONATA, or reproduce the predictive infrastructure of Sensorium.
 Instead, it formalizes the evidence contract that must be satisfied before a
 model output can support a particular claim. This distinction determines both
 the software architecture and the evaluation protocol. Models and public
-resources remain responsible for producing observations or predictions;
+resources remain responsible for producing observations or predictions.
 MouseBrainBench records what those quantities represent, evaluates them against
 explicit alternatives, and limits the final interpretation to the evidence that
 has actually passed.
@@ -30,7 +30,7 @@ Fig.~\ref{fig:framework-workflow}.
   \centering
   \includegraphics[width=0.94\linewidth]{figures/framework_workflow.pdf}
   \captionof{figure}{MouseBrainBench workflow. A bounded claim is declared before model
-  evaluation. Observability determines which evidence blocks can be tested;
+  evaluation. Observability determines which evidence blocks can be tested.
   adapters then expose predictions and observations through a common audit
   interface. The claim gate accepts an interpretation only when every required
   block passes. Failed and unobservable blocks remain part of the result rather
@@ -127,7 +127,7 @@ The distinction between $M$ and $P_{\mathrm{MIS}}$ is central to the method.
 The continuous value locates weak blocks and supports threshold-sensitivity
 analysis, but it is not evidence that can be exchanged across blocks. A high
 reproducibility score cannot compensate for a topology that performs like a
-permuted graph; similarly, a resolvable lead--lag signature cannot compensate
+permuted graph. Similarly, a resolvable lead--lag signature cannot compensate
 for failure to distinguish the proposed regional organization. The categorical
 decision is therefore conjunctive, while the score remains diagnostic. This
 prevents the numerical average from becoming an unsupported ranking of
@@ -140,7 +140,7 @@ that comparison meaningful. Mean-response, scrambled-stimulus, and transparent
 temporal baselines test predictive value. Random, distance-matched, and
 degree-matched non-connected pairs test local structure--function associations.
 A null model is not considered adequate merely because it is computationally
-convenient; it must remove the property under examination while preserving the
+convenient. It must remove the property under examination while preserving the
 main nuisance structure that could otherwise explain the effect.
 
 \subsection{Software architecture, construction, and execution workflow}
@@ -154,7 +154,7 @@ connectivity, subject identifiers, and provenance. Dataset adapters convert
 Allen, Sensorium, Dynamic Sensorium, and MICRONS artifacts into those schemas
 without erasing source-specific metadata. Model adapters expose outputs from
 transparent baselines or external software through the same evaluation
-interface. The validation layer computes metrics and null comparisons; the
+interface. The validation layer computes metrics and null comparisons. The
 claim gate evaluates each criterion and produces both a diagnostic report and a
 bounded interpretation.
 
@@ -173,8 +173,8 @@ The resulting package separates data loaders, atlas and connectivity utilities,
 dynamics, simulation, perturbations, validation metrics, baseline adapters,
 visualization, and benchmark commands. This modularity is functional rather
 than cosmetic. A new simulator can be connected through an adapter without
-changing the definition of a claim; a new dataset can supply additional
-observables without redefining how existing evidence blocks pass; and a new
+changing the definition of a claim. A new dataset can supply additional
+observables without redefining how existing evidence blocks pass. A new
 criterion can be introduced without altering archived outcomes. External tools
 therefore remain responsible for simulation or prediction, while
 MouseBrainBench controls evaluation semantics.
