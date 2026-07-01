@@ -19,6 +19,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from mousebrainbench import __version__
+from mousebrainbench.artifacts import code_revision
 from run_microns_stratified_structure_function import (  # noqa: PLC0415
     _add_metric_columns,
     _build_pair_frame,
@@ -243,7 +245,9 @@ def run(
         for cohort in cohorts
     )
     payload = {
-        "analysis": "microns_q1_replicated_structure_function_package",
+        "version": __version__,
+        "git_revision": code_revision(),
+        "analysis": "microns_q1_internally_reproduced_structure_function_package",
         "primary_endpoint": f"{PRIMARY_STRATUM}/{PRIMARY_METRIC}",
         "bootstrap": {
             "cluster": "unit",
@@ -253,7 +257,8 @@ def run(
         "q1_package_ready": bool(package_ready),
         "cohorts": cohorts,
         "claims_allowed": [
-            "Replicated local MICRONS structure-function association.",
+            "Internally reproduced local MICRONS structure-function association "
+            "across two non-overlapping hold-out windows from the same resource.",
             "Connected pairs show closer readout-location similarity than distance- and degree-matched controls.",
             "MouseBrainBench provides a reproducible claim-audit benchmark for partial mouse-brain digital models.",
         ],
@@ -278,7 +283,7 @@ def _round(value: Any) -> str:
 
 def _write_markdown(payload: dict[str, Any], markdown: Path) -> None:
     lines = [
-        "# MICRONS Q1 Replicated Structure-Function Package",
+        "# MICRONS Q1 Internally Reproduced Structure-Function Package",
         "",
         f"- Primary endpoint: `{payload['primary_endpoint']}`",
         "- Endpoint status: fixed after discovery and evaluated in two non-overlapping hold-outs.",
