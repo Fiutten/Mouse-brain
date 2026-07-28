@@ -1,4 +1,4 @@
-# Q1 manuscript technical section: replicated MICRONS benchmark
+# Q1 manuscript technical section: internally reproduced MICRONS benchmark
 
 ## Core claim
 
@@ -6,7 +6,8 @@ MouseBrainBench provides a reproducible benchmark for auditing local
 structure-function claims in partial mouse-brain digital models. In MICRONS
 co-registered functional/EM data, synaptically connected directed pairs show
 closer functional readout-location similarity than matched non-connected pairs.
-The result replicates across a discovery cohort and two offset hold-out cohorts.
+The result is internally reproduced across a discovery cohort and two offset
+hold-out cohorts from the same resource.
 
 ## What is being tested
 
@@ -47,13 +48,13 @@ Unit-cluster bootstrap with 300 resamples:
 | Hold-out offset2000 | 0.0181306 | [0.0115043, 0.0237966] | 0.0287003 | [0.0228738, 0.0353670] |
 
 The lower bound is positive in all three cohorts and both matched-control families.
-This supports a replicated local structure-function association.
+This supports an internally reproduced local structure-function association.
 
 ## Allowed interpretation
 
 Allowed:
 
-- replicated local MICRONS structure-function association;
+- internally reproduced local MICRONS structure-function association;
 - connected pairs have closer readout-location similarity than distance- and
   degree-matched non-connected pairs;
 - MouseBrainBench prevents broad digital-twin claims from being inferred from a
@@ -74,6 +75,7 @@ angle is:
 
 ```text
 MouseBrainBench is a reproducible claim-audit benchmark for partial mouse-brain
-digital models, with a replicated MICRONS structure-function case demonstrating
-how local synaptic evidence can be separated from causal or whole-brain claims.
+digital models, with an internally reproduced MICRONS structure-function case
+demonstrating how local synaptic evidence can be separated from causal or
+whole-brain claims.
 ```

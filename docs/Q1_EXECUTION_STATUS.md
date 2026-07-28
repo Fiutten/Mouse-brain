@@ -3,8 +3,9 @@
 ## Current Bottom Line
 
 MouseBrainBench now has a Q1-candidate empirical package: the positive MICRONS
-stratified signal replicated across a discovery cohort and two independent CAVE
-hold-out subsets. It is still not a whole-brain or causal-mechanism claim.
+stratified signal is internally reproduced across a discovery cohort and two
+non-overlapping CAVE hold-out subsets. It is still not a whole-brain or
+causal-mechanism claim.
 
 The most important result is now the expanded MICrONS pilot plus its
 stratified follow-up:
@@ -28,8 +29,9 @@ distance-matched null. Therefore, the aggregate result remains a stress test,
 while the stratified result provides the current Q1-candidate signal.
 
 The two hold-out results change the Q1 situation from "candidate requiring
-replication" to "candidate ready for manuscript planning". The strongest effect
-remains local and correlational rather than causal or interventional.
+internal reproduction" to "candidate ready for manuscript planning". The
+strongest effect remains local and correlational rather than causal or
+interventional.
 
 ## Step Status
 
@@ -39,7 +41,7 @@ remains local and correlational rather than causal or interventional.
 | Add structure-function model | Done | Synapse count/size, random, distance, degree controls |
 | Add stronger nulls | Done | Distance and degree matched permutation tests |
 | Scale Sensorium on Mac GPU | Done | MPS works; bounded official model improves over mean in 4/5 mice but remains far below local temporal/MLP baselines |
-| Publication decision table | Done | Q1 candidate supported by replicated MICRONS stratification; causal claims remain blocked |
+| Publication decision table | Done | Q1 candidate supported by internally reproduced MICRONS stratification; causal claims remain blocked |
 
 ## Key Results
 
@@ -48,18 +50,19 @@ remains local and correlational rather than causal or interventional.
 | MICrONS static micro-pilot | 172 units, 82 synapses | Negative/inconclusive | Stress test only |
 | MICrONS expanded pilot | 1000 units, 2267 synapses | Positive vs random/degree, not distance | Not enough for positive Q1 claim |
 | MICrONS stratified expanded pilot | 1000 units, 2267 synapses | 28 tests positive after FDR, mostly readout-location | Discovery cohort |
-| MICrONS stratified hold-out offset1000 | 992 units, 2161 synapses | 30 tests positive after FDR, readout-location replicated | Q1 candidate evidence |
-| MICrONS stratified hold-out offset2000 | 999 units, 2147 synapses | 25 tests positive after FDR, readout-location replicated | Q1 candidate evidence strengthened |
+| MICrONS stratified hold-out offset1000 | 992 units, 2161 synapses | 30 tests positive after FDR, readout-location internally reproduced | Q1 candidate evidence |
+| MICrONS stratified hold-out offset2000 | 999 units, 2147 synapses | 25 tests positive after FDR, readout-location internally reproduced | Q1 candidate evidence strengthened |
 | Sensorium official bounded | 5 mice | Runs on MPS, positive vs mean in 4/5, weak absolute correlation | Integration evidence, not Q1/SOTA |
 | Dynamic Sensorium MLP | 5 mice | Stronger prediction | Predictive baseline, not mechanistic |
 
 ## Next Q1-Capable Moves
 
-1. Convert the replicated MICRONS result into a manuscript-grade benchmark
+1. Convert the internally reproduced MICRONS result into a manuscript-grade benchmark
    section with claims limited to local structure-function association.
 2. Keep the global MICrONS result negative unless the all-pairs distance-matched
    effect turns positive.
-3. Treat non-readout functional positives as exploratory unless they replicate.
+3. Treat non-readout functional positives as exploratory unless they reproduce in
+   fixed hold-outs.
 4. Obtain or train a stronger official Sensorium baseline. The current local
    official models are integration controls, not competitive baselines.
 5. Frame the paper around the central methodological claim: MouseBrainBench
@@ -78,5 +81,5 @@ but to harden the positive signal:
 - keep causal, whole-brain, and Sensorium-SOTA claims explicitly blocked: done.
 
 The current next step is manuscript production plus one external-facing
-replication/benchmark comparison if time permits, not open-ended exploratory
-signal search.
+external replication or benchmark comparison if time permits, not open-ended
+exploratory signal search.

@@ -1030,10 +1030,10 @@ permutaciones y `min_connected_pairs = 50`.
 
 ### Decisión
 
-La señal principal replica en hold-out. MouseBrainBench ya tiene una pieza
-empírica positiva candidata para Q1, siempre que el manuscrito la formule como
-benchmark estructura-función local con controles, no como causalidad, whole-brain
-digital twin ni modelo SOTA Sensorium.
+La señal principal se reproduce internamente en hold-out. MouseBrainBench ya
+tiene una pieza empírica positiva candidata para Q1, siempre que el manuscrito la
+formule como benchmark estructura-función local con controles, no como
+causalidad, whole-brain digital twin ni modelo SOTA Sensorium.
 
 ## 2026-06-26 — Paquete Q1 MICRONS con bootstrap por unidades
 

@@ -1,8 +1,8 @@
 """Build manuscript-grade MICRONS Q1 tables and bootstrap stability checks.
 
-This script summarizes the replicated MICRONS stratified signal without changing
-the underlying tests. The primary endpoint was fixed after the discovery analysis
-and evaluated in two non-overlapping hold-outs: ``all_pairs`` with
+This script summarizes the internally reproduced MICRONS stratified signal
+without changing the underlying tests. The primary endpoint was fixed after the
+discovery analysis and evaluated in two non-overlapping hold-outs: ``all_pairs`` with
 ``readout_location`` similarity. Bootstrap intervals use a unit-cluster weighted
 bootstrap over the directed pair frame, avoiding naive pair-level independence.
 """
@@ -37,7 +37,7 @@ PRIMARY_STRATUM = "all_pairs"
 
 @dataclass(frozen=True)
 class CohortSpec:
-    """Input and result files for one MICRONS replicated cohort."""
+    """Input and result files for one MICRONS discovery or hold-out cohort."""
 
     name: str
     units: Path
@@ -232,7 +232,7 @@ def run(
     bootstrap_samples: int = 300,
     seed: int = 71,
 ) -> dict[str, Any]:
-    """Build replicated MICRONS package artifacts."""
+    """Build internally reproduced MICRONS package artifacts."""
 
     cohorts = [
         _cohort_summary(spec, bootstrap_samples=bootstrap_samples, seed=seed + idx)

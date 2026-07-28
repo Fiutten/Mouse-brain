@@ -15,8 +15,8 @@ performance, reproducibility, anatomical plausibility, structure-function
 association, and mechanistic identifiability in partial mouse-brain digital
 models.
 
-The main empirical result is the replicated MICRONS local structure-function
-case. Allen VBN, Sensorium, Dynamic Sensorium, and synthetic experiments are
+The main empirical result is the internally reproduced MICRONS local
+structure-function case. Allen VBN, Sensorium, Dynamic Sensorium, and synthetic experiments are
 supporting audit layers, not competing main claims.
 
 ## Recommended Journal Strategy
@@ -110,7 +110,7 @@ Four-message abstract:
    and mechanistic identifiability.
 3. Across Allen VBN, Sensorium/Dynamic Sensorium, synthetic cases, and MICRONS,
    the framework blocks weak claims and identifies one robust positive result:
-   replicated MICRONS local structure-function association.
+   internally reproduced MICRONS local structure-function association.
 4. The contribution is a benchmark for partial digital models, not a complete
    mouse-brain simulation.
 
@@ -177,7 +177,7 @@ Use a table:
 | Allen VBN | 20-21 analyzed sessions | negative mechanistic control | reproducible but not identifiable |
 | Sensorium static | 7 validation mice, 5 repeated-test mice | predictive/reliability auxiliary case | predictive, not causal |
 | Dynamic Sensorium | 5 current + 5 OOD mice | temporal predictive stress test | predictive, underpowered for central claim |
-| MICRONS CAVE | 2991 units, 6575 synapses, 5943 connected pairs | main empirical evidence | replicated local structure-function |
+| MICRONS CAVE | 2991 units, 6575 synapses, 5943 connected pairs | main empirical evidence | internally reproduced local structure-function |
 
 ### 6. Results
 
@@ -189,7 +189,7 @@ Recommended order:
    incomplete.
 4. MICRONS global aggregate test fails distance matching, preventing an
    overclaim.
-5. MICRONS stratified endpoint replicates across three cohorts.
+5. MICRONS stratified endpoint is internally reproduced across three cohorts.
 6. Claim audit freezes allowed and blocked interpretations.
 
 Main result to highlight:
@@ -262,7 +262,7 @@ State:
 3. Allen negative mechanistic-identifiability result.
 4. Sensorium predictive controls and bounded official baseline.
 5. MICRONS cohort design and matched nulls.
-6. MICRONS replicated primary endpoint with bootstrap intervals.
+6. MICRONS internally reproduced primary endpoint with bootstrap intervals.
 7. Claim audit: allowed vs blocked claims.
 
 ## Immediate Writing Plan

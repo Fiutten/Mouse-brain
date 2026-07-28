@@ -52,7 +52,7 @@ Y puede usar estas frases si los artefactos actuales se mantienen:
 
 La estratificación expandida encuentra señal positiva tras controles de
 distancia, grado y FDR, dominada por similitud de `readout_location`. Esta señal
-se replicó en un segundo subconjunto CAVE hold-out con `992` unidades,
+se reprodujo internamente en un subconjunto CAVE hold-out con `992` unidades,
 `2161` sinapsis y `30` pruebas positivas tras FDR.
 
 Interpretación estricta:

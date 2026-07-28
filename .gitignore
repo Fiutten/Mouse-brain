@@ -20,3 +20,5 @@ data/**
 external/**
 !external/.gitkeep
 !external/README.md
+tmp/
+/*.pdf
