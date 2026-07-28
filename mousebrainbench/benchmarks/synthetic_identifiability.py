@@ -56,7 +56,19 @@ def _synthetic_case(
     n_sessions: int = 24,
     n_regions: int = 6,
     n_time: int = 24,
+    observation_noise: float = 0.08,
+    split_noise: float = 0.04,
+    prediction_noise: float = 0.02,
+    n_null_per_session: int = 200,
+    n_permutation_predictions: int = 100,
 ) -> dict[str, object]:
+    """Generate one truth-known synthetic case and score it with MIS.
+
+    The extra noise and sampling parameters support the MIS 2.0 calibration
+    benchmark. Defaults preserve the original four-case benchmark used by the
+    submitted manuscript.
+    """
+
     rng = np.random.default_rng(seed)
     template = _make_template(
         n_regions=n_regions,
@@ -65,16 +77,19 @@ def _synthetic_case(
         region_specific_amplitude=region_specific_amplitude,
     )
     sessions = np.stack(
-        [template + rng.normal(0.0, 0.08, template.shape) for _ in range(n_sessions)]
+        [template + rng.normal(0.0, observation_noise, template.shape) for _ in range(n_sessions)]
     )
-    odd = sessions + rng.normal(0.0, 0.04, sessions.shape)
-    even = sessions + rng.normal(0.0, 0.04, sessions.shape)
+    odd = sessions + rng.normal(0.0, split_noise, sessions.shape)
+    even = sessions + rng.normal(0.0, split_noise, sessions.shape)
     reference = sessions.mean(axis=0)
     reproducibility = np.asarray([_correlation(session, reference) for session in sessions])
     split = np.asarray([_correlation(left, right) for left, right in zip(odd, even, strict=True)])
     null = np.asarray(
         [
-            [_correlation(session[:, rng.permutation(n_regions)], reference) for _ in range(200)]
+            [
+                _correlation(session[:, rng.permutation(n_regions)], reference)
+                for _ in range(n_null_per_session)
+            ]
             for session in sessions
         ]
     )
@@ -86,9 +101,9 @@ def _synthetic_case(
         region_specific_amplitude=False,
     )
     true_prediction_template = template if topology_specific_prediction else disconnected_prediction
-    true_prediction = true_prediction_template + rng.normal(0.0, 0.02, template.shape)
+    true_prediction = true_prediction_template + rng.normal(0.0, prediction_noise, template.shape)
     permutation_predictions = np.stack(
-        [true_prediction[:, rng.permutation(n_regions)] for _ in range(100)]
+        [true_prediction[:, rng.permutation(n_regions)] for _ in range(n_permutation_predictions)]
     )
     true_scores = np.asarray([_correlation(true_prediction, session) for session in sessions])
     disconnected_scores = np.asarray(

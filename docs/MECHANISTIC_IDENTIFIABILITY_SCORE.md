@@ -129,3 +129,42 @@ Artefacto:
 ```text
 results/q1_sensitivity/summary.json
 ```
+
+## MIS 2.0: calibración sintética ampliada
+
+La siguiente línea metodológica del proyecto no sustituye el MIS usado en el
+manuscrito enviado. Lo extiende con un benchmark sintético de calibración para
+estimar falsos positivos, falsos negativos y estabilidad de bloques bajo verdad
+conocida.
+
+Comando:
+
+```text
+mousebrainbench-mis2-synthetic
+```
+
+Artefactos:
+
+```text
+results/mis2_synthetic_calibration/summary.json
+results/mis2_synthetic_calibration/summary.md
+```
+
+La suite incluye escenarios positivos y negativos:
+
+- verdad dirigida limpia;
+- verdad dirigida con más ruido;
+- verdad dirigida con pocas sesiones;
+- verdad dirigida de baja señal/ruido;
+- common drive altamente reproducible;
+- topología sin dirección;
+- dirección sin topología específica;
+- predicción sin topología verdadera;
+- common drive ruidoso.
+
+La regla crítica se mantiene: un caso no mecanístico no debe pasar MIS aunque
+sea reproducible o predictivo. Si aparece un falso positivo en esta suite, la
+decisión correcta no es relajar la interpretación, sino revisar el gate. Los
+falsos negativos en escenarios de baja señal se interpretan como conservadurismo
+del gate y deben cuantificarse antes de proponer MIS 2.0 como contribución
+general.
