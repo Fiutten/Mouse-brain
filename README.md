@@ -67,6 +67,9 @@ está resumido en [PUBLICATION_PACKAGE.md](docs/PUBLICATION_PACKAGE.md). La
 estrategia Q1 actual formaliza el
 [Mechanistic Identifiability Score](docs/MECHANISTIC_IDENTIFIABILITY_SCORE.md)
 y la ruta de evidencias se congela en `results/publication_freeze/summary.json`.
+Para revisión y release, usar
+[REVIEWER_RESPONSE_DOSSIER.md](docs/REVIEWER_RESPONSE_DOSSIER.md) y
+[RELEASE_REPRODUCIBILITY_CHECKLIST.md](docs/RELEASE_REPRODUCIBILITY_CHECKLIST.md).
 
 ## Capacidades de la Fase 1
 
