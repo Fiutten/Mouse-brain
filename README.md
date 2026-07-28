@@ -70,6 +70,8 @@ y la ruta de evidencias se congela en `results/publication_freeze/summary.json`.
 Para revisión y release, usar
 [REVIEWER_RESPONSE_DOSSIER.md](docs/REVIEWER_RESPONSE_DOSSIER.md) y
 [RELEASE_REPRODUCIBILITY_CHECKLIST.md](docs/RELEASE_REPRODUCIBILITY_CHECKLIST.md).
+La extensión metodológica MIS 2.0 queda separada en
+[MIS2_CALIBRATION_PROTOCOL.md](docs/MIS2_CALIBRATION_PROTOCOL.md).
 
 ## Capacidades de la Fase 1
 

@@ -13,6 +13,7 @@ The current source of truth for the publication state is:
 - `results/microns_q1_package/summary.json`;
 - `docs/DATASET_VOLUME_AUDIT.md`;
 - `docs/MECHANISTIC_IDENTIFIABILITY_SCORE.md`;
+- `docs/MIS2_CALIBRATION_PROTOCOL.md`;
 - `results/digital_twin_claim_audit/summary.json`.
 
 Older phase documents are historical unless they are explicitly referenced by

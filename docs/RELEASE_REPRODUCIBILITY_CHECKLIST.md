@@ -36,6 +36,7 @@ git status --short
 .venv/bin/python -m mousebrainbench.benchmarks.microns_pilot_gate
 .venv/bin/python -m mousebrainbench.benchmarks.publication_freeze
 .venv/bin/python -m mousebrainbench.benchmarks.mis2_synthetic_calibration
+.venv/bin/python -m mousebrainbench.benchmarks.mis2_threshold_sensitivity
 ```
 
 Interpretation rules:
@@ -83,6 +84,7 @@ revision with `-dirty`.
 | MICRONS expanded/Q1 package | Ready | Main positive local observational evidence. |
 | Publication freeze | Q1 candidate after internally reproduced MICRONS signal | Current manuscript route. |
 | MIS 2.0 synthetic calibration | No false positives in designed non-mechanistic cases | Development evidence for next methodological extension. |
+| MIS 2.0 threshold sensitivity | No dangerous or unstable threshold regions | Maps safe versus conservative operating regimes. |
 
 ## Dirty-Tree Policy
 

@@ -148,6 +148,8 @@ Artefactos:
 ```text
 results/mis2_synthetic_calibration/summary.json
 results/mis2_synthetic_calibration/summary.md
+results/mis2_threshold_sensitivity/summary.json
+results/mis2_threshold_sensitivity/summary.md
 ```
 
 La suite incluye escenarios positivos y negativos:
@@ -168,3 +170,18 @@ decisión correcta no es relajar la interpretación, sino revisar el gate. Los
 falsos negativos en escenarios de baja señal se interpretan como conservadurismo
 del gate y deben cuantificarse antes de proponer MIS 2.0 como contribución
 general.
+
+El comando `mousebrainbench-mis2-sensitivity` añade esa cuantificación mediante
+un barrido de ruido, tamaño muestral y perfiles de umbral. Cada celda se
+clasifica como:
+
+- `safe`: falsos positivos cero y falsos negativos bajos;
+- `conservative`: falsos positivos cero y falsos negativos altos;
+- `dangerous`: falsos positivos no nulos con sensibilidad aparentemente buena;
+- `unstable`: falsos positivos y falsos negativos problemáticos.
+
+La condición mínima para seguir desarrollando MIS 2.0 es que los escenarios
+negativos diseñados no entren en regiones `dangerous` o `unstable`.
+
+El protocolo de desarrollo queda documentado en
+[MIS2_CALIBRATION_PROTOCOL.md](MIS2_CALIBRATION_PROTOCOL.md).
