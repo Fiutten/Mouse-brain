@@ -37,6 +37,9 @@ git status --short
 .venv/bin/python -m mousebrainbench.benchmarks.publication_freeze
 .venv/bin/python -m mousebrainbench.benchmarks.mis2_synthetic_calibration
 .venv/bin/python -m mousebrainbench.benchmarks.mis2_threshold_sensitivity
+.venv/bin/python -m mousebrainbench.benchmarks.claim_adversarial
+.venv/bin/python -m mousebrainbench.benchmarks.claim_attack_suite
+.venv/bin/python -m mousebrainbench.benchmarks.microns_primary_robustness
 ```
 
 Interpretation rules:
@@ -85,6 +88,9 @@ revision with `-dirty`.
 | Publication freeze | Q1 candidate after internally reproduced MICRONS signal | Current manuscript route. |
 | MIS 2.0 synthetic calibration | No false positives in designed non-mechanistic cases | Development evidence for next methodological extension. |
 | MIS 2.0 threshold sensitivity | No dangerous or unstable threshold regions | Maps safe versus conservative operating regimes. |
+| Claim adversarial benchmark | Claim gate has zero false-positive claims | Demonstrates failure of correlation-only or compensatory overclaiming. |
+| Claim attack suite | No high-risk release blockers | Consolidates reviewer-facing claim risk. |
+| MICRONS primary robustness | Endpoint survives combined controls or is downgraded | Hardens the local observational MICRONS claim. |
 
 ## Dirty-Tree Policy
 

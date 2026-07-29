@@ -151,3 +151,31 @@ safe or conservative under controlled truth-known perturbations.
 ```
 
 That is a solid next-step contribution, but not yet a complete second paper.
+
+## Adversarial Claim Evaluation
+
+The next layer is implemented by:
+
+```bash
+mousebrainbench-claim-adversarial
+```
+
+It compares three evaluators:
+
+- `correlation_only`;
+- `compensatory_score`;
+- `claim_gate`.
+
+The benchmark deliberately includes high-prediction common-drive cases,
+topology-without-direction cases, direction-without-topology cases, spatially
+confounded structure-function cases, and positive controls. Its purpose is to
+show whether standard or compensatory evaluation authorizes claims that the
+non-compensatory gate correctly blocks.
+
+The aggregate reviewer-facing check is:
+
+```bash
+mousebrainbench-claim-attack-suite
+```
+
+This produces a risk report rather than a new scientific claim.
