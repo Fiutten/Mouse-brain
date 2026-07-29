@@ -96,14 +96,30 @@ def _shuffle_within_distance_bins(
     n_permutations: int,
     rng: np.random.Generator,
 ) -> dict[str, float]:
+    """Shuffle readout similarity within distance bins without copying full frames."""
+
     null_means = []
-    unique_bins = [value for value in np.unique(distance_bins.astype(str)) if value != "<NA>"]
+    bins = distance_bins.astype(str)
+    bin_specs = []
+    for bin_value in np.unique(bins):
+        if bin_value == "<NA>":
+            continue
+        bin_mask = bins == bin_value
+        connected_in_bin = connected_mask & bin_mask
+        connected_count = int(connected_in_bin.sum())
+        if connected_count:
+            bin_specs.append((values[bin_mask], connected_count))
+    total_connected = int(connected_mask.sum())
     for _ in range(n_permutations):
-        shuffled = values.copy()
-        for bin_value in unique_bins:
-            mask = distance_bins.astype(str) == bin_value
-            shuffled[mask] = rng.permutation(shuffled[mask])
-        null_means.append(float(shuffled[connected_mask].mean()))
+        sampled_sum = 0.0
+        sampled_count = 0
+        for pool, connected_count in bin_specs:
+            sampled = rng.choice(pool, size=connected_count, replace=False)
+            sampled_sum += float(sampled.sum())
+            sampled_count += connected_count
+        if sampled_count != total_connected:
+            raise ValueError("distance-bin shuffle failed to cover all connected pairs")
+        null_means.append(sampled_sum / sampled_count)
     null = np.asarray(null_means, dtype=float)
     return {
         "null_mean": float(null.mean()),
