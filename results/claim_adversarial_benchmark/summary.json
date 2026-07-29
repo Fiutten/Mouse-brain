@@ -1,0 +1,866 @@
+{
+  "version": "0.6.0",
+  "git_revision": "b3c970d677d005edf35d2bf7ba85cf7fe7ab6600",
+  "analysis": "claim_adversarial_benchmark",
+  "claim_types": [
+    "predictive",
+    "reproducible",
+    "topology_specific",
+    "directed",
+    "structure_function",
+    "mechanistic",
+    "causal",
+    "digital_twin"
+  ],
+  "cases": [
+    {
+      "case": "directed_mechanistic_truth",
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic"
+      ],
+      "failure_mode": "positive control with all non-causal mechanistic gates present"
+    },
+    {
+      "case": "common_drive_high_prediction",
+      "true_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "failure_mode": "prediction and reproducibility caused by common drive"
+    },
+    {
+      "case": "topology_without_direction",
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "failure_mode": "regional specificity exists but no directed signature is present"
+    },
+    {
+      "case": "direction_without_topology",
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "directed"
+      ],
+      "failure_mode": "timing exists but does not identify the proposed topology"
+    },
+    {
+      "case": "spatial_confound_structure_function",
+      "true_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "failure_mode": "structure-function association disappears under matched controls"
+    },
+    {
+      "case": "local_structure_function_truth",
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "failure_mode": "positive local observational structure-function control"
+    },
+    {
+      "case": "causal_component_truth",
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "failure_mode": "causal positive control without whole-brain coverage"
+    },
+    {
+      "case": "whole_brain_digital_twin_truth",
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal",
+        "digital_twin"
+      ],
+      "failure_mode": "upper-bound positive control for digital-twin wording"
+    }
+  ],
+  "case_evaluator_rows": [
+    {
+      "case": "directed_mechanistic_truth",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [],
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence",
+      "failure_mode": "positive control with all non-causal mechanistic gates present"
+    },
+    {
+      "case": "common_drive_high_prediction",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function",
+        "topology_specific"
+      ],
+      "false_negative_claims": [],
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence",
+      "failure_mode": "prediction and reproducibility caused by common drive"
+    },
+    {
+      "case": "topology_without_direction",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function"
+      ],
+      "false_negative_claims": [],
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence",
+      "failure_mode": "regional specificity exists but no directed signature is present"
+    },
+    {
+      "case": "direction_without_topology",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "directed"
+      ],
+      "false_positive_claims": [
+        "mechanistic",
+        "structure_function",
+        "topology_specific"
+      ],
+      "false_negative_claims": [],
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence",
+      "failure_mode": "timing exists but does not identify the proposed topology"
+    },
+    {
+      "case": "spatial_confound_structure_function",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function",
+        "topology_specific"
+      ],
+      "false_negative_claims": [],
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence",
+      "failure_mode": "structure-function association disappears under matched controls"
+    },
+    {
+      "case": "local_structure_function_truth",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "topology_specific"
+      ],
+      "false_negative_claims": [],
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence",
+      "failure_mode": "positive local observational structure-function control"
+    },
+    {
+      "case": "causal_component_truth",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [
+        "causal"
+      ],
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence",
+      "failure_mode": "causal positive control without whole-brain coverage"
+    },
+    {
+      "case": "whole_brain_digital_twin_truth",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal",
+        "digital_twin"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [
+        "causal",
+        "digital_twin"
+      ],
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence",
+      "failure_mode": "upper-bound positive control for digital-twin wording"
+    },
+    {
+      "case": "directed_mechanistic_truth",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [],
+      "rationale": "weighted score=0.795; high blocks can compensate failed blocks",
+      "failure_mode": "positive control with all non-causal mechanistic gates present"
+    },
+    {
+      "case": "common_drive_high_prediction",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "weighted score=0.463; high blocks can compensate failed blocks",
+      "failure_mode": "prediction and reproducibility caused by common drive"
+    },
+    {
+      "case": "topology_without_direction",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function"
+      ],
+      "false_negative_claims": [],
+      "rationale": "weighted score=0.633; high blocks can compensate failed blocks",
+      "failure_mode": "regional specificity exists but no directed signature is present"
+    },
+    {
+      "case": "direction_without_topology",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "directed"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [
+        "directed"
+      ],
+      "rationale": "weighted score=0.554; high blocks can compensate failed blocks",
+      "failure_mode": "timing exists but does not identify the proposed topology"
+    },
+    {
+      "case": "spatial_confound_structure_function",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "weighted score=0.395; high blocks can compensate failed blocks",
+      "failure_mode": "structure-function association disappears under matched controls"
+    },
+    {
+      "case": "local_structure_function_truth",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [
+        "structure_function"
+      ],
+      "rationale": "weighted score=0.475; high blocks can compensate failed blocks",
+      "failure_mode": "positive local observational structure-function control"
+    },
+    {
+      "case": "causal_component_truth",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [
+        "causal"
+      ],
+      "rationale": "weighted score=0.760; high blocks can compensate failed blocks",
+      "failure_mode": "causal positive control without whole-brain coverage"
+    },
+    {
+      "case": "whole_brain_digital_twin_truth",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal",
+        "digital_twin"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [
+        "causal",
+        "digital_twin"
+      ],
+      "rationale": "weighted score=0.783; high blocks can compensate failed blocks",
+      "failure_mode": "upper-bound positive control for digital-twin wording"
+    },
+    {
+      "case": "directed_mechanistic_truth",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "claims require their own evidence gates and cannot compensate each other",
+      "failure_mode": "positive control with all non-causal mechanistic gates present"
+    },
+    {
+      "case": "common_drive_high_prediction",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "claims require their own evidence gates and cannot compensate each other",
+      "failure_mode": "prediction and reproducibility caused by common drive"
+    },
+    {
+      "case": "topology_without_direction",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "claims require their own evidence gates and cannot compensate each other",
+      "failure_mode": "regional specificity exists but no directed signature is present"
+    },
+    {
+      "case": "direction_without_topology",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "directed"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "directed"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "claims require their own evidence gates and cannot compensate each other",
+      "failure_mode": "timing exists but does not identify the proposed topology"
+    },
+    {
+      "case": "spatial_confound_structure_function",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "claims require their own evidence gates and cannot compensate each other",
+      "failure_mode": "structure-function association disappears under matched controls"
+    },
+    {
+      "case": "local_structure_function_truth",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "claims require their own evidence gates and cannot compensate each other",
+      "failure_mode": "positive local observational structure-function control"
+    },
+    {
+      "case": "causal_component_truth",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "claims require their own evidence gates and cannot compensate each other",
+      "failure_mode": "causal positive control without whole-brain coverage"
+    },
+    {
+      "case": "whole_brain_digital_twin_truth",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal",
+        "digital_twin"
+      ],
+      "true_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal",
+        "digital_twin"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "rationale": "claims require their own evidence gates and cannot compensate each other",
+      "failure_mode": "upper-bound positive control for digital-twin wording"
+    }
+  ],
+  "confusion_matrix": [
+    {
+      "evaluator": "correlation_only",
+      "claim": "predictive",
+      "tp": 8,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "reproducible",
+      "tp": 8,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "topology_specific",
+      "tp": 4,
+      "fp": 4,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "directed",
+      "tp": 4,
+      "fp": 4,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "structure_function",
+      "tp": 1,
+      "fp": 7,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "mechanistic",
+      "tp": 3,
+      "fp": 5,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "causal",
+      "tp": 0,
+      "fp": 0,
+      "tn": 6,
+      "fn": 2
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "digital_twin",
+      "tp": 0,
+      "fp": 0,
+      "tn": 7,
+      "fn": 1
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "predictive",
+      "tp": 8,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "reproducible",
+      "tp": 8,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "topology_specific",
+      "tp": 4,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "directed",
+      "tp": 3,
+      "fp": 1,
+      "tn": 3,
+      "fn": 1
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "structure_function",
+      "tp": 0,
+      "fp": 4,
+      "tn": 3,
+      "fn": 1
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "mechanistic",
+      "tp": 3,
+      "fp": 1,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "causal",
+      "tp": 0,
+      "fp": 0,
+      "tn": 6,
+      "fn": 2
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "digital_twin",
+      "tp": 0,
+      "fp": 0,
+      "tn": 7,
+      "fn": 1
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "predictive",
+      "tp": 8,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "reproducible",
+      "tp": 8,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "topology_specific",
+      "tp": 4,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "directed",
+      "tp": 4,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "structure_function",
+      "tp": 1,
+      "fp": 0,
+      "tn": 7,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "mechanistic",
+      "tp": 3,
+      "fp": 0,
+      "tn": 5,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "causal",
+      "tp": 2,
+      "fp": 0,
+      "tn": 6,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "digital_twin",
+      "tp": 1,
+      "fp": 0,
+      "tn": 7,
+      "fn": 0
+    }
+  ],
+  "aggregate_by_evaluator": [
+    {
+      "evaluator": "claim_gate",
+      "tp": 31,
+      "fp": 0,
+      "tn": 33,
+      "fn": 0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "tp": 26,
+      "fp": 6,
+      "tn": 27,
+      "fn": 5,
+      "false_positive_rate": 0.18181818181818182,
+      "false_negative_rate": 0.16129032258064516
+    },
+    {
+      "evaluator": "correlation_only",
+      "tp": 28,
+      "fp": 20,
+      "tn": 13,
+      "fn": 3,
+      "false_positive_rate": 0.6060606060606061,
+      "false_negative_rate": 0.0967741935483871
+    }
+  ],
+  "decision": "claim_gate_blocks_adversarial_overclaims"
+}

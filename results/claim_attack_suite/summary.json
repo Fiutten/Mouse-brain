@@ -1,0 +1,44 @@
+{
+  "version": "0.6.0",
+  "git_revision": "b3c970d677d005edf35d2bf7ba85cf7fe7ab6600",
+  "analysis": "claim_attack_suite",
+  "inputs": {
+    "adversarial": "results/claim_adversarial_benchmark/summary.json",
+    "mis2_threshold_sensitivity": "results/mis2_threshold_sensitivity/summary.json",
+    "publication_freeze": "results/publication_freeze/summary.json",
+    "digital_twin_claim_audit": "results/digital_twin_claim_audit/summary.json",
+    "microns_q1_package": "results/microns_q1_package/summary.json",
+    "microns_primary_robustness": "results/microns_primary_robustness/summary.json",
+    "sensorium_official_baseline_audit": "results/sensorium_official_baseline_audit/summary.json",
+    "allen_vbn_mis": "results/allen_vbn_mechanistic_identifiability_score.json"
+  },
+  "allowed_claims": [
+    "MouseBrainBench separates prediction, OOD, reliability, and mechanistic gates.",
+    "Allen VBN is a real negative case: reproducible but not mechanistically identifiable.",
+    "Sensorium/Dynamic Sensorium provide modern predictive cases with local NN control.",
+    "Sensorium static provides partial positive reliability/topographic evidence.",
+    "The official Sensorium stack can run local forward-pass and bounded training/evaluation artifacts.",
+    "MICrONS now provides a real CAVE-backed micro-pilot, but current structure-function signal is negative/inconclusive.",
+    "MICrONS expanded pilot reaches Q1-scale data volume, but current distance-controlled structure-function result is not positive.",
+    "MICrONS stratified analysis finds a local structure-function signal after distance/degree/FDR controls, dominated by readout-location similarity.",
+    "MICrONS hold-out analyses internally reproduce the readout-location signal in two non-overlapping windows from the same resource.",
+    "MICRONS primary endpoint survives combined distance/degree matching and within-distance readout shuffling."
+  ],
+  "blocked_claims": [
+    "A complete digital twin of mouse brain.",
+    "A SOTA Sensorium predictor.",
+    "A Q1-qualified official Sensorium baseline until the published budget/configuration or official checkpoint is evaluated.",
+    "Causal mechanistic identifiability in Dynamic Sensorium.",
+    "MICrONS causal mechanism claims: the stratified signal is correlational and local, not interventional.",
+    "Whole-brain or causal MICrONS claims: the internally reproduced signal remains local, observational, and confined to one resource."
+  ],
+  "risks": [
+    {
+      "level": "medium",
+      "item": "sensorium_not_q1_qualified",
+      "evidence": "official Sensorium baseline is not Q1-qualified locally",
+      "action": "Keep Sensorium as predictive/interoperability evidence, not SOTA."
+    }
+  ],
+  "decision": "claim_attack_suite_passed_with_known_limits"
+}
