@@ -102,6 +102,11 @@ mousebrainbench-sensorium-mis /path/to/unzipped/sensorium_mouse --max-trials 100
 mousebrainbench-sensorium-compare
 mousebrainbench-sensorium-official-audit
 mousebrainbench-synthetic-mis
+mousebrainbench-mis2-synthetic
+mousebrainbench-mis2-sensitivity
+mousebrainbench-claim-adversarial
+mousebrainbench-microns-primary-robustness
+mousebrainbench-claim-attack-suite
 mousebrainbench-q1-sensitivity
 mousebrainbench-publication-freeze
 pytest

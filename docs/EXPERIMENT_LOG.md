@@ -1107,3 +1107,42 @@ tres cohortes CAVE no solapadas. Se añade `docs/Q1_VOLUME_ADEQUACY.md` como
 criterio de parada: no se deben seguir descargando cohortes para redefinir el
 endpoint o buscar una señal mejor. Cualquier descarga adicional debe etiquetarse
 como robustez confirmatoria o respuesta a revisores.
+
+## 2026-07-28 — Suite adversarial de claims y robustez primaria MICRONS
+
+### Objetivo
+
+Responder a la debilidad metodológica de que MouseBrainBench pudiera parecer una
+combinación simple de métricas. Se añadieron evaluadores comparativos,
+benchmark adversarial de claims, suite agregada de ataque y controles MICRONS
+más estrictos para el endpoint primario ya fijado.
+
+### Artefactos
+
+- `results/claim_adversarial_benchmark/summary.json`
+- `results/claim_adversarial_benchmark/summary.md`
+- `results/microns_primary_robustness/summary.json`
+- `results/microns_primary_robustness/summary.md`
+- `results/claim_attack_suite/summary.json`
+- `results/claim_attack_suite/summary.md`
+
+### Resultados
+
+| Resultado | Valor |
+|---|---:|
+| Claim gate FP | `0` |
+| Correlation-only FP | `20` |
+| Compensatory-score FP | `6` |
+| MICRONS cohorts robustos | `3/3` |
+| Claim attack high risks | `0` |
+| Claim attack medium risks | `1` |
+
+### Decisión
+
+La nueva suite apoya la contribución metodológica: los evaluadores estándar o
+compensatorios sobreautorizan claims en casos adversariales, mientras que el
+gate no compensatorio bloquea esos falsos positivos. El endpoint MICRONS
+`all_pairs/readout_location` sobrevive a matching combinado distancia/grado y a
+shuffle de readout dentro de bins de distancia en las tres cohortes. La
+interpretación sigue siendo local y observacional. No se autoriza causalidad,
+whole-brain digital twin ni claim SOTA Sensorium.
