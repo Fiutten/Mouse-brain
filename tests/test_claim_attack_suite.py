@@ -27,6 +27,10 @@ def test_claim_attack_suite_reports_known_nonblocking_limits(tmp_path, monkeypat
     (tmp_path / "results/microns_q1_package/summary.json").write_text(
         json.dumps({"q1_package_ready": True})
     )
+    (tmp_path / "results/microns_primary_robustness").mkdir(parents=True)
+    (tmp_path / "results/microns_primary_robustness/summary.json").write_text(
+        json.dumps({"all_cohorts_robust": True})
+    )
     (tmp_path / "results/sensorium_official_baseline_audit").mkdir(parents=True)
     (tmp_path / "results/sensorium_official_baseline_audit/summary.json").write_text(
         json.dumps({"official_q1_baseline_qualified": False})

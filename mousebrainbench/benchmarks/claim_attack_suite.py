@@ -40,6 +40,7 @@ def run(output: Path = DEFAULT_OUTPUT, markdown: Path = DEFAULT_MARKDOWN) -> Pat
     freeze = _load(Path("results/publication_freeze/summary.json"))
     digital = _load(Path("results/digital_twin_claim_audit/summary.json"))
     microns = _load(Path("results/microns_q1_package/summary.json"))
+    microns_robustness = _load(Path("results/microns_primary_robustness/summary.json"))
     sensorium = _load(Path("results/sensorium_official_baseline_audit/summary.json"))
     allen = _load(Path("results/allen_vbn_mechanistic_identifiability_score.json"))
 
@@ -90,6 +91,15 @@ def run(output: Path = DEFAULT_OUTPUT, markdown: Path = DEFAULT_MARKDOWN) -> Pat
                 "Downgrade MICRONS from primary positive evidence.",
             )
         )
+    if microns_robustness and not microns_robustness.get("all_cohorts_robust", False):
+        risks.append(
+            _risk(
+                "high",
+                "microns_primary_endpoint_not_robust",
+                f"decision={microns_robustness.get('decision')}",
+                "Downgrade MICRONS primary endpoint or report it as control-sensitive.",
+            )
+        )
     if sensorium.get("official_q1_baseline_qualified", False):
         sensorium_action = "Sensorium official baseline may be discussed with exact scope."
     else:
@@ -125,12 +135,22 @@ def run(output: Path = DEFAULT_OUTPUT, markdown: Path = DEFAULT_MARKDOWN) -> Pat
             "publication_freeze": "results/publication_freeze/summary.json",
             "digital_twin_claim_audit": "results/digital_twin_claim_audit/summary.json",
             "microns_q1_package": "results/microns_q1_package/summary.json",
+            "microns_primary_robustness": "results/microns_primary_robustness/summary.json",
             "sensorium_official_baseline_audit": (
                 "results/sensorium_official_baseline_audit/summary.json"
             ),
             "allen_vbn_mis": "results/allen_vbn_mechanistic_identifiability_score.json",
         },
-        "allowed_claims": allowed_claims,
+        "allowed_claims": [
+            *allowed_claims,
+            *(
+                [
+                    "MICRONS primary endpoint survives combined distance/degree matching and within-distance readout shuffling."
+                ]
+                if microns_robustness.get("all_cohorts_robust", False)
+                else []
+            ),
+        ],
         "blocked_claims": blocked_claims,
         "risks": risks,
         "decision": "claim_attack_suite_passed_with_known_limits"
