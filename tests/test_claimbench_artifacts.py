@@ -35,7 +35,10 @@ def _minimal_artifacts(root: Path) -> None:
     )
     _write_json(
         root / "results/sensorium_official_baseline_audit/summary.json",
-        {"decision": "official_baseline_available_but_not_q1_qualified", "git_revision": "abc"},
+        {
+            "decision": "official_sensorium_bounded_trained_baseline_available_not_q1_qualified",
+            "git_revision": "abc",
+        },
     )
     _write_json(
         root / "results/claim_adversarial_benchmark/summary.json",

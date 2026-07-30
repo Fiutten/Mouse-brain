@@ -75,10 +75,10 @@ def build_entries(root: Path = Path(".")) -> tuple[ClaimLedgerEntry, ...]:
                 "MouseBrainBench is a Sensorium SOTA model.",
             ),
             evidence_artifact="results/sensorium_official_baseline_audit/summary.json",
-            required_decision="official_baseline_available_but_not_q1_qualified",
+            required_decision="official_sensorium_bounded_trained_baseline_available_not_q1_qualified",
             status=_status(
                 sensorium.get("decision"),
-                "official_baseline_available_but_not_q1_qualified",
+                "official_sensorium_bounded_trained_baseline_available_not_q1_qualified",
             ),
             rationale="The official ecosystem can be audited, but the local run is not a SOTA claim.",
         ),
