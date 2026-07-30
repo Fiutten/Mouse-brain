@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "db8911e3a5ffdd1d0239732e7b679c33b5fa6729",
+  "git_revision": "97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9",
   "analysis": "claimbench_v2_release",
   "baseline_commit": "ff0aca9",
   "missing_artifacts": [],
@@ -73,21 +73,21 @@
     {
       "artifact": "results/external_benchmark_registry/summary.json",
       "exists": true,
-      "git_revision": "db8911e3a5ffdd1d0239732e7b679c33b5fa6729",
+      "git_revision": "97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9",
       "decision": "external_benchmarks_registered_with_pending_data",
       "expected_decision": "external_benchmarks_registered_with_pending_data"
     },
     {
       "artifact": "results/scifact_claim_verification/summary.json",
       "exists": true,
-      "git_revision": "db8911e3a5ffdd1d0239732e7b679c33b5fa6729",
+      "git_revision": "97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9",
       "decision": "scifact_external_claim_audit_ready",
       "expected_decision": "scifact_external_claim_audit_ready"
     },
     {
       "artifact": "results/tuebingen_causal_direction/summary.json",
       "exists": true,
-      "git_revision": "db8911e3a5ffdd1d0239732e7b679c33b5fa6729",
+      "git_revision": "97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9",
       "decision": "tuebingen_external_direction_benchmark_ready",
       "expected_decision": "tuebingen_external_direction_benchmark_ready"
     }

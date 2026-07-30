@@ -17,6 +17,6 @@
 | `results/manuscript_claim_audit/summary.json` | `True` | `manuscript_claim_audit_passed` | `manuscript_claim_audit_passed` | `f843adff0b2fbef2b4146605bb5fa46b139a56e2` |
 | `results/uncertainty_claim_gate_v2/summary.json` | `True` | `uncertainty_gate_blocks_unsupported_support` | `uncertainty_gate_blocks_unsupported_support` | `f843adff0b2fbef2b4146605bb5fa46b139a56e2` |
 | `results/cost_fidelity_claim_frontier/summary.json` | `True` | `cost_fidelity_claim_frontier_built` | `cost_fidelity_claim_frontier_built` | `f843adff0b2fbef2b4146605bb5fa46b139a56e2` |
-| `results/external_benchmark_registry/summary.json` | `True` | `external_benchmarks_registered_with_pending_data` | `external_benchmarks_registered_with_pending_data` | `db8911e3a5ffdd1d0239732e7b679c33b5fa6729` |
-| `results/scifact_claim_verification/summary.json` | `True` | `scifact_external_claim_audit_ready` | `scifact_external_claim_audit_ready` | `db8911e3a5ffdd1d0239732e7b679c33b5fa6729` |
-| `results/tuebingen_causal_direction/summary.json` | `True` | `tuebingen_external_direction_benchmark_ready` | `tuebingen_external_direction_benchmark_ready` | `db8911e3a5ffdd1d0239732e7b679c33b5fa6729` |
+| `results/external_benchmark_registry/summary.json` | `True` | `external_benchmarks_registered_with_pending_data` | `external_benchmarks_registered_with_pending_data` | `97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9` |
+| `results/scifact_claim_verification/summary.json` | `True` | `scifact_external_claim_audit_ready` | `scifact_external_claim_audit_ready` | `97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9` |
+| `results/tuebingen_causal_direction/summary.json` | `True` | `tuebingen_external_direction_benchmark_ready` | `tuebingen_external_direction_benchmark_ready` | `97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9` |

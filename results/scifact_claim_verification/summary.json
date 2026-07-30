@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "db8911e3a5ffdd1d0239732e7b679c33b5fa6729",
+  "git_revision": "97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9",
   "analysis": "scifact_claim_verification",
   "dataset": "SciFact dev",
   "num_claims": 300,
@@ -10,2710 +10,3932 @@
     "CONTRADICT": 64
   },
   "lexical_threshold": 0.18,
+  "abstain_threshold": 0.12,
   "shortcut_false_positives": 37,
   "shortcut_false_negatives": 61,
   "shortcut_overclaiming_risk": 0.21022727272727273,
   "shortcut_conservativeness": 0.49193548387096775,
+  "abstention_rate": 0.3566666666666667,
+  "abstaining_overclaiming_risk": 0.40217391304347827,
+  "abstaining_conservativeness": 0.37623762376237624,
+  "per_label": {
+    "CONTRADICT": {
+      "n": 64,
+      "mean_lexical_score": 0.15784244026527372,
+      "shortcut_supported_rate": 0.375
+    },
+    "NOT_ENOUGH_INFO": {
+      "n": 112,
+      "mean_lexical_score": 0.1048650553562422,
+      "shortcut_supported_rate": 0.11607142857142858
+    },
+    "SUPPORT": {
+      "n": 124,
+      "mean_lexical_score": 0.18339403346327607,
+      "shortcut_supported_rate": 0.5080645161290323
+    }
+  },
+  "runtime_seconds": 0.04581291598151438,
   "rows": [
     {
       "claim_id": 1,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 3,
       "gold_label": "SUPPORT",
       "lexical_score": 0.12909944487358058,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 5,
       "gold_label": "SUPPORT",
       "lexical_score": 0.11141720290623112,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 13,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.07001400420140048,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 36,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08381981343406689,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 42,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.12242552671859794,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 48,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.058722021951470346,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 49,
       "gold_label": "SUPPORT",
       "lexical_score": 0.18372608486985015,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 50,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1975459193299179,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 51,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1649572197684645,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 53,
       "gold_label": "SUPPORT",
       "lexical_score": 0.20619652471058064,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 54,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.128564869306645,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 56,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2727723627949905,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 57,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.2727723627949905,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 70,
       "gold_label": "SUPPORT",
       "lexical_score": 0.12493900951088485,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 72,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.07597371763975863,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 75,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1269591790297564,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 94,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08687444855261388,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 99,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.10660035817780522,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 100,
       "gold_label": "SUPPORT",
       "lexical_score": 0.23490461932490853,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 113,
       "gold_label": "SUPPORT",
       "lexical_score": 0.24072846024282468,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 115,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.06537204504606134,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 118,
       "gold_label": "SUPPORT",
       "lexical_score": 0.26519741765271837,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 124,
       "gold_label": "SUPPORT",
       "lexical_score": 0.16641005886756874,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 127,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0837707816583391,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 128,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1363196353181994,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 129,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1427406673849796,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 130,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1427406673849796,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 132,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.053300179088902604,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 133,
       "gold_label": "SUPPORT",
       "lexical_score": 0.06485444351255215,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 137,
       "gold_label": "SUPPORT",
       "lexical_score": 0.17912443020795965,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 141,
       "gold_label": "SUPPORT",
       "lexical_score": 0.12883132528016616,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 142,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.21938172723813917,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 143,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2072890493972125,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 146,
       "gold_label": "SUPPORT",
       "lexical_score": 0.22613350843332272,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 148,
       "gold_label": "SUPPORT",
       "lexical_score": 0.20203050891044214,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 163,
       "gold_label": "SUPPORT",
       "lexical_score": 0.13977131156292244,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 171,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.2545875386086578,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 179,
       "gold_label": "SUPPORT",
       "lexical_score": 0.13443321448446624,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 180,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.21936339884283268,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 183,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.15936381457791915,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 185,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.12777531299998798,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 198,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.10425720702853739,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 208,
       "gold_label": "SUPPORT",
       "lexical_score": 0.12350804543889274,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 212,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1646463899845355,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 213,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.13693063937629152,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 216,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1849000654084097,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 217,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1849000654084097,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 218,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1849000654084097,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 219,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1849000654084097,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 230,
       "gold_label": "SUPPORT",
       "lexical_score": 0.14494275891311212,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 232,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.2672612419124244,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 233,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.18695308585492673,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 236,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2090199042874853,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 237,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08481889296799709,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 238,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1126872339638022,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 239,
       "gold_label": "SUPPORT",
       "lexical_score": 0.03965257928590721,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 248,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2857738033247041,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 249,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.24494897427831783,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 261,
       "gold_label": "SUPPORT",
       "lexical_score": 0.09454389184941309,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 268,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.13987572123604708,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 269,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.13987572123604708,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 274,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1841149235796647,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 275,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1302114330657568,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 279,
       "gold_label": "SUPPORT",
       "lexical_score": 0.17541160386140583,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 294,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.17327729467737232,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 295,
       "gold_label": "SUPPORT",
       "lexical_score": 0.28180093098831727,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 298,
       "gold_label": "SUPPORT",
       "lexical_score": 0.23211917272131485,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 300,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08748177652797064,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 303,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.10450995214374265,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 312,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.16210296808748975,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 314,
       "gold_label": "SUPPORT",
       "lexical_score": 0.08663864733868616,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 324,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.043852900965351466,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 327,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2710523708715754,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 338,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.16262312563634834,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 343,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1923788514932202,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 350,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1556997888323046,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 354,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.23717082451262844,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 362,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.19047619047619047,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 380,
       "gold_label": "SUPPORT",
       "lexical_score": 0.26252051021607226,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 384,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0958706236059213,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 385,
       "gold_label": "SUPPORT",
       "lexical_score": 0.14961500768757807,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 386,
       "gold_label": "SUPPORT",
       "lexical_score": 0.19611613513818402,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 388,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.04003203845127178,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 399,
       "gold_label": "SUPPORT",
       "lexical_score": 0.21300321680756462,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 410,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.23087854826980508,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 411,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.18470283861584408,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 415,
       "gold_label": "SUPPORT",
       "lexical_score": 0.15922346773028256,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 421,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.033709993123162106,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 431,
       "gold_label": "SUPPORT",
       "lexical_score": 0.07749842582921286,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 436,
       "gold_label": "SUPPORT",
       "lexical_score": 0.21182963643408087,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 437,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.026860765467512676,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 439,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.12977713690461004,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 440,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.12977713690461004,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 443,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2300894966542111,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 452,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1326862231085688,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 475,
       "gold_label": "SUPPORT",
       "lexical_score": 0.04745789978762495,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 478,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.11189084777289188,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 491,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.13736056394868904,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 501,
       "gold_label": "SUPPORT",
       "lexical_score": 0.11420804814403214,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 502,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.04191297423079543,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 507,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.17644616831014637,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 508,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.11952286093343938,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 513,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.14847846772912465,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 514,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1414213562373095,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 516,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.22536015980024166,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 517,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.14377703093791788,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 521,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2040061202754138,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 525,
       "gold_label": "SUPPORT",
       "lexical_score": 0.27062315069591864,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 527,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.16609095970747995,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 528,
       "gold_label": "SUPPORT",
       "lexical_score": 0.34095601715109325,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 532,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.07332355751067665,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 533,
       "gold_label": "SUPPORT",
       "lexical_score": 0.07332355751067665,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 535,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.031686212526223896,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 536,
       "gold_label": "SUPPORT",
       "lexical_score": 0.11840055569457876,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 539,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1174890674981936,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 540,
       "gold_label": "SUPPORT",
       "lexical_score": 0.06516352124510746,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 544,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.07412493166611012,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 549,
       "gold_label": "SUPPORT",
       "lexical_score": 0.23904572186687875,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 551,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.14106912317171966,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 552,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.24603391565256144,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 554,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.14574100933227224,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 560,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.07188851546895894,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 569,
       "gold_label": "SUPPORT",
       "lexical_score": 0.19920476822239894,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 575,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.06768974434224127,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 577,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 578,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.13074409009212268,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 587,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.16834512458535864,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 589,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2840042890767528,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 593,
       "gold_label": "SUPPORT",
       "lexical_score": 0.17323973216880928,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 597,
       "gold_label": "SUPPORT",
       "lexical_score": 0.16705381391691138,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 598,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.15047095877265576,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 613,
       "gold_label": "SUPPORT",
       "lexical_score": 0.24209101306752098,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 619,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.0743066106927105,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 623,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.09733285267845752,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 628,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.20225995873897262,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 636,
       "gold_label": "SUPPORT",
       "lexical_score": 0.11624763874381928,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 637,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.14462030521243746,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 641,
       "gold_label": "SUPPORT",
       "lexical_score": 0.09904510364835646,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 644,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.17699808135119716,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 649,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.07110681947099658,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 659,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08687444855261388,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 660,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.04856429311786321,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 674,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.19889806323953876,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 684,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.10728835615716402,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 690,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08404977220207886,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 691,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.2665569949915915,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 692,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1147550621098494,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 693,
       "gold_label": "SUPPORT",
       "lexical_score": 0.14344382763731175,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 700,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.09525009525014287,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 702,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.09525009525014287,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 715,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.09811049102515929,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 716,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.040996003084539386,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 718,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.10553963170954378,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 721,
       "gold_label": "SUPPORT",
       "lexical_score": 0.24479602454484184,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 723,
       "gold_label": "SUPPORT",
       "lexical_score": 0.30338993810845893,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 727,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1326716253613319,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 728,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.13296743760228547,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 729,
       "gold_label": "SUPPORT",
       "lexical_score": 0.12009611535381534,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 742,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2036532699906392,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 743,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.16064386578049977,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 744,
       "gold_label": "SUPPORT",
       "lexical_score": 0.16395645894598823,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 756,
       "gold_label": "SUPPORT",
       "lexical_score": 0.06711560552140243,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 759,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.21114460292333606,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 768,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0397778642087865,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 770,
       "gold_label": "SUPPORT",
       "lexical_score": 0.25140057118274656,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 775,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.060522753266880246,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 781,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.228924479058705,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 783,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.10514994558491723,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 784,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2010075630518424,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 785,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1403586535110865,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 793,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.19050019050028574,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 800,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0644825880219161,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 805,
       "gold_label": "SUPPORT",
       "lexical_score": 0.25677629550654774,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 808,
       "gold_label": "SUPPORT",
       "lexical_score": 0.15523010514126656,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 811,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.18681617943926834,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 814,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1368949942788826,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 820,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0314970394174356,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 821,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0314970394174356,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 823,
       "gold_label": "SUPPORT",
       "lexical_score": 0.12205563953947067,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 830,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.06085806194501846,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 831,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.03513641844631533,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 832,
       "gold_label": "SUPPORT",
       "lexical_score": 0.19090088708030314,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 834,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.036810508691615514,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 837,
       "gold_label": "SUPPORT",
       "lexical_score": 0.12970131035013507,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 839,
       "gold_label": "SUPPORT",
       "lexical_score": 0.15717365336548286,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 845,
       "gold_label": "SUPPORT",
       "lexical_score": 0.4242640687119285,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 847,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.20908334939572668,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 852,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1399731277389636,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 859,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.08971226080325131,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 870,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 873,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.07523547938632788,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 879,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.16594796272900447,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 880,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1472642081021448,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 882,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.19334729780913273,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 887,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.045198461470556874,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 903,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.17556172079419585,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 904,
       "gold_label": "SUPPORT",
       "lexical_score": 0.3997513431667695,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 907,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.36363636363636365,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 911,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2264195724419824,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 913,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.050964719143762556,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 914,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 921,
       "gold_label": "SUPPORT",
       "lexical_score": 0.11215443081840887,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 922,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.16703827619526523,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 936,
       "gold_label": "SUPPORT",
       "lexical_score": 0.18033392693348646,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 956,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.13719886811400708,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 957,
       "gold_label": "SUPPORT",
       "lexical_score": 0.11952286093343938,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 960,
       "gold_label": "SUPPORT",
       "lexical_score": 0.09274777915203367,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 967,
       "gold_label": "SUPPORT",
       "lexical_score": 0.08571428571428572,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 971,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1593851798082518,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 975,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.034179296351233165,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 982,
       "gold_label": "SUPPORT",
       "lexical_score": 0.18148850216015694,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 985,
       "gold_label": "SUPPORT",
       "lexical_score": 0.18738292224896536,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 993,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.13349824784699543,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1012,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2366284025109637,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1014,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1404878717372541,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1019,
       "gold_label": "SUPPORT",
       "lexical_score": 0.16273613872602985,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1020,
       "gold_label": "SUPPORT",
       "lexical_score": 0.14907119849998599,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1021,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.14907119849998599,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1024,
       "gold_label": "SUPPORT",
       "lexical_score": 0.17049858486761837,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1029,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.22138864914147288,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1041,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.12354155277685021,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1049,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.07293249574894728,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1062,
       "gold_label": "SUPPORT",
       "lexical_score": 0.19641855032959654,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1086,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2072940478671954,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1088,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.086710996952412,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1089,
       "gold_label": "SUPPORT",
       "lexical_score": 0.21706078553111482,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1099,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.19364916731037085,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1100,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.19364916731037085,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1104,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2802086774965826,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1107,
       "gold_label": "SUPPORT",
       "lexical_score": 0.3239105320715664,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1110,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.02475368857441686,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1121,
       "gold_label": "SUPPORT",
       "lexical_score": 0.22691041111895985,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1130,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.3194382824999699,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1132,
       "gold_label": "SUPPORT",
       "lexical_score": 0.11009637651263607,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1137,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1638463841038081,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1140,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.05643326479831003,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1144,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.22990024493585143,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1146,
       "gold_label": "SUPPORT",
       "lexical_score": 0.17378533390904768,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1150,
       "gold_label": "SUPPORT",
       "lexical_score": 0.20032077005375098,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1163,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1675415633166782,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1175,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.04423739552038088,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1179,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0827605888602368,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1180,
       "gold_label": "SUPPORT",
       "lexical_score": 0.19112739302699863,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1185,
       "gold_label": "SUPPORT",
       "lexical_score": 0.28867513459481287,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1187,
       "gold_label": "SUPPORT",
       "lexical_score": 0.16761959991370148,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1191,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0890870806374748,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1194,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08770580193070292,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1196,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08199200616907877,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1197,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.07669649888473704,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1199,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.04408667141774055,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1200,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.08058229640253803,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1202,
       "gold_label": "SUPPORT",
       "lexical_score": 0.14509525002200233,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1204,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.16188097705954402,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1207,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.19466570535691505,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1213,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.061898446059017294,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1216,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2618614682831909,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1221,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.09045340337332908,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1225,
       "gold_label": "SUPPORT",
       "lexical_score": 0.10846522890932808,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1226,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.06154574548966636,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1232,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.20739033894608505,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1241,
       "gold_label": "SUPPORT",
       "lexical_score": 0.033671751485073696,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1245,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.09667364890456637,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1259,
       "gold_label": "SUPPORT",
       "lexical_score": 0.14322297480788657,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1262,
       "gold_label": "SUPPORT",
       "lexical_score": 0.33520076157699547,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1266,
       "gold_label": "SUPPORT",
       "lexical_score": 0.195099743142927,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1270,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1656472891122698,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1271,
       "gold_label": "SUPPORT",
       "lexical_score": 0.14962640041614492,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1272,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1212678125181665,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1273,
       "gold_label": "SUPPORT",
       "lexical_score": 0.2944840695329241,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1274,
       "gold_label": "SUPPORT",
       "lexical_score": 0.18482827349523615,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1278,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.06619033923214952,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1279,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.07761505257063328,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1280,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.024310831916315757,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1281,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1282,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.055048188256318034,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1290,
       "gold_label": "SUPPORT",
       "lexical_score": 0.18981415059132414,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1292,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1557522394953495,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1298,
       "gold_label": "SUPPORT",
       "lexical_score": 0.3408106015837333,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1303,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.0875376219064817,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1316,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.037267799624996496,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1319,
       "gold_label": "SUPPORT",
       "lexical_score": 0.13333333333333333,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1320,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.1941450686788302,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1332,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0582964037329089,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1335,
       "gold_label": "SUPPORT",
       "lexical_score": 0.18633899812498247,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1336,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.15936381457791915,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1337,
       "gold_label": "SUPPORT",
       "lexical_score": 0.17049858486761837,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1339,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.24747528995589838,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1344,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.19474520942613002,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1352,
       "gold_label": "SUPPORT",
       "lexical_score": 0.228747855498907,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1359,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.22978931453467435,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": false,
       "shortcut_false_positive": true,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": true,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1362,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.1363196353181994,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1363,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.12751534261266764,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1368,
       "gold_label": "SUPPORT",
       "lexical_score": 0.08268982305947231,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1370,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.12403473458920847,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1379,
       "gold_label": "SUPPORT",
       "lexical_score": 0.12674485010489558,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1382,
       "gold_label": "CONTRADICT",
       "lexical_score": 0.0839921051131616,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1385,
       "gold_label": "SUPPORT",
       "lexical_score": 0.1965892748731962,
       "shortcut_supported": true,
+      "abstained": false,
+      "abstaining_supported": true,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     },
     {
       "claim_id": 1389,
       "gold_label": "SUPPORT",
       "lexical_score": 0.17025130615174972,
       "shortcut_supported": false,
+      "abstained": false,
+      "abstaining_supported": false,
       "gold_supported": true,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": true
+      "shortcut_false_negative": true,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": true
     },
     {
       "claim_id": 1395,
       "gold_label": "NOT_ENOUGH_INFO",
       "lexical_score": 0.0563436169819011,
       "shortcut_supported": false,
+      "abstained": true,
+      "abstaining_supported": false,
       "gold_supported": false,
       "shortcut_false_positive": false,
-      "shortcut_false_negative": false
+      "shortcut_false_negative": false,
+      "abstaining_false_positive": false,
+      "abstaining_false_negative": false
     }
   ],
   "decision": "scifact_external_claim_audit_ready"

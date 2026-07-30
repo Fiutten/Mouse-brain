@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "db8911e3a5ffdd1d0239732e7b679c33b5fa6729",
+  "git_revision": "97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9",
   "analysis": "external_benchmark_registry",
   "registered_benchmarks": 3,
   "locally_available_benchmarks": 2,
