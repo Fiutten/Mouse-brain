@@ -107,6 +107,9 @@ mousebrainbench-mis2-sensitivity
 mousebrainbench-claim-adversarial
 mousebrainbench-microns-primary-robustness
 mousebrainbench-claim-attack-suite
+mousebrainbench-real-case-claims
+mousebrainbench-claim-ledger
+mousebrainbench-claimbench-release
 mousebrainbench-q1-sensitivity
 mousebrainbench-publication-freeze
 pytest
