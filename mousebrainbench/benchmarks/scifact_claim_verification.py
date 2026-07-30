@@ -11,6 +11,7 @@ import argparse
 import json
 import math
 import re
+import time
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -68,6 +69,7 @@ def run(
 ) -> Path:
     """Run a lightweight SciFact claim-auditing benchmark."""
 
+    started = time.perf_counter()
     claims_path = root / "claims_dev.jsonl"
     corpus_path = root / "corpus.jsonl"
     if not claims_path.exists() or not corpus_path.exists():
@@ -90,10 +92,13 @@ def run(
 
     rows: list[dict[str, Any]] = []
     threshold = 0.18
+    abstain_threshold = 0.12
     for claim in claims:
         label = _gold_label(claim)
         score = _lexical_score(str(claim["claim"]), claim.get("cited_doc_ids", []), corpus)
         shortcut_supported = score >= threshold
+        abstaining_supported = score >= threshold
+        abstained = score < abstain_threshold
         gold_supported = label == "SUPPORT"
         rows.append(
             {
@@ -101,9 +106,13 @@ def run(
                 "gold_label": label,
                 "lexical_score": score,
                 "shortcut_supported": shortcut_supported,
+                "abstained": abstained,
+                "abstaining_supported": False if abstained else abstaining_supported,
                 "gold_supported": gold_supported,
                 "shortcut_false_positive": shortcut_supported and not gold_supported,
                 "shortcut_false_negative": (not shortcut_supported) and gold_supported,
+                "abstaining_false_positive": (not abstained) and abstaining_supported and not gold_supported,
+                "abstaining_false_negative": (not abstained) and (not abstaining_supported) and gold_supported,
             }
         )
 
@@ -112,6 +121,19 @@ def run(
     gold_positive = sum(row["gold_supported"] for row in rows)
     gold_negative = len(rows) - gold_positive
     label_counts = Counter(row["gold_label"] for row in rows)
+    per_label = {}
+    for label in sorted(label_counts):
+        subset = [row for row in rows if row["gold_label"] == label]
+        per_label[label] = {
+            "n": len(subset),
+            "mean_lexical_score": sum(float(row["lexical_score"]) for row in subset) / len(subset),
+            "shortcut_supported_rate": sum(row["shortcut_supported"] for row in subset) / len(subset),
+        }
+    non_abstained = [row for row in rows if not row["abstained"]]
+    abstaining_fp = sum(row["abstaining_false_positive"] for row in non_abstained)
+    abstaining_fn = sum(row["abstaining_false_negative"] for row in non_abstained)
+    abstaining_gold_positive = sum(row["gold_supported"] for row in non_abstained)
+    abstaining_gold_negative = len(non_abstained) - abstaining_gold_positive
     payload = {
         "version": __version__,
         "git_revision": code_revision(),
@@ -120,10 +142,20 @@ def run(
         "num_claims": len(rows),
         "label_counts": dict(label_counts),
         "lexical_threshold": threshold,
+        "abstain_threshold": abstain_threshold,
         "shortcut_false_positives": fp,
         "shortcut_false_negatives": fn,
         "shortcut_overclaiming_risk": fp / gold_negative if gold_negative else 0.0,
         "shortcut_conservativeness": fn / gold_positive if gold_positive else 0.0,
+        "abstention_rate": 1.0 - (len(non_abstained) / len(rows) if rows else 0.0),
+        "abstaining_overclaiming_risk": (
+            abstaining_fp / abstaining_gold_negative if abstaining_gold_negative else 0.0
+        ),
+        "abstaining_conservativeness": (
+            abstaining_fn / abstaining_gold_positive if abstaining_gold_positive else 0.0
+        ),
+        "per_label": per_label,
+        "runtime_seconds": time.perf_counter() - started,
         "rows": rows,
         "decision": (
             "scifact_external_claim_audit_ready"
@@ -148,6 +180,9 @@ def write_markdown(payload: dict[str, Any], markdown: Path) -> None:
         f"- Label counts: `{payload.get('label_counts', {})}`",
         f"- Shortcut ORI: `{payload.get('shortcut_overclaiming_risk', 0.0):.3f}`",
         f"- Shortcut CI: `{payload.get('shortcut_conservativeness', 0.0):.3f}`",
+        f"- Abstention rate: `{payload.get('abstention_rate', 0.0):.3f}`",
+        f"- Abstaining ORI: `{payload.get('abstaining_overclaiming_risk', 0.0):.3f}`",
+        f"- Runtime seconds: `{payload.get('runtime_seconds', 0.0):.3f}`",
         "",
     ]
     markdown.parent.mkdir(parents=True, exist_ok=True)
