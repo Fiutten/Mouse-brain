@@ -13,6 +13,11 @@ from mousebrainbench.benchmarks.reviewer_attack_suite_v2 import run as run_revie
 from mousebrainbench.benchmarks.uncertainty_claim_gate_v2 import run as run_uncertainty
 
 
+def _write_json(path: Path, payload: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload))
+
+
 def test_claim_adversarial_v2_has_broad_stress_suite(tmp_path) -> None:
     output = run_adversarial_v2(
         output=tmp_path / "results/claim_adversarial_v2/summary.json",
@@ -109,6 +114,14 @@ def test_reviewer_attack_and_release_v2_are_reproducible(tmp_path, monkeypatch) 
         output=tmp_path / "results/external_benchmark_registry/summary.json",
         markdown=tmp_path / "results/external_benchmark_registry/summary.md",
         root=tmp_path,
+    )
+    _write_json(
+        tmp_path / "results/scifact_claim_verification/summary.json",
+        {"decision": "scifact_external_claim_audit_ready", "git_revision": head},
+    )
+    _write_json(
+        tmp_path / "results/tuebingen_causal_direction/summary.json",
+        {"decision": "tuebingen_external_direction_benchmark_ready", "git_revision": head},
     )
 
     release_output = run_release_v2(

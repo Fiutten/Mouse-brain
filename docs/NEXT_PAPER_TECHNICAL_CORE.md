@@ -26,8 +26,9 @@ model evidence, uncertainty, cost, and claim scope.
 
 ## What is not yet strong enough
 
-- SciFact, Tuebingen cause-effect pairs, and Sachs are registered but not fully
-  integrated as executable local benchmarks.
+- SciFact and Tuebingen cause-effect pairs have executable adapters. They are
+  external validation cases, not SOTA claims. Sachs remains registered but not
+  integrated.
 - The uncertainty-aware gate currently uses deterministic local perturbations.
   It is useful as a conservative first layer, but it is not a full Bayesian or
   bootstrap uncertainty model.
@@ -58,16 +59,18 @@ uncertain under the available artifacts.
 
 ## Required next additions for a stronger Q1 submission
 
-1. Integrate one public external benchmark fully, preferably SciFact for
-   scientific claim verification or Tuebingen for causal direction.
-2. Replace proxy cost with measured runtime/memory/data-volume metrics.
-3. Add paraphrase-level claim extraction from LaTeX/PDF.
-4. Add bootstrap or Bayesian uncertainty for real MICRONS/Sensorium evidence.
-5. Produce a paper-level claim audit table automatically from the final LaTeX.
+1. Strengthen the SciFact adapter beyond lexical baselines, or explicitly keep
+   it as an external claim-auditing sanity check.
+2. Add a stronger causal-direction baseline for Tuebingen before making any
+   causal-discovery performance claim.
+3. Replace proxy cost with measured runtime/memory/data-volume metrics.
+4. Add paraphrase-level claim extraction from LaTeX/PDF.
+5. Add bootstrap or Bayesian uncertainty for real MICRONS/Sensorium evidence.
+6. Produce a paper-level claim audit table automatically from the final LaTeX.
 
 ## Decision
 
-Proceed as a second-paper line only if at least one public external benchmark is
-fully integrated and the manuscript auditor is used on the actual paper sources.
-Without that, the work is a strong engineering extension but still vulnerable as
-a standalone Q1 contribution.
+Proceed as a second-paper line if the external adapters show useful diagnostic
+value and the paper clearly avoids SOTA claims on SciFact or causal discovery.
+For a stronger Q1 submission, add at least one stronger external baseline and
+run the manuscript auditor on the actual LaTeX sources.

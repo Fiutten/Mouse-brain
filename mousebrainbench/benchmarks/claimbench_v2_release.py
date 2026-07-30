@@ -25,6 +25,8 @@ REQUIRED_ARTIFACTS = (
     Path("results/uncertainty_claim_gate_v2/summary.json"),
     Path("results/cost_fidelity_claim_frontier/summary.json"),
     Path("results/external_benchmark_registry/summary.json"),
+    Path("results/scifact_claim_verification/summary.json"),
+    Path("results/tuebingen_causal_direction/summary.json"),
 )
 
 
@@ -59,6 +61,10 @@ def run(output: Path = DEFAULT_OUTPUT, markdown: Path = DEFAULT_MARKDOWN, root: 
         "results/cost_fidelity_claim_frontier/summary.json": "cost_fidelity_claim_frontier_built",
         "results/external_benchmark_registry/summary.json": (
             "external_benchmarks_registered_with_pending_data"
+        ),
+        "results/scifact_claim_verification/summary.json": "scifact_external_claim_audit_ready",
+        "results/tuebingen_causal_direction/summary.json": (
+            "tuebingen_external_direction_benchmark_ready"
         ),
     }
     for relative in REQUIRED_ARTIFACTS:

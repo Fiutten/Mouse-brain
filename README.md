@@ -119,6 +119,8 @@ mousebrainbench-manuscript-claim-audit
 mousebrainbench-uncertainty-claim-gate-v2
 mousebrainbench-cost-fidelity-claim-frontier
 mousebrainbench-external-benchmark-registry
+mousebrainbench-scifact-claim-verification
+mousebrainbench-tuebingen-causal-direction
 mousebrainbench-q1-sensitivity
 mousebrainbench-publication-freeze
 pytest

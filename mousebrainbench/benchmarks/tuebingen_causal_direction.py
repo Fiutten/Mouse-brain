@@ -1,0 +1,178 @@
+"""Tuebingen cause-effect external direction benchmark.
+
+The adapter uses a deliberately lightweight residual-dependence heuristic. The
+goal is not causal-discovery SOTA. The goal is to test whether claim auditing can
+separate high association from justified directional wording on a public causal
+benchmark.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+
+from mousebrainbench import __version__
+from mousebrainbench.artifacts import code_revision
+
+
+DEFAULT_ROOT = Path("data/external/tuebingen_cause_effect")
+DEFAULT_OUTPUT = Path("results/tuebingen_causal_direction/summary.json")
+DEFAULT_MARKDOWN = Path("results/tuebingen_causal_direction/summary.md")
+
+
+def _load_meta(path: Path) -> dict[int, dict[str, Any]]:
+    rows: dict[int, dict[str, Any]] = {}
+    for line in path.read_text().splitlines():
+        parts = line.split()
+        if len(parts) < 6:
+            continue
+        pair = int(parts[0])
+        cause_start, cause_end, effect_start, effect_end = (int(part) for part in parts[1:5])
+        rows[pair] = {
+            "cause_start": cause_start - 1,
+            "cause_end": cause_end,
+            "effect_start": effect_start - 1,
+            "effect_end": effect_end,
+            "weight": float(parts[5]),
+        }
+    return rows
+
+
+def _standardize(values: np.ndarray) -> np.ndarray:
+    std = np.std(values)
+    if std == 0:
+        return values * 0.0
+    return (values - np.mean(values)) / std
+
+
+def _normalized_residual_error(source: np.ndarray, target: np.ndarray) -> float:
+    """Return normalized polynomial residual error for one direction."""
+
+    source = _standardize(source.reshape(-1))
+    target = _standardize(target.reshape(-1))
+    coeff = np.polyfit(source, target, deg=2)
+    predicted = np.polyval(coeff, source)
+    residual = target - predicted
+    return float(np.mean(residual**2) / (np.var(target) + 1e-12))
+
+
+def _predict_direction(cause_values: np.ndarray, effect_values: np.ndarray) -> tuple[str, float]:
+    forward = _normalized_residual_error(cause_values, effect_values)
+    backward = _normalized_residual_error(effect_values, cause_values)
+    margin = abs(backward - forward)
+    if margin < 0.02:
+        return "uncertain", margin
+    return ("forward", margin) if forward < backward else ("backward", margin)
+
+
+def run(
+    root: Path = DEFAULT_ROOT,
+    output: Path = DEFAULT_OUTPUT,
+    markdown: Path = DEFAULT_MARKDOWN,
+    max_pairs: int | None = 20,
+) -> Path:
+    """Run Tuebingen external causal-direction adapter."""
+
+    meta_path = root / "pairmeta.txt"
+    if not meta_path.exists():
+        payload = {
+            "version": __version__,
+            "git_revision": code_revision(),
+            "analysis": "tuebingen_causal_direction",
+            "decision": "tuebingen_data_missing",
+            "missing": [str(meta_path)],
+        }
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(payload, indent=2))
+        write_markdown(payload, markdown)
+        return output
+
+    meta = _load_meta(meta_path)
+    rows: list[dict[str, Any]] = []
+    for pair_id in sorted(meta):
+        if max_pairs is not None and len(rows) >= max_pairs:
+            break
+        path = root / f"pair{pair_id:04d}.txt"
+        if not path.exists():
+            continue
+        values = np.loadtxt(path)
+        item = meta[pair_id]
+        cause = values[:, item["cause_start"] : item["cause_end"]].mean(axis=1)
+        effect = values[:, item["effect_start"] : item["effect_end"]].mean(axis=1)
+        corr = abs(float(np.corrcoef(cause, effect)[0, 1]))
+        direction, margin = _predict_direction(cause, effect)
+        correct = direction == "forward"
+        rows.append(
+            {
+                "pair_id": pair_id,
+                "absolute_correlation": corr,
+                "predicted_direction": direction,
+                "direction_margin": margin,
+                "correct_direction": correct,
+                "weight": item["weight"],
+                "correlation_only_would_overclaim_direction": corr >= 0.30,
+            }
+        )
+
+    attempted = [row for row in rows if row["predicted_direction"] != "uncertain"]
+    correct = sum(row["correct_direction"] for row in attempted)
+    weighted_total = sum(row["weight"] for row in attempted)
+    weighted_correct = sum(row["weight"] for row in attempted if row["correct_direction"])
+    corr_overclaims = sum(row["correlation_only_would_overclaim_direction"] for row in rows)
+    payload = {
+        "version": __version__,
+        "git_revision": code_revision(),
+        "analysis": "tuebingen_causal_direction",
+        "dataset": "Tuebingen cause-effect pairs",
+        "num_pairs_loaded": len(rows),
+        "num_direction_attempts": len(attempted),
+        "direction_accuracy": correct / len(attempted) if attempted else 0.0,
+        "weighted_direction_accuracy": weighted_correct / weighted_total if weighted_total else 0.0,
+        "correlation_only_direction_overclaims": corr_overclaims,
+        "rows": rows,
+        "decision": (
+            "tuebingen_external_direction_benchmark_ready"
+            if len(rows) >= 10 and len(attempted) >= 5
+            else "tuebingen_external_direction_benchmark_insufficient"
+        ),
+    }
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(payload, indent=2))
+    write_markdown(payload, markdown)
+    return output
+
+
+def write_markdown(payload: dict[str, Any], markdown: Path) -> None:
+    """Write Tuebingen adapter report."""
+
+    lines = [
+        "# Tuebingen Causal Direction Adapter",
+        "",
+        f"- Decision: `{payload['decision']}`",
+        f"- Pairs loaded: `{payload.get('num_pairs_loaded', 0)}`",
+        f"- Direction attempts: `{payload.get('num_direction_attempts', 0)}`",
+        f"- Direction accuracy: `{payload.get('direction_accuracy', 0.0):.3f}`",
+        f"- Weighted accuracy: `{payload.get('weighted_direction_accuracy', 0.0):.3f}`",
+        f"- Correlation-only direction overclaims: `{payload.get('correlation_only_direction_overclaims', 0)}`",
+        "",
+    ]
+    markdown.parent.mkdir(parents=True, exist_ok=True)
+    markdown.write_text("\n".join(lines))
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=DEFAULT_ROOT)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
+    parser.add_argument("--max-pairs", type=int, default=20)
+    args = parser.parse_args()
+    print(json.dumps({"output": str(run(args.root, args.output, args.markdown, args.max_pairs).resolve())}))
+
+
+if __name__ == "__main__":
+    main()

@@ -65,6 +65,8 @@ mousebrainbench-manuscript-claim-audit = "mousebrainbench.benchmarks.manuscript_
 mousebrainbench-uncertainty-claim-gate-v2 = "mousebrainbench.benchmarks.uncertainty_claim_gate_v2:main"
 mousebrainbench-cost-fidelity-claim-frontier = "mousebrainbench.benchmarks.cost_fidelity_claim_frontier:main"
 mousebrainbench-external-benchmark-registry = "mousebrainbench.benchmarks.external_benchmark_registry:main"
+mousebrainbench-scifact-claim-verification = "mousebrainbench.benchmarks.scifact_claim_verification:main"
+mousebrainbench-tuebingen-causal-direction = "mousebrainbench.benchmarks.tuebingen_causal_direction:main"
 mousebrainbench-run = "mousebrainbench.cli:main"
 
 [tool.setuptools.packages.find]
