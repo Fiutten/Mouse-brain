@@ -110,6 +110,11 @@ mousebrainbench-claim-attack-suite
 mousebrainbench-real-case-claims
 mousebrainbench-claim-ledger
 mousebrainbench-claimbench-release
+mousebrainbench-claim-adversarial-v2
+mousebrainbench-claim-threshold-sensitivity-v2
+mousebrainbench-external-causal-claims
+mousebrainbench-reviewer-attack-v2
+mousebrainbench-claimbench-v2-release
 mousebrainbench-q1-sensitivity
 mousebrainbench-publication-freeze
 pytest
@@ -131,6 +136,14 @@ exportarlo mediante `MOUSEBRAINBENCH_GIT_REVISION`. El valor solo admite un
 identificador hexadecimal de Git. De este modo, todos los artefactos de una
 misma ejecución quedan vinculados a la misma versión de código aunque los
 primeros archivos generados modifiquen posteriormente el árbol de trabajo.
+
+## Línea post-submission ClaimBench v2
+
+Los comandos `*-v2` son una línea de endurecimiento posterior al envío del
+primer manuscrito. No reemplazan automáticamente los artefactos usados en el
+artículo enviado. Su objetivo es preparar análisis adicionales para revisión o
+un segundo artículo: benchmark adversarial ampliado, sensibilidad de umbrales,
+validación causal sintética externa y ataques de revisor ejecutables.
 
 ## Lo que no demuestra
 

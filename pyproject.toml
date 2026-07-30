@@ -56,6 +56,11 @@ mousebrainbench-microns-primary-robustness = "mousebrainbench.benchmarks.microns
 mousebrainbench-real-case-claims = "mousebrainbench.benchmarks.real_case_claim_matrix:main"
 mousebrainbench-claim-ledger = "mousebrainbench.benchmarks.claim_ledger:main"
 mousebrainbench-claimbench-release = "mousebrainbench.benchmarks.claimbench_release:main"
+mousebrainbench-claim-adversarial-v2 = "mousebrainbench.benchmarks.claim_adversarial_v2:main"
+mousebrainbench-claim-threshold-sensitivity-v2 = "mousebrainbench.benchmarks.claim_threshold_sensitivity_v2:main"
+mousebrainbench-external-causal-claims = "mousebrainbench.benchmarks.external_causal_claim_validation:main"
+mousebrainbench-reviewer-attack-v2 = "mousebrainbench.benchmarks.reviewer_attack_suite_v2:main"
+mousebrainbench-claimbench-v2-release = "mousebrainbench.benchmarks.claimbench_v2_release:main"
 mousebrainbench-run = "mousebrainbench.cli:main"
 
 [tool.setuptools.packages.find]

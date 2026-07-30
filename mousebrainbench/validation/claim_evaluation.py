@@ -104,6 +104,21 @@ class ClaimEvidence:
 
 
 @dataclass(frozen=True)
+class ClaimGateThresholds:
+    """Thresholds used by the non-compensatory claim gate.
+
+    Keeping thresholds in a dataclass makes sensitivity analysis explicit. The
+    default values reproduce the nominal MouseBrainBench claim gate.
+    """
+
+    predictive_score: float = 0.30
+    reproducibility_score: float = 0.70
+    topology_effect: float = 0.05
+    directed_fraction: float = 0.50
+    matched_structure_function_effect: float = 0.01
+
+
+@dataclass(frozen=True)
 class ClaimDecision:
     """Allowed claims produced by one evaluator."""
 
@@ -296,15 +311,20 @@ class ClaimGateEvaluator:
 
     name = "claim_gate"
 
+    def __init__(self, thresholds: ClaimGateThresholds | None = None, name: str = "claim_gate") -> None:
+        self.thresholds = thresholds or ClaimGateThresholds()
+        self.name = name
+
     def evaluate(self, evidence: ClaimEvidence) -> ClaimDecision:
         claims: list[str] = []
-        predictive = evidence.predictive_score >= 0.30
-        reproducible = evidence.reproducibility_score >= 0.70
-        topology = evidence.topology_specific and evidence.topology_effect >= 0.05
-        directed = evidence.directed_fraction >= 0.50
+        predictive = evidence.predictive_score >= self.thresholds.predictive_score
+        reproducible = evidence.reproducibility_score >= self.thresholds.reproducibility_score
+        topology = evidence.topology_specific and evidence.topology_effect >= self.thresholds.topology_effect
+        directed = evidence.directed_fraction >= self.thresholds.directed_fraction
         structure_function = (
             evidence.structure_function_effect > 0.0
-            and evidence.matched_structure_function_effect >= 0.01
+            and evidence.matched_structure_function_effect
+            >= self.thresholds.matched_structure_function_effect
             and evidence.structure_function_fdr_passed
         )
         causal = evidence.causal_evidence
