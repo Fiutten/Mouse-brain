@@ -1,0 +1,194 @@
+{
+  "version": "0.6.0",
+  "git_revision": "db8911e3a5ffdd1d0239732e7b679c33b5fa6729",
+  "analysis": "tuebingen_causal_direction",
+  "dataset": "Tuebingen cause-effect pairs",
+  "num_pairs_loaded": 20,
+  "num_direction_attempts": 16,
+  "direction_accuracy": 0.5625,
+  "weighted_direction_accuracy": 0.3845798707294552,
+  "correlation_only_direction_overclaims": 15,
+  "rows": [
+    {
+      "pair_id": 1,
+      "absolute_correlation": 0.8660966541900016,
+      "predicted_direction": "uncertain",
+      "direction_margin": 0.014794265582017185,
+      "correct_direction": false,
+      "weight": 0.166,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 2,
+      "absolute_correlation": 0.7599258779885811,
+      "predicted_direction": "uncertain",
+      "direction_margin": 0.005193136189137582,
+      "correct_direction": false,
+      "weight": 0.166,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 3,
+      "absolute_correlation": 0.237856725308063,
+      "predicted_direction": "uncertain",
+      "direction_margin": 0.001717904712257745,
+      "correct_direction": false,
+      "weight": 0.167,
+      "correlation_only_would_overclaim_direction": false
+    },
+    {
+      "pair_id": 4,
+      "absolute_correlation": 0.1480114468332843,
+      "predicted_direction": "backward",
+      "direction_margin": 0.07072852302288457,
+      "correct_direction": false,
+      "weight": 0.166,
+      "correlation_only_would_overclaim_direction": false
+    },
+    {
+      "pair_id": 5,
+      "absolute_correlation": 0.5567195769296182,
+      "predicted_direction": "forward",
+      "direction_margin": 0.16716529301450356,
+      "correct_direction": true,
+      "weight": 0.143,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 6,
+      "absolute_correlation": 0.6275740445103215,
+      "predicted_direction": "forward",
+      "direction_margin": 0.045932662300579685,
+      "correct_direction": true,
+      "weight": 0.143,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 7,
+      "absolute_correlation": 0.5746598513059193,
+      "predicted_direction": "forward",
+      "direction_margin": 0.16427496739686398,
+      "correct_direction": true,
+      "weight": 0.143,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 8,
+      "absolute_correlation": 0.5574673244580378,
+      "predicted_direction": "forward",
+      "direction_margin": 0.04302977160872068,
+      "correct_direction": true,
+      "weight": 0.143,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 9,
+      "absolute_correlation": 0.5403896769239006,
+      "predicted_direction": "forward",
+      "direction_margin": 0.047590371150997735,
+      "correct_direction": true,
+      "weight": 0.143,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 10,
+      "absolute_correlation": 0.4208836579452146,
+      "predicted_direction": "forward",
+      "direction_margin": 0.04739449512354155,
+      "correct_direction": true,
+      "weight": 0.143,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 11,
+      "absolute_correlation": 0.5038192487597714,
+      "predicted_direction": "forward",
+      "direction_margin": 0.04984462005074641,
+      "correct_direction": true,
+      "weight": 0.142,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 12,
+      "absolute_correlation": 0.22289946997088472,
+      "predicted_direction": "forward",
+      "direction_margin": 0.020912550709731303,
+      "correct_direction": true,
+      "weight": 0.5,
+      "correlation_only_would_overclaim_direction": false
+    },
+    {
+      "pair_id": 13,
+      "absolute_correlation": 0.8051269467104578,
+      "predicted_direction": "backward",
+      "direction_margin": 0.08750901769787756,
+      "correct_direction": false,
+      "weight": 0.25,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 14,
+      "absolute_correlation": 0.7784267838977759,
+      "predicted_direction": "backward",
+      "direction_margin": 0.030406901223301197,
+      "correct_direction": false,
+      "weight": 0.25,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 15,
+      "absolute_correlation": 0.8322442148315754,
+      "predicted_direction": "backward",
+      "direction_margin": 0.08285731897396348,
+      "correct_direction": false,
+      "weight": 0.25,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 16,
+      "absolute_correlation": 0.6891955103342363,
+      "predicted_direction": "backward",
+      "direction_margin": 0.06978085606358853,
+      "correct_direction": false,
+      "weight": 0.25,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 17,
+      "absolute_correlation": 0.1679380142677822,
+      "predicted_direction": "backward",
+      "direction_margin": 0.029007522926127294,
+      "correct_direction": false,
+      "weight": 0.5,
+      "correlation_only_would_overclaim_direction": false
+    },
+    {
+      "pair_id": 18,
+      "absolute_correlation": 0.7052438597820266,
+      "predicted_direction": "backward",
+      "direction_margin": 0.051563639538768524,
+      "correct_direction": false,
+      "weight": 1.0,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 19,
+      "absolute_correlation": 0.8817472236911371,
+      "predicted_direction": "uncertain",
+      "direction_margin": 0.011007625457595122,
+      "correct_direction": false,
+      "weight": 1.0,
+      "correlation_only_would_overclaim_direction": true
+    },
+    {
+      "pair_id": 20,
+      "absolute_correlation": 0.2738653688908011,
+      "predicted_direction": "forward",
+      "direction_margin": 0.04168742687455773,
+      "correct_direction": true,
+      "weight": 0.166,
+      "correlation_only_would_overclaim_direction": false
+    }
+  ],
+  "decision": "tuebingen_external_direction_benchmark_ready"
+}
