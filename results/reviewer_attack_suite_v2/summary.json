@@ -1,13 +1,22 @@
 {
   "version": "0.6.0",
-  "git_revision": "7c8a2412dffeadc665c71997705c25971cb8b277",
+  "git_revision": "a94d9590ebb8c325c4ff49d756c97b0f7cc72d9e",
   "analysis": "reviewer_attack_suite_v2",
   "inputs": {
     "adversarial_v2": "results/claim_adversarial_v2/summary.json",
     "threshold_sensitivity_v2": "results/claim_threshold_sensitivity_v2/summary.json",
     "external_causal": "results/external_causal_claim_validation/summary.json",
     "claim_ledger": "results/claim_ledger/summary.json",
-    "release": "results/claimbench_release/summary.json"
+    "release": "results/claimbench_release/summary.json",
+    "manuscript_claim_audit": "results/manuscript_claim_audit/summary.json",
+    "scifact": "results/scifact_claim_verification/summary.json",
+    "tuebingen": "results/tuebingen_causal_direction/summary.json"
+  },
+  "external_controls": {
+    "scifact_decision": "scifact_external_claim_audit_ready",
+    "scifact_shortcut_overclaiming_risk": 0.21022727272727273,
+    "tuebingen_decision": "tuebingen_external_direction_benchmark_ready",
+    "tuebingen_correlation_only_direction_overclaims": 79
   },
   "risks": [
     {
