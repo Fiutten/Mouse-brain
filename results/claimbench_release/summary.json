@@ -1,0 +1,52 @@
+{
+  "version": "0.6.0",
+  "git_revision": "005da07b8eb7b3aacd42f10e3c676cbc6ac20e8a",
+  "analysis": "claimbench_release",
+  "decision": "claimbench_release_ready",
+  "missing_artifacts": [],
+  "dirty_artifacts": [],
+  "required_artifacts": [
+    {
+      "artifact": "docs/CLAIMBENCH_SOTA_AND_VIABILITY.md",
+      "exists": true,
+      "git_revision": null,
+      "decision": null
+    },
+    {
+      "artifact": "results/claim_adversarial_benchmark/summary.json",
+      "exists": true,
+      "git_revision": "005da07b8eb7b3aacd42f10e3c676cbc6ac20e8a",
+      "decision": "claim_gate_blocks_broad_adversarial_overclaims"
+    },
+    {
+      "artifact": "results/real_case_claim_matrix/summary.json",
+      "exists": true,
+      "git_revision": "005da07b8eb7b3aacd42f10e3c676cbc6ac20e8a",
+      "decision": "real_case_claim_gate_consistent"
+    },
+    {
+      "artifact": "results/claim_ledger/summary.json",
+      "exists": true,
+      "git_revision": "005da07b8eb7b3aacd42f10e3c676cbc6ac20e8a",
+      "decision": "claim_ledger_supported"
+    },
+    {
+      "artifact": "results/microns_primary_robustness/summary.json",
+      "exists": true,
+      "git_revision": "b3c970d677d005edf35d2bf7ba85cf7fe7ab6600",
+      "decision": "microns_primary_endpoint_survives_harder_controls"
+    },
+    {
+      "artifact": "results/mis2_synthetic_calibration/summary.json",
+      "exists": true,
+      "git_revision": "2912b54c84fa69320844f0bc19ab25e04623f03a",
+      "decision": "mis2_nominal_synthetic_suite_passed"
+    },
+    {
+      "artifact": "results/mis2_threshold_sensitivity/summary.json",
+      "exists": true,
+      "git_revision": "4041ddd35e4dadf236b5bda9fe1652e3cdf4546b",
+      "decision": "mis2_sensitivity_supports_conservative_gate"
+    }
+  ]
+}

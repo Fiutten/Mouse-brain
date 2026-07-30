@@ -1,0 +1,83 @@
+{
+  "version": "0.6.0",
+  "git_revision": "005da07b8eb7b3aacd42f10e3c676cbc6ac20e8a",
+  "analysis": "claim_ledger",
+  "num_claims": 6,
+  "supported_claims": 6,
+  "unsupported_claims": 0,
+  "decision": "claim_ledger_supported",
+  "entries": [
+    {
+      "claim_id": "allen-negative-identifiability",
+      "permitted_wording": "Allen VBN is a real negative mechanistic-identifiability case.",
+      "blocked_wording": [
+        "Allen VBN validates a mechanistic brain model.",
+        "Reproducibility alone establishes mechanism."
+      ],
+      "evidence_artifact": "results/allen_vbn_mechanistic_identifiability_score.json",
+      "required_decision": "reproducible_target_without_mechanistic_identifiability",
+      "status": "supported",
+      "rationale": "The target is reproducible, but topology and direction are not identified."
+    },
+    {
+      "claim_id": "sensorium-predictive-interoperability",
+      "permitted_wording": "Sensorium/Dynamic Sensorium are predictive and interoperability cases.",
+      "blocked_wording": [
+        "Sensorium proves mechanistic identifiability.",
+        "MouseBrainBench is a Sensorium SOTA model."
+      ],
+      "evidence_artifact": "results/sensorium_official_baseline_audit/summary.json",
+      "required_decision": "official_sensorium_bounded_trained_baseline_available_not_q1_qualified",
+      "status": "supported",
+      "rationale": "The official ecosystem can be audited, but the local run is not a SOTA claim."
+    },
+    {
+      "claim_id": "dynamic-sensorium-predictive-only",
+      "permitted_wording": "Dynamic Sensorium is used as a temporal predictive case.",
+      "blocked_wording": [
+        "Dynamic Sensorium validates causal mechanism.",
+        "Temporal prediction establishes a digital twin."
+      ],
+      "evidence_artifact": "results/dynamic_sensorium_model_comparator/summary.json",
+      "required_decision": "dynamic_sensorium_predictive_model_comparator",
+      "status": "supported",
+      "rationale": "The comparator tracks prediction and temporal modeling, not causal circuits."
+    },
+    {
+      "claim_id": "microns-local-structure-function",
+      "permitted_wording": "MICRONS supports a local observational structure-function case at the fixed endpoint.",
+      "blocked_wording": [
+        "MICRONS proves causality in this study.",
+        "MICRONS validates a whole-brain mouse digital twin."
+      ],
+      "evidence_artifact": "results/microns_primary_robustness/summary.json",
+      "required_decision": "microns_primary_endpoint_survives_harder_controls",
+      "status": "supported",
+      "rationale": "The endpoint survives harder controls but remains local and observational."
+    },
+    {
+      "claim_id": "claim-gate-blocks-overclaiming",
+      "permitted_wording": "The non-compensatory gate blocks broad adversarial overclaims.",
+      "blocked_wording": [
+        "The gate is universally optimal.",
+        "The adversarial suite proves biological truth."
+      ],
+      "evidence_artifact": "results/claim_adversarial_benchmark/summary.json",
+      "required_decision": "claim_gate_blocks_broad_adversarial_overclaims",
+      "status": "supported",
+      "rationale": "Synthetic cases test claim authorization under known truth."
+    },
+    {
+      "claim_id": "attack-suite-known-limits",
+      "permitted_wording": "The current release passes known attack checks with declared limits.",
+      "blocked_wording": [
+        "All external Q1 pieces are fully solved.",
+        "There are no remaining methodological limitations."
+      ],
+      "evidence_artifact": "results/claim_attack_suite/summary.json",
+      "required_decision": "claim_attack_suite_passed_with_known_limits",
+      "status": "supported",
+      "rationale": "Known medium-risk limitations are part of the release claim."
+    }
+  ]
+}

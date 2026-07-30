@@ -1,0 +1,818 @@
+{
+  "version": "0.6.0",
+  "git_revision": "005da07b8eb7b3aacd42f10e3c676cbc6ac20e8a",
+  "analysis": "real_case_claim_matrix",
+  "claim_types": [
+    "predictive",
+    "reproducible",
+    "topology_specific",
+    "directed",
+    "structure_function",
+    "mechanistic",
+    "causal",
+    "digital_twin"
+  ],
+  "cases": [
+    {
+      "case": "allen_vbn_negative_identifiability",
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "source_artifact": "results/allen_vbn_mechanistic_identifiability_score.json",
+      "interpretation": "real negative case: reproducible target without mechanistic identifiability"
+    },
+    {
+      "case": "sensorium_static_predictive_interoperability",
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "source_artifact": "results/sensorium_static_model_comparator/summary.json",
+      "interpretation": "predictive/interoperability case, not causal or digital-twin evidence"
+    },
+    {
+      "case": "dynamic_sensorium_predictive_temporal_case",
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "source_artifact": "results/dynamic_sensorium_model_comparator/summary.json",
+      "interpretation": "temporal predictive case without topology, direction, or causal support"
+    },
+    {
+      "case": "microns_local_structure_function",
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "source_artifact": "results/microns_primary_robustness/summary.json",
+      "interpretation": "local observational structure-function case, not causal evidence"
+    },
+    {
+      "case": "synthetic_causal_graph_positive_control",
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "source_artifact": "synthetic_calibration_case",
+      "interpretation": "non-neuro positive control showing the gate can authorize causal claims"
+    }
+  ],
+  "case_evaluator_rows": [
+    {
+      "case": "allen_vbn_negative_identifiability",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function",
+        "topology_specific"
+      ],
+      "false_negative_claims": [],
+      "source_artifact": "results/allen_vbn_mechanistic_identifiability_score.json",
+      "interpretation": "real negative case: reproducible target without mechanistic identifiability",
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence"
+    },
+    {
+      "case": "sensorium_static_predictive_interoperability",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function"
+      ],
+      "false_negative_claims": [],
+      "source_artifact": "results/sensorium_static_model_comparator/summary.json",
+      "interpretation": "predictive/interoperability case, not causal or digital-twin evidence",
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence"
+    },
+    {
+      "case": "dynamic_sensorium_predictive_temporal_case",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function",
+        "topology_specific"
+      ],
+      "false_negative_claims": [],
+      "source_artifact": "results/dynamic_sensorium_model_comparator/summary.json",
+      "interpretation": "temporal predictive case without topology, direction, or causal support",
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence"
+    },
+    {
+      "case": "microns_local_structure_function",
+      "evaluator": "correlation_only",
+      "allowed_claims": [],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "source_artifact": "results/microns_primary_robustness/summary.json",
+      "interpretation": "local observational structure-function case, not causal evidence",
+      "rationale": "prediction below threshold"
+    },
+    {
+      "case": "synthetic_causal_graph_positive_control",
+      "evaluator": "correlation_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [
+        "causal"
+      ],
+      "source_artifact": "synthetic_calibration_case",
+      "interpretation": "non-neuro positive control showing the gate can authorize causal claims",
+      "rationale": "prediction above threshold is incorrectly treated as broad evidence"
+    },
+    {
+      "case": "allen_vbn_negative_identifiability",
+      "evaluator": "leaderboard_only",
+      "allowed_claims": [],
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "source_artifact": "results/allen_vbn_mechanistic_identifiability_score.json",
+      "interpretation": "real negative case: reproducible target without mechanistic identifiability",
+      "rationale": "leaderboard score below threshold"
+    },
+    {
+      "case": "sensorium_static_predictive_interoperability",
+      "evaluator": "leaderboard_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function"
+      ],
+      "false_negative_claims": [],
+      "source_artifact": "results/sensorium_static_model_comparator/summary.json",
+      "interpretation": "predictive/interoperability case, not causal or digital-twin evidence",
+      "rationale": "leaderboard prediction is incorrectly treated as mechanistic evidence"
+    },
+    {
+      "case": "dynamic_sensorium_predictive_temporal_case",
+      "evaluator": "leaderboard_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [
+        "directed",
+        "mechanistic",
+        "structure_function",
+        "topology_specific"
+      ],
+      "false_negative_claims": [],
+      "source_artifact": "results/dynamic_sensorium_model_comparator/summary.json",
+      "interpretation": "temporal predictive case without topology, direction, or causal support",
+      "rationale": "leaderboard prediction is incorrectly treated as mechanistic evidence"
+    },
+    {
+      "case": "microns_local_structure_function",
+      "evaluator": "leaderboard_only",
+      "allowed_claims": [],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "source_artifact": "results/microns_primary_robustness/summary.json",
+      "interpretation": "local observational structure-function case, not causal evidence",
+      "rationale": "leaderboard score below threshold"
+    },
+    {
+      "case": "synthetic_causal_graph_positive_control",
+      "evaluator": "leaderboard_only",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [
+        "causal"
+      ],
+      "source_artifact": "synthetic_calibration_case",
+      "interpretation": "non-neuro positive control showing the gate can authorize causal claims",
+      "rationale": "leaderboard prediction is incorrectly treated as mechanistic evidence"
+    },
+    {
+      "case": "allen_vbn_negative_identifiability",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "source_artifact": "results/allen_vbn_mechanistic_identifiability_score.json",
+      "interpretation": "real negative case: reproducible target without mechanistic identifiability",
+      "rationale": "weighted score=0.358; high blocks can compensate failed blocks"
+    },
+    {
+      "case": "sensorium_static_predictive_interoperability",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [
+        "topology_specific"
+      ],
+      "source_artifact": "results/sensorium_static_model_comparator/summary.json",
+      "interpretation": "predictive/interoperability case, not causal or digital-twin evidence",
+      "rationale": "weighted score=0.540; high blocks can compensate failed blocks"
+    },
+    {
+      "case": "dynamic_sensorium_predictive_temporal_case",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "source_artifact": "results/dynamic_sensorium_model_comparator/summary.json",
+      "interpretation": "temporal predictive case without topology, direction, or causal support",
+      "rationale": "weighted score=0.353; high blocks can compensate failed blocks"
+    },
+    {
+      "case": "microns_local_structure_function",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [
+        "structure_function"
+      ],
+      "source_artifact": "results/microns_primary_robustness/summary.json",
+      "interpretation": "local observational structure-function case, not causal evidence",
+      "rationale": "weighted score=0.345; high blocks can compensate failed blocks"
+    },
+    {
+      "case": "synthetic_causal_graph_positive_control",
+      "evaluator": "compensatory_score",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "structure_function",
+        "mechanistic"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "false_positive_claims": [
+        "structure_function"
+      ],
+      "false_negative_claims": [
+        "causal"
+      ],
+      "source_artifact": "synthetic_calibration_case",
+      "interpretation": "non-neuro positive control showing the gate can authorize causal claims",
+      "rationale": "weighted score=0.773; high blocks can compensate failed blocks"
+    },
+    {
+      "case": "allen_vbn_negative_identifiability",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "source_artifact": "results/allen_vbn_mechanistic_identifiability_score.json",
+      "interpretation": "real negative case: reproducible target without mechanistic identifiability",
+      "rationale": "claims require their own evidence gates and cannot compensate each other"
+    },
+    {
+      "case": "sensorium_static_predictive_interoperability",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "source_artifact": "results/sensorium_static_model_comparator/summary.json",
+      "interpretation": "predictive/interoperability case, not causal or digital-twin evidence",
+      "rationale": "claims require their own evidence gates and cannot compensate each other"
+    },
+    {
+      "case": "dynamic_sensorium_predictive_temporal_case",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "source_artifact": "results/dynamic_sensorium_model_comparator/summary.json",
+      "interpretation": "temporal predictive case without topology, direction, or causal support",
+      "rationale": "claims require their own evidence gates and cannot compensate each other"
+    },
+    {
+      "case": "microns_local_structure_function",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "structure_function"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "source_artifact": "results/microns_primary_robustness/summary.json",
+      "interpretation": "local observational structure-function case, not causal evidence",
+      "rationale": "claims require their own evidence gates and cannot compensate each other"
+    },
+    {
+      "case": "synthetic_causal_graph_positive_control",
+      "evaluator": "claim_gate",
+      "allowed_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "expected_claims": [
+        "predictive",
+        "reproducible",
+        "topology_specific",
+        "directed",
+        "mechanistic",
+        "causal"
+      ],
+      "false_positive_claims": [],
+      "false_negative_claims": [],
+      "source_artifact": "synthetic_calibration_case",
+      "interpretation": "non-neuro positive control showing the gate can authorize causal claims",
+      "rationale": "claims require their own evidence gates and cannot compensate each other"
+    }
+  ],
+  "confusion_matrix": [
+    {
+      "evaluator": "correlation_only",
+      "claim": "predictive",
+      "tp": 4,
+      "fp": 0,
+      "tn": 0,
+      "fn": 1
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "reproducible",
+      "tp": 4,
+      "fp": 0,
+      "tn": 0,
+      "fn": 1
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "topology_specific",
+      "tp": 2,
+      "fp": 2,
+      "tn": 1,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "directed",
+      "tp": 1,
+      "fp": 3,
+      "tn": 1,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "structure_function",
+      "tp": 0,
+      "fp": 4,
+      "tn": 0,
+      "fn": 1
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "mechanistic",
+      "tp": 1,
+      "fp": 3,
+      "tn": 1,
+      "fn": 0
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "causal",
+      "tp": 0,
+      "fp": 0,
+      "tn": 4,
+      "fn": 1
+    },
+    {
+      "evaluator": "correlation_only",
+      "claim": "digital_twin",
+      "tp": 0,
+      "fp": 0,
+      "tn": 5,
+      "fn": 0
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "claim": "predictive",
+      "tp": 3,
+      "fp": 0,
+      "tn": 0,
+      "fn": 2
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "claim": "reproducible",
+      "tp": 3,
+      "fp": 0,
+      "tn": 0,
+      "fn": 2
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "claim": "topology_specific",
+      "tp": 2,
+      "fp": 1,
+      "tn": 2,
+      "fn": 0
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "claim": "directed",
+      "tp": 1,
+      "fp": 2,
+      "tn": 2,
+      "fn": 0
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "claim": "structure_function",
+      "tp": 0,
+      "fp": 3,
+      "tn": 1,
+      "fn": 1
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "claim": "mechanistic",
+      "tp": 1,
+      "fp": 2,
+      "tn": 2,
+      "fn": 0
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "claim": "causal",
+      "tp": 0,
+      "fp": 0,
+      "tn": 4,
+      "fn": 1
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "claim": "digital_twin",
+      "tp": 0,
+      "fp": 0,
+      "tn": 5,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "predictive",
+      "tp": 5,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "reproducible",
+      "tp": 5,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "topology_specific",
+      "tp": 1,
+      "fp": 0,
+      "tn": 3,
+      "fn": 1
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "directed",
+      "tp": 1,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "structure_function",
+      "tp": 0,
+      "fp": 1,
+      "tn": 3,
+      "fn": 1
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "mechanistic",
+      "tp": 1,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "causal",
+      "tp": 0,
+      "fp": 0,
+      "tn": 4,
+      "fn": 1
+    },
+    {
+      "evaluator": "compensatory_score",
+      "claim": "digital_twin",
+      "tp": 0,
+      "fp": 0,
+      "tn": 5,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "predictive",
+      "tp": 5,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "reproducible",
+      "tp": 5,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "topology_specific",
+      "tp": 2,
+      "fp": 0,
+      "tn": 3,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "directed",
+      "tp": 1,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "structure_function",
+      "tp": 1,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "mechanistic",
+      "tp": 1,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "causal",
+      "tp": 1,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0
+    },
+    {
+      "evaluator": "claim_gate",
+      "claim": "digital_twin",
+      "tp": 0,
+      "fp": 0,
+      "tn": 5,
+      "fn": 0
+    }
+  ],
+  "aggregate_by_evaluator": [
+    {
+      "evaluator": "claim_gate",
+      "tp": 16,
+      "fp": 0,
+      "tn": 24,
+      "fn": 0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "overclaiming_risk_index": 0.0,
+      "conservativeness_index": 0.0
+    },
+    {
+      "evaluator": "compensatory_score",
+      "tp": 13,
+      "fp": 1,
+      "tn": 23,
+      "fn": 3,
+      "false_positive_rate": 0.041666666666666664,
+      "false_negative_rate": 0.1875,
+      "overclaiming_risk_index": 0.041666666666666664,
+      "conservativeness_index": 0.1875
+    },
+    {
+      "evaluator": "correlation_only",
+      "tp": 12,
+      "fp": 12,
+      "tn": 12,
+      "fn": 4,
+      "false_positive_rate": 0.5,
+      "false_negative_rate": 0.25,
+      "overclaiming_risk_index": 0.5,
+      "conservativeness_index": 0.25
+    },
+    {
+      "evaluator": "leaderboard_only",
+      "tp": 10,
+      "fp": 8,
+      "tn": 16,
+      "fn": 6,
+      "false_positive_rate": 0.3333333333333333,
+      "false_negative_rate": 0.375,
+      "overclaiming_risk_index": 0.3333333333333333,
+      "conservativeness_index": 0.375
+    }
+  ],
+  "decision": "real_case_claim_gate_consistent"
+}
