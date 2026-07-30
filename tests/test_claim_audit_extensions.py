@@ -43,6 +43,35 @@ def _write_minimal_v2_artifacts(root: Path) -> None:
             "git_revision": "abc",
         },
     )
+    _write_json(
+        root / "results/scifact_claim_verification/summary.json",
+        {
+            "decision": "scifact_external_claim_audit_ready",
+            "num_claims": 300,
+            "shortcut_false_positives": 37,
+            "shortcut_overclaiming_risk": 0.21,
+            "git_revision": "abc",
+        },
+    )
+    _write_json(
+        root / "results/tuebingen_causal_direction/summary.json",
+        {
+            "decision": "tuebingen_external_direction_benchmark_ready",
+            "num_pairs_loaded": 108,
+            "correlation_only_direction_overclaims": 79,
+            "git_revision": "abc",
+        },
+    )
+    _write_json(
+        root / "results/claimbench_v2_release/summary.json",
+        {
+            "decision": "claimbench_v2_release_ready",
+            "missing_artifacts": [],
+            "dirty_artifacts": [],
+            "failing_artifacts": [],
+            "git_revision": "abc",
+        },
+    )
 
 
 def test_claim_dsl_audits_required_artifacts(tmp_path) -> None:
@@ -52,7 +81,7 @@ def test_claim_dsl_audits_required_artifacts(tmp_path) -> None:
     specs = load_claim_specs(claims_file)
     results = audit_claim_specs(specs, root=tmp_path)
 
-    assert len(results) == 4
+    assert len(results) == 7
     assert all(result.status == "supported" for result in results)
 
 
@@ -75,6 +104,41 @@ def test_manuscript_claim_auditor_blocks_declared_bad_wording(tmp_path) -> None:
 
     assert payload["decision"] == "manuscript_claim_audit_blocks_release"
     assert payload["blocked_wording_hits"]
+
+
+def test_manuscript_claim_auditor_detects_risky_patterns_but_allows_negated_limits(
+    tmp_path,
+) -> None:
+    _write_minimal_v2_artifacts(tmp_path)
+    (tmp_path / "configs/claims").mkdir(parents=True)
+    claim_text = Path("configs/claims/mousebrainbench_claims.yaml").read_text()
+    (tmp_path / "configs/claims/mousebrainbench_claims.yaml").write_text(claim_text)
+
+    risky = tmp_path / "risky.tex"
+    risky.write_text("We present a full mouse-brain digital twin with SOTA causal mechanism.")
+    risky_output = run_manuscript_audit(
+        claims=Path("configs/claims/mousebrainbench_claims.yaml"),
+        manuscript=(Path("risky.tex"),),
+        output=tmp_path / "results/manuscript_claim_audit/risky.json",
+        markdown=tmp_path / "results/manuscript_claim_audit/risky.md",
+        root=tmp_path,
+    )
+    risky_payload = json.loads(risky_output.read_text())
+    assert risky_payload["decision"] == "manuscript_claim_audit_blocks_release"
+    assert risky_payload["active_risk_pattern_hits"]
+
+    limited = tmp_path / "limited.tex"
+    limited.write_text("This is not a full mouse-brain digital twin and not a SOTA claim.")
+    limited_output = run_manuscript_audit(
+        claims=Path("configs/claims/mousebrainbench_claims.yaml"),
+        manuscript=(Path("limited.tex"),),
+        output=tmp_path / "results/manuscript_claim_audit/limited.json",
+        markdown=tmp_path / "results/manuscript_claim_audit/limited.md",
+        root=tmp_path,
+    )
+    limited_payload = json.loads(limited_output.read_text())
+    assert limited_payload["decision"] == "manuscript_claim_audit_passed"
+    assert limited_payload["active_risk_pattern_hits"] == []
 
 
 def test_uncertainty_claim_gate_blocks_unsupported_support(tmp_path) -> None:

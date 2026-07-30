@@ -33,6 +33,9 @@ def _ensure_inputs(root: Path = Path(".")) -> dict[str, dict[str, Any]]:
         "external_causal": root / "results/external_causal_claim_validation/summary.json",
         "claim_ledger": root / "results/claim_ledger/summary.json",
         "release": root / "results/claimbench_release/summary.json",
+        "manuscript_claim_audit": root / "results/manuscript_claim_audit/summary.json",
+        "scifact": root / "results/scifact_claim_verification/summary.json",
+        "tuebingen": root / "results/tuebingen_causal_direction/summary.json",
     }
     if not paths["adversarial_v2"].exists():
         run_adversarial_v2(
@@ -65,6 +68,9 @@ def run(
     external = inputs["external_causal"]
     ledger = inputs["claim_ledger"]
     release = inputs["release"]
+    manuscript = inputs["manuscript_claim_audit"]
+    scifact = inputs["scifact"]
+    tuebingen = inputs["tuebingen"]
     risks: list[dict[str, str]] = []
 
     gate_v2 = next(
@@ -138,6 +144,55 @@ def run(
                 "Regenerate release artifacts from a clean commit.",
             )
         )
+    if manuscript and manuscript.get("decision") != "manuscript_claim_audit_passed":
+        risks.append(
+            _risk(
+                "high",
+                "The manuscript contains unsupported or risky wording.",
+                (
+                    f"active_risk_patterns="
+                    f"{len(manuscript.get('active_risk_pattern_hits', []))}; "
+                    f"unsupported={manuscript.get('unsupported_present_claims', [])}"
+                ),
+                "Downgrade wording or add non-compensatory evidence before submission.",
+            )
+        )
+    if scifact.get("decision") != "scifact_external_claim_audit_ready":
+        risks.append(
+            _risk(
+                "medium",
+                "External scientific claim-verification control is missing or insufficient.",
+                f"SciFact decision={scifact.get('decision')}",
+                "Keep SciFact out of the main contribution or regenerate the adapter.",
+            )
+        )
+    elif float(scifact.get("shortcut_overclaiming_risk", 0.0)) <= 0.0:
+        risks.append(
+            _risk(
+                "medium",
+                "SciFact does not expose a measurable lexical overclaiming risk.",
+                f"shortcut ORI={scifact.get('shortcut_overclaiming_risk')}",
+                "Re-check thresholds or present SciFact only as interoperability evidence.",
+            )
+        )
+    if tuebingen.get("decision") != "tuebingen_external_direction_benchmark_ready":
+        risks.append(
+            _risk(
+                "medium",
+                "External causal-direction control is missing or insufficient.",
+                f"Tuebingen decision={tuebingen.get('decision')}",
+                "Keep causal-direction claims synthetic-only or regenerate public data.",
+            )
+        )
+    elif int(tuebingen.get("correlation_only_direction_overclaims", 0)) <= 0:
+        risks.append(
+            _risk(
+                "medium",
+                "Tuebingen does not expose correlation-only directional overclaiming.",
+                f"overclaims={tuebingen.get('correlation_only_direction_overclaims')}",
+                "Do not use Tuebingen as a reviewer-facing causal overclaiming control.",
+            )
+        )
 
     payload = {
         "version": __version__,
@@ -149,6 +204,17 @@ def run(
             "external_causal": "results/external_causal_claim_validation/summary.json",
             "claim_ledger": "results/claim_ledger/summary.json",
             "release": "results/claimbench_release/summary.json",
+            "manuscript_claim_audit": "results/manuscript_claim_audit/summary.json",
+            "scifact": "results/scifact_claim_verification/summary.json",
+            "tuebingen": "results/tuebingen_causal_direction/summary.json",
+        },
+        "external_controls": {
+            "scifact_decision": scifact.get("decision"),
+            "scifact_shortcut_overclaiming_risk": scifact.get("shortcut_overclaiming_risk"),
+            "tuebingen_decision": tuebingen.get("decision"),
+            "tuebingen_correlation_only_direction_overclaims": tuebingen.get(
+                "correlation_only_direction_overclaims"
+            ),
         },
         "risks": risks,
         "decision": (
@@ -182,6 +248,19 @@ def write_markdown(payload: dict[str, Any], markdown: Path) -> None:
             )
     else:
         lines.append("| `none` | No blocking reviewer attack detected. | All checks passed. | Continue. |")
+    controls = payload.get("external_controls", {})
+    lines.extend(
+        [
+            "",
+            "## External Controls",
+            "",
+            f"- SciFact decision: `{controls.get('scifact_decision')}`",
+            f"- SciFact shortcut ORI: `{controls.get('scifact_shortcut_overclaiming_risk')}`",
+            f"- Tuebingen decision: `{controls.get('tuebingen_decision')}`",
+            "- Tuebingen correlation-only direction overclaims: "
+            f"`{controls.get('tuebingen_correlation_only_direction_overclaims')}`",
+        ]
+    )
     lines.append("")
     markdown.parent.mkdir(parents=True, exist_ok=True)
     markdown.write_text("\n".join(lines))
