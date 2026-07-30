@@ -1,0 +1,70 @@
+claims:
+  - claim_id: claimbench_v2_blocks_overclaiming
+    claim_type: benchmark_claim
+    scope: synthetic_known_truth
+    permitted_wording: >-
+      ClaimBench v2 blocks unsupported scientific overclaims in a broad
+      deterministic adversarial suite.
+    blocked_wording:
+      - ClaimBench v2 proves biological truth.
+      - ClaimBench v2 is universally optimal for scientific review.
+    required_artifacts:
+      - path: results/claim_adversarial_v2/summary.json
+        expectations:
+          - key: decision
+            equals: claimbench_v2_blocks_overclaiming_under_broad_attacks
+          - key: num_cases
+            min: 100
+    uncertainty_policy: deterministic
+
+  - claim_id: thresholds_safe_region_with_limits
+    claim_type: uncertainty_claim
+    scope: threshold_sensitivity
+    permitted_wording: >-
+      The nominal claim gate lies inside a non-trivial safe threshold region,
+      but dangerous threshold regions exist and must be reported.
+    blocked_wording:
+      - The thresholds are universally robust.
+      - No threshold choices can authorize unsupported claims.
+    required_artifacts:
+      - path: results/claim_threshold_sensitivity_v2/summary.json
+        expectations:
+          - key: decision
+            equals: claim_thresholds_have_nontrivial_safe_region_with_reportable_limits
+          - key: safe_cells
+            min: 20
+          - key: dangerous_cells
+            min: 1
+    uncertainty_policy: reportable_limits
+
+  - claim_id: external_causal_validation
+    claim_type: external_validity_claim
+    scope: synthetic_external_causal_graphs
+    permitted_wording: >-
+      The claim gate passes a non-neuroscience causal positive and negative
+      control suite with known graph truth.
+    blocked_wording:
+      - This establishes general validity across all causal benchmarks.
+      - This replaces validation on public causal datasets.
+    required_artifacts:
+      - path: results/external_causal_claim_validation/summary.json
+        expectations:
+          - key: decision
+            equals: external_causal_validation_passed
+    uncertainty_policy: deterministic
+
+  - claim_id: reviewer_attack_v2
+    claim_type: reviewer_defense_claim
+    scope: post_submission_revision_support
+    permitted_wording: >-
+      Reviewer-style attacks identify no high-risk blocker for using ClaimBench
+      v2 as additional revision evidence, while preserving reportable limits.
+    blocked_wording:
+      - The submitted manuscript has no limitations.
+      - Reviewer criticism is impossible.
+    required_artifacts:
+      - path: results/reviewer_attack_suite_v2/summary.json
+        expectations:
+          - key: decision
+            equals: reviewer_attack_suite_v2_passed_with_reportable_limits
+    uncertainty_policy: reviewer_attack

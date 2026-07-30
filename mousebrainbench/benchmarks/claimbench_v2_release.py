@@ -21,6 +21,10 @@ REQUIRED_ARTIFACTS = (
     Path("results/claim_threshold_sensitivity_v2/summary.json"),
     Path("results/external_causal_claim_validation/summary.json"),
     Path("results/reviewer_attack_suite_v2/summary.json"),
+    Path("results/manuscript_claim_audit/summary.json"),
+    Path("results/uncertainty_claim_gate_v2/summary.json"),
+    Path("results/cost_fidelity_claim_frontier/summary.json"),
+    Path("results/external_benchmark_registry/summary.json"),
 )
 
 
@@ -47,6 +51,14 @@ def run(output: Path = DEFAULT_OUTPUT, markdown: Path = DEFAULT_MARKDOWN, root: 
         ),
         "results/reviewer_attack_suite_v2/summary.json": (
             "reviewer_attack_suite_v2_passed_with_reportable_limits"
+        ),
+        "results/manuscript_claim_audit/summary.json": "manuscript_claim_audit_passed",
+        "results/uncertainty_claim_gate_v2/summary.json": (
+            "uncertainty_gate_blocks_unsupported_support"
+        ),
+        "results/cost_fidelity_claim_frontier/summary.json": "cost_fidelity_claim_frontier_built",
+        "results/external_benchmark_registry/summary.json": (
+            "external_benchmarks_registered_with_pending_data"
         ),
     }
     for relative in REQUIRED_ARTIFACTS:

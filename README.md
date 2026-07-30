@@ -115,6 +115,10 @@ mousebrainbench-claim-threshold-sensitivity-v2
 mousebrainbench-external-causal-claims
 mousebrainbench-reviewer-attack-v2
 mousebrainbench-claimbench-v2-release
+mousebrainbench-manuscript-claim-audit
+mousebrainbench-uncertainty-claim-gate-v2
+mousebrainbench-cost-fidelity-claim-frontier
+mousebrainbench-external-benchmark-registry
 mousebrainbench-q1-sensitivity
 mousebrainbench-publication-freeze
 pytest

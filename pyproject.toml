@@ -61,6 +61,10 @@ mousebrainbench-claim-threshold-sensitivity-v2 = "mousebrainbench.benchmarks.cla
 mousebrainbench-external-causal-claims = "mousebrainbench.benchmarks.external_causal_claim_validation:main"
 mousebrainbench-reviewer-attack-v2 = "mousebrainbench.benchmarks.reviewer_attack_suite_v2:main"
 mousebrainbench-claimbench-v2-release = "mousebrainbench.benchmarks.claimbench_v2_release:main"
+mousebrainbench-manuscript-claim-audit = "mousebrainbench.benchmarks.manuscript_claim_auditor:main"
+mousebrainbench-uncertainty-claim-gate-v2 = "mousebrainbench.benchmarks.uncertainty_claim_gate_v2:main"
+mousebrainbench-cost-fidelity-claim-frontier = "mousebrainbench.benchmarks.cost_fidelity_claim_frontier:main"
+mousebrainbench-external-benchmark-registry = "mousebrainbench.benchmarks.external_benchmark_registry:main"
 mousebrainbench-run = "mousebrainbench.cli:main"
 
 [tool.setuptools.packages.find]
