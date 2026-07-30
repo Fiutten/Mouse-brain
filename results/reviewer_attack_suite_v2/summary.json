@@ -1,0 +1,21 @@
+{
+  "version": "0.6.0",
+  "git_revision": "7c8a2412dffeadc665c71997705c25971cb8b277",
+  "analysis": "reviewer_attack_suite_v2",
+  "inputs": {
+    "adversarial_v2": "results/claim_adversarial_v2/summary.json",
+    "threshold_sensitivity_v2": "results/claim_threshold_sensitivity_v2/summary.json",
+    "external_causal": "results/external_causal_claim_validation/summary.json",
+    "claim_ledger": "results/claim_ledger/summary.json",
+    "release": "results/claimbench_release/summary.json"
+  },
+  "risks": [
+    {
+      "level": "medium",
+      "attack": "Some threshold cells authorize unsupported claims.",
+      "evidence": "dangerous_cells=135",
+      "response": "Report the dangerous region and keep nominal thresholds fixed."
+    }
+  ],
+  "decision": "reviewer_attack_suite_v2_passed_with_reportable_limits"
+}
