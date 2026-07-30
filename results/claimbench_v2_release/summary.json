@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "7c8a2412dffeadc665c71997705c25971cb8b277",
+  "git_revision": "f843adff0b2fbef2b4146605bb5fa46b139a56e2",
   "analysis": "claimbench_v2_release",
   "baseline_commit": "ff0aca9",
   "missing_artifacts": [],
@@ -48,6 +48,34 @@
       "git_revision": "7c8a2412dffeadc665c71997705c25971cb8b277",
       "decision": "reviewer_attack_suite_v2_passed_with_reportable_limits",
       "expected_decision": "reviewer_attack_suite_v2_passed_with_reportable_limits"
+    },
+    {
+      "artifact": "results/manuscript_claim_audit/summary.json",
+      "exists": true,
+      "git_revision": "f843adff0b2fbef2b4146605bb5fa46b139a56e2",
+      "decision": "manuscript_claim_audit_passed",
+      "expected_decision": "manuscript_claim_audit_passed"
+    },
+    {
+      "artifact": "results/uncertainty_claim_gate_v2/summary.json",
+      "exists": true,
+      "git_revision": "f843adff0b2fbef2b4146605bb5fa46b139a56e2",
+      "decision": "uncertainty_gate_blocks_unsupported_support",
+      "expected_decision": "uncertainty_gate_blocks_unsupported_support"
+    },
+    {
+      "artifact": "results/cost_fidelity_claim_frontier/summary.json",
+      "exists": true,
+      "git_revision": "f843adff0b2fbef2b4146605bb5fa46b139a56e2",
+      "decision": "cost_fidelity_claim_frontier_built",
+      "expected_decision": "cost_fidelity_claim_frontier_built"
+    },
+    {
+      "artifact": "results/external_benchmark_registry/summary.json",
+      "exists": true,
+      "git_revision": "f843adff0b2fbef2b4146605bb5fa46b139a56e2",
+      "decision": "external_benchmarks_registered_with_pending_data",
+      "expected_decision": "external_benchmarks_registered_with_pending_data"
     }
   ],
   "decision": "claimbench_v2_release_ready"

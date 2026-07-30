@@ -14,3 +14,7 @@
 | `results/claim_threshold_sensitivity_v2/summary.json` | `True` | `claim_thresholds_have_nontrivial_safe_region_with_reportable_limits` | `claim_thresholds_have_nontrivial_safe_region_with_reportable_limits` | `7c8a2412dffeadc665c71997705c25971cb8b277` |
 | `results/external_causal_claim_validation/summary.json` | `True` | `external_causal_validation_passed` | `external_causal_validation_passed` | `7c8a2412dffeadc665c71997705c25971cb8b277` |
 | `results/reviewer_attack_suite_v2/summary.json` | `True` | `reviewer_attack_suite_v2_passed_with_reportable_limits` | `reviewer_attack_suite_v2_passed_with_reportable_limits` | `7c8a2412dffeadc665c71997705c25971cb8b277` |
+| `results/manuscript_claim_audit/summary.json` | `True` | `manuscript_claim_audit_passed` | `manuscript_claim_audit_passed` | `f843adff0b2fbef2b4146605bb5fa46b139a56e2` |
+| `results/uncertainty_claim_gate_v2/summary.json` | `True` | `uncertainty_gate_blocks_unsupported_support` | `uncertainty_gate_blocks_unsupported_support` | `f843adff0b2fbef2b4146605bb5fa46b139a56e2` |
+| `results/cost_fidelity_claim_frontier/summary.json` | `True` | `cost_fidelity_claim_frontier_built` | `cost_fidelity_claim_frontier_built` | `f843adff0b2fbef2b4146605bb5fa46b139a56e2` |
+| `results/external_benchmark_registry/summary.json` | `True` | `external_benchmarks_registered_with_pending_data` | `external_benchmarks_registered_with_pending_data` | `f843adff0b2fbef2b4146605bb5fa46b139a56e2` |

@@ -1,0 +1,54 @@
+{
+  "version": "0.6.0",
+  "git_revision": "f843adff0b2fbef2b4146605bb5fa46b139a56e2",
+  "analysis": "manuscript_claim_audit",
+  "claims_file": "configs/claims/mousebrainbench_claims.yaml",
+  "manuscript_inputs": [
+    "README.md"
+  ],
+  "rows": [
+    {
+      "claim_id": "claimbench_v2_blocks_overclaiming",
+      "claim_type": "benchmark_claim",
+      "scope": "synthetic_known_truth",
+      "artifact_status": "supported",
+      "permitted_wording_present": false,
+      "blocked_wording_hits": [],
+      "missing_artifacts": [],
+      "failed_expectations": []
+    },
+    {
+      "claim_id": "thresholds_safe_region_with_limits",
+      "claim_type": "uncertainty_claim",
+      "scope": "threshold_sensitivity",
+      "artifact_status": "supported",
+      "permitted_wording_present": false,
+      "blocked_wording_hits": [],
+      "missing_artifacts": [],
+      "failed_expectations": []
+    },
+    {
+      "claim_id": "external_causal_validation",
+      "claim_type": "external_validity_claim",
+      "scope": "synthetic_external_causal_graphs",
+      "artifact_status": "supported",
+      "permitted_wording_present": false,
+      "blocked_wording_hits": [],
+      "missing_artifacts": [],
+      "failed_expectations": []
+    },
+    {
+      "claim_id": "reviewer_attack_v2",
+      "claim_type": "reviewer_defense_claim",
+      "scope": "post_submission_revision_support",
+      "artifact_status": "supported",
+      "permitted_wording_present": false,
+      "blocked_wording_hits": [],
+      "missing_artifacts": [],
+      "failed_expectations": []
+    }
+  ],
+  "blocked_wording_hits": [],
+  "unsupported_present_claims": [],
+  "decision": "manuscript_claim_audit_passed"
+}
