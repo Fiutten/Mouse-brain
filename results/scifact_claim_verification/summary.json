@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
+  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
   "analysis": "scifact_claim_verification",
   "dataset": "SciFact dev",
   "num_claims": 300,
@@ -49,7 +49,7 @@
       "shortcut_supported_rate": 0.5161290322580645
     }
   },
-  "runtime_seconds": 4.333279499987839,
+  "runtime_seconds": 4.373716625006637,
   "rows": [
     {
       "claim_id": 1,

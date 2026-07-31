@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
+  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
   "analysis": "tuebingen_causal_direction",
   "dataset": "Tuebingen cause-effect pairs",
   "num_pairs_loaded": 108,

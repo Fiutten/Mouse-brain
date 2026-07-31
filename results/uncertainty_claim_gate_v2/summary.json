@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "f843adff0b2fbef2b4146605bb5fa46b139a56e2",
+  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
   "analysis": "uncertainty_claim_gate_v2",
   "num_rows": 1152,
   "status_counts": {

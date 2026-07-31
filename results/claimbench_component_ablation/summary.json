@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "fe5b8353ea8838fdbcbd159770d0aef5450763d1",
+  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
   "analysis": "claimbench_component_ablation",
   "num_components": 8,
   "high_or_critical_components": 7,

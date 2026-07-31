@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "fe5b8353ea8838fdbcbd159770d0aef5450763d1",
+  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
   "analysis": "claimbench_unified_report",
   "num_criteria": 9,
   "passed_criteria": 9,
@@ -63,11 +63,11 @@
       "interpretation": "Reviewer attacks pass with explicit reportable limits."
     },
     {
-      "name": "clean_release",
+      "name": "reviewer_threat_model",
       "passed": true,
-      "artifact": "results/claimbench_v2_release/summary.json",
-      "evidence": "missing=[]; dirty=[]; failing=[]",
-      "interpretation": "The tracked artifact package is internally reproducible."
+      "artifact": "results/claimbench_threat_model/summary.json",
+      "evidence": "passed=6; critical_failed=0",
+      "interpretation": "Known reviewer threats are mapped to artifacts and claim boundaries."
     }
   ],
   "publishable_claim": "ClaimBench v2 is a claim-aware auditing framework that separates prediction, evidence retrieval, causal direction, uncertainty, manuscript wording, and release reproducibility. It is not a SciFact SOTA system and not a causal-discovery performance method.",

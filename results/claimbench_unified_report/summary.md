@@ -15,7 +15,7 @@
 | `manuscript_claim_audit` | `True` | inputs=3; active_hits=0 | The current manuscript wording passes executable claim-boundary checks. |
 | `component_ablation_nonredundancy` | `True` | components=8; high_or_critical=7 | Core components are non-redundant because ablations reintroduce risks. |
 | `reviewer_attack_suite` | `True` | risks=1 | Reviewer attacks pass with explicit reportable limits. |
-| `clean_release` | `True` | missing=[]; dirty=[]; failing=[] | The tracked artifact package is internally reproducible. |
+| `reviewer_threat_model` | `True` | passed=6; critical_failed=0 | Known reviewer threats are mapped to artifacts and claim boundaries. |
 
 ## Publishable Claim Boundary
 
