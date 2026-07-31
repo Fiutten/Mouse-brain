@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "a94d9590ebb8c325c4ff49d756c97b0f7cc72d9e",
+  "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
   "analysis": "claimbench_v2_release",
   "baseline_commit": "ff0aca9",
   "missing_artifacts": [],
@@ -45,14 +45,14 @@
     {
       "artifact": "results/reviewer_attack_suite_v2/summary.json",
       "exists": true,
-      "git_revision": "a94d9590ebb8c325c4ff49d756c97b0f7cc72d9e",
+      "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
       "decision": "reviewer_attack_suite_v2_passed_with_reportable_limits",
       "expected_decision": "reviewer_attack_suite_v2_passed_with_reportable_limits"
     },
     {
       "artifact": "results/manuscript_claim_audit/summary.json",
       "exists": true,
-      "git_revision": "a94d9590ebb8c325c4ff49d756c97b0f7cc72d9e",
+      "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
       "decision": "manuscript_claim_audit_passed",
       "expected_decision": "manuscript_claim_audit_passed"
     },
@@ -80,14 +80,14 @@
     {
       "artifact": "results/scifact_claim_verification/summary.json",
       "exists": true,
-      "git_revision": "97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9",
+      "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
       "decision": "scifact_external_claim_audit_ready",
       "expected_decision": "scifact_external_claim_audit_ready"
     },
     {
       "artifact": "results/tuebingen_causal_direction/summary.json",
       "exists": true,
-      "git_revision": "97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9",
+      "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
       "decision": "tuebingen_external_direction_benchmark_ready",
       "expected_decision": "tuebingen_external_direction_benchmark_ready"
     }

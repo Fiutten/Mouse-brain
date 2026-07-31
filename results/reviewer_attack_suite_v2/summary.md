@@ -10,6 +10,6 @@
 ## External Controls
 
 - SciFact decision: `scifact_external_claim_audit_ready`
-- SciFact shortcut ORI: `0.21022727272727273`
+- SciFact shortcut ORI: `0.19886363636363635`
 - Tuebingen decision: `tuebingen_external_direction_benchmark_ready`
 - Tuebingen correlation-only direction overclaims: `79`

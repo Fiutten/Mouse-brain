@@ -1,11 +1,19 @@
 {
   "version": "0.6.0",
-  "git_revision": "a94d9590ebb8c325c4ff49d756c97b0f7cc72d9e",
+  "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
   "analysis": "manuscript_claim_audit",
   "claims_file": "configs/claims/mousebrainbench_claims.yaml",
   "manuscript_inputs": [
+    "paper/main.tex",
+    "paper/README.md",
     "README.md"
   ],
+  "existing_manuscript_inputs": [
+    "paper/main.tex",
+    "paper/README.md",
+    "README.md"
+  ],
+  "manuscript_character_count": 95318,
   "rows": [
     {
       "claim_id": "claimbench_v2_blocks_overclaiming",
@@ -133,6 +141,134 @@
   ],
   "blocked_wording_hits": [],
   "risk_pattern_hits": [
+    {
+      "risk_id": "complete_mouse_brain_twin",
+      "severity": "high",
+      "claim_family": "digital_twin",
+      "matched_text": "whole-brain digital twin",
+      "negated": true,
+      "reason": "Complete or whole-brain digital-twin wording requires evidence not present here."
+    },
+    {
+      "risk_id": "complete_mouse_brain_twin",
+      "severity": "high",
+      "claim_family": "digital_twin",
+      "matched_text": "full digital twin",
+      "negated": true,
+      "reason": "Complete or whole-brain digital-twin wording requires evidence not present here."
+    },
+    {
+      "risk_id": "complete_mouse_brain_twin",
+      "severity": "high",
+      "claim_family": "digital_twin",
+      "matched_text": "complete mouse-brain digital twin",
+      "negated": true,
+      "reason": "Complete or whole-brain digital-twin wording requires evidence not present here."
+    },
+    {
+      "risk_id": "complete_mouse_brain_twin",
+      "severity": "high",
+      "claim_family": "digital_twin",
+      "matched_text": "complete mouse-brain digital twin",
+      "negated": true,
+      "reason": "Complete or whole-brain digital-twin wording requires evidence not present here."
+    },
+    {
+      "risk_id": "complete_mouse_brain_twin",
+      "severity": "high",
+      "claim_family": "digital_twin",
+      "matched_text": "complete mouse-brain digital twin",
+      "negated": true,
+      "reason": "Complete or whole-brain digital-twin wording requires evidence not present here."
+    },
+    {
+      "risk_id": "causal_mechanism_from_observation",
+      "severity": "high",
+      "claim_family": "causal",
+      "matched_text": "causal\n  evidence",
+      "negated": true,
+      "reason": "Causal wording requires interventional or causal-identification evidence."
+    },
+    {
+      "risk_id": "causal_mechanism_from_observation",
+      "severity": "high",
+      "claim_family": "causal",
+      "matched_text": "causal evidence",
+      "negated": true,
+      "reason": "Causal wording requires interventional or causal-identification evidence."
+    },
+    {
+      "risk_id": "causal_mechanism_from_observation",
+      "severity": "high",
+      "claim_family": "causal",
+      "matched_text": "causal mechanism",
+      "negated": true,
+      "reason": "Causal wording requires interventional or causal-identification evidence."
+    },
+    {
+      "risk_id": "causal_mechanism_from_observation",
+      "severity": "high",
+      "claim_family": "causal",
+      "matched_text": "causal effect",
+      "negated": true,
+      "reason": "Causal wording requires interventional or causal-identification evidence."
+    },
+    {
+      "risk_id": "causal_mechanism_from_observation",
+      "severity": "high",
+      "claim_family": "causal",
+      "matched_text": "causal mechanism",
+      "negated": true,
+      "reason": "Causal wording requires interventional or causal-identification evidence."
+    },
+    {
+      "risk_id": "causal_mechanism_from_observation",
+      "severity": "high",
+      "claim_family": "causal",
+      "matched_text": "causal\nmechanism",
+      "negated": true,
+      "reason": "Causal wording requires interventional or causal-identification evidence."
+    },
+    {
+      "risk_id": "sota_without_comparable_baseline",
+      "severity": "high",
+      "claim_family": "benchmark_performance",
+      "matched_text": "state-of-the-art",
+      "negated": true,
+      "reason": "SOTA wording requires comparable official baselines and matched protocols."
+    },
+    {
+      "risk_id": "sota_without_comparable_baseline",
+      "severity": "high",
+      "claim_family": "benchmark_performance",
+      "matched_text": "state-of-the-art",
+      "negated": true,
+      "reason": "SOTA wording requires comparable official baselines and matched protocols."
+    },
+    {
+      "risk_id": "sota_without_comparable_baseline",
+      "severity": "high",
+      "claim_family": "benchmark_performance",
+      "matched_text": "state-of-the-art",
+      "negated": true,
+      "reason": "SOTA wording requires comparable official baselines and matched protocols."
+    },
+    {
+      "risk_id": "sota_without_comparable_baseline",
+      "severity": "high",
+      "claim_family": "benchmark_performance",
+      "matched_text": "state-of-the-art",
+      "negated": true,
+      "reason": "SOTA wording requires comparable official baselines and matched protocols."
+    },
+    {
+      "risk_id": "sota_without_comparable_baseline",
+      "severity": "high",
+      "claim_family": "benchmark_performance",
+      "matched_text": "state-of-the-art",
+      "negated": true,
+      "reason": "SOTA wording requires comparable official baselines and matched protocols."
+    },
     {
       "risk_id": "sota_without_comparable_baseline",
       "severity": "high",
