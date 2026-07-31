@@ -67,6 +67,8 @@ mousebrainbench-cost-fidelity-claim-frontier = "mousebrainbench.benchmarks.cost_
 mousebrainbench-external-benchmark-registry = "mousebrainbench.benchmarks.external_benchmark_registry:main"
 mousebrainbench-scifact-claim-verification = "mousebrainbench.benchmarks.scifact_claim_verification:main"
 mousebrainbench-tuebingen-causal-direction = "mousebrainbench.benchmarks.tuebingen_causal_direction:main"
+mousebrainbench-claimbench-component-ablation = "mousebrainbench.benchmarks.claimbench_component_ablation:main"
+mousebrainbench-claimbench-unified-report = "mousebrainbench.benchmarks.claimbench_unified_report:main"
 mousebrainbench-run = "mousebrainbench.cli:main"
 
 [tool.setuptools.packages.find]

@@ -27,6 +27,8 @@ REQUIRED_ARTIFACTS = (
     Path("results/external_benchmark_registry/summary.json"),
     Path("results/scifact_claim_verification/summary.json"),
     Path("results/tuebingen_causal_direction/summary.json"),
+    Path("results/claimbench_component_ablation/summary.json"),
+    Path("results/claimbench_unified_report/summary.json"),
 )
 
 
@@ -65,6 +67,12 @@ def run(output: Path = DEFAULT_OUTPUT, markdown: Path = DEFAULT_MARKDOWN, root: 
         "results/scifact_claim_verification/summary.json": "scifact_external_claim_audit_ready",
         "results/tuebingen_causal_direction/summary.json": (
             "tuebingen_external_direction_benchmark_ready"
+        ),
+        "results/claimbench_component_ablation/summary.json": (
+            "claimbench_components_have_nonredundant_value"
+        ),
+        "results/claimbench_unified_report/summary.json": (
+            "claimbench_v2_methodological_package_ready"
         ),
     }
     for relative in REQUIRED_ARTIFACTS:

@@ -4,7 +4,9 @@ from pathlib import Path
 
 from mousebrainbench.benchmarks.claim_adversarial_v2 import build_cases, run as run_adversarial_v2
 from mousebrainbench.benchmarks.claim_threshold_sensitivity_v2 import run as run_sensitivity_v2
+from mousebrainbench.benchmarks.claimbench_component_ablation import run as run_ablation
 from mousebrainbench.benchmarks.claimbench_v2_release import run as run_release_v2
+from mousebrainbench.benchmarks.claimbench_unified_report import run as run_unified
 from mousebrainbench.benchmarks.cost_fidelity_claim_frontier import run as run_frontier
 from mousebrainbench.benchmarks.external_causal_claim_validation import run as run_external_causal
 from mousebrainbench.benchmarks.external_benchmark_registry import run as run_registry
@@ -117,11 +119,46 @@ def test_reviewer_attack_and_release_v2_are_reproducible(tmp_path, monkeypatch) 
     )
     _write_json(
         tmp_path / "results/scifact_claim_verification/summary.json",
-        {"decision": "scifact_external_claim_audit_ready", "git_revision": head},
+        {
+            "decision": "scifact_external_claim_audit_ready",
+            "num_claims": 300,
+            "retrieval_recall_at_5": 0.89,
+            "shortcut_overclaiming_risk": 0.19,
+            "retrieval_overclaiming_risk": 0.25,
+            "git_revision": head,
+        },
     )
     _write_json(
         tmp_path / "results/tuebingen_causal_direction/summary.json",
-        {"decision": "tuebingen_external_direction_benchmark_ready", "git_revision": head},
+        {
+            "decision": "tuebingen_external_direction_benchmark_ready",
+            "num_pairs_loaded": 108,
+            "direction_accuracy": 0.48,
+            "correlation_only_direction_overclaims": 79,
+            "causal_control_claim_allowed": True,
+            "causal_performance_claim_allowed": False,
+            "git_revision": head,
+        },
+    )
+    run_ablation(
+        output=tmp_path / "results/claimbench_component_ablation/summary.json",
+        markdown=tmp_path / "results/claimbench_component_ablation/summary.md",
+        root=tmp_path,
+    )
+    _write_json(
+        tmp_path / "results/claimbench_v2_release/summary.json",
+        {
+            "decision": "claimbench_v2_release_ready",
+            "missing_artifacts": [],
+            "dirty_artifacts": [],
+            "failing_artifacts": [],
+            "git_revision": head,
+        },
+    )
+    run_unified(
+        output=tmp_path / "results/claimbench_unified_report/summary.json",
+        markdown=tmp_path / "results/claimbench_unified_report/summary.md",
+        root=tmp_path,
     )
 
     release_output = run_release_v2(
