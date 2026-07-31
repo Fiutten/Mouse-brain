@@ -104,6 +104,16 @@ def test_reviewer_attack_and_release_v2_are_reproducible(tmp_path, monkeypatch) 
         markdown=tmp_path / "results/manuscript_claim_audit/summary.md",
         root=tmp_path,
     )
+    _write_json(
+        tmp_path / "results/llm_claim_extraction_audit/summary.json",
+        {
+            "decision": "llm_claim_extraction_layer_ready_non_authoritative",
+            "num_candidates": 3,
+            "llm_authoritative": False,
+            "llm_api_called": False,
+            "git_revision": head,
+        },
+    )
     run_uncertainty(
         output=tmp_path / "results/uncertainty_claim_gate_v2/summary.json",
         markdown=tmp_path / "results/uncertainty_claim_gate_v2/summary.md",

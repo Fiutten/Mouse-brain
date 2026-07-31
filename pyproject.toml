@@ -71,6 +71,7 @@ mousebrainbench-claimbench-component-ablation = "mousebrainbench.benchmarks.clai
 mousebrainbench-claimbench-threat-model = "mousebrainbench.benchmarks.claimbench_threat_model:main"
 mousebrainbench-claimbench-unified-report = "mousebrainbench.benchmarks.claimbench_unified_report:main"
 mousebrainbench-claimbench-reproduce-package = "mousebrainbench.benchmarks.claimbench_reproduce_package:main"
+mousebrainbench-llm-claim-extraction-audit = "mousebrainbench.benchmarks.llm_claim_extraction_audit:main"
 mousebrainbench-run = "mousebrainbench.cli:main"
 
 [tool.setuptools.packages.find]

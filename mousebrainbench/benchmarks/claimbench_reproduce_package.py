@@ -26,6 +26,7 @@ from mousebrainbench.benchmarks.claimbench_v2_release import run as run_release
 from mousebrainbench.benchmarks.cost_fidelity_claim_frontier import run as run_frontier
 from mousebrainbench.benchmarks.external_benchmark_registry import run as run_registry
 from mousebrainbench.benchmarks.external_causal_claim_validation import run as run_external_causal
+from mousebrainbench.benchmarks.llm_claim_extraction_audit import run as run_llm_claims
 from mousebrainbench.benchmarks.manuscript_claim_auditor import run as run_manuscript
 from mousebrainbench.benchmarks.reviewer_attack_suite_v2 import run as run_reviewer
 from mousebrainbench.benchmarks.scifact_claim_verification import run as run_scifact
@@ -98,6 +99,12 @@ STAGES: tuple[Stage, ...] = (
         Path("results/manuscript_claim_audit/summary.json"),
         run_manuscript,
         "manuscript_claim_audit_passed",
+    ),
+    Stage(
+        "llm_claim_extraction_audit",
+        Path("results/llm_claim_extraction_audit/summary.json"),
+        run_llm_claims,
+        "llm_claim_extraction_layer_ready_non_authoritative",
     ),
     Stage(
         "cost_fidelity_frontier",

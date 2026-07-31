@@ -5,6 +5,7 @@ from mousebrainbench.benchmarks.claimbench_component_ablation import run as run_
 from mousebrainbench.benchmarks.claimbench_reproduce_package import STAGES
 from mousebrainbench.benchmarks.claimbench_threat_model import run as run_threat
 from mousebrainbench.benchmarks.claimbench_unified_report import run as run_unified
+from mousebrainbench.benchmarks.llm_claim_extraction_audit import run as run_llm_claims
 
 
 def _write_json(path: Path, payload: dict) -> None:
@@ -83,6 +84,16 @@ def _write_minimal_package(root: Path) -> None:
             "decision": "manuscript_claim_audit_passed",
             "existing_manuscript_inputs": ["paper/main.tex"],
             "active_risk_pattern_hits": [],
+            "git_revision": "abc",
+        },
+    )
+    _write_json(
+        root / "results/llm_claim_extraction_audit/summary.json",
+        {
+            "decision": "llm_claim_extraction_layer_ready_non_authoritative",
+            "num_candidates": 4,
+            "llm_authoritative": False,
+            "llm_api_called": False,
             "git_revision": "abc",
         },
     )
@@ -175,6 +186,7 @@ def test_threat_model_maps_reviewer_attacks_to_artifacts(tmp_path) -> None:
     assert payload["decision"] == "claimbench_threat_model_passed_with_boundaries"
     assert payload["passed_threats"] == payload["num_threats"]
     assert any(row["threat_id"] == "causal_overclaim" for row in payload["rows"])
+    assert any(row["threat_id"] == "llm_authority_drift" for row in payload["rows"])
 
 
 def test_reproduction_runner_declares_ordered_package_stages() -> None:
@@ -182,8 +194,28 @@ def test_reproduction_runner_declares_ordered_package_stages() -> None:
     data_roots = {stage.name: stage.data_root for stage in STAGES}
 
     assert stage_names.index("component_ablation") < stage_names.index("threat_model")
+    assert stage_names.index("llm_claim_extraction_audit") < stage_names.index("threat_model")
     assert stage_names.index("threat_model") < stage_names.index("unified_report")
     assert stage_names.index("unified_report") < stage_names.index("release_check")
     assert stage_names[-1] == "release_check"
     assert data_roots["scifact_external_claims"] is not None
     assert data_roots["tuebingen_causal_direction"] is not None
+
+
+def test_llm_claim_extraction_layer_is_non_authoritative(tmp_path) -> None:
+    (tmp_path / "paper").mkdir()
+    (tmp_path / "paper/main.tex").write_text(
+        "MouseBrainBench predicts neural responses but does not validate a causal mechanism. "
+        "The framework blocks state-of-the-art predictor claims without matched baselines."
+    )
+    output = run_llm_claims(
+        output=tmp_path / "results/llm_claim_extraction_audit/summary.json",
+        markdown=tmp_path / "results/llm_claim_extraction_audit/summary.md",
+        root=tmp_path,
+    )
+    payload = json.loads(output.read_text())
+
+    assert payload["decision"] == "llm_claim_extraction_layer_ready_non_authoritative"
+    assert payload["llm_api_called"] is False
+    assert payload["llm_authoritative"] is False
+    assert payload["num_candidates"] > 0

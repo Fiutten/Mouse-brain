@@ -22,6 +22,7 @@ REQUIRED_ARTIFACTS = (
     Path("results/external_causal_claim_validation/summary.json"),
     Path("results/reviewer_attack_suite_v2/summary.json"),
     Path("results/manuscript_claim_audit/summary.json"),
+    Path("results/llm_claim_extraction_audit/summary.json"),
     Path("results/uncertainty_claim_gate_v2/summary.json"),
     Path("results/cost_fidelity_claim_frontier/summary.json"),
     Path("results/external_benchmark_registry/summary.json"),
@@ -58,6 +59,9 @@ def run(output: Path = DEFAULT_OUTPUT, markdown: Path = DEFAULT_MARKDOWN, root: 
             "reviewer_attack_suite_v2_passed_with_reportable_limits"
         ),
         "results/manuscript_claim_audit/summary.json": "manuscript_claim_audit_passed",
+        "results/llm_claim_extraction_audit/summary.json": (
+            "llm_claim_extraction_layer_ready_non_authoritative"
+        ),
         "results/uncertainty_claim_gate_v2/summary.json": (
             "uncertainty_gate_blocks_unsupported_support"
         ),

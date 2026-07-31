@@ -51,6 +51,7 @@ def build_criteria(root: Path = Path(".")) -> list[dict[str, Any]]:
     scifact = _load(root / "results/scifact_claim_verification/summary.json")
     tuebingen = _load(root / "results/tuebingen_causal_direction/summary.json")
     manuscript = _load(root / "results/manuscript_claim_audit/summary.json")
+    llm_claims = _load(root / "results/llm_claim_extraction_audit/summary.json")
     ablation = _load(root / "results/claimbench_component_ablation/summary.json")
     reviewer = _load(root / "results/reviewer_attack_suite_v2/summary.json")
     threat = _load(root / "results/claimbench_threat_model/summary.json")
@@ -144,6 +145,22 @@ def build_criteria(root: Path = Path(".")) -> list[dict[str, Any]]:
                 f"active_hits={len(manuscript.get('active_risk_pattern_hits', []))}"
             ),
             interpretation="The current manuscript wording passes executable claim-boundary checks.",
+        ),
+        _criterion(
+            name="llm_claim_extraction_boundary",
+            passed=(
+                llm_claims.get("decision")
+                == "llm_claim_extraction_layer_ready_non_authoritative"
+                and not bool(llm_claims.get("llm_authoritative", True))
+                and not bool(llm_claims.get("llm_api_called", True))
+            ),
+            artifact="results/llm_claim_extraction_audit/summary.json",
+            evidence=(
+                f"candidates={llm_claims.get('num_candidates')}; "
+                f"authoritative={llm_claims.get('llm_authoritative')}; "
+                f"api_called={llm_claims.get('llm_api_called')}"
+            ),
+            interpretation="LLM assistance is limited to candidate extraction, not claim authorization.",
         ),
         _criterion(
             name="component_ablation_nonredundancy",

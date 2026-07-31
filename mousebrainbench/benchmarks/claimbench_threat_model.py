@@ -76,6 +76,14 @@ THREATS: tuple[Threat, ...] = (
         severity="critical",
     ),
     Threat(
+        threat_id="llm_authority_drift",
+        reviewer_attack="The LLM becomes an unverified judge of scientific claims.",
+        required_artifact="results/llm_claim_extraction_audit/summary.json",
+        pass_decision="llm_claim_extraction_layer_ready_non_authoritative",
+        boundary="Use LLMs only for candidate extraction and conservative wording support.",
+        severity="critical",
+    ),
+    Threat(
         threat_id="uncertainty_hidden",
         reviewer_attack="Borderline evidence is forced into binary support.",
         required_artifact="results/uncertainty_claim_gate_v2/summary.json",
