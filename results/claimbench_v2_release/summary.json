@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
+  "git_revision": "fe5b8353ea8838fdbcbd159770d0aef5450763d1",
   "analysis": "claimbench_v2_release",
   "baseline_commit": "ff0aca9",
   "missing_artifacts": [],
@@ -90,6 +90,20 @@
       "git_revision": "f980daac08c5c462e92654d262d691e3815ab549",
       "decision": "tuebingen_external_direction_benchmark_ready",
       "expected_decision": "tuebingen_external_direction_benchmark_ready"
+    },
+    {
+      "artifact": "results/claimbench_component_ablation/summary.json",
+      "exists": true,
+      "git_revision": "fe5b8353ea8838fdbcbd159770d0aef5450763d1",
+      "decision": "claimbench_components_have_nonredundant_value",
+      "expected_decision": "claimbench_components_have_nonredundant_value"
+    },
+    {
+      "artifact": "results/claimbench_unified_report/summary.json",
+      "exists": true,
+      "git_revision": "fe5b8353ea8838fdbcbd159770d0aef5450763d1",
+      "decision": "claimbench_v2_methodological_package_ready",
+      "expected_decision": "claimbench_v2_methodological_package_ready"
     }
   ],
   "decision": "claimbench_v2_release_ready"

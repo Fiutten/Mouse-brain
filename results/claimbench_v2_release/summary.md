@@ -20,3 +20,5 @@
 | `results/external_benchmark_registry/summary.json` | `True` | `external_benchmarks_registered_with_pending_data` | `external_benchmarks_registered_with_pending_data` | `97648ba5b849ae3c8d7e77b9c3a172ee4ab6e7c9` |
 | `results/scifact_claim_verification/summary.json` | `True` | `scifact_external_claim_audit_ready` | `scifact_external_claim_audit_ready` | `f980daac08c5c462e92654d262d691e3815ab549` |
 | `results/tuebingen_causal_direction/summary.json` | `True` | `tuebingen_external_direction_benchmark_ready` | `tuebingen_external_direction_benchmark_ready` | `f980daac08c5c462e92654d262d691e3815ab549` |
+| `results/claimbench_component_ablation/summary.json` | `True` | `claimbench_components_have_nonredundant_value` | `claimbench_components_have_nonredundant_value` | `fe5b8353ea8838fdbcbd159770d0aef5450763d1` |
+| `results/claimbench_unified_report/summary.json` | `True` | `claimbench_v2_methodological_package_ready` | `claimbench_v2_methodological_package_ready` | `fe5b8353ea8838fdbcbd159770d0aef5450763d1` |
