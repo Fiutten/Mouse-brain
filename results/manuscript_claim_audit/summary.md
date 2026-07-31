@@ -15,4 +15,4 @@
 | `reviewer_attack_v2` | `reviewer_defense_claim` | `high` | `supported` | `False` | `0` |
 | `scifact_external_claim_audit` | `external_claim_verification` | `medium` | `supported` | `False` | `0` |
 | `tuebingen_direction_overclaim_control` | `causal_direction_control` | `high` | `supported` | `False` | `0` |
-| `claimbench_v2_release_clean` | `reproducibility_claim` | `high` | `blocked` | `False` | `0` |
+| `claimbench_v2_release_clean` | `reproducibility_claim` | `high` | `supported` | `False` | `0` |

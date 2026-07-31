@@ -1,9 +1,9 @@
 {
   "version": "0.6.0",
-  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
+  "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24",
   "analysis": "claimbench_reproduction_manifest",
-  "num_stages": 14,
-  "passed_stages": 14,
+  "num_stages": 15,
+  "passed_stages": 15,
   "failed_stages": [],
   "stages": [
     {
@@ -12,7 +12,7 @@
       "expected_decision": "claimbench_v2_blocks_overclaiming_under_broad_attacks",
       "observed_decision": "claimbench_v2_blocks_overclaiming_under_broad_attacks",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "threshold_sensitivity_v2",
@@ -20,7 +20,7 @@
       "expected_decision": "claim_thresholds_have_nontrivial_safe_region_with_reportable_limits",
       "observed_decision": "claim_thresholds_have_nontrivial_safe_region_with_reportable_limits",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "external_causal_synthetic",
@@ -28,7 +28,7 @@
       "expected_decision": "external_causal_validation_passed",
       "observed_decision": "external_causal_validation_passed",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "uncertainty_gate_v2",
@@ -36,7 +36,7 @@
       "expected_decision": "uncertainty_gate_blocks_unsupported_support",
       "observed_decision": "uncertainty_gate_blocks_unsupported_support",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "external_benchmark_registry",
@@ -44,7 +44,7 @@
       "expected_decision": "external_benchmarks_registered_with_pending_data",
       "observed_decision": "external_benchmarks_registered_with_pending_data",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "scifact_external_claims",
@@ -52,7 +52,7 @@
       "expected_decision": "scifact_external_claim_audit_ready",
       "observed_decision": "scifact_external_claim_audit_ready",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "tuebingen_causal_direction",
@@ -60,7 +60,7 @@
       "expected_decision": "tuebingen_external_direction_benchmark_ready",
       "observed_decision": "tuebingen_external_direction_benchmark_ready",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "manuscript_claim_audit",
@@ -68,7 +68,15 @@
       "expected_decision": "manuscript_claim_audit_passed",
       "observed_decision": "manuscript_claim_audit_passed",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
+    },
+    {
+      "stage": "llm_claim_extraction_audit",
+      "artifact": "results/llm_claim_extraction_audit/summary.json",
+      "expected_decision": "llm_claim_extraction_layer_ready_non_authoritative",
+      "observed_decision": "llm_claim_extraction_layer_ready_non_authoritative",
+      "passed": true,
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "cost_fidelity_frontier",
@@ -76,7 +84,7 @@
       "expected_decision": "cost_fidelity_claim_frontier_built",
       "observed_decision": "cost_fidelity_claim_frontier_built",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "component_ablation",
@@ -84,7 +92,7 @@
       "expected_decision": "claimbench_components_have_nonredundant_value",
       "observed_decision": "claimbench_components_have_nonredundant_value",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "reviewer_attack_v2",
@@ -92,7 +100,7 @@
       "expected_decision": "reviewer_attack_suite_v2_passed_with_reportable_limits",
       "observed_decision": "reviewer_attack_suite_v2_passed_with_reportable_limits",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "threat_model",
@@ -100,7 +108,7 @@
       "expected_decision": "claimbench_threat_model_passed_with_boundaries",
       "observed_decision": "claimbench_threat_model_passed_with_boundaries",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "unified_report",
@@ -108,7 +116,7 @@
       "expected_decision": "claimbench_v2_methodological_package_ready",
       "observed_decision": "claimbench_v2_methodological_package_ready",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     },
     {
       "stage": "release_check",
@@ -116,7 +124,7 @@
       "expected_decision": "claimbench_v2_release_ready",
       "observed_decision": "claimbench_v2_release_ready",
       "passed": true,
-      "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be"
+      "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24"
     }
   ],
   "decision": "claimbench_reproduction_package_passed"

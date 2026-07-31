@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
+  "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24",
   "analysis": "reviewer_attack_suite_v2",
   "inputs": {
     "adversarial_v2": "results/claim_adversarial_v2/summary.json",

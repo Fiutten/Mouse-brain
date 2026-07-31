@@ -1,7 +1,7 @@
 # ClaimBench v2 Threat Model
 
 - Decision: `claimbench_threat_model_passed_with_boundaries`
-- Threats passed: `6/6`
+- Threats passed: `7/7`
 - Critical failed threats: `0`
 
 | Threat | Severity | Passed | Artifact | Boundary |
@@ -11,4 +11,5 @@
 | `synthetic_overfit` | `high` | `True` | `results/scifact_claim_verification/summary.json` | Use SciFact as external claim-auditing evidence, not SOTA verification. |
 | `causal_overclaim` | `critical` | `True` | `results/tuebingen_causal_direction/summary.json` | Use Tuebingen to block causal overclaims, not to claim causal-discovery performance. |
 | `wording_drift` | `critical` | `True` | `results/manuscript_claim_audit/summary.json` | Keep manuscript wording tied to executable claim contracts. |
+| `llm_authority_drift` | `critical` | `True` | `results/llm_claim_extraction_audit/summary.json` | Use LLMs only for candidate extraction and conservative wording support. |
 | `uncertainty_hidden` | `high` | `True` | `results/uncertainty_claim_gate_v2/summary.json` | Uncertain claims remain uncertain; uncertainty cannot become support. |

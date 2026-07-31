@@ -1,9 +1,9 @@
 {
   "version": "0.6.0",
-  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
+  "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24",
   "analysis": "claimbench_unified_report",
-  "num_criteria": 9,
-  "passed_criteria": 9,
+  "num_criteria": 10,
+  "passed_criteria": 10,
   "failed_criteria": [],
   "criteria": [
     {
@@ -49,6 +49,13 @@
       "interpretation": "The current manuscript wording passes executable claim-boundary checks."
     },
     {
+      "name": "llm_claim_extraction_boundary",
+      "passed": true,
+      "artifact": "results/llm_claim_extraction_audit/summary.json",
+      "evidence": "candidates=120; authoritative=False; api_called=False",
+      "interpretation": "LLM assistance is limited to candidate extraction, not claim authorization."
+    },
+    {
       "name": "component_ablation_nonredundancy",
       "passed": true,
       "artifact": "results/claimbench_component_ablation/summary.json",
@@ -66,7 +73,7 @@
       "name": "reviewer_threat_model",
       "passed": true,
       "artifact": "results/claimbench_threat_model/summary.json",
-      "evidence": "passed=6; critical_failed=0",
+      "evidence": "passed=7; critical_failed=0",
       "interpretation": "Known reviewer threats are mapped to artifacts and claim boundaries."
     }
   ],

@@ -1,9 +1,9 @@
 {
   "version": "0.6.0",
-  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
+  "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24",
   "analysis": "claimbench_threat_model",
-  "num_threats": 6,
-  "passed_threats": 6,
+  "num_threats": 7,
+  "passed_threats": 7,
   "failed_threats": [],
   "critical_failed_threats": [],
   "rows": [
@@ -56,6 +56,16 @@
       "observed_decision": "manuscript_claim_audit_passed",
       "passed": true,
       "claim_boundary": "Keep manuscript wording tied to executable claim contracts."
+    },
+    {
+      "threat_id": "llm_authority_drift",
+      "severity": "critical",
+      "reviewer_attack": "The LLM becomes an unverified judge of scientific claims.",
+      "required_artifact": "results/llm_claim_extraction_audit/summary.json",
+      "expected_decision": "llm_claim_extraction_layer_ready_non_authoritative",
+      "observed_decision": "llm_claim_extraction_layer_ready_non_authoritative",
+      "passed": true,
+      "claim_boundary": "Use LLMs only for candidate extraction and conservative wording support."
     },
     {
       "threat_id": "uncertainty_hidden",

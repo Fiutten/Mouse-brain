@@ -1,6 +1,6 @@
 # Next paper technical core
 
-Date: 2026-07-30
+Date: 2026-07-31
 
 ## Working title
 
@@ -23,19 +23,26 @@ model evidence, uncertainty, cost, and claim scope.
 - External causal controls show that the gate is not only a MICRONS/Sensorium
   artifact.
 - The claim DSL and manuscript auditor convert claims into executable contracts.
+- The LLM-ready claim extraction layer is implemented as a non-authoritative
+  candidate extractor with deterministic fallback.
+- The package is reproducible through a single runner:
+  `mousebrainbench.benchmarks.claimbench_reproduce_package`.
+- The reviewer threat model is executable and currently passes all critical
+  threats with explicit claim boundaries.
 
 ## What is not yet strong enough
 
 - SciFact and Tuebingen cause-effect pairs have executable adapters. They are
-  external validation cases, not SOTA claims. Sachs remains registered but not
-  integrated.
+  external validation cases, not SOTA claims. This is now an explicit claim
+  boundary in the unified report and threat model.
 - The uncertainty-aware gate currently uses deterministic local perturbations.
   It is useful as a conservative first layer, but it is not a full Bayesian or
   bootstrap uncertainty model.
 - The cost-fidelity frontier uses transparent proxy costs. A Q1 paper should add
   measured wall-clock, memory, data volume, and possibly energy estimates.
-- The manuscript auditor currently matches declared wording. A stronger version
-  should extract claims from LaTeX/PDF and classify paraphrases.
+- The current LLM-ready layer extracts claim candidates deterministically and can
+  ingest optional local LLM outputs. A stronger version should evaluate real LLM
+  extractors under a fixed benchmark of annotated manuscript claims.
 
 ## Novelty position
 
@@ -64,7 +71,7 @@ uncertain under the available artifacts.
 2. Add a stronger causal-direction baseline for Tuebingen before making any
    causal-discovery performance claim.
 3. Replace proxy cost with measured runtime/memory/data-volume metrics.
-4. Add paraphrase-level claim extraction from LaTeX/PDF.
+4. Build an annotated claim-extraction benchmark for manuscript sentences.
 5. Add bootstrap or Bayesian uncertainty for real MICRONS/Sensorium evidence.
 6. Produce a paper-level claim audit table automatically from the final LaTeX.
 

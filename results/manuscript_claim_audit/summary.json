@@ -1,6 +1,6 @@
 {
   "version": "0.6.0",
-  "git_revision": "215defc004f2d96d15e9ee0928cd4427edb9f8be",
+  "git_revision": "4fecaaf07773d1b6353cdba8334eb04e2a497f24",
   "analysis": "manuscript_claim_audit",
   "claims_file": "configs/claims/mousebrainbench_claims.yaml",
   "manuscript_inputs": [
@@ -126,7 +126,7 @@
       "evidence_family": "reproducibility",
       "severity": "high",
       "scope": "post_submission_extension",
-      "artifact_status": "blocked",
+      "artifact_status": "supported",
       "permitted_wording_present": false,
       "blocked_wording_hits": [],
       "blocked_pattern_hits": [],
@@ -136,10 +136,7 @@
         "no failing expected decisions"
       ],
       "missing_artifacts": [],
-      "failed_expectations": [
-        "results/claimbench_v2_release/summary.json::decision expected {'key': 'decision', 'equals': 'claimbench_v2_release_ready'}, observed 'claimbench_v2_release_requires_cleanup'",
-        "results/claimbench_v2_release/summary.json::failing_artifacts expected {'key': 'failing_artifacts', 'equals': []}, observed ['results/claimbench_threat_model/summary.json', 'results/claimbench_unified_report/summary.json']"
-      ]
+      "failed_expectations": []
     }
   ],
   "blocked_wording_hits": [],

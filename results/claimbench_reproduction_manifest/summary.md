@@ -1,7 +1,7 @@
 # ClaimBench v2 Reproduction Manifest
 
 - Decision: `claimbench_reproduction_package_passed`
-- Stages passed: `14/14`
+- Stages passed: `15/15`
 
 | Stage | Passed | Decision | Artifact |
 |---|---:|---|---|
@@ -13,6 +13,7 @@
 | `scifact_external_claims` | `True` | `scifact_external_claim_audit_ready` | `results/scifact_claim_verification/summary.json` |
 | `tuebingen_causal_direction` | `True` | `tuebingen_external_direction_benchmark_ready` | `results/tuebingen_causal_direction/summary.json` |
 | `manuscript_claim_audit` | `True` | `manuscript_claim_audit_passed` | `results/manuscript_claim_audit/summary.json` |
+| `llm_claim_extraction_audit` | `True` | `llm_claim_extraction_layer_ready_non_authoritative` | `results/llm_claim_extraction_audit/summary.json` |
 | `cost_fidelity_frontier` | `True` | `cost_fidelity_claim_frontier_built` | `results/cost_fidelity_claim_frontier/summary.json` |
 | `component_ablation` | `True` | `claimbench_components_have_nonredundant_value` | `results/claimbench_component_ablation/summary.json` |
 | `reviewer_attack_v2` | `True` | `reviewer_attack_suite_v2_passed_with_reportable_limits` | `results/reviewer_attack_suite_v2/summary.json` |

@@ -10,6 +10,6 @@
 - BM25/rationale CI: `0.492`
 - Abstention rate: `0.363`
 - Abstaining ORI: `0.393`
-- Runtime seconds: `4.374`
+- Runtime seconds: `4.219`
 
 Interpretation: BM25/rationale is a transparent local evidence-retrieval baseline. It is used to separate retrieval, support classification, and overclaiming risk; it is not a SciFact SOTA system.
