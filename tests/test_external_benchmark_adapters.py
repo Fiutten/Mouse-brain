@@ -59,6 +59,10 @@ def test_scifact_adapter_detects_lexical_shortcut_overclaiming(tmp_path) -> None
 
     assert payload["shortcut_false_positives"] >= 1
     assert payload["shortcut_overclaiming_risk"] > 0
+    assert payload["retrieval_recall_at_5"] > 0
+    assert "retrieval_overclaiming_risk" in payload
+    assert payload["rows"][0]["bm25_topk_doc_ids"]
+    assert payload["rows"][0]["retrieval_label"] in {"SUPPORT", "NOT_ENOUGH_INFO"}
 
 
 def test_tuebingen_adapter_runs_on_local_pair_subset(tmp_path) -> None:
@@ -77,3 +81,6 @@ def test_tuebingen_adapter_runs_on_local_pair_subset(tmp_path) -> None:
 
     assert payload["num_pairs_loaded"] == 1
     assert payload["decision"] == "tuebingen_external_direction_benchmark_insufficient"
+    assert set(payload["method_summary"]) == {"anm", "igci", "lingam_proxy"}
+    assert payload["consensus_curve"]
+    assert payload["causal_performance_claim_allowed"] is False

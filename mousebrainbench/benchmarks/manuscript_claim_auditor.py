@@ -16,6 +16,22 @@ from mousebrainbench.claimdsl import audit_claim_specs, load_claim_specs
 DEFAULT_CLAIMS = Path("configs/claims/mousebrainbench_claims.yaml")
 DEFAULT_OUTPUT = Path("results/manuscript_claim_audit/summary.json")
 DEFAULT_MARKDOWN = Path("results/manuscript_claim_audit/summary.md")
+DEFAULT_MANUSCRIPT_GLOBS = (
+    "paper/main.tex",
+    "paper/README.md",
+    "README.md",
+)
+FALLBACK_MANUSCRIPT_GLOBS = (
+    "paper/main_anonymous.tex",
+    "paper/sections/*.tex",
+    "paper/tables/*.tex",
+)
+NEGATING_CLAIM_CONTEXT = (
+    r"\b(not|no|without|does\s+not|do\s+not|cannot|not\s+a|must\s+not|"
+    r"blocks?|blocking|rejects?|rejecting|downgrades?|downgraded|downgrading|"
+    r"not\s+validate|does\s+not\s+validate|not\s+interpreted|not\s+promoted|"
+    r"cannot\s+promote|not\s+allowed)\b"
+)
 
 RISK_PATTERNS: tuple[dict[str, str], ...] = (
     {
@@ -23,7 +39,7 @@ RISK_PATTERNS: tuple[dict[str, str], ...] = (
         "severity": "high",
         "claim_family": "digital_twin",
         "pattern": r"\b(complete|full|whole[- ]brain)\s+(mouse[- ]brain\s+)?digital\s+twin\b",
-        "negation_window": r"\b(not|no|without|does\s+not|do\s+not|cannot|not\s+a)\b",
+        "negation_window": NEGATING_CLAIM_CONTEXT,
         "reason": "Complete or whole-brain digital-twin wording requires evidence not present here.",
     },
     {
@@ -32,9 +48,11 @@ RISK_PATTERNS: tuple[dict[str, str], ...] = (
         "claim_family": "causal",
         "pattern": (
             r"\b(causal\s+mechanism|causal\s+evidence|causal\s+effect|"
-            r"causality|causation|mechanistic\s+cause)\b"
+            r"(establishes?|validates?|proves?|supports?)\s+causality|"
+            r"(establishes?|validates?|proves?|supports?)\s+causation|"
+            r"mechanistic\s+cause)\b"
         ),
-        "negation_window": r"\b(not|no|without|does\s+not|do\s+not|cannot|non[- ]causal|no\s+es)\b",
+        "negation_window": rf"{NEGATING_CLAIM_CONTEXT}|non[- ]causal|no\s+es",
         "reason": "Causal wording requires interventional or causal-identification evidence.",
     },
     {
@@ -42,7 +60,7 @@ RISK_PATTERNS: tuple[dict[str, str], ...] = (
         "severity": "high",
         "claim_family": "benchmark_performance",
         "pattern": r"\b(state[- ]of[- ]the[- ]art|SOTA|outperforms\s+all|best[- ]performing)\b",
-        "negation_window": r"\b(not|no|without|does\s+not|do\s+not|cannot)\b",
+        "negation_window": NEGATING_CLAIM_CONTEXT,
         "reason": "SOTA wording requires comparable official baselines and matched protocols.",
     },
     {
@@ -68,12 +86,30 @@ def _normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text.lower()).strip()
 
 
-def _read_texts(paths: tuple[Path, ...]) -> str:
+def _resolve_manuscripts(root: Path, paths: tuple[Path, ...] | None) -> tuple[Path, ...]:
+    """Resolve explicit manuscript files or the default paper source set."""
+
+    if paths:
+        return tuple(root / path for path in paths)
+    resolved: list[Path] = []
+    for pattern in DEFAULT_MANUSCRIPT_GLOBS:
+        matches = sorted(root.glob(pattern))
+        resolved.extend(path for path in matches if path.is_file())
+    if not any(path.name == "main.tex" for path in resolved):
+        for pattern in FALLBACK_MANUSCRIPT_GLOBS:
+            matches = sorted(root.glob(pattern))
+            resolved.extend(path for path in matches if path.is_file())
+    return tuple(dict.fromkeys(resolved))
+
+
+def _read_texts(paths: tuple[Path, ...]) -> tuple[str, list[str]]:
     chunks = []
+    existing = []
     for path in paths:
         if path.exists():
+            existing.append(str(path))
             chunks.append(path.read_text(errors="ignore"))
-    return "\n".join(chunks)
+    return "\n".join(chunks), existing
 
 
 def _is_negated(text: str, start: int, negation_pattern: str) -> bool:
@@ -85,7 +121,7 @@ def _is_negated(text: str, start: int, negation_pattern: str) -> bool:
     whole-brain digital twin".
     """
 
-    prefix = text[max(0, start - 80) : start]
+    prefix = text[max(0, start - 180) : start]
     return bool(re.search(negation_pattern, prefix, flags=re.IGNORECASE))
 
 
@@ -111,7 +147,7 @@ def _pattern_hits(text: str) -> list[dict[str, Any]]:
 
 def run(
     claims: Path = DEFAULT_CLAIMS,
-    manuscript: tuple[Path, ...] = (Path("README.md"),),
+    manuscript: tuple[Path, ...] | None = None,
     output: Path = DEFAULT_OUTPUT,
     markdown: Path = DEFAULT_MARKDOWN,
     root: Path = Path("."),
@@ -120,8 +156,9 @@ def run(
 
     specs = load_claim_specs(root / claims)
     audit_results = audit_claim_specs(specs, root=root)
-    text = _normalize(_read_texts(tuple(root / path for path in manuscript)))
-    raw_text = _read_texts(tuple(root / path for path in manuscript))
+    manuscript_paths = _resolve_manuscripts(root, manuscript)
+    raw_text, existing_manuscripts = _read_texts(manuscript_paths)
+    text = _normalize(raw_text)
     pattern_hits = _pattern_hits(raw_text)
     active_pattern_hits = [hit for hit in pattern_hits if not hit["negated"]]
     rows: list[dict[str, Any]] = []
@@ -166,7 +203,12 @@ def run(
         "git_revision": code_revision(),
         "analysis": "manuscript_claim_audit",
         "claims_file": str(claims),
-        "manuscript_inputs": [str(path) for path in manuscript],
+        "manuscript_inputs": [
+            str(path.relative_to(root)) if path.is_relative_to(root) else str(path)
+            for path in manuscript_paths
+        ],
+        "existing_manuscript_inputs": existing_manuscripts,
+        "manuscript_character_count": len(raw_text),
         "rows": rows,
         "blocked_wording_hits": blocked_hits,
         "risk_pattern_hits": pattern_hits,
@@ -192,6 +234,8 @@ def write_markdown(payload: dict[str, Any], markdown: Path) -> None:
         "",
         f"- Decision: `{payload['decision']}`",
         f"- Claims audited: `{len(payload['rows'])}`",
+        f"- Manuscript inputs found: `{len(payload.get('existing_manuscript_inputs', []))}`",
+        f"- Manuscript characters: `{payload.get('manuscript_character_count', 0)}`",
         f"- Blocked wording hits: `{len(payload['blocked_wording_hits'])}`",
         f"- Active risk-pattern hits: `{len(payload.get('active_risk_pattern_hits', []))}`",
         "",
@@ -227,7 +271,7 @@ def main() -> None:
     parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
     parser.add_argument("--root", type=Path, default=Path("."))
     args = parser.parse_args()
-    manuscripts = tuple(args.manuscript) if args.manuscript else (Path("README.md"),)
+    manuscripts = tuple(args.manuscript) if args.manuscript else None
     print(
         json.dumps(
             {

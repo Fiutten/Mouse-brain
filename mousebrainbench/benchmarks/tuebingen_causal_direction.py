@@ -50,22 +50,29 @@ def _standardize(values: np.ndarray) -> np.ndarray:
     return (values - np.mean(values)) / std
 
 
-def _normalized_residual_error(source: np.ndarray, target: np.ndarray) -> float:
-    """Return normalized polynomial residual error for one direction."""
+def _polyfit_residual(source: np.ndarray, target: np.ndarray, degree: int = 2) -> np.ndarray:
+    """Return standardized polynomial residuals for one direction."""
 
     source = _standardize(source.reshape(-1))
     target = _standardize(target.reshape(-1))
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", np.exceptions.RankWarning)
-        coeff = np.polyfit(source, target, deg=2)
+        coeff = np.polyfit(source, target, deg=degree)
     predicted = np.polyval(coeff, source)
-    residual = target - predicted
+    return target - predicted
+
+
+def _normalized_residual_error(source: np.ndarray, target: np.ndarray, degree: int = 2) -> float:
+    """Return normalized polynomial residual error for one direction."""
+
+    target = _standardize(target.reshape(-1))
+    residual = _polyfit_residual(source, target, degree=degree)
     return float(np.mean(residual**2) / (np.var(target) + 1e-12))
 
 
 def _anm_direction(cause_values: np.ndarray, effect_values: np.ndarray) -> tuple[str, float]:
-    forward = _normalized_residual_error(cause_values, effect_values)
-    backward = _normalized_residual_error(effect_values, cause_values)
+    forward = min(_normalized_residual_error(cause_values, effect_values, degree=d) for d in (1, 2, 3))
+    backward = min(_normalized_residual_error(effect_values, cause_values, degree=d) for d in (1, 2, 3))
     margin = abs(backward - forward)
     if margin < 0.02:
         return "uncertain", margin
@@ -103,16 +110,93 @@ def _igci_direction(cause_values: np.ndarray, effect_values: np.ndarray) -> tupl
     return ("forward", margin) if forward < backward else ("backward", margin)
 
 
-def _ensemble_direction(cause_values: np.ndarray, effect_values: np.ndarray) -> tuple[str, float, str, str]:
+def _safe_abs_corr(left: np.ndarray, right: np.ndarray) -> float:
+    if np.std(left) == 0 or np.std(right) == 0:
+        return 0.0
+    value = np.corrcoef(left.reshape(-1), right.reshape(-1))[0, 1]
+    if not np.isfinite(value):
+        return 0.0
+    return abs(float(value))
+
+
+def _residual_dependence_score(source: np.ndarray, residual: np.ndarray) -> float:
+    """Approximate residual-source dependence without optional HSIC packages."""
+
+    source = _standardize(source.reshape(-1))
+    residual = _standardize(residual.reshape(-1))
+    return float(
+        max(
+            _safe_abs_corr(source, residual),
+            _safe_abs_corr(source, residual**2),
+            _safe_abs_corr(source**2, residual),
+            _safe_abs_corr(source**2, residual**2),
+        )
+    )
+
+
+def _lingam_proxy_direction(cause_values: np.ndarray, effect_values: np.ndarray) -> tuple[str, float]:
+    """Linear non-Gaussian causal-direction proxy.
+
+    This is not a full DirectLiNGAM implementation. It is a transparent
+    residual-independence baseline that is valid only as a reviewer-facing
+    control against correlation-only causal wording.
+    """
+
+    forward_residual = _polyfit_residual(cause_values, effect_values, degree=1)
+    backward_residual = _polyfit_residual(effect_values, cause_values, degree=1)
+    forward_dep = _residual_dependence_score(cause_values, forward_residual)
+    backward_dep = _residual_dependence_score(effect_values, backward_residual)
+    margin = abs(backward_dep - forward_dep)
+    if margin < 0.02:
+        return "uncertain", margin
+    return ("forward", margin) if forward_dep < backward_dep else ("backward", margin)
+
+
+def _ensemble_direction(
+    cause_values: np.ndarray, effect_values: np.ndarray
+) -> tuple[str, float, str, str, str, int]:
     anm_direction, anm_margin = _anm_direction(cause_values, effect_values)
     igci_direction, igci_margin = _igci_direction(cause_values, effect_values)
-    if anm_direction == igci_direction and anm_direction != "uncertain":
-        return anm_direction, min(anm_margin, igci_margin), anm_direction, igci_direction
+    lingam_direction, lingam_margin = _lingam_proxy_direction(cause_values, effect_values)
+    votes = [anm_direction, igci_direction, lingam_direction]
+    forward_votes = sum(vote == "forward" for vote in votes)
+    backward_votes = sum(vote == "backward" for vote in votes)
+    if forward_votes >= 2:
+        margins = [
+            margin
+            for vote, margin in (
+                (anm_direction, anm_margin),
+                (igci_direction, igci_margin),
+                (lingam_direction, lingam_margin),
+            )
+            if vote == "forward"
+        ]
+        return "forward", min(margins), anm_direction, igci_direction, lingam_direction, forward_votes
+    if backward_votes >= 2:
+        margins = [
+            margin
+            for vote, margin in (
+                (anm_direction, anm_margin),
+                (igci_direction, igci_margin),
+                (lingam_direction, lingam_margin),
+            )
+            if vote == "backward"
+        ]
+        return "backward", min(margins), anm_direction, igci_direction, lingam_direction, backward_votes
     if anm_direction != "uncertain" and anm_margin >= 0.12:
-        return anm_direction, anm_margin, anm_direction, igci_direction
+        return anm_direction, anm_margin, anm_direction, igci_direction, lingam_direction, 1
     if igci_direction != "uncertain" and igci_margin >= 0.12:
-        return igci_direction, igci_margin, anm_direction, igci_direction
-    return "uncertain", max(anm_margin, igci_margin), anm_direction, igci_direction
+        return igci_direction, igci_margin, anm_direction, igci_direction, lingam_direction, 1
+    if lingam_direction != "uncertain" and lingam_margin >= 0.12:
+        return lingam_direction, lingam_margin, anm_direction, igci_direction, lingam_direction, 1
+    return (
+        "uncertain",
+        max(anm_margin, igci_margin, lingam_margin),
+        anm_direction,
+        igci_direction,
+        lingam_direction,
+        max(forward_votes, backward_votes),
+    )
 
 
 def run(
@@ -150,7 +234,14 @@ def run(
         cause = values[:, item["cause_start"] : item["cause_end"]].mean(axis=1)
         effect = values[:, item["effect_start"] : item["effect_end"]].mean(axis=1)
         corr = abs(float(np.corrcoef(cause, effect)[0, 1]))
-        direction, margin, anm_direction, igci_direction = _ensemble_direction(cause, effect)
+        (
+            direction,
+            margin,
+            anm_direction,
+            igci_direction,
+            lingam_proxy_direction,
+            consensus_votes,
+        ) = _ensemble_direction(cause, effect)
         correct = direction == "forward"
         rows.append(
             {
@@ -159,6 +250,8 @@ def run(
                 "predicted_direction": direction,
                 "anm_direction": anm_direction,
                 "igci_direction": igci_direction,
+                "lingam_proxy_direction": lingam_proxy_direction,
+                "consensus_votes": consensus_votes,
                 "direction_margin": margin,
                 "correct_direction": correct,
                 "weight": item["weight"],
@@ -171,6 +264,15 @@ def run(
     weighted_total = sum(row["weight"] for row in attempted)
     weighted_correct = sum(row["weight"] for row in attempted if row["correct_direction"])
     corr_overclaims = sum(row["correlation_only_would_overclaim_direction"] for row in rows)
+    method_summary = {}
+    for method_key in ("anm_direction", "igci_direction", "lingam_proxy_direction"):
+        method_attempted = [row for row in rows if row[method_key] != "uncertain"]
+        method_correct = sum(row[method_key] == "forward" for row in method_attempted)
+        method_summary[method_key.replace("_direction", "")] = {
+            "attempts": len(method_attempted),
+            "coverage": len(method_attempted) / len(rows) if rows else 0.0,
+            "accuracy": method_correct / len(method_attempted) if method_attempted else 0.0,
+        }
     confidence_curve = []
     for threshold in (0.02, 0.05, 0.10, 0.15, 0.20):
         subset = [
@@ -187,6 +289,22 @@ def run(
                 ),
             }
         )
+    consensus_curve = []
+    for min_votes in (1, 2, 3):
+        subset = [
+            row
+            for row in rows
+            if row["predicted_direction"] != "uncertain" and row["consensus_votes"] >= min_votes
+        ]
+        consensus_curve.append(
+            {
+                "min_consensus_votes": min_votes,
+                "coverage": len(subset) / len(rows) if rows else 0.0,
+                "accuracy": (
+                    sum(row["correct_direction"] for row in subset) / len(subset) if subset else 0.0
+                ),
+            }
+        )
     payload = {
         "version": __version__,
         "git_revision": code_revision(),
@@ -197,7 +315,11 @@ def run(
         "direction_accuracy": correct / len(attempted) if attempted else 0.0,
         "weighted_direction_accuracy": weighted_correct / weighted_total if weighted_total else 0.0,
         "correlation_only_direction_overclaims": corr_overclaims,
+        "method_summary": method_summary,
         "confidence_curve": confidence_curve,
+        "consensus_curve": consensus_curve,
+        "causal_performance_claim_allowed": False,
+        "causal_control_claim_allowed": len(rows) >= 100 and corr_overclaims > 0,
         "rows": rows,
         "decision": (
             "tuebingen_external_direction_benchmark_ready"
@@ -223,8 +345,27 @@ def write_markdown(payload: dict[str, Any], markdown: Path) -> None:
         f"- Direction accuracy: `{payload.get('direction_accuracy', 0.0):.3f}`",
         f"- Weighted accuracy: `{payload.get('weighted_direction_accuracy', 0.0):.3f}`",
         f"- Correlation-only direction overclaims: `{payload.get('correlation_only_direction_overclaims', 0)}`",
+        f"- Causal performance claim allowed: `{payload.get('causal_performance_claim_allowed')}`",
+        f"- Causal control claim allowed: `{payload.get('causal_control_claim_allowed')}`",
         "",
+        "## Method Summary",
+        "",
+        "| Method | Attempts | Coverage | Accuracy |",
+        "|---|---:|---:|---:|",
     ]
+    for method, row in payload.get("method_summary", {}).items():
+        lines.append(
+            f"| `{method}` | `{row['attempts']}` | `{row['coverage']:.3f}` | "
+            f"`{row['accuracy']:.3f}` |"
+        )
+    lines.extend(
+        [
+            "",
+            "Interpretation: these methods are transparent causal-direction controls. "
+            "They are used to audit causal wording, not to claim causal-discovery SOTA.",
+        "",
+        ]
+    )
     markdown.parent.mkdir(parents=True, exist_ok=True)
     markdown.write_text("\n".join(lines))
 

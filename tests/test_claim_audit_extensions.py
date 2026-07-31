@@ -141,6 +141,27 @@ def test_manuscript_claim_auditor_detects_risky_patterns_but_allows_negated_limi
     assert limited_payload["active_risk_pattern_hits"] == []
 
 
+def test_manuscript_claim_auditor_uses_default_paper_sources(tmp_path) -> None:
+    _write_minimal_v2_artifacts(tmp_path)
+    (tmp_path / "configs/claims").mkdir(parents=True)
+    claim_text = Path("configs/claims/mousebrainbench_claims.yaml").read_text()
+    (tmp_path / "configs/claims/mousebrainbench_claims.yaml").write_text(claim_text)
+    (tmp_path / "paper/sections").mkdir(parents=True)
+    (tmp_path / "paper/main.tex").write_text("Main paper source.")
+    (tmp_path / "paper/sections/results.tex").write_text("This is not a SOTA claim.")
+
+    output = run_manuscript_audit(
+        claims=Path("configs/claims/mousebrainbench_claims.yaml"),
+        output=tmp_path / "results/manuscript_claim_audit/default.json",
+        markdown=tmp_path / "results/manuscript_claim_audit/default.md",
+        root=tmp_path,
+    )
+    payload = json.loads(output.read_text())
+
+    assert payload["decision"] == "manuscript_claim_audit_passed"
+    assert payload["manuscript_inputs"] == ["paper/main.tex"]
+
+
 def test_uncertainty_claim_gate_blocks_unsupported_support(tmp_path) -> None:
     output = run_uncertainty(
         output=tmp_path / "results/uncertainty_claim_gate_v2/summary.json",
