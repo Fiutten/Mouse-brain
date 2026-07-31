@@ -5,6 +5,7 @@ from pathlib import Path
 from mousebrainbench.benchmarks.claim_adversarial_v2 import build_cases, run as run_adversarial_v2
 from mousebrainbench.benchmarks.claim_threshold_sensitivity_v2 import run as run_sensitivity_v2
 from mousebrainbench.benchmarks.claimbench_component_ablation import run as run_ablation
+from mousebrainbench.benchmarks.claimbench_threat_model import run as run_threat
 from mousebrainbench.benchmarks.claimbench_v2_release import run as run_release_v2
 from mousebrainbench.benchmarks.claimbench_unified_report import run as run_unified
 from mousebrainbench.benchmarks.cost_fidelity_claim_frontier import run as run_frontier
@@ -154,6 +155,15 @@ def test_reviewer_attack_and_release_v2_are_reproducible(tmp_path, monkeypatch) 
             "failing_artifacts": [],
             "git_revision": head,
         },
+    )
+    _write_json(
+        tmp_path / "results/claimbench_unified_report/summary.json",
+        {"decision": "claimbench_v2_methodological_package_ready", "git_revision": head},
+    )
+    run_threat(
+        output=tmp_path / "results/claimbench_threat_model/summary.json",
+        markdown=tmp_path / "results/claimbench_threat_model/summary.md",
+        root=tmp_path,
     )
     run_unified(
         output=tmp_path / "results/claimbench_unified_report/summary.json",

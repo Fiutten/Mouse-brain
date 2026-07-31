@@ -28,6 +28,7 @@ REQUIRED_ARTIFACTS = (
     Path("results/scifact_claim_verification/summary.json"),
     Path("results/tuebingen_causal_direction/summary.json"),
     Path("results/claimbench_component_ablation/summary.json"),
+    Path("results/claimbench_threat_model/summary.json"),
     Path("results/claimbench_unified_report/summary.json"),
 )
 
@@ -70,6 +71,9 @@ def run(output: Path = DEFAULT_OUTPUT, markdown: Path = DEFAULT_MARKDOWN, root: 
         ),
         "results/claimbench_component_ablation/summary.json": (
             "claimbench_components_have_nonredundant_value"
+        ),
+        "results/claimbench_threat_model/summary.json": (
+            "claimbench_threat_model_passed_with_boundaries"
         ),
         "results/claimbench_unified_report/summary.json": (
             "claimbench_v2_methodological_package_ready"

@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 
 from mousebrainbench.benchmarks.claimbench_component_ablation import run as run_ablation
+from mousebrainbench.benchmarks.claimbench_reproduce_package import STAGES
+from mousebrainbench.benchmarks.claimbench_threat_model import run as run_threat
 from mousebrainbench.benchmarks.claimbench_unified_report import run as run_unified
 
 
@@ -125,6 +127,18 @@ def test_unified_report_passes_when_all_criteria_are_met(tmp_path) -> None:
         markdown=tmp_path / "results/claimbench_component_ablation/summary.md",
         root=tmp_path,
     )
+    _write_json(
+        tmp_path / "results/claimbench_unified_report/summary.json",
+        {
+            "decision": "claimbench_v2_methodological_package_ready",
+            "git_revision": "abc",
+        },
+    )
+    run_threat(
+        output=tmp_path / "results/claimbench_threat_model/summary.json",
+        markdown=tmp_path / "results/claimbench_threat_model/summary.md",
+        root=tmp_path,
+    )
     output = run_unified(
         output=tmp_path / "results/claimbench_unified_report/summary.json",
         markdown=tmp_path / "results/claimbench_unified_report/summary.md",
@@ -135,3 +149,41 @@ def test_unified_report_passes_when_all_criteria_are_met(tmp_path) -> None:
     assert payload["decision"] == "claimbench_v2_methodological_package_ready"
     assert payload["passed_criteria"] == payload["num_criteria"]
     assert "not a causal-discovery performance method" in payload["publishable_claim"]
+
+
+def test_threat_model_maps_reviewer_attacks_to_artifacts(tmp_path) -> None:
+    _write_minimal_package(tmp_path)
+    run_ablation(
+        output=tmp_path / "results/claimbench_component_ablation/summary.json",
+        markdown=tmp_path / "results/claimbench_component_ablation/summary.md",
+        root=tmp_path,
+    )
+    _write_json(
+        tmp_path / "results/claimbench_unified_report/summary.json",
+        {
+            "decision": "claimbench_v2_methodological_package_ready",
+            "git_revision": "abc",
+        },
+    )
+    output = run_threat(
+        output=tmp_path / "results/claimbench_threat_model/summary.json",
+        markdown=tmp_path / "results/claimbench_threat_model/summary.md",
+        root=tmp_path,
+    )
+    payload = json.loads(output.read_text())
+
+    assert payload["decision"] == "claimbench_threat_model_passed_with_boundaries"
+    assert payload["passed_threats"] == payload["num_threats"]
+    assert any(row["threat_id"] == "causal_overclaim" for row in payload["rows"])
+
+
+def test_reproduction_runner_declares_ordered_package_stages() -> None:
+    stage_names = [stage.name for stage in STAGES]
+    data_roots = {stage.name: stage.data_root for stage in STAGES}
+
+    assert stage_names.index("component_ablation") < stage_names.index("threat_model")
+    assert stage_names.index("threat_model") < stage_names.index("unified_report")
+    assert stage_names.index("unified_report") < stage_names.index("release_check")
+    assert stage_names[-1] == "release_check"
+    assert data_roots["scifact_external_claims"] is not None
+    assert data_roots["tuebingen_causal_direction"] is not None

@@ -53,7 +53,7 @@ def build_criteria(root: Path = Path(".")) -> list[dict[str, Any]]:
     manuscript = _load(root / "results/manuscript_claim_audit/summary.json")
     ablation = _load(root / "results/claimbench_component_ablation/summary.json")
     reviewer = _load(root / "results/reviewer_attack_suite_v2/summary.json")
-    release = _load(root / "results/claimbench_v2_release/summary.json")
+    threat = _load(root / "results/claimbench_threat_model/summary.json")
 
     gate_row = next(
         (
@@ -163,20 +163,14 @@ def build_criteria(root: Path = Path(".")) -> list[dict[str, Any]]:
             interpretation="Reviewer attacks pass with explicit reportable limits.",
         ),
         _criterion(
-            name="clean_release",
-            passed=(
-                release.get("decision") == "claimbench_v2_release_ready"
-                and release.get("missing_artifacts") == []
-                and release.get("dirty_artifacts") == []
-                and release.get("failing_artifacts") == []
-            ),
-            artifact="results/claimbench_v2_release/summary.json",
+            name="reviewer_threat_model",
+            passed=threat.get("decision") == "claimbench_threat_model_passed_with_boundaries",
+            artifact="results/claimbench_threat_model/summary.json",
             evidence=(
-                f"missing={release.get('missing_artifacts')}; "
-                f"dirty={release.get('dirty_artifacts')}; "
-                f"failing={release.get('failing_artifacts')}"
+                f"passed={threat.get('passed_threats')}; "
+                f"critical_failed={len(threat.get('critical_failed_threats', []))}"
             ),
-            interpretation="The tracked artifact package is internally reproducible.",
+            interpretation="Known reviewer threats are mapped to artifacts and claim boundaries.",
         ),
     ]
 
